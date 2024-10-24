@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/providers/general_provider.dart';
@@ -17,7 +16,6 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/authentication_provider.dart';
-import '../../providers/users_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -42,11 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.getProportionalWidth(10),
-              vertical: SizeConfig.getProportionalWidth(70)),
-          child: Column(
-            children: [
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.getProportionalWidth(10),
+                vertical: SizeConfig.getProportionalWidth(70)),
+            child: Column(children: [
               SizedBox(
                   height: SizeConfig.getProportionalHeight(179),
                   width: SizeConfig.getProportionalHeight(179),
@@ -68,13 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomErrorTxt(
                   text: TranslationService()
                       .translate(_authController.errorText)),
+              SizedBox(height: SizeConfig.getProportionalWidth(6)),
               CustomAuthTextFieldHeader(
                   text: TranslationService().translate('email')),
               CustomAuthenticationTextField(
                 hintText: 'example@example.com',
                 obscureText: false,
-                textEditingController: _authController.usernameController,
-                borderColor: _authController.usernameTextFieldBorderColor,
+                textEditingController: _authController.emailController,
+                borderColor: _authController.emailTextFieldBorderColor,
               ),
               SizedBox(
                 height: SizeConfig.getProportionalHeight(15),
@@ -90,89 +88,118 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: SizeConfig.getProportionalHeight(15),
               ),
-              Container(
+              SizedBox(
                 width: SizeConfig.getProportionalWidth(312),
                 height: SizeConfig.getProportionalHeight(48),
-
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                Row(
-                children: [
-                Container(
-                decoration: BoxDecoration(
-                color:  Colors.white,
-                  border: Border.all(
-                    color:  AppColors.textFieldBorderColor,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                  width: SizeConfig.getProportionalWidth(20),
-                  height: SizeConfig.getProportionalHeight(20),
-
-                  child: Checkbox(
-                    activeColor: AppColors.backgroundColor,
-                    checkColor: AppColors.fontColor,
-                    value: _authController.rememberMe,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        _authController.toggleRememberMe();
-                      });
-                    },
-                    side: const BorderSide(color: AppColors.textFieldBorderColor), // Transparent to not show the default borde
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: SizeConfig.getProportionalWidth(10)),
-                  child: Text(
-                    TranslationService().translate("remember_me"),
-                    style: TextStyle(
-                      fontFamily: AppFonts.primaryFont,
-                      fontSize: 15,
-                      color: AppColors.fontColor,
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: AppColors.textFieldBorderColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          width: SizeConfig.getProportionalWidth(20),
+                          height: SizeConfig.getProportionalHeight(20),
+                          child: Checkbox(
+                            activeColor: AppColors.backgroundColor,
+                            checkColor: AppColors.fontColor,
+                            value: _authController.rememberMe,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                _authController.toggleRememberMe();
+                              });
+                            },
+                            side: const BorderSide(
+                                color: AppColors
+                                    .textFieldBorderColor), // Transparent to not show the default borde
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.getProportionalWidth(10)),
+                          child: Text(
+                            TranslationService().translate("remember_me"),
+                            style: TextStyle(
+                              fontFamily: AppFonts.primaryFont,
+                              fontSize: 15,
+                              color: AppColors.fontColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        TranslationService().translate("forgot_password"),
+                        style: TextStyle(
+                          fontFamily: AppFonts.primaryFont,
+                          fontSize: 16,
+                          color: AppColors.errorColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                ],
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  TranslationService().translate("forgot_password"),
-                  style: TextStyle(
-                    fontFamily: AppFonts.primaryFont,
-                    fontSize: 16,
-                    color: AppColors.errorColor,
-                  ),
+              SizedBox(
+                height: SizeConfig.getProportionalHeight(15),
+              ),
+              CustomAuthBtn(
+                text: TranslationService().translate('login'),
+                onTap: () async {
+                  _authController.checkEmptyFields(true);
+                  if (!_authController.noneIsEmpty) {
+                    setState(() {
+                      _authController.changeTextFieldsColors(true);
+                    });
+                    return;
+                  }
+                  else {
+                    setState(() {
+                      _authController.changeTextFieldsColors(true);
+                    });
+
+                    var user = await AuthProvider().login(
+                      _authController.emailController.text,
+                      _authController.passwordController.text,
+                    );
+
+
+                    if(user == null) {
+                      print(user);
+                      setState(() {
+                        print( AuthController().errorText);
+                        _authController.errorText = TranslationService().translate("wrong_email_password");
+                      });
+                      return;
+                    }
+                  }
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.getProportionalHeight(15),
                 ),
+                child: const CustomAuthDivider(),
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.getProportionalHeight(15),
-        ),
-        CustomAuthBtn(
-          text: TranslationService().translate('login'),
-          onTap: () async {},
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(15),
-          ),
-          child: const CustomAuthDivider(),
-        ),
-        CustomGoogleAuthBtn(
-          text: TranslationService().translate("google_login"),
-          onTap: () {},
-        ),
-        SizedBox(height: SizeConfig.getProportionalHeight(15)),
-        CustomAuthFooter(
-          headingText: "do_not_have_account",
-          tailText: "signup",
-          onTap: () => {Get.to(() => const SignUpScreen())},
-        )
-        ])));
+              CustomGoogleAuthBtn(
+                text: TranslationService().translate("google_login"),
+                onTap: () {},
+              ),
+              SizedBox(height: SizeConfig.getProportionalHeight(15)),
+              CustomAuthFooter(
+                headingText: "do_not_have_account",
+                tailText: "signup",
+                onTap: () => {Get.to(() => const SignUpScreen())},
+              )
+            ])));
   }
 }

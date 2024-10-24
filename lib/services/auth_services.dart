@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../models/auth_data.dart';
+import 'package:foodlink/services/translation_services.dart';
+import '../controllers/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService with ChangeNotifier {
@@ -18,26 +19,21 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future<AuthData?> signInUser(String email, String password) async {
-    // AIzaSyDaQ7hyAkv5t710PjXRCKeHxnd5sjpKri4
+  Future<UserCredential?> login(String email, String password) async {
     try {
-      // var res = await http.post(
-      //   Uri.parse(
-      //       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCJDAzrvC_RraVS4gzwgFl4rZ1WjankX90'),
-      //   body: json.encode({
-      //     'email': email,
-      //     'password': password,
-      //     'returnSecureToken': true,
-      //   }),
-      // );
-      // if (res.statusCode == 200) {
-      //   return AuthData.fromJson(json.decode(res.body));
-      // }
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email:email,
+        password: password,
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        AuthController().errorText = TranslationService().translate("user_not_found");
+      } else if (e.code == 'wrong-password') {
+        AuthController().errorText = TranslationService().translate("wrong_password");
+      } else {
+        AuthController().errorText = e.message!;
+      }
     }
-
-    catch (ex) {
-      rethrow;
-    }
-    return null;
   }
 }

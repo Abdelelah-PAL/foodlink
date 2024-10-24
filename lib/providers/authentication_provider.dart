@@ -12,6 +12,8 @@ class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
   bool isLoading = false;
   User? user;
+  final String errorMessage = "";
+
 
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
@@ -23,12 +25,12 @@ class AuthProvider with ChangeNotifier {
     return user;
   }
 
-  Future<AuthData?> signInUser(String email, String password) async {
-    // isLoading = true;
-    // notifyListeners();
-    // authData = await _authService.signInUser(email, password);
-    // isLoading = false;
-    // notifyListeners();
-    // return authData;
+  Future<UserCredential?> login(String email, String password) async {
+     isLoading = true;
+     notifyListeners();
+     var userCredential = await _authService.login(email, password);
+     isLoading = false;
+     notifyListeners();
+     return userCredential;
   }
 }

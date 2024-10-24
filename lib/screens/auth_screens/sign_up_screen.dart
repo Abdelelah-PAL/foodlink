@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
@@ -11,7 +9,6 @@ import 'package:foodlink/screens/auth_screens/widgets/custom_error_txt.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../controllers/auth_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
@@ -28,6 +25,16 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   late AuthController _authController;
+
+  @override
+  void dispose() {
+    _authController.usernameController.dispose();
+    _authController.emailController.dispose();
+    _authController.passwordController.dispose();
+    _authController.confirmedPasswordController.dispose();
+
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -96,21 +103,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
             CustomAuthBtn(
               text: TranslationService().translate('signup'),
               onTap: () async {
-                if (!_authController.noneIsEmpty() ||
-                    !_authController.isPasswordMatched()) {
+                _authController.checkEmptyFields(false);
+                _authController.checkMatchedPassword();
+                if (!_authController.noneIsEmpty ||
+                    !_authController.isMatched) {
                   setState(() {
-                    _authController.changeTextFieldsColors();
+                    _authController.changeTextFieldsColors(false);
                   });
                   return;
                 } else {
-                  if (_authController.isPasswordMatched()) {
+                  if (_authController.isMatched) {
                     var user = await AuthProvider().signUpWithEmailAndPassword(
                       _authController.emailController.text,
                       _authController.passwordController.text,
                     );
                     UsersProvider().addUserDetails(user!.uid);
                     setState(() {
-                      _authController.changeTextFieldsColors();
+                      _authController.changeTextFieldsColors(false);
                     });
                     Get.to(() => const LoginScreen());
                   }
@@ -119,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalHeight(15),
+                vertical: SizeConfig.getProportionalHeight(13),
               ),
               child: const CustomAuthDivider(),
             ),
