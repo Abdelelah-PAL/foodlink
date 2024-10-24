@@ -1,0 +1,48 @@
+name: foodlink
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  get: ^4.6.6
+  provider: ^6.1.2
+  google_fonts: ^4.0.3
+  google_sign_in: ^6.2.1
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
+  cloud_firestore: ^5.4.1
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - lib/core/utils/intl_ar.json
+    - lib/core/utils/intl_en.json
+
+  fonts:
+    - family: Salsa
+      fonts:
+        - asset: assets/fonts/Salsa-Regular.ttf
+    - family: MyriadArabic
+      fonts:
+        - asset: assets/fonts/MyriadArabic-Regular.otf

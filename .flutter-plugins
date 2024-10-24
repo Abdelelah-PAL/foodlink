@@ -1,0 +1,16 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/cloud_firestore-5.4.4/
+cloud_firestore_web=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/cloud_firestore_web-4.3.2/
+firebase_auth=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/firebase_auth-5.3.1/
+firebase_auth_web=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/firebase_auth_web-5.13.2/
+firebase_core=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/firebase_core-3.6.0/
+firebase_core_web=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/firebase_core_web-2.18.1/
+google_sign_in=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/google_sign_in-6.2.1/
+google_sign_in_android=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/google_sign_in_android-6.1.32/
+google_sign_in_ios=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/google_sign_in_ios-5.7.7/
+google_sign_in_web=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4+2/
+path_provider=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/path_provider-2.1.4/
+path_provider_android=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/path_provider_android-2.2.10/
+path_provider_foundation=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.0/
+path_provider_linux=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+path_provider_windows=/Users/abdel-elahshorbaji/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/

@@ -1,0 +1,22 @@
+[debug] [2024-10-08T20:18:04.953Z] ----------------------------------------------------------------------
+[debug] [2024-10-08T20:18:04.955Z] Command:       /usr/local/bin/firebase /Users/abdel-elahshorbaji/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase apps:create android foodlink (android) --package-name=co --json --project=foodlink-6c41e
+[debug] [2024-10-08T20:18:04.956Z] CLI Version:   11.1.0
+[debug] [2024-10-08T20:18:04.956Z] Platform:      darwin
+[debug] [2024-10-08T20:18:04.956Z] Node Version:  v16.15.0
+[debug] [2024-10-08T20:18:04.957Z] Time:          Tue Oct 08 2024 23:18:04 GMT+0300 (Eastern European Summer Time)
+[debug] [2024-10-08T20:18:04.957Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-10-08T20:18:04.966Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-10-08T20:18:04.967Z] > authorizing via signed-in user (abdelelah93pal@gmail.com)
+[info] Create your ANDROID app in project foodlink-6c41e:
+[debug] [2024-10-08T20:18:04.972Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1beta1/projects/foodlink-6c41e/androidApps [none]
+[debug] [2024-10-08T20:18:04.974Z] >>> [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/foodlink-6c41e/androidApps {"displayName":"foodlink (android)","packageName":"co"}
+[debug] [2024-10-08T20:18:05.780Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1beta1/projects/foodlink-6c41e/androidApps 400
+[debug] [2024-10-08T20:18:05.783Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/foodlink-6c41e/androidApps {"error":{"code":400,"message":"Request contains an invalid argument.","status":"INVALID_ARGUMENT"}}
+[debug] [2024-10-08T20:18:05.784Z] HTTP Error: 400, Request contains an invalid argument.
+[debug] [2024-10-08T20:18:06.242Z] FirebaseError: HTTP Error: 400, Request contains an invalid argument.
+    at responseToError (/Users/abdel-elahshorbaji/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/responseToError.js:49:12)
+    at RetryOperation._fn (/Users/abdel-elahshorbaji/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/apiv2.js:287:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to create Android app for project foodlink-6c41e. See firebase-debug.log for more info.
