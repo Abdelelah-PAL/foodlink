@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
   VoidCallback? updateUI;
@@ -87,5 +88,22 @@ class AuthController {
 
   void toggleRememberMe() {
     rememberMe = !rememberMe;
+  }
+
+  Future<void> saveLoginInfo(String email, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('email', email);
+    await prefs.setString('password', password);
+    await prefs.setBool('saved for $email', true);
+  }
+
+  Future<Map<String, String>> getLoginInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final email = prefs.getString('email') ?? '';
+    final password = prefs.getString('password') ?? '';
+    emailController.text = email;
+    passwordController.text = password;
+    return {'email': email, 'password': password};
   }
 }

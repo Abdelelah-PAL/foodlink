@@ -1,12 +1,12 @@
 class AuthData {
-  String userId;
+  String id;
   String? username;
   String email;
   String refreshToken;
   String token;
 
   AuthData({
-    required this.userId,
+    required this.id,
     required this.username,
     required this.email,
     required this.refreshToken,
@@ -14,7 +14,7 @@ class AuthData {
   });
   factory AuthData.fromJson(Map<String, dynamic> json) {
     return AuthData(
-      userId: json['localId'],
+      id: json['uid'],
       username: json['displayName'],
       email: json['email'],
       refreshToken: json['refreshToken'],

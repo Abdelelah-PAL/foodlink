@@ -7,12 +7,17 @@ class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User?> signUpWithEmailAndPassword(String email,
-      String password) async {
+      String password, String username) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email,
-          password: password);
-      return userCredential.user;
+          password: password,
+      );
+      User? user = userCredential.user;
+      await user!.updateDisplayName(username);
+      await user.reload();
+      user = FirebaseAuth.instance.currentUser; // Get the updated user info
+      return user;
     }
     catch (ex) {
       rethrow;
@@ -36,4 +41,4 @@ class AuthService with ChangeNotifier {
       }
     }
   }
-}
+  }

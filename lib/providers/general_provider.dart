@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/user_details.dart';
 
@@ -6,9 +7,6 @@ class GeneralProvider with ChangeNotifier {
   factory GeneralProvider() => _instance;
 
   GeneralProvider._internal();
-  var selectedGender = '';
   UserDetails? selectedUser;
-  String loggingInEmail = '';
-  String loggingInPassword = '';
   String language = 'en';
 }

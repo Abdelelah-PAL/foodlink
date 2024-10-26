@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/auth_screens/sign_up_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
@@ -9,6 +8,7 @@ import 'package:foodlink/screens/auth_screens/widgets/custom_auth_textfield.dart
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_textfield_header.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_error_txt.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dart';
+import 'package:foodlink/screens/roles_screen/roles_screen.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import '../../controllers/auth_controller.dart';
@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _authController = AuthController(updateUI: () {
       setState(() {});
     });
+     _authController.getLoginInfo();
   }
 
   @override
@@ -161,8 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _authController.changeTextFieldsColors(true);
                     });
                     return;
-                  }
-                  else {
+                  } else {
                     setState(() {
                       _authController.changeTextFieldsColors(true);
                     });
@@ -173,15 +173,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
 
 
-                    if(user == null) {
-                      print(user);
+                    if (user == null) {
                       setState(() {
-                        print( AuthController().errorText);
-                        _authController.errorText = TranslationService().translate("wrong_email_password");
+                        _authController.errorText = TranslationService()
+                            .translate("wrong_email_password");
                       });
                       return;
+                    } else {
+                      Get.to(RolesScreen(
+                        user: user.user!,
+                      ));
+                    if (_authController.rememberMe == true) {
+                      _authController.saveLoginInfo(user.user!.email!,
+                        _authController.passwordController.text,
+                      );
                     }
                   }
+                  }
+
                 },
               ),
               Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
+import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
@@ -29,8 +30,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     _authController.usernameController.dispose();
-    _authController.emailController.dispose();
-    _authController.passwordController.dispose();
     _authController.confirmedPasswordController.dispose();
 
     super.dispose();
@@ -116,8 +115,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     var user = await AuthProvider().signUpWithEmailAndPassword(
                       _authController.emailController.text,
                       _authController.passwordController.text,
+                      _authController.usernameController.text
                     );
-                    UsersProvider().addUserDetails(user!.uid);
+                    UserDetails userDetails = UserDetails(userId: user!.uid, userTypeId: null, email: user.email!, username: user.displayName!);
+                     UsersProvider().addUserDetails(userDetails);
                     setState(() {
                       _authController.changeTextFieldsColors(false);
                     });

@@ -1,4 +1,4 @@
 class UserTypes {
-  static const String cooker = "1";
-  static const String user = "2";
+  static const int cooker = 1;
+  static const int user = 2;
 }
