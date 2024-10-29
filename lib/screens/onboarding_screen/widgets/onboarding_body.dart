@@ -29,38 +29,41 @@ class OnBoardingBody extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(children: [
-                TextSpan(
-                  text: content.firstTextSpan,
-                  style: TextStyle(
-                      fontSize: GeneralProvider().language == 'en' ? 30 : 45,
-                      color: AppColors.fontColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppFonts.primaryFont),
-                ),
-                TextSpan(
-                  text: content.secondTextSpan,
-                  style: TextStyle(
-                      fontSize: GeneralProvider().language == 'en' ? 30 : 45,
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppFonts.primaryFont),
-                ),
-                content.thirdTextSpan == null
-                    ? const TextSpan(
-                  text: '',
-                )
-                    : TextSpan(
-                  text: content.thirdTextSpan,
-                  style: TextStyle(
-                      fontSize: GeneralProvider().language == 'en' ? 30 : 45,
-                      color: AppColors.fontColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppFonts.primaryFont),
-                )
-              ])),
+          child: SizedBox(
+            height: SizeConfig.getProportionalHeight(110),
+            child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(children: [
+                  TextSpan(
+                    text: content.firstTextSpan,
+                    style: TextStyle(
+                        fontSize: GeneralProvider().language == 'en' ? 30 : 45,
+                        color: AppColors.fontColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppFonts.primaryFont),
+                  ),
+                  TextSpan(
+                    text: content.secondTextSpan,
+                    style: TextStyle(
+                        fontSize: GeneralProvider().language == 'en' ? 30 : 45,
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppFonts.primaryFont),
+                  ),
+                  content.thirdTextSpan == null
+                      ? const TextSpan(
+                    text: '',
+                  )
+                      : TextSpan(
+                    text: content.thirdTextSpan,
+                    style: TextStyle(
+                        fontSize: GeneralProvider().language == 'en' ? 30 : 45,
+                        color: AppColors.fontColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppFonts.primaryFont),
+                  )
+                ])),
+          ),
         ),
       ],
     );
