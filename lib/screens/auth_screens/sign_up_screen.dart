@@ -46,106 +46,114 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
+
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.getProportionalWidth(10),
-            vertical: SizeConfig.getProportionalWidth(70)),
-        child: Column(
-          children: [
-            SizedBox(
-                height: SizeConfig.getProportionalHeight(179),
-                width: SizeConfig.getProportionalHeight(179),
-                child: Image.asset(Assets.pureLogo)),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: SizeConfig.getProportionalHeight(10),
-                  bottom: SizeConfig.getProportionalHeight(13)),
-              child: Text(
-                TranslationService().translate("create_an_account"),
-                style: TextStyle(
-                  fontFamily: AppFonts.primaryFont,
-                  fontSize: 24,
-                  color: AppColors.fontColor,
+            vertical: SizeConfig.getProportionalWidth(45)),
+        child: SingleChildScrollView(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              children: [
+                SizedBox(
+                    height: SizeConfig.getProportionalHeight(179),
+                    width: SizeConfig.getProportionalHeight(179),
+                    child: Image.asset(Assets.pureLogo)),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.getProportionalHeight(10),
+                      bottom: SizeConfig.getProportionalHeight(13)),
+                  child: Text(
+                    TranslationService().translate("create_an_account"),
+                    style: TextStyle(
+                      fontFamily: AppFonts.primaryFont,
+                      fontSize: 24,
+                      color: AppColors.fontColor,
+                    ),
+                    softWrap: false,
+                  ),
                 ),
-                softWrap: false,
-              ),
-            ),
-            CustomErrorTxt(
-                text:
+                CustomErrorTxt(
+                    text:
                     TranslationService().translate(_authController.errorText)),
-            CustomAuthenticationTextField(
-              hintText: TranslationService().translate('enter_username'),
-              obscureText: false,
-              textEditingController: _authController.usernameController,
-              borderColor: _authController.usernameTextFieldBorderColor,
-            ),
-            CustomAuthenticationTextField(
-              hintText: TranslationService().translate('enter_email'),
-              obscureText: false,
-              textEditingController: _authController.emailController,
-              borderColor: _authController.emailTextFieldBorderColor,
-            ),
-            CustomAuthenticationTextField(
-              hintText: TranslationService().translate('enter_password'),
-              obscureText: true,
-              textEditingController: _authController.passwordController,
-              borderColor: _authController.passwordTextFieldBorderColor,
-            ),
-            CustomAuthenticationTextField(
-              hintText: TranslationService().translate('confirm_password'),
-              obscureText: true,
-              textEditingController:
+                CustomAuthenticationTextField(
+                  hintText: TranslationService().translate('enter_username'),
+                  obscureText: false,
+                  textEditingController: _authController.usernameController,
+                  borderColor: _authController.usernameTextFieldBorderColor,
+                ),
+                CustomAuthenticationTextField(
+                  hintText: TranslationService().translate('enter_email'),
+                  obscureText: false,
+                  textEditingController: _authController.emailController,
+                  borderColor: _authController.emailTextFieldBorderColor,
+                ),
+                CustomAuthenticationTextField(
+                  hintText: TranslationService().translate('enter_password'),
+                  obscureText: true,
+                  textEditingController: _authController.passwordController,
+                  borderColor: _authController.passwordTextFieldBorderColor,
+                ),
+                CustomAuthenticationTextField(
+                  hintText: TranslationService().translate('confirm_password'),
+                  obscureText: true,
+                  textEditingController:
                   _authController.confirmedPasswordController,
-              borderColor: _authController.confirmPasswordTextFieldBorderColor,
+                  borderColor: _authController.confirmPasswordTextFieldBorderColor,
+                ),
+                CustomAuthBtn(
+                  text: TranslationService().translate('signup'),
+                  onTap: () async {
+                    _authController.checkEmptyFields(false);
+                    _authController.checkMatchedPassword();
+                    if (!_authController.noneIsEmpty ||
+                        !_authController.isMatched) {
+                      setState(() {
+                        _authController.changeTextFieldsColors(false);
+                      });
+                      return;
+                    } else {
+                      if (_authController.isMatched) {
+                        var user = await AuthProvider().signUpWithEmailAndPassword(
+                            _authController.emailController.text,
+                            _authController.passwordController.text,
+                            _authController.usernameController.text
+                        );
+                        UserDetails userDetails = UserDetails(userId: user!.uid, userTypeId: null, email: user.email!, username: user.displayName!);
+                        UsersProvider().addUserDetails(userDetails);
+                        setState(() {
+                          _authController.changeTextFieldsColors(false);
+                        });
+                        Get.to(() => const LoginScreen());
+                      }
+                    }
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.getProportionalHeight(10),
+                  ),
+                  child: const CustomAuthDivider(),
+                ),
+                CustomGoogleAuthBtn(
+                  text: TranslationService().translate("google_signup"),
+                  onTap: () {},
+                ),
+                SizedBox(height: SizeConfig.getProportionalHeight(11)),
+                CustomAuthFooter(
+                  headingText: "have_account",
+                  tailText: "login",
+                  onTap: () {
+                    Get.to(() =>  const LoginScreen());
+                  },
+                )
+              ],
             ),
-            CustomAuthBtn(
-              text: TranslationService().translate('signup'),
-              onTap: () async {
-                _authController.checkEmptyFields(false);
-                _authController.checkMatchedPassword();
-                if (!_authController.noneIsEmpty ||
-                    !_authController.isMatched) {
-                  setState(() {
-                    _authController.changeTextFieldsColors(false);
-                  });
-                  return;
-                } else {
-                  if (_authController.isMatched) {
-                    var user = await AuthProvider().signUpWithEmailAndPassword(
-                      _authController.emailController.text,
-                      _authController.passwordController.text,
-                      _authController.usernameController.text
-                    );
-                    UserDetails userDetails = UserDetails(userId: user!.uid, userTypeId: null, email: user.email!, username: user.displayName!);
-                     UsersProvider().addUserDetails(userDetails);
-                    setState(() {
-                      _authController.changeTextFieldsColors(false);
-                    });
-                    Get.to(() => const LoginScreen());
-                  }
-                }
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalHeight(13),
-              ),
-              child: const CustomAuthDivider(),
-            ),
-            CustomGoogleAuthBtn(
-              text: TranslationService().translate("google_signup"),
-              onTap: () {},
-            ),
-            SizedBox(height: SizeConfig.getProportionalHeight(11)),
-            CustomAuthFooter(
-              headingText: "have_account",
-              tailText: "login",
-              onTap: () {
-                Get.to(() =>  const LoginScreen());
-              },
-            )
-          ],
+          ),
         ),
       ),
     );
