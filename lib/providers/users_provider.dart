@@ -22,10 +22,10 @@ class UsersProvider with ChangeNotifier {
     QuerySnapshot<Map<String, dynamic>> userQuery =
         await _us.getUserByRoleAndId(id, roleId);
     UserDetails user = UserDetails(
-        userId: userQuery.docs[0]!['userId'],
-        email: userQuery.docs[0]!['email'],
-        userTypeId: userQuery.docs[0]!['userTypeId'],
-        username: userQuery.docs[0]!['username']);
+        userId: userQuery.docs[0]['userId'],
+        email: userQuery.docs[0]['email'],
+        userTypeId: userQuery.docs[0]['userTypeId'],
+        username: userQuery.docs[0]['username']);
     return user;
   }
 // Future<void> getAllUsers() async {
