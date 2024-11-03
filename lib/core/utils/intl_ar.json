@@ -33,5 +33,6 @@
   "wrong_email_password": "خطأ في البريد الإلكتروني أو كلمة المرور",
   "choose_role": "حدد دورك",
   "user": "مستخدم",
-  "cooker": "مُعد طعام"
+  "cooker": "مُعد طعام",
+  "greeting": "مرحبًا، {name}!"
 }

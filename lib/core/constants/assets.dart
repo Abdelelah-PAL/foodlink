@@ -11,6 +11,8 @@ class Assets {
   static String cooker = "$rootImages/cooker.png";
   static String userBlack = "$rootImages/user_black.png";
   static String cookerBlack = "$rootImages/cooker_black.png";
+  static String dishOfTheWeek = "$rootImages/dish_of_the_week.png";
+
 
   /// Icons
   static String googleIcon = "$rootIcons/ic_google.png";

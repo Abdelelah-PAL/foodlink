@@ -33,5 +33,6 @@
   "wrong_email_password": "Wrong email or password",
   "choose_role": "Select a role",
   "user": "User",
-  "cooker": "Cooker"
+  "cooker": "Cooker",
+  "greeting": "Hello, {name}!"
 }
