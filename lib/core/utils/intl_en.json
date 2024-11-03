@@ -34,5 +34,12 @@
   "choose_role": "Select a role",
   "user": "User",
   "cooker": "Cooker",
-  "greeting": "Hello, {name}!"
+  "greeting": "Hello, {name}!",
+  "meals": "Meals",
+  "dinner":"Dinner",
+  "launch": "Launch",
+  "breakfast": "Breakfast",
+  "snacks":"Snacks",
+  "sweets":"Sweets",
+  "drinks": "Drinks"
 }

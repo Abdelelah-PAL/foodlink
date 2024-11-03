@@ -34,5 +34,12 @@
   "choose_role": "حدد دورك",
   "user": "مستخدم",
   "cooker": "مُعد طعام",
-  "greeting": "مرحبًا، {name}!"
+  "greeting": "مرحبًا، {name}!",
+  "meals": "الوجبات",
+  "dinner": "عشاء",
+  "launch": "غداء",
+  "breakfast": "إفطار",
+  "snacks": "سناك",
+  "sweets": "حلويات",
+  "drinks": "مشروبات"
 }

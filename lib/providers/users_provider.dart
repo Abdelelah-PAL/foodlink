@@ -10,8 +10,9 @@ class UsersProvider with ChangeNotifier {
   factory UsersProvider() => _instance;
 
   UsersProvider._internal();
+  UserDetails? selectedUser;
 
-  List<UserDetails> users = [];
+  List<UserDetails> loggedInUsers = [];
   final UsersServices _us = UsersServices();
 
   void addUserDetails(UserDetails userDetails) async {
@@ -28,21 +29,30 @@ class UsersProvider with ChangeNotifier {
         username: userQuery.docs[0]['username']);
     return user;
   }
-// Future<void> getAllUsers() async {
-//   users = await _us.getAllUsers();
-// }
 
-//   UserDetails? getSelectedUser(String email, String password) {
-//     try {
-//       for (var u in users) {
-//         if (email == u.email && password == u.password) {
-//           return u;
-//         }
-//       }
-//     }
-//     catch(ex) {
-//       rethrow;
-//     }
-//     return null;
-// }
-}
+  void getUsersById(String id) async {
+    try{
+      QuerySnapshot<Map<String, dynamic>> userQuery =
+          await _us.getUsersById(id);
+      for (var doc in userQuery.docs) {
+        UserDetails user = UserDetails(
+            userId: doc['userId'],
+            email: doc['email'],
+            userTypeId: doc['userTypeId'],
+            username: doc['username']);
+        loggedInUsers.add(user);
+      }
+    }
+    catch(ex) {
+      rethrow;
+    }
+
+    }
+  UserDetails? toggleSelectedUser(int userTypeId) {
+    selectedUser = loggedInUsers.firstWhere((user) => user.userTypeId == userTypeId);
+    notifyListeners();
+  }
+  }
+
+
+

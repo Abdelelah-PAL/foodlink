@@ -6,6 +6,5 @@ class GeneralProvider with ChangeNotifier {
   factory GeneralProvider() => _instance;
 
   GeneralProvider._internal();
-  UserDetails? selectedUser;
-  String language = 'en';
+  String language = 'ar';
 }

@@ -92,7 +92,7 @@ class RoleTile extends StatelessWidget {
   }
 
   void onTap() async {
-    GeneralProvider().selectedUser =
+    UsersProvider().selectedUser =
         await UsersProvider().getUserByRoleAndId(user.uid!, roleId);
     Get.to(const HomeScreen());
   }

@@ -7,6 +7,7 @@ import '../models/user_details.dart';
 class UsersServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;
 
+
   Future<void> addUserDetails(userDetails) async {
     try {
       UserDetails cooker = UserDetails(
@@ -42,6 +43,21 @@ class UsersServices with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getUsersById(String id) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> userQuery = await FirebaseFirestore
+          .instance
+          .collection('user_details')
+          .where('userId', isEqualTo: id)
+          .get();
+
+      return userQuery;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
 // Future<List<UserDetails>> getAllUsers() async {
 //   List<UserDetails> users = [];
