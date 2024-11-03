@@ -1,11 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';

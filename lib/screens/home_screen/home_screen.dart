@@ -71,10 +71,77 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   UsersProvider().selectedUser!.userTypeId == UserTypes.cooker
                       ? const CookerBody()
-                      : const UserBody()
+                      : const UserBody(),
+
+                  NavigationBar(
+                      marginR: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.getProportionalWidth(10),
+                          vertical: SizeConfig.getProportionalHeight(20)),
+                      paddingR: EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(5)),
+                      currentIndex: dashBoardController.tabIndex.value,
+                      dotIndicatorColor: const Color(0xffDBA514),
+                      selectedItemColor: const Color(0xffDBA514),
+                      unselectedItemColor: Colors.grey[300],
+                      enableFloatingNavBar: true,
+                      onTap: dashBoardController.handleIndexChanged,
+                      enablePaddingAnimation: false,
+
+                      items: [
+                        /// Home
+                        DotNavigationBarItem(
+                          icon: Image.asset(
+                            dashBoardController.tabIndex.value == 0
+                                ? Assets.ic_home_selected
+                                : Assets.ic_home,
+                            height: SizeConfig.getProportionalHeight(18),
+                            color: dashBoardController.tabIndex.value == 0
+                                ? const Color(0xffDBA514)
+                                : null,
+                          ),
+
+                        ),
+
+                        /// Search
+                        DotNavigationBarItem(
+                          icon: Image.asset(
+                            Assets.ic_search,
+                            height: SizeConfig.getProportionalHeight(18),
+                          ),
+
+                        ),
+
+                        /// Email
+                        DotNavigationBarItem(
+                          icon: Image.asset(
+                            Assets.ic_message,
+                            height: SizeConfig.getProportionalHeight(18),
+                          ),
+                        ),
+
+                        /// Notification
+                        DotNavigationBarItem(
+                          icon: Image.asset(
+                            Assets.ic_notification,
+                            height: SizeConfig.getProportionalHeight(18),
+                          ),
+                        ),
+
+                        /// Profile
+                        DotNavigationBarItem(
+                          icon: Image.asset(
+                            Assets.ic_profile,
+                            height: SizeConfig.getProportionalHeight(18),
+                          ),
+                        ),
+                      ], destinations: [
+
+                  ],
+                    ),
+                  )
                 ],
               ),
             ),
+
           );
   }
 }
