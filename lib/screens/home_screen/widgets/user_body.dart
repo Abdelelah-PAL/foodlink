@@ -1,13 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/core/constants/assets.dart';
+import 'package:foodlink/core/constants/fonts.dart';
+import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/providers/general_provider.dart';
+import 'package:foodlink/providers/meal_categories_provider.dart';
+import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
+import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
+import 'package:foodlink/services/translation_services.dart';
+import 'package:provider/provider.dart';
 
 class UserBody extends StatelessWidget {
   const UserBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-
+        Align(
+          alignment: GeneralProvider().language == "en"
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
+          child: Text(
+            TranslationService().translate("wht_want_eat"),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                fontFamily: AppFonts.primaryFont),
+          ),
+        ),
+        SizedBox(
+          height: SizeConfig.getProportionalHeight(5),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
+          child: SizedBox(
+            width: SizeConfig.getProportionalWidth(346),
+            height: SizeConfig.getProportionalHeight(275),
+            child: Consumer<MealCategoriesProvider>(
+              builder: (context, mealCategoriesProvider, child) {
+                return GridView.builder(
+                  itemCount: mealCategoriesProvider.mealCategories.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 100,
+                    crossAxisSpacing: 20,
+                    childAspectRatio: 2.5,
+                  ),
+                  itemBuilder: (ctx, index) {
+                    final category =
+                        mealCategoriesProvider.mealCategories[index];
+                    return MealTile(
+                      name: category.name,
+                      imageUrl: category.imageUrl,
+                      width: 95,
+                      height: 101
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+        FeatureContainer(
+          imageUrl: Assets.healthyFood,
+          text: TranslationService().translate("healthy_food"),
+        ),
+        FeatureContainer(
+          imageUrl: Assets.aestheticFood,
+          text: TranslationService().translate("aesthetic_food"),
+        ),
       ],
     );
   }

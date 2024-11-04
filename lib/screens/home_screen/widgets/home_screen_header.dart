@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/home_controller.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
@@ -7,8 +8,8 @@ import '../../../core/utils/size_config.dart';
 import '../../../services/translation_services.dart';
 
 class HomeScreenHeader extends StatefulWidget {
-  const HomeScreenHeader({super.key, required this.onUpdate});
-
+  const HomeScreenHeader({super.key, required this.onUpdate, required this.homeController});
+  final HomeController homeController;
   final VoidCallback onUpdate;
 
   @override
@@ -16,7 +17,6 @@ class HomeScreenHeader extends StatefulWidget {
 }
 
 class _HomeScreenHeaderState extends State<HomeScreenHeader> {
-  bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    isExpanded = !isExpanded;
+                    widget.homeController.isExpanded = !widget.homeController.isExpanded;
                   });
                 },
                 child: Container(
@@ -86,14 +86,14 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                   ),
                 ),
               ),
-              isExpanded
+              widget.homeController.isExpanded
                   ? GestureDetector(
                       onTap: () {
                         setState(() {
                           UsersProvider().toggleSelectedUser(
                             UsersProvider().selectedUser!.userTypeId == 1 ? 2 : 1,
                           );
-                          isExpanded = !isExpanded;
+                          widget.homeController.isExpanded = !widget.homeController.isExpanded;
                         });
                         widget.onUpdate();
                       },
