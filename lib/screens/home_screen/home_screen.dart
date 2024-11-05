@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: SizeConfig.getProperHorizontalSpace(10),
+                      height: SizeConfig.getProperHorizontalSpace(20),
                     ),
                     Container(
                       child: UsersProvider().selectedUser!.userTypeId ==

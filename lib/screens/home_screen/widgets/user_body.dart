@@ -35,27 +35,28 @@ class UserBody extends StatelessWidget {
           padding:
               EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
           child: SizedBox(
-            width: SizeConfig.getProportionalWidth(346),
-            height: SizeConfig.getProportionalHeight(275),
+            width: SizeConfig.getProportionalWidth(500),
+            height: SizeConfig.getProportionalHeight(300),
             child: Consumer<MealCategoriesProvider>(
               builder: (context, mealCategoriesProvider, child) {
                 return GridView.builder(
                   itemCount: mealCategoriesProvider.mealCategories.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  // Disable scrolling
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    mainAxisSpacing: 100,
-                    crossAxisSpacing: 20,
-                    childAspectRatio: 2.5,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 0.7,
                   ),
                   itemBuilder: (ctx, index) {
                     final category =
                         mealCategoriesProvider.mealCategories[index];
                     return MealTile(
-                      name: category.name,
-                      imageUrl: category.imageUrl,
-                      width: 95,
-                      height: 101
-                    );
+                        name: category.name,
+                        imageUrl: category.imageUrl,
+                        width: 99,
+                        height: 99);
                   },
                 );
               },
