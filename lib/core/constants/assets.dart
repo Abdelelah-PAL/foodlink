@@ -18,8 +18,9 @@ class Assets {
   static String sweets = "$rootImages/sweets.png";
   static String snacks = "$rootImages/snacks.png";
   static String drinks = "$rootImages/drinks.png";
-
-
+  static String healthyFood = "$rootImages/healthy_food.png";
+  static String resourcesAdvertising = "$rootImages/resources_advertising.png";
+  static String aestheticFood = "$rootImages/aesthetic_food.png";
 
   /// Icons
   static String googleIcon = "$rootIcons/ic_google.png";

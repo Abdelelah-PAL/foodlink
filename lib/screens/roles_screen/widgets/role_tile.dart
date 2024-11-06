@@ -5,6 +5,7 @@ import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/dashboard/dashboard.dart';
 import 'package:foodlink/screens/home_screen/home_screen.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
@@ -94,6 +95,6 @@ class RoleTile extends StatelessWidget {
   void onTap() async {
     UsersProvider().selectedUser =
         await UsersProvider().getUserByRoleAndId(user.uid!, roleId);
-    Get.to(const HomeScreen());
+    Get.to(const Dashboard());
   }
 }
