@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/dashboard_controller.dart';
+import 'package:foodlink/main.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
@@ -10,10 +13,9 @@ import '../../../services/translation_services.dart';
 
 class HomeScreenHeader extends StatefulWidget {
   const HomeScreenHeader(
-      {super.key, required this.onUpdate, required this.dashboardController});
+      {super.key, required this.dashboardController});
 
   final DashboardController dashboardController;
-  final VoidCallback onUpdate;
 
   @override
   State<HomeScreenHeader> createState() => _HomeScreenHeaderState();
@@ -22,6 +24,7 @@ class HomeScreenHeader extends StatefulWidget {
 class _HomeScreenHeaderState extends State<HomeScreenHeader> {
   @override
   Widget build(BuildContext context) {
+    DashboardProvider dashboardProviderWatcher = context.watch<DashboardProvider>();
     String template = TranslationService().translate("greeting");
     template =
         template.replaceFirst('{name}', UsersProvider().selectedUser!.username);
@@ -46,12 +49,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          widget.dashboardController.isExpanded =
-                              !widget.dashboardController.isExpanded;
-                        });
-                      },
+                      onTap: DashboardProvider().toggleExpanded,
                       child: Container(
                         width: SizeConfig.getProportionalWidth(94),
                         height: SizeConfig.getProportionalHeight(22),
@@ -60,7 +58,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: AppColors.primaryColor,
+                          color: AppColors.widgetsColor,
                         ),
                         child: Row(
                           children: [
@@ -108,23 +106,21 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                 height: SizeConfig.getProportionalHeight(38),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primaryColor,
+                  color: AppColors.widgetsColor,
                 ),
                 child: const Icon(Icons.person_outline_outlined),
               ),
             ],
           ),
-          widget.dashboardController.isExpanded
+              dashboardProviderWatcher.isExpanded
               ? GestureDetector(
                   onTap: () {
                     setState(() {
                       UsersProvider().toggleSelectedUser(
                         UsersProvider().selectedUser!.userTypeId == 1 ? 2 : 1,
                       );
-                      widget.dashboardController.isExpanded =
-                          !widget.dashboardController.isExpanded;
+                      DashboardProvider().toggleExpanded();
                     });
-                    widget.onUpdate();
                   },
                   child: Container(
                     width: SizeConfig.getProportionalWidth(94),
@@ -164,7 +160,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                 )
               : SizedBox(
                   width: SizeConfig.getProportionalWidth(94),
-                  height: SizeConfig.getProportionalHeight(10),
+                  height: SizeConfig.getProportionalHeight(22),
                 ),
           Align(
             alignment: GeneralProvider().language == 'en'

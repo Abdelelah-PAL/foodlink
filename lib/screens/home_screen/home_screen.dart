@@ -24,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     MealCategoriesProvider().getAllMealCategories();
@@ -35,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     MealCategoriesProvider mealCategoriesProvider =
         context.watch<MealCategoriesProvider>();
+    UsersProvider usersProviderWatcher = context.watch<UsersProvider>();
+
     return mealCategoriesProvider.isLoading == true
-        ? const CircularProgressIndicator()
+        ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: AppColors.backgroundColor,
             body: Padding(
@@ -52,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: SizeConfig.getProperHorizontalSpace(25),
                     ),
                     Container(
-                      child: UsersProvider().selectedUser!.userTypeId ==
+                      child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker
                           ? const CookerBody()
                           : const UserBody(),

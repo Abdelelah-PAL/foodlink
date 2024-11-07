@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/authentication_provider.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
@@ -11,13 +12,14 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-    runApp(MultiProvider(providers: [
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
     ChangeNotifierProvider(create: (ctx) => AuthProvider()),
     ChangeNotifierProvider(create: (ctx) => UsersProvider()),
-      ChangeNotifierProvider(create: (ctx) => MealCategoriesProvider()),
-    ], child: const MyApp()));
+    ChangeNotifierProvider(create: (ctx) => MealCategoriesProvider()),
+    ChangeNotifierProvider(create: (ctx) => DashboardProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {

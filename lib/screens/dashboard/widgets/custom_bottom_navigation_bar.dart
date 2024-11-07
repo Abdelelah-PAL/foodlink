@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
 import '../../../controllers/dashboard_controller.dart';
 import '../../../core/constants/colors.dart';
 
@@ -14,14 +15,13 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      widget.dashboardController.onItemTapped(index);
+      DashboardProvider().onItemTapped(index);
     });
-    DashboardController().handleIndexChanged(_selectedIndex);
   }
 
   @override
@@ -37,7 +37,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             SizeConfig.getProportionalWidth(20),
             SizeConfig.getProportionalHeight(25)),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: AppColors.widgetsColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
