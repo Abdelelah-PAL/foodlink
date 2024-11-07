@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/roles_screen/widgets/role_tile.dart';
+import 'package:foodlink/screens/widgets/custom_button.dart';
 
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
@@ -29,14 +30,14 @@ class RolesScreen extends StatelessWidget {
                     width: SizeConfig.getProportionalWidth(179),
                     child: Image.asset(Assets.pureLogo)),
                 SizedBox(
-                  height: SizeConfig.getProportionalHeight(70),
+                  height: SizeConfig.getProportionalHeight(20),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
                       bottom: SizeConfig.getProportionalHeight(13),
-                      left: SizeConfig.getProportionalWidth(70),
-                      right: SizeConfig.getProportionalWidth(70)),
+                      left: SizeConfig.getProportionalWidth(20),
+                      right: SizeConfig.getProportionalWidth(20)),
                   child: Align(
                     alignment: GeneralProvider().language == "en"
                         ? Alignment.centerLeft
@@ -59,16 +60,15 @@ class RolesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                RoleTile(
-                    imageUrl: Assets.user,
-                    roleId: 2,
-                    user: user),
-                RoleTile(
-                    imageUrl: Assets.cooker,
-                    roleId: 1,
-                    user: user)
-              ])
-          ),
+                RoleTile(imageUrl: Assets.user, roleId: 2, user: user),
+                RoleTile(imageUrl: Assets.cooker, roleId: 1, user: user),
+                SizedBox(height: SizeConfig.getProportionalHeight(50)),
+                CustomButton(
+                    onTap: () {},
+                    text: TranslationService().translate("next"),
+                    width: SizeConfig.getProportionalWidth(216),
+                    height: SizeConfig.getProportionalHeight(45))
+              ])),
         ));
   }
 }
