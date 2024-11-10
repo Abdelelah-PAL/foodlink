@@ -9,6 +9,8 @@ class Assets {
   static String pureLogo = "$rootImages/pureLogo.png";
   static String user = "$rootImages/user.png";
   static String cooker = "$rootImages/cooker.png";
+  static String pressedUser = "$rootImages/pressed_user.png";
+  static String pressedCooker = "$rootImages/pressed_cooker.png";
   static String userBlack = "$rootImages/user_black.png";
   static String cookerBlack = "$rootImages/cooker_black.png";
   static String dishOfTheWeek = "$rootImages/dish_of_the_week.png";

@@ -31,7 +31,7 @@
   "user_not_found": "No user found for that email",
   "wrong_password": "Wrong password provided for that user",
   "wrong_email_password": "Wrong email or password",
-  "choose_role": "Select a role",
+  "choose_role": "Choose your role in The Application",
   "user": "User",
   "cooker": "Cooker",
   "greeting": "Hello, {name}!",
@@ -45,5 +45,11 @@
   "healthy_food": "Healthy Food",
   "resources_advertising": "Resources Advertising",
   "aesthetic_food": "Aesthetic Food",
-  "wht_want_eat": "What do you want to eat? "
+  "wht_want_eat": "What do you want to eat? ",
+  "cook_one": "You're the one who's gonna cook",
+  "use_one": "You're the one who's request food",
+  "next": "Next",
+  "enter_user_name": "Enter the user name",
+  "enter_cooker_name": "Enter the cooker name"
+
 }

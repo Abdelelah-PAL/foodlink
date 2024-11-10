@@ -28,39 +28,37 @@ class UserBody extends StatelessWidget {
                 fontFamily: AppFonts.primaryFont),
           ),
         ),
-        SizedBox(
-          height: SizeConfig.getProportionalHeight(5),
-        ),
-        Padding(
-          padding:
-              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
-          child: SizedBox(
-            width: SizeConfig.getProportionalWidth(500),
-            height: SizeConfig.getProportionalHeight(300),
-            child: Consumer<MealCategoriesProvider>(
-              builder: (context, mealCategoriesProvider, child) {
-                return GridView.builder(
-                  itemCount: mealCategoriesProvider.mealCategories.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  // Disable scrolling
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 0.7,
-                  ),
-                  itemBuilder: (ctx, index) {
-                    final category =
-                        mealCategoriesProvider.mealCategories[index];
-                    return MealTile(
-                        name: category.name,
-                        imageUrl: category.imageUrl,
-                        width: 99,
-                        height: 99);
-                  },
-                );
-              },
-            ),
+
+        Container(
+          padding: EdgeInsets.only(
+              top: SizeConfig.getProportionalHeight(5),
+              bottom: SizeConfig.getProportionalHeight(25),
+              left: SizeConfig.getProportionalWidth(15)),
+          width: SizeConfig.getProportionalWidth(500),
+          height: SizeConfig.getProportionalHeight(250),
+          child: Consumer<MealCategoriesProvider>(
+            builder: (context, mealCategoriesProvider, child) {
+              return GridView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: mealCategoriesProvider.mealCategories.length,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  childAspectRatio: 0.85,
+                ),
+                itemBuilder: (ctx, index) {
+                  final category =
+                  mealCategoriesProvider.mealCategories[index];
+                  return MealTile(
+                      name: category.name,
+                      imageUrl: category.imageUrl,
+                      width: 85,
+                      height: 85);
+                },
+              );
+            },
           ),
         ),
         FeatureContainer(

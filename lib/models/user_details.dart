@@ -2,27 +2,28 @@ class UserDetails {
   String userId;
   int? userTypeId;
   String email;
-  String username;
+  String? username;
 
   UserDetails({
     required this.userId,
     this.userTypeId,
     required this.email,
-    required this.username
+    this.username,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
     return UserDetails(
-      userId: json['userId'],
-      userTypeId: json['userTypeId'],
+      userId: json['user_id'],
+      userTypeId: json['user_type_id'],
       email: json['email'],
       username: json['username'],
     );
   }
+
   Map<String, dynamic> toMap() {
     return {
-      'userId': userId,
-      'userTypeId': userTypeId,
+      'user_id': userId,
+      'user_type_id': userTypeId,
       'email': email,
       'username': username
     };

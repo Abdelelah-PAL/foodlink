@@ -90,7 +90,9 @@ class _CustomAuthenticationTextFieldState
                     color: AppColors.hintTextColor,
                     fontFamily: AppFonts.primaryFont),
                 border: InputBorder.none,
-              )),
+              )
+          )
+          ,
         ),
       ),
     );

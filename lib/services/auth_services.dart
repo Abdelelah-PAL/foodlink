@@ -6,20 +6,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User?> signUpWithEmailAndPassword(String email,
-      String password, String username) async {
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
       User? user = userCredential.user;
-      await user!.updateDisplayName(username);
-      await user.reload();
-      user = FirebaseAuth.instance.currentUser; // Get the updated user info
       return user;
-    }
-    catch (ex) {
+    } catch (ex) {
       rethrow;
     }
   }
@@ -27,18 +24,20 @@ class AuthService with ChangeNotifier {
   Future<UserCredential?> login(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email:email,
+        email: email,
         password: password,
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        AuthController().errorText = TranslationService().translate("user_not_found");
+        AuthController().errorText =
+            TranslationService().translate("user_not_found");
       } else if (e.code == 'wrong-password') {
-        AuthController().errorText = TranslationService().translate("wrong_password");
+        AuthController().errorText =
+            TranslationService().translate("wrong_password");
       } else {
         AuthController().errorText = e.message!;
       }
     }
   }
-  }
+}

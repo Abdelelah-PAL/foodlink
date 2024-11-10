@@ -31,9 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _authController = AuthController(updateUI: () {
-      setState(() {});
-    });
+    _authController = AuthController();
     _authController.getLoginInfo();
   }
 
@@ -185,8 +183,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                         return;
                       } else {
-                        UsersProvider().getUsersById(user.user!.uid!);
-                        Get.to(RolesScreen(
+                       await UsersProvider().getUsersById(user.user!.uid!);
+                       Get.to(RolesScreen(
                           user: user.user!,
                         ));
                         if (_authController.rememberMe == true) {
