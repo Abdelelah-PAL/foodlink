@@ -6,6 +6,7 @@ import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/add_meal_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
+import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
 import 'package:foodlink/screens/home_screen/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
@@ -14,9 +15,11 @@ import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
 
 class MealsListScreen extends StatefulWidget {
-  const MealsListScreen({super.key, required this.index});
+  const MealsListScreen(
+      {super.key, required this.index, required this.categoryId});
 
   final int index;
+  final int categoryId;
 
   @override
   State<MealsListScreen> createState() => _MealsListScreenState();
@@ -27,7 +30,8 @@ class _MealsListScreenState extends State<MealsListScreen> {
 
   @override
   void initState() {
-    MealsProvider().getAllMealsByCategory(widget.index,UsersProvider().selectedUser!.userId);
+    MealsProvider().getAllMealsByCategory(
+        widget.categoryId, UsersProvider().selectedUser!.userId);
     super.initState();
   }
 
@@ -38,28 +42,36 @@ class _MealsListScreenState extends State<MealsListScreen> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)), // Set your desired height
+              preferredSize:
+                  Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+              // Set your desired height
               child: SafeArea(
                 child: ListHeader(
                     text: TranslationService()
-                        .translate(mealCategories[widget.index].mealsName)),
+                        .translate(mealCategories[widget.index].mealsName),
+                  isEmpty: mealsProviderWatcher.meals.isEmpty,
+
+                ),
               ),
             ),
             bottomNavigationBar:
                 CustomBottomNavigationBar(homeController: HomeController()),
             body: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20),
-                  ),
+                horizontal: SizeConfig.getProportionalWidth(20),
+              ),
               child: mealsProviderWatcher.meals.isEmpty
                   ? SizedBox(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {Get.to(AddMealScreen(categoryId: widget.index));},
-                            child: Container(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(AddMealScreen(
+                                    categoryId: widget.categoryId));
+                              },
+                              child: Container(
                                 width: SizeConfig.getProportionalWidth(105),
                                 height: SizeConfig.getProportionalHeight(73),
                                 decoration: BoxDecoration(
@@ -68,29 +80,32 @@ class _MealsListScreenState extends State<MealsListScreen> {
                                 ),
                                 child: const Icon(Icons.add),
                               ),
-                          ),
-                          SizedBox(height: SizeConfig.getProportionalHeight(20)),
-                          Text(
-                            TranslationService().translate("add_first_meal"),
-                            textAlign: TextAlign.center,
-                            style:  TextStyle(
-                              fontSize: 30,
-                              fontFamily: AppFonts.primaryFont,
-                              fontWeight: FontWeight.bold
                             ),
-                          )
-                        ],
+                            SizedBox(
+                                height: SizeConfig.getProportionalHeight(20)),
+                            Text(
+                              TranslationService().translate("add_first_meal"),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: AppFonts.primaryFont,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )
+                    )
                   : Consumer<MealsProvider>(
                       builder: (context, mealsProvider, child) {
-                        return ListView.builder(
-                          itemCount: mealsProvider.meals.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (ctx, index) {
-                            return const ListTile();
-                          },
+                        return Padding(
+                          padding: EdgeInsets.only(top: SizeConfig.getProportionalHeight(20)),
+                          child: ListView.builder(
+                            itemCount: mealsProvider.meals.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (ctx, index) {
+                              return ListMealTile(meal: mealsProvider.meals[index]);
+                            },
+                          ),
                         );
                       },
                     ),

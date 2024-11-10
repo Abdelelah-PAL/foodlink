@@ -17,8 +17,6 @@ class MealsServices with ChangeNotifier {
   Future<QuerySnapshot<Map<String, dynamic>>> getAllMealsByCategory(
       categoryId, userId) async {
     try {
-      print(categoryId);
-      print(userId);
       QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore
           .collection('meals')
           .where('category_id', isEqualTo: categoryId)

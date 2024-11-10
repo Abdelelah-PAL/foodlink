@@ -42,7 +42,7 @@ class CookerBody extends StatelessWidget {
         ),
         Padding(
           padding:
-          EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
+              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
           child: SizedBox(
             width: SizeConfig.getProportionalWidth(332),
             height: SizeConfig.getProportionalHeight(95),
@@ -53,13 +53,14 @@ class CookerBody extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (ctx, index) {
                     final category =
-                    mealCategoriesProvider.mealCategories[index];
+                        mealCategoriesProvider.mealCategories[index];
                     return MealTile(
-                        name: category.name,
-                        imageUrl: category.imageUrl,
-                        width: 66,
-                        height: 55,
+                      name: category.name,
+                      imageUrl: category.imageUrl,
+                      width: 66,
+                      height: 55,
                       index: index,
+                      categoryId: category.id,
                     );
                   },
                 );

@@ -12,13 +12,15 @@ class MealTile extends StatelessWidget {
       required this.imageUrl,
       required this.width,
       required this.height,
-      required this.index});
+      required this.index,
+      required this.categoryId});
 
   final String name;
   final String imageUrl;
   final double width;
   final double height;
   final int index;
+  final int categoryId;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class MealTile extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Get.to(MealsListScreen(
-              index: index + 1,
+              index: index,
+              categoryId: categoryId,
             ));
           },
           child: Column(
