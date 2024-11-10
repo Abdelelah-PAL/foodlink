@@ -5,5 +5,5 @@ class GeneralProvider with ChangeNotifier {
   factory GeneralProvider() => _instance;
 
   GeneralProvider._internal();
-  String language = 'en';
+  String language = 'ar';
 }

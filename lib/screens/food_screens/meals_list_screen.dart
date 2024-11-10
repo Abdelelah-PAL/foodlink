@@ -39,9 +39,11 @@ class _MealsListScreenState extends State<MealsListScreen> {
         : Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)), // Set your desired height
-              child: ListHeader(
-                  text: TranslationService()
-                      .translate(mealCategories[widget.index].mealsName)),
+              child: SafeArea(
+                child: ListHeader(
+                    text: TranslationService()
+                        .translate(mealCategories[widget.index].mealsName)),
+              ),
             ),
             bottomNavigationBar:
                 CustomBottomNavigationBar(homeController: HomeController()),
