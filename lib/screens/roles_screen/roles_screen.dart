@@ -1,14 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/dashboard_controller.dart';
+import 'package:foodlink/controllers/user_types.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/general_provider.dart';
-import 'package:foodlink/screens/roles_screen/widgets/role_tile.dart';
+import 'package:foodlink/screens/roles_screen/widgets/cooker_tile.dart';
+import 'package:foodlink/screens/roles_screen/widgets/user_tile.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
+import 'package:foodlink/services/users_services.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
+import '../dashboard/dashboard.dart';
 
 class RolesScreen extends StatelessWidget {
   const RolesScreen({super.key, required this.user});
@@ -17,9 +26,13 @@ class RolesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DashboardProvider dashboardProvider = context.watch<DashboardProvider>();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.backgroundColor,
-        body: Center(
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(70),
@@ -53,18 +66,34 @@ class RolesScreen extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: AppFonts.primaryFont,
                           fontSize:
-                              GeneralProvider().language == "en" ? 25 : 30,
+                          GeneralProvider().language == "en" ? 25 : 30,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold),
                       softWrap: false,
                     ),
                   ),
                 ),
-                RoleTile(imageUrl: Assets.user, roleId: 2, user: user),
-                RoleTile(imageUrl: Assets.cooker, roleId: 1, user: user),
+                UserTile(
+                  dashboardProvider: dashboardProvider,
+                ),
+                CookerTile(
+                  dashboardProvider: dashboardProvider,
+                ),
                 SizedBox(height: SizeConfig.getProportionalHeight(50)),
                 CustomButton(
-                    onTap: () {},
+                    onTap: () async {
+                      int roleId = dashboardProvider.roleId;
+                      TextEditingController controller =
+                      roleId == UserTypes.cooker
+                          ? DashboardController().cookerNameController
+                          : DashboardController().userNameController;
+                      await UsersServices()
+                          .updateUsername(user.uid, roleId, controller.text);
+                      UsersProvider().selectedUser = await UsersProvider()
+                          .getUserByRoleAndId(
+                          user.uid, dashboardProvider.roleId);
+                      Get.to(const Dashboard());
+                    },
                     text: TranslationService().translate("next"),
                     width: SizeConfig.getProportionalWidth(216),
                     height: SizeConfig.getProportionalHeight(45))

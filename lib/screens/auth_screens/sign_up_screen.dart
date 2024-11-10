@@ -29,18 +29,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
-    _authController.usernameController.dispose();
     _authController.confirmedPasswordController.dispose();
-
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _authController = AuthController(updateUI: () {
-      setState(() {});
-    });
+    _authController = AuthController();
   }
 
   @override
@@ -48,7 +44,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
-
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.getProportionalWidth(10),
@@ -78,14 +73,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 CustomErrorTxt(
-                    text:
-                    TranslationService().translate(_authController.errorText)),
-                CustomAuthenticationTextField(
-                  hintText: TranslationService().translate('enter_username'),
-                  obscureText: false,
-                  textEditingController: _authController.usernameController,
-                  borderColor: _authController.usernameTextFieldBorderColor,
-                ),
+                    text: TranslationService()
+                        .translate(_authController.errorText)),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_email'),
                   obscureText: false,
@@ -102,9 +91,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: TranslationService().translate('confirm_password'),
                   obscureText: true,
                   textEditingController:
-                  _authController.confirmedPasswordController,
-                  borderColor: _authController.confirmPasswordTextFieldBorderColor,
+                      _authController.confirmedPasswordController,
+                  borderColor:
+                      _authController.confirmPasswordTextFieldBorderColor,
                 ),
+                SizedBox(height: SizeConfig.getProportionalHeight(50)),
+
                 CustomAuthBtn(
                   text: TranslationService().translate('signup'),
                   onTap: () async {
@@ -118,12 +110,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return;
                     } else {
                       if (_authController.isMatched) {
-                        var user = await AuthProvider().signUpWithEmailAndPassword(
-                            _authController.emailController.text,
-                            _authController.passwordController.text,
-                            _authController.usernameController.text
+                        var user = await AuthProvider()
+                            .signUpWithEmailAndPassword(
+                                _authController.emailController.text,
+                                _authController.passwordController.text,
+                               );
+                        UserDetails userDetails = UserDetails(
+                          userId: user!.uid,
+                          userTypeId: null,
+                          email: user.email!,
+                          username: null,
                         );
-                        UserDetails userDetails = UserDetails(userId: user!.uid, userTypeId: null, email: user.email!, username: user.displayName!);
                         UsersProvider().addUserDetails(userDetails);
                         setState(() {
                           _authController.changeTextFieldsColors(false);
@@ -148,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   headingText: "have_account",
                   tailText: "login",
                   onTap: () {
-                    Get.to(() =>  const LoginScreen());
+                    Get.to(() => const LoginScreen());
                   },
                 )
               ],

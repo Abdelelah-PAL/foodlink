@@ -24,16 +24,12 @@ class MealCategoriesProvider with ChangeNotifier {
           await _mcs.getAllMealCategories();
       for (var doc in mealQuery.docs) {
         MealCategory mealCategory =
-            MealCategory(id: doc['id'], name: doc['name'], imageUrl: doc['image_url']);
+            MealCategory(id: doc['id'], name: doc['name'], imageUrl: doc['image_url'], mealsName: doc['meals_name']);
         mealCategories.add(mealCategory);
       }
       isLoading = false;
       mealCategories.sort((a, b) => a.id.compareTo(b.id));
       notifyListeners();
-
-      for (var meal in mealCategories) {
-      print('${meal.id} : ${meal.name}');
-      }
     } catch (ex) {
       rethrow;
     }

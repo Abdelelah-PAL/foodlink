@@ -31,7 +31,7 @@
   "user_not_found": "No user found for that email",
   "wrong_password": "Wrong password provided for that user",
   "wrong_email_password": "Wrong email or password",
-  "choose_role": "Choose your role in The Application",
+  "choose_role": "Choose your FoodLink role",
   "user": "User",
   "cooker": "Cooker",
   "greeting": "Hello, {name}!",
@@ -48,6 +48,19 @@
   "wht_want_eat": "What do you want to eat? ",
   "cook_one": "You're the one who's gonna cook",
   "use_one": "You're the one who's request food",
-  "next": "Next"
-
+  "next": "Next",
+  "enter_user_name": "Enter the user name",
+  "enter_cooker_name": "Enter the cooker name",
+  "breakfast_meals": "Breakfast Meals",
+  "launch_meals": "Launch Meals",
+  "dinner_meals": "Dinner Meals",
+  "sweet_meals": "Sweets",
+  "snack_meals": "Snacks",
+  "drinks_meals": "Drinks",
+  "add_first_meal": "Add your first meal",
+  "upload_food_image": "Upload an image for the meal",
+  "meal_name": "Meal Name",
+  "ingredients": "Ingredients",
+  "recipe": "Recipe",
+  "confirm": "Confirm"
 }

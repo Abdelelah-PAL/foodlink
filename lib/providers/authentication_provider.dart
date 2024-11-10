@@ -15,10 +15,10 @@ class AuthProvider with ChangeNotifier {
 
 
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password, username) async {
+      String email, String password) async {
     isLoading = true;
     notifyListeners();
-    user = await _authService.signUpWithEmailAndPassword(email, password, username);
+    user = await _authService.signUpWithEmailAndPassword(email, password);
     isLoading = false;
     notifyListeners();
     return user;

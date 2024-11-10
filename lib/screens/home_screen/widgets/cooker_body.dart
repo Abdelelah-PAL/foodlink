@@ -58,7 +58,9 @@ class CookerBody extends StatelessWidget {
                         name: category.name,
                         imageUrl: category.imageUrl,
                         width: 66,
-                        height: 55);
+                        height: 55,
+                      index: index,
+                    );
                   },
                 );
               },

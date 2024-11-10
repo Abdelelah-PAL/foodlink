@@ -4,13 +4,10 @@ import 'package:foodlink/services/translation_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
-  VoidCallback? updateUI;
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmedPasswordController = TextEditingController();
-  Color usernameTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color emailTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
@@ -20,12 +17,9 @@ class AuthController {
   bool rememberMe = true;
   String errorText = "";
 
-  AuthController({this.updateUI});
-
   void checkEmptyFields(login) {
     if (login == false) {
-      noneIsEmpty = usernameController.text.isNotEmpty &&
-          emailController.text.isNotEmpty &&
+      noneIsEmpty = emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty &&
           confirmedPasswordController.text.isNotEmpty;
     } else {
@@ -47,9 +41,6 @@ class AuthController {
   void changeTextFieldsColors(login) {
     if (login == false) {
       if (!noneIsEmpty) {
-        if (usernameController.text.isEmpty) {
-          usernameTextFieldBorderColor = AppColors.errorColor;
-        }
         if (emailController.text.isEmpty) {
           emailTextFieldBorderColor = AppColors.errorColor;
         }
@@ -64,7 +55,6 @@ class AuthController {
         confirmPasswordTextFieldBorderColor = AppColors.errorColor;
       } else {
         errorText = "";
-        usernameTextFieldBorderColor = AppColors.textFieldBorderColor;
         emailTextFieldBorderColor = AppColors.textFieldBorderColor;
         passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
         confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;

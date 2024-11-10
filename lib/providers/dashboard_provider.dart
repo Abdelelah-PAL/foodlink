@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:foodlink/controllers/user_types.dart';
 import 'package:get/get.dart';
 import '../screens/home_screen/home_screen.dart';
 
@@ -13,6 +14,9 @@ class DashboardProvider with ChangeNotifier {
 
   bool isExpanded = false;
   int selectedIndex = 0;
+  int roleId = UserTypes.user;
+  bool userPressed = false;
+  bool cookerPressed = false;
 
   void onItemTapped(int index) {
     selectedIndex = index;
@@ -21,6 +25,28 @@ class DashboardProvider with ChangeNotifier {
 
   void toggleExpanded() {
     isExpanded = !isExpanded;
+    notifyListeners();
+  }
+
+  void changeRole(userTypeId) {
+    roleId = userTypeId;
+    notifyListeners();
+  }
+
+  void togglePressed(roleId) {
+    roleId = roleId;
+    if(roleId == UserTypes.user) {
+      userPressed = !userPressed;
+      if(userPressed == true) {
+        cookerPressed = false;
+      }
+    }
+    else {
+      cookerPressed = !cookerPressed;
+      if(cookerPressed == true) {
+        userPressed = false;
+      }
+    }
     notifyListeners();
   }
 

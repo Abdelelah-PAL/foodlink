@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/dashboard_controller.dart';
-import 'package:foodlink/main.dart';
+import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +11,7 @@ import '../../../providers/general_provider.dart';
 import '../../../services/translation_services.dart';
 
 class HomeScreenHeader extends StatefulWidget {
-  const HomeScreenHeader(
-      {super.key, required this.dashboardController});
-
-  final DashboardController dashboardController;
+  const HomeScreenHeader({super.key});
 
   @override
   State<HomeScreenHeader> createState() => _HomeScreenHeaderState();
@@ -24,10 +20,15 @@ class HomeScreenHeader extends StatefulWidget {
 class _HomeScreenHeaderState extends State<HomeScreenHeader> {
   @override
   Widget build(BuildContext context) {
-    DashboardProvider dashboardProviderWatcher = context.watch<DashboardProvider>();
+    DashboardProvider dashboardProviderWatcher =
+        context.watch<DashboardProvider>();
     String template = TranslationService().translate("greeting");
-    template =
-        template.replaceFirst('{name}', UsersProvider().selectedUser!.username);
+    template = template.replaceFirst(
+        '{name}',
+        UsersProvider().selectedUser?.username ??
+            (UsersProvider().selectedUser?.userTypeId == UserTypes.user
+                ? TranslationService().translate("user")
+                : TranslationService().translate("cooker")));
     return Padding(
       padding: EdgeInsets.only(
         top: SizeConfig.getProportionalHeight(50.0),

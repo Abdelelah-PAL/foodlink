@@ -1,25 +1,25 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import '../models/user_details.dart';
 
 class UsersServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;
 
-
   Future<void> addUserDetails(userDetails) async {
     try {
       UserDetails cooker = UserDetails(
-          userId: userDetails.userId,
-          userTypeId: UserTypes.cooker,
-          email: userDetails.email,
-          username: userDetails.username);
+        userId: userDetails.userId,
+        userTypeId: UserTypes.cooker,
+        email: userDetails.email,
+        username: userDetails.username,
+      );
       UserDetails user = UserDetails(
-          userId: userDetails.userId,
-          userTypeId: UserTypes.user,
-          email: userDetails.email,
-          username: userDetails.username);
+        userId: userDetails.userId,
+        userTypeId: UserTypes.user,
+        email: userDetails.email,
+        username: userDetails.username,
+      );
 
       await _firebaseFireStore.collection('user_details').add(cooker.toMap());
       await _firebaseFireStore.collection('user_details').add(user.toMap());
@@ -34,8 +34,8 @@ class UsersServices with ChangeNotifier {
       QuerySnapshot<Map<String, dynamic>> userQuery = await FirebaseFirestore
           .instance
           .collection('user_details')
-          .where('userTypeId', isEqualTo: roleId)
-          .where('userId', isEqualTo: id)
+          .where('user_type_id', isEqualTo: roleId)
+          .where('user_id', isEqualTo: id)
           .get();
 
       return userQuery;
@@ -49,7 +49,7 @@ class UsersServices with ChangeNotifier {
       QuerySnapshot<Map<String, dynamic>> userQuery = await FirebaseFirestore
           .instance
           .collection('user_details')
-          .where('userId', isEqualTo: id)
+          .where('user_id', isEqualTo: id)
           .get();
 
       return userQuery;
@@ -58,18 +58,30 @@ class UsersServices with ChangeNotifier {
     }
   }
 
+  Future<void> updateUsername(
+      String userId, int roleId, String username) async {
+    try {
+      var querySnapshot = await _firebaseFireStore
+          .collection('user_details')
+          .where('user_type_id', isEqualTo: roleId)
+          .where('user_id', isEqualTo: userId)
+          .limit(1)
+          .get();
 
-// Future<List<UserDetails>> getAllUsers() async {
-//   List<UserDetails> users = [];
-//   var res = await http.get(
-//     Uri.parse(
-//         'https://babies-memories-default-rtdb.firebaseio.com/users.json'),
-//   );
-//   var allUsersJson = json.decode(res.body) as Map<String, dynamic>;
-//   for (var x in allUsersJson.keys) {
-//     users.add(UserDetails.fromJson(allUsersJson[x], x));
-//     notifyListeners();
-//   }
-//   return users;
-// }
+      if (querySnapshot.docs.isNotEmpty) {
+        var docId = querySnapshot.docs.first.id;
+        if (querySnapshot.docs.first['username'] == null &&
+            username.isNotEmpty) {
+          await _firebaseFireStore
+              .collection('user_details')
+              .doc(docId)
+              .update({
+            'username': username,
+          });
+        }
+      }
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
