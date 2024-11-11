@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-
 import '../../../core/constants/fonts.dart';
 
 class CustomAuthBtn extends StatelessWidget {

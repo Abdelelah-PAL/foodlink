@@ -76,9 +76,10 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: SizeConfig.screenHeight! * 0.8,
-              child: PageView.builder(
+            SizeConfig.customSizedBox(
+              null,
+              SizeConfig.screenHeight! * 0.8,
+              PageView.builder(
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 // Disable swiping
@@ -89,18 +90,17 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                 },
                 itemCount: onBoardingContentList.length,
                 itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: double.infinity,
-                    child: OnBoardingBody(
+                  return SizeConfig.customSizedBox(
+                    double.infinity,
+                    null,
+                    OnBoardingBody(
                       content: onBoardingContentList[index],
                     ),
                   );
                 },
               ),
             ),
-            SizedBox(
-              height: SizeConfig.getProportionalHeight(60),
-            ),
+            SizeConfig.customSizedBox(null, 60, null),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

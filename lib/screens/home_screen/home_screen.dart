@@ -18,7 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    MealCategoriesProvider().getAllMealCategories();
     super.initState();
   }
 
@@ -41,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: SizeConfig.getProperHorizontalSpace(25),
-                    ),
+                    SizeConfig.customSizedBox(null, 25, null),
                     Container(
                       child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker

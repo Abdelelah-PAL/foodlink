@@ -62,5 +62,9 @@
   "meal_name": "اسم الوجبة",
   "ingredients": "المكونات",
   "recipe": "الوصفة",
-  "confirm": "تأكيد"
+  "confirm": "تأكيد",
+  "followup":  "متابعة",
+  "edit": "تعديل",
+  "check_ingredients": "تفقّد المكونات"
+
 }

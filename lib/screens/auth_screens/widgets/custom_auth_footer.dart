@@ -8,20 +8,20 @@ import '../../../providers/general_provider.dart';
 import '../../../services/translation_services.dart';
 
 class CustomAuthFooter extends StatelessWidget {
-  const CustomAuthFooter(
-      {super.key,
-        required this.headingText,
-        required this.tailText,
-        required this.onTap,
-      });
+  const CustomAuthFooter({
+    super.key,
+    required this.headingText,
+    required this.tailText,
+    required this.onTap,
+  });
+
   final String headingText;
   final String tailText;
   final VoidCallback? onTap;
 
-
   @override
   Widget build(BuildContext context) {
-    return  Directionality(
+    return Directionality(
       textDirection: GeneralProvider().language == "en"
           ? TextDirection.ltr
           : TextDirection.rtl,
@@ -37,8 +37,7 @@ class CustomAuthFooter extends StatelessWidget {
               ),
             ),
             WidgetSpan(
-              child: SizedBox(
-                  width: SizeConfig.getProportionalWidth(4)),
+              child: SizeConfig.customSizedBox(4, null, null),
             ),
             TextSpan(
               text: TranslationService().translate(tailText),
@@ -47,16 +46,15 @@ class CustomAuthFooter extends StatelessWidget {
                 fontSize: 16,
                 color: AppColors.primaryColor,
                 decoration: TextDecoration.underline,
-                decorationColor: AppColors.primaryColor, // Change the underline color here
+                decorationColor:
+                    AppColors.primaryColor, // Change the underline color here
               ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = onTap,
+              recognizer: TapGestureRecognizer()..onTap = onTap,
             ),
           ],
         ),
         textAlign: TextAlign.start,
       ),
     );
-
   }
 }

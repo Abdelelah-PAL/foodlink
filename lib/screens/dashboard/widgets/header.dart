@@ -10,14 +10,14 @@ import '../../../core/utils/size_config.dart';
 import '../../../providers/general_provider.dart';
 import '../../../services/translation_services.dart';
 
-class HomeScreenHeader extends StatefulWidget {
-  const HomeScreenHeader({super.key});
+class Header extends StatefulWidget {
+  const Header({super.key});
 
   @override
-  State<HomeScreenHeader> createState() => _HomeScreenHeaderState();
+  State<Header> createState() => _HeaderState();
 }
 
-class _HomeScreenHeaderState extends State<HomeScreenHeader> {
+class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     DashboardProvider dashboardProviderWatcher =
@@ -40,10 +40,10 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: SizeConfig.getProportionalWidth(24),
-                height: SizeConfig.getProportionalHeight(24),
-                child: const Icon(
+              SizeConfig.customSizedBox(
+                24,
+                24,
+                const Icon(
                     color: Colors.black, Icons.notifications_none_outlined),
               ),
               Expanded(
@@ -115,54 +115,51 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
           ),
           dashboardProviderWatcher.isExpanded
               ? GestureDetector(
-            onTap: () {
-              setState(() {
-                UsersProvider().toggleSelectedUser(
-                  UsersProvider().selectedUser!.userTypeId == 1 ? 2 : 1,
-                );
-                DashboardProvider().toggleExpanded();
-              });
-            },
-            child: Container(
-              width: SizeConfig.getProportionalWidth(94),
-              height: SizeConfig.getProportionalHeight(22),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.backgroundColor,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      UsersProvider().selectedUser!.userTypeId == 1
-                          ? TranslationService().translate("user")
-                          : TranslationService().translate("cooker"),
-                      style: TextStyle(
-                        fontFamily: AppFonts.primaryFont,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  onTap: () {
+                    setState(() {
+                      UsersProvider().toggleSelectedUser(
+                        UsersProvider().selectedUser!.userTypeId == 1 ? 2 : 1,
+                      );
+                      DashboardProvider().toggleExpanded();
+                    });
+                  },
+                  child: Container(
+                    width: SizeConfig.getProportionalWidth(94),
+                    height: SizeConfig.getProportionalHeight(22),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.backgroundColor,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            UsersProvider().selectedUser!.userTypeId == 1
+                                ? TranslationService().translate("user")
+                                : TranslationService().translate("cooker"),
+                            style: TextStyle(
+                              fontFamily: AppFonts.primaryFont,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: SizeConfig.getProportionalWidth(20),
+                          height: SizeConfig.getProportionalHeight(18),
+                          margin: EdgeInsets.only(
+                              right: SizeConfig.getProportionalWidth(10)),
+                          child: Image.asset(
+                              UsersProvider().selectedUser!.userTypeId == 1
+                                  ? Assets.userBlack
+                                  : Assets.cookerBlack),
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
-                    width: SizeConfig.getProportionalWidth(20),
-                    height: SizeConfig.getProportionalHeight(18),
-                    margin: EdgeInsets.only(
-                        right: SizeConfig.getProportionalWidth(10)),
-                    child: Image.asset(
-                        UsersProvider().selectedUser!.userTypeId == 1
-                            ? Assets.userBlack
-                            : Assets.cookerBlack),
-                  ),
-                ],
-              ),
-            ),
-          )
-              : SizedBox(
-            width: SizeConfig.getProportionalWidth(94),
-            height: SizeConfig.getProportionalHeight(22),
-          ),
+                )
+              : SizeConfig.customSizedBox(94, 22, null),
           Align(
             alignment: GeneralProvider().language == 'en'
                 ? Alignment.centerLeft

@@ -26,7 +26,6 @@ class CustomAuthenticationTextField extends StatefulWidget {
 
 class _CustomAuthenticationTextFieldState
     extends State<CustomAuthenticationTextField> {
-  @override
   bool showPassword = false;
 
   @override

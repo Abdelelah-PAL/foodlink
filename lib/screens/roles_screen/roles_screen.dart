@@ -15,6 +15,7 @@ import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/meal_categories_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
 import '../dashboard/dashboard.dart';
@@ -38,13 +39,9 @@ class RolesScreen extends StatelessWidget {
                   vertical: SizeConfig.getProportionalWidth(70),
                   horizontal: SizeConfig.getProportionalWidth(10)),
               child: Column(children: [
-                SizedBox(
-                    height: SizeConfig.getProportionalHeight(179),
-                    width: SizeConfig.getProportionalWidth(179),
-                    child: Image.asset(Assets.pureLogo)),
-                SizedBox(
-                  height: SizeConfig.getProportionalHeight(20),
-                ),
+                SizeConfig.customSizedBox(
+                    179, 179, Image.asset(Assets.pureLogo)),
+                SizeConfig.customSizedBox(null, 20, null),
                 Padding(
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
@@ -66,7 +63,7 @@ class RolesScreen extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: AppFonts.primaryFont,
                           fontSize:
-                          GeneralProvider().language == "en" ? 25 : 30,
+                              GeneralProvider().language == "en" ? 25 : 30,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold),
                       softWrap: false,
@@ -79,19 +76,20 @@ class RolesScreen extends StatelessWidget {
                 CookerTile(
                   dashboardProvider: dashboardProvider,
                 ),
-                SizedBox(height: SizeConfig.getProportionalHeight(50)),
+                SizeConfig.customSizedBox(null, 50, null),
                 CustomButton(
                     onTap: () async {
                       int roleId = dashboardProvider.roleId;
                       TextEditingController controller =
-                      roleId == UserTypes.cooker
-                          ? DashboardController().cookerNameController
-                          : DashboardController().userNameController;
+                          roleId == UserTypes.cooker
+                              ? DashboardController().cookerNameController
+                              : DashboardController().userNameController;
                       await UsersServices()
                           .updateUsername(user.uid, roleId, controller.text);
                       UsersProvider().selectedUser = await UsersProvider()
                           .getUserByRoleAndId(
-                          user.uid, dashboardProvider.roleId);
+                              user.uid, dashboardProvider.roleId);
+                      MealCategoriesProvider().getAllMealCategories();
                       Get.to(const Dashboard());
                     },
                     text: TranslationService().translate("next"),

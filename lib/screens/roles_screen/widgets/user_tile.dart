@@ -68,8 +68,9 @@ class UserTile extends StatelessWidget {
                           ? Assets.pressedUser
                           : Assets.user))),
             ),
-            SizedBox(width: SizeConfig.getProportionalWidth(15)),
-            dashboardProvider.userPressed && usersProvider.userFirstLogin == true
+            SizeConfig.customSizedBox(15, null, null),
+            dashboardProvider.userPressed &&
+                    usersProvider.userFirstLogin == true
                 ? UsernameTextField(
                     controller: DashboardController().userNameController,
                     hintText: TranslationService().translate("enter_user_name"))
@@ -82,9 +83,10 @@ class UserTile extends StatelessWidget {
                             fontFamily: AppFonts.primaryFont,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        width: SizeConfig.getProportionalWidth(170),
-                        child: Text(
+                      SizeConfig.customSizedBox(
+                        170,
+                        null,
+                        Text(
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.center,
                           TranslationService().translate("use_one"),
@@ -97,7 +99,8 @@ class UserTile extends StatelessWidget {
                     ],
                   )
           ] else ...[
-            dashboardProvider.userPressed && usersProvider.userFirstLogin == true
+            dashboardProvider.userPressed &&
+                    usersProvider.userFirstLogin == true
                 ? UsernameTextField(
                     controller: DashboardController().userNameController,
                     hintText: TranslationService().translate("enter_user_name"))
@@ -111,9 +114,10 @@ class UserTile extends StatelessWidget {
                             fontFamily: AppFonts.primaryFont,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        width: SizeConfig.getProportionalWidth(170),
-                        child: Text(
+                      SizeConfig.customSizedBox(
+                        170,
+                        null,
+                        Text(
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.center,
                           TranslationService().translate("use_one"),
@@ -125,7 +129,7 @@ class UserTile extends StatelessWidget {
                       ),
                     ],
                   ),
-            SizedBox(width: SizeConfig.getProportionalWidth(15)),
+            SizeConfig.customSizedBox(15,null, null),
             GestureDetector(
               onTap: () {
                 DashboardProvider().changeRole(UserTypes.user);

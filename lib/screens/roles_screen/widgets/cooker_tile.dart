@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/main.dart';
 import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/general_provider.dart';
@@ -70,7 +69,7 @@ class CookerTile extends StatelessWidget {
                           ? Assets.pressedCooker
                           : Assets.cooker))),
             ),
-            SizedBox(width: SizeConfig.getProportionalWidth(15)),
+            SizeConfig.customSizedBox(15, null, null),
             dashboardProvider.cookerPressed == true &&
                     usersProvider.cookerFirstLogin == true
                 ? UsernameTextField(
@@ -86,9 +85,10 @@ class CookerTile extends StatelessWidget {
                             fontFamily: AppFonts.primaryFont,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        width: SizeConfig.getProportionalWidth(170),
-                        child: Text(
+                      SizeConfig.customSizedBox(
+                        170,
+                        null,
+                        Text(
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.center,
                           TranslationService().translate("cook_one"),
@@ -117,9 +117,10 @@ class CookerTile extends StatelessWidget {
                             fontFamily: AppFonts.primaryFont,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        width: SizeConfig.getProportionalWidth(170),
-                        child: Text(
+                      SizeConfig.customSizedBox(
+                        170,
+                        null,
+                        Text(
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.center,
                           TranslationService().translate("cook_one"),
@@ -131,7 +132,7 @@ class CookerTile extends StatelessWidget {
                       ),
                     ],
                   ),
-            SizedBox(width: SizeConfig.getProportionalWidth(15)),
+            SizeConfig.customSizedBox(15, null, null),
             GestureDetector(
               onTap: () {
                 DashboardProvider().changeRole(UserTypes.cooker);

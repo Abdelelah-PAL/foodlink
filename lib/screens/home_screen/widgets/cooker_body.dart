@@ -22,8 +22,10 @@ class CookerBody extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
           child: Image.asset(Assets.dishOfTheWeek, fit: BoxFit.fill),
         ),
-        SizedBox(
-          height: SizeConfig.getProperHorizontalSpace(10),
+        SizeConfig.customSizedBox(
+          null,
+          10,
+          null,
         ),
         Align(
           alignment: GeneralProvider().language == "en"
@@ -37,16 +39,18 @@ class CookerBody extends StatelessWidget {
                 fontFamily: AppFonts.primaryFont),
           ),
         ),
-        SizedBox(
-          height: SizeConfig.getProportionalHeight(5),
+        SizeConfig.customSizedBox(
+          null,
+          5,
+          null,
         ),
         Padding(
           padding:
               EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
-          child: SizedBox(
-            width: SizeConfig.getProportionalWidth(332),
-            height: SizeConfig.getProportionalHeight(95),
-            child: Consumer<MealCategoriesProvider>(
+          child: SizeConfig.customSizedBox(
+            332,
+            95,
+            Consumer<MealCategoriesProvider>(
               builder: (context, mealCategoriesProvider, child) {
                 return ListView.builder(
                   itemCount: mealCategoriesProvider.mealCategories.length,

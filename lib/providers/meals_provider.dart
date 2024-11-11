@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:foodlink/providers/users_provider.dart';
 import '../models/meal.dart';
 import '../services/meals_services.dart';
 

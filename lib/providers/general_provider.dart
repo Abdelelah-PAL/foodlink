@@ -6,4 +6,5 @@ class GeneralProvider with ChangeNotifier {
 
   GeneralProvider._internal();
   String language = 'ar';
+
 }

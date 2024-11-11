@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/general_provider.dart';
+import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
+import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 
 class ListHeader extends StatelessWidget {
-  const ListHeader({super.key, required this.text, required this.isEmpty});
+  const ListHeader(
+      {super.key,
+      required this.text,
+      required this.isEmpty,
+      required this.categoryId});
 
   final String text;
   final bool isEmpty;
+  final int categoryId;
 
   @override
   Widget build(BuildContext context) {
@@ -28,65 +35,77 @@ class ListHeader extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: SizeConfig.getProportionalWidth(20)),
+          SizeConfig.customSizedBox(20, null, null),
         ],
       );
     } else {
-      return GeneralProvider().language == 'en'
-          ? Padding(
-              padding: EdgeInsets.only(
-                top: SizeConfig.getProportionalHeight(10),
-                left: SizeConfig.getProportionalWidth(24),
-                right: SizeConfig.getProportionalWidth(24),
+      if (GeneralProvider().language == 'en') {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: SizeConfig.getProportionalHeight(10),
+            left: SizeConfig.getProportionalWidth(24),
+            right: SizeConfig.getProportionalWidth(24),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppFonts.primaryFont),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    text,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
-                  ),
-                  SizedBox(width: SizeConfig.getProportionalWidth(20)),
-                  Container(
-                    width: SizeConfig.getProportionalWidth(30),
-                    height: SizeConfig.getProportionalHeight(30),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColors.widgetsColor),
-                    child: const Icon(Icons.add),
-                  ),
-                ],
+              SizeConfig.customSizedBox(20, null, null),
+              GestureDetector(
+                onTap: () {
+                  Get.to(AddMealScreen(categoryId: categoryId));
+                },
+                child: Container(
+                  width: SizeConfig.getProportionalWidth(30),
+                  height: SizeConfig.getProportionalHeight(30),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: AppColors.widgetsColor),
+                  child: const Icon(Icons.add),
+                ),
               ),
-            )
-          : Padding(
-              padding: EdgeInsets.only(
-                top: SizeConfig.getProportionalHeight(10),
-                left: SizeConfig.getProportionalWidth(24),
-                right: SizeConfig.getProportionalWidth(24),
+            ],
+          ),
+        );
+      } else {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: SizeConfig.getProportionalHeight(10),
+            left: SizeConfig.getProportionalWidth(24),
+            right: SizeConfig.getProportionalWidth(24),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.to(AddMealScreen(categoryId: categoryId));
+                },
+                child: Container(
+                  width: SizeConfig.getProportionalWidth(30),
+                  height: SizeConfig.getProportionalHeight(30),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: AppColors.widgetsColor),
+                  child: const Icon(Icons.add),
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: SizeConfig.getProportionalWidth(30),
-                    height: SizeConfig.getProportionalHeight(30),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColors.widgetsColor),
-                    child: const Icon(Icons.add),
-                  ),
-                  SizedBox(width: SizeConfig.getProportionalWidth(20)),
-                  Text(
-                    text,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
-                  )
-                ],
-              ),
-            );
+              SizeConfig.customSizedBox(20, null, null),
+              Text(
+                text,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppFonts.primaryFont),
+              )
+            ],
+          ),
+        );
+      }
     }
   }
 }

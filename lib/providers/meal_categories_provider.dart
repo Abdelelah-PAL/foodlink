@@ -19,17 +19,20 @@ class MealCategoriesProvider with ChangeNotifier {
   void getAllMealCategories() async {
     try {
       mealCategories = [];
-      isLoading = true;
-      QuerySnapshot<Map<String, dynamic>> mealQuery =
-          await _mcs.getAllMealCategories();
-      for (var doc in mealQuery.docs) {
-        MealCategory mealCategory =
-            MealCategory(id: doc['id'], name: doc['name'], imageUrl: doc['image_url'], mealsName: doc['meals_name']);
-        mealCategories.add(mealCategory);
-      }
-      isLoading = false;
-      mealCategories.sort((a, b) => a.id.compareTo(b.id));
-      notifyListeners();
+        isLoading = true;
+        QuerySnapshot<Map<String, dynamic>> mealQuery =
+            await _mcs.getAllMealCategories();
+        for (var doc in mealQuery.docs) {
+          MealCategory mealCategory = MealCategory(
+              id: doc['id'],
+              name: doc['name'],
+              imageUrl: doc['image_url'],
+              mealsName: doc['meals_name']);
+          mealCategories.add(mealCategory);
+        }
+        isLoading = false;
+        mealCategories.sort((a, b) => a.id.compareTo(b.id));
+        notifyListeners();
     } catch (ex) {
       rethrow;
     }

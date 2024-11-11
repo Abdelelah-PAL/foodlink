@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/general_provider.dart';
+import 'package:foodlink/screens/food_screens/meal_screen.dart';
+import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
+import 'package:get/get.dart';
 import '../../../models/meal.dart';
+import 'name_row.dart';
 
 class ListMealTile extends StatelessWidget {
   const ListMealTile({
@@ -14,144 +16,92 @@ class ListMealTile extends StatelessWidget {
 
   final Meal meal;
 
+  onTap() {
+    Get.to(MealScreen(meal: meal));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GeneralProvider().language == "en"
-        ? Stack(
-          children: [
-            Row(
-                children: [
-                  Container(
-                      width: SizeConfig.getProportionalWidth(182),
-                      height: SizeConfig.getProportionalHeight(95),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 1, color: AppColors.defaultBorderColor),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Image.asset(
-                        meal.imageUrl!,
-                        fit: BoxFit.fill,
-                      )),
-                  SizedBox(
-                    width: SizeConfig.getProportionalWidth(10),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+        ? GestureDetector(
+            onTap: onTap,
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          width: SizeConfig.getProportionalWidth(182),
+                          height: SizeConfig.getProportionalHeight(95),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1, color: AppColors.defaultBorderColor),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Image.asset(
+                            meal.imageUrl!,
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                    SizeConfig.customSizedBox(10, null, null),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(Assets.mealNameIcon),
-                          SizedBox(
-                            width: SizeConfig.getProportionalWidth(10),
-                          ),
-                          Text(
-                            meal.name,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: AppFonts.primaryFont
-                            ),
-                          ),
+                          NameRow(meal: meal, fontSize: 15, textWidth: 115,),
+                          SizeConfig.customSizedBox(null, 10, null),
+                          IngredientsRow(meal: meal, fontSize: 14, textWidth: 115,),
                         ],
                       ),
-                      SizedBox(
-                        height: SizeConfig.getProportionalHeight(10),
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(Assets.mealIngredients),
-                          SizedBox(
-                            width: SizeConfig.getProportionalWidth(10),
+                    )
+                  ],
+                ),
+                const Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Icon(Icons.favorite_outline),
+                )
+              ],
+            ),
+          )
+        : GestureDetector(
+            onTap: onTap,
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        NameRow(meal: meal, fontSize: 15, textWidth: 115),
+                        SizeConfig.customSizedBox(null, 10, null),
+                        IngredientsRow(meal: meal, fontSize: 14, textWidth: 115),
+                      ],
+                    ),
+                    SizeConfig.customSizedBox(10, null, null),
+                    Expanded(
+                      child: Container(
+                          width: SizeConfig.getProportionalWidth(182),
+                          height: SizeConfig.getProportionalHeight(95),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1, color: AppColors.defaultBorderColor),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          Text(
-                            meal.ingredients,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: AppFonts.primaryFont
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            const Positioned(
-              right: 100,
-              bottom: 0,
-              child: Icon(Icons.favorite_outline),
-            )
-          ],
-        )
-        : Stack(
-          children: [
-            Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            meal.name,
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: AppFonts.primaryFont
-                            ),
-                          ),
-                          SizedBox(
-                            width: SizeConfig.getProportionalWidth(10),
-                          ),
-                          Image.asset(Assets.mealNameIcon),
-                        ],
-                      ),
-                      SizedBox(
-                        height: SizeConfig.getProportionalHeight(10),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            meal.ingredients,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: AppFonts.primaryFont
-                            ),
-                          ),
-                          SizedBox(
-                            width: SizeConfig.getProportionalWidth(10),
-                          ),
-                          Image.asset(Assets.mealIngredients),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: SizeConfig.getProportionalWidth(10),
-                  ),
-                  Expanded(
-                    child: Container(
-                        width: SizeConfig.getProportionalWidth(182),
-                        height: SizeConfig.getProportionalHeight(95),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: AppColors.defaultBorderColor),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Image.asset(
-                          meal.imageUrl!,
-                          fit: BoxFit.fill,
-                        )),
-                  ),
-                ],
-              ),
-            const Positioned(
-              left: 0,
-              bottom: 0,
-              child: Icon(Icons.favorite_outline),
-            )
-          ],
-        );
+                          child: Image.asset(
+                            meal.imageUrl!,
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                  ],
+                ),
+                const Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: Icon(Icons.favorite_outline),
+                )
+              ],
+            ),
+          );
   }
 }

@@ -48,10 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontal: SizeConfig.getProportionalWidth(10),
                   vertical: SizeConfig.getProportionalWidth(45)),
               child: Column(children: [
-                SizedBox(
-                    height: SizeConfig.getProportionalHeight(179),
-                    width: SizeConfig.getProportionalHeight(179),
-                    child: Image.asset(Assets.pureLogo)),
+                SizeConfig.customSizedBox(
+                    179, 179, Image.asset(Assets.pureLogo)),
                 Padding(
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
@@ -69,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomErrorTxt(
                     text: TranslationService()
                         .translate(_authController.errorText)),
-                SizedBox(height: SizeConfig.getProportionalWidth(6)),
+                SizeConfig.customSizedBox(null, 6, null),
                 CustomAuthTextFieldHeader(
                     text: TranslationService().translate('email')),
                 CustomAuthenticationTextField(
@@ -78,8 +76,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   textEditingController: _authController.emailController,
                   borderColor: _authController.emailTextFieldBorderColor,
                 ),
-                SizedBox(
-                  height: SizeConfig.getProportionalHeight(15),
+                SizeConfig.customSizedBox(
+                  null,
+                  15,
+                  null,
                 ),
                 CustomAuthTextFieldHeader(
                     text: TranslationService().translate('password')),
@@ -89,13 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   textEditingController: _authController.passwordController,
                   borderColor: _authController.passwordTextFieldBorderColor,
                 ),
-                SizedBox(
-                  height: SizeConfig.getProportionalHeight(15),
+                SizeConfig.customSizedBox(
+                  null,
+                  15,
+                  null,
                 ),
-                SizedBox(
-                  width: SizeConfig.getProportionalWidth(312),
-                  height: SizeConfig.getProportionalHeight(48),
-                  child: Row(
+                SizeConfig.customSizedBox(
+                  312,
+                  48,
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -153,9 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: SizeConfig.getProportionalHeight(15),
-                ),
+                SizeConfig.customSizedBox(null, 15, null),
                 CustomAuthBtn(
                   text: TranslationService().translate('login'),
                   onTap: () async {
@@ -175,7 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         _authController.passwordController.text,
                       );
 
-
                       if (user == null) {
                         setState(() {
                           _authController.errorText = TranslationService()
@@ -183,18 +182,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                         return;
                       } else {
-                       await UsersProvider().getUsersById(user.user!.uid!);
-                       Get.to(RolesScreen(
+                        await UsersProvider().getUsersById(user.user!.uid);
+                        Get.to(RolesScreen(
                           user: user.user!,
                         ));
                         if (_authController.rememberMe == true) {
-                          _authController.saveLoginInfo(user.user!.email!,
+                          _authController.saveLoginInfo(
+                            user.user!.email!,
                             _authController.passwordController.text,
                           );
                         }
                       }
                     }
-
                   },
                 ),
                 Padding(
@@ -207,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   text: TranslationService().translate("google_login"),
                   onTap: () {},
                 ),
-                SizedBox(height: SizeConfig.getProportionalHeight(15)),
+                SizeConfig.customSizedBox(null, 15, null),
                 CustomAuthFooter(
                   headingText: "do_not_have_account",
                   tailText: "signup",

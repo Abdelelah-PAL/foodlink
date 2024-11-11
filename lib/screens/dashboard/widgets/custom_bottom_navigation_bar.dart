@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
-import '../../../controllers/dashboard_controller.dart';
+import 'package:foodlink/screens/dashboard/dashboard.dart';
+import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key, required this.dashboardController});
+  const CustomBottomNavigationBar({super.key, required this.fromDashboard});
+  final bool fromDashboard;
 
-  final DashboardController dashboardController;
 
   @override
   State<CustomBottomNavigationBar> createState() =>
@@ -22,33 +23,33 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       _selectedIndex = index;
       DashboardProvider().onItemTapped(index);
     });
+    if(!widget.fromDashboard) {
+      Get.to(const Dashboard());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: SizeConfig.getProportionalWidth(355),
-        height: SizeConfig.getProportionalHeight(61),
-        margin: EdgeInsets.fromLTRB(
-            SizeConfig.getProportionalWidth(20),
-            SizeConfig.getProportionalHeight(10),
-            SizeConfig.getProportionalWidth(20),
-            SizeConfig.getProportionalHeight(25)),
-        decoration: BoxDecoration(
-          color: AppColors.widgetsColor,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(Icons.home_outlined, 0),
-            _buildNavItem(Icons.favorite_outline, 1),
-            _buildNavItem(Icons.calendar_month_outlined, 2),
-            _buildNavItem(Icons.person_outline_outlined, 3),
-          ],
-        ),
+    return Container(
+      width: SizeConfig.getProportionalWidth(355),
+      height: SizeConfig.getProportionalHeight(61),
+      margin: EdgeInsets.fromLTRB(
+          SizeConfig.getProportionalWidth(20),
+          SizeConfig.getProportionalHeight(10),
+          SizeConfig.getProportionalWidth(20),
+          SizeConfig.getProportionalHeight(25)),
+      decoration: BoxDecoration(
+        color: AppColors.widgetsColor,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildNavItem(Icons.home_outlined, 0),
+          _buildNavItem(Icons.favorite_outline, 1),
+          _buildNavItem(Icons.calendar_month_outlined, 2),
+          _buildNavItem(Icons.person_outline_outlined, 3),
+        ],
       ),
     );
   }

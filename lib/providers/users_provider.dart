@@ -55,7 +55,7 @@ class UsersProvider with ChangeNotifier {
     }
   }
 
-  UserDetails? toggleSelectedUser(int userTypeId) {
+  void toggleSelectedUser(int userTypeId) {
     selectedUser =
         loggedInUsers.firstWhere((user) => user.userTypeId == userTypeId);
     notifyListeners();

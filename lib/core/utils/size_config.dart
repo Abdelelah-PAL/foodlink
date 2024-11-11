@@ -41,4 +41,12 @@ class SizeConfig {
     var space = screenWidth! / value;
     return space;
   }
+
+  static Widget customSizedBox(double? width, double? height, Widget? child) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: child,
+    );
+  }
 }

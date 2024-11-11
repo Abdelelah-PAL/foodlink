@@ -54,10 +54,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onTap: () => FocusScope.of(context).unfocus(),
             child: Column(
               children: [
-                SizedBox(
-                    height: SizeConfig.getProportionalHeight(179),
-                    width: SizeConfig.getProportionalHeight(179),
-                    child: Image.asset(Assets.pureLogo)),
+                SizeConfig.customSizedBox(
+                    179, 179, Image.asset(Assets.pureLogo)),
                 Padding(
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
@@ -95,8 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   borderColor:
                       _authController.confirmPasswordTextFieldBorderColor,
                 ),
-                SizedBox(height: SizeConfig.getProportionalHeight(50)),
-
+                SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthBtn(
                   text: TranslationService().translate('signup'),
                   onTap: () async {
@@ -110,11 +107,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return;
                     } else {
                       if (_authController.isMatched) {
-                        var user = await AuthProvider()
-                            .signUpWithEmailAndPassword(
-                                _authController.emailController.text,
-                                _authController.passwordController.text,
-                               );
+                        var user =
+                            await AuthProvider().signUpWithEmailAndPassword(
+                          _authController.emailController.text,
+                          _authController.passwordController.text,
+                        );
                         UserDetails userDetails = UserDetails(
                           userId: user!.uid,
                           userTypeId: null,
@@ -140,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   text: TranslationService().translate("google_signup"),
                   onTap: () {},
                 ),
-                SizedBox(height: SizeConfig.getProportionalHeight(11)),
+                SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthFooter(
                   headingText: "have_account",
                   tailText: "login",

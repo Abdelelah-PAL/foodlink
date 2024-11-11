@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
 import 'package:get/get.dart';
 
 class CustomBackButton extends StatelessWidget {

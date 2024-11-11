@@ -17,21 +17,15 @@ class OnBoardingBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: SizeConfig.getProportionalHeight(120),
-        ),
-        SizedBox(
-            width: SizeConfig.getProportionalWidth(316),
-            height: SizeConfig.getProportionalHeight(316),
-            child: Image.asset(content.imageURL)),
-        SizedBox(
-          height: SizeConfig.getProportionalHeight(100),
-        ),
+        SizeConfig.customSizedBox(null, 120, null),
+        SizeConfig.customSizedBox(316, 316, Image.asset(content.imageURL)),
+        SizeConfig.customSizedBox(null, 100, null),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SizedBox(
-            height: SizeConfig.getProportionalHeight(110),
-            child: RichText(
+          child: SizeConfig.customSizedBox(
+            null,
+            110,
+            RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
                   TextSpan(
@@ -52,16 +46,17 @@ class OnBoardingBody extends StatelessWidget {
                   ),
                   content.thirdTextSpan == null
                       ? const TextSpan(
-                    text: '',
-                  )
+                          text: '',
+                        )
                       : TextSpan(
-                    text: content.thirdTextSpan,
-                    style: TextStyle(
-                        fontSize: GeneralProvider().language == 'en' ? 30 : 45,
-                        color: AppColors.fontColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
-                  )
+                          text: content.thirdTextSpan,
+                          style: TextStyle(
+                              fontSize:
+                                  GeneralProvider().language == 'en' ? 30 : 45,
+                              color: AppColors.fontColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: AppFonts.primaryFont),
+                        )
                 ])),
           ),
         ),

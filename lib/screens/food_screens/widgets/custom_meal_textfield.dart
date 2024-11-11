@@ -34,7 +34,7 @@ class CustomMealTextField extends StatelessWidget {
       ),
       child: TextField(
         maxLines: maxLines,
-        controller: controller!,
+        controller: controller,
         textAlign: GeneralProvider().language == 'en'
             ? TextAlign.left
             : TextAlign.right,

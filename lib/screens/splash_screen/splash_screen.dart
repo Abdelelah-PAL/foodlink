@@ -30,9 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(Assets.logo),
-          SizedBox(
-            height: SizeConfig.getProportionalHeight(30),
-          ),
+          SizeConfig.customSizedBox(null, 30, null),
           Text(
             'FoodLink',
             style: TextStyle(
@@ -50,6 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
 void goToNextView() {
   Future.delayed(const Duration(seconds: 2), () {
-     Get.to(()=> const OnBoardingScreen(), transition: Transition.fade);
+    Get.to(() => const OnBoardingScreen(), transition: Transition.fade);
   });
 }

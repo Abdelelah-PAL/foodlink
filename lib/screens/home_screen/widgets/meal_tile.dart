@@ -35,10 +35,10 @@ class MealTile extends StatelessWidget {
           },
           child: Column(
             children: [
-              SizedBox(
-                width: SizeConfig.getProportionalWidth(width),
-                height: SizeConfig.getProportionalHeight(height),
-                child: Image.asset(imageUrl),
+              SizeConfig.customSizedBox(
+                width,
+                height,
+                Image.asset(imageUrl),
               ),
               Text(
                 TranslationService().translate(name),
@@ -50,9 +50,7 @@ class MealTile extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          width: SizeConfig.getProportionalWidth(5),
-        ),
+        SizeConfig.customSizedBox(5, null, null),
       ],
     );
   }
