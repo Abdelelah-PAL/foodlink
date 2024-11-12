@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:foodlink/models/meal.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MealsServices with ChangeNotifier {
@@ -20,9 +21,13 @@ class MealsServices with ChangeNotifier {
     }
   }
 
-  Future<void> addMeal(meal) async {
+  Future<void> addMeal(Meal meal) async {
     try {
-      await _firebaseFireStore.collection('meals').add(meal.toMap());
+      Future<DocumentReference<Map<String, dynamic>>> addMeal() async {
+        var addedMeal =
+            await _firebaseFireStore.collection('meals').add(meal.toMap());
+        return addedMeal;
+      }
     } catch (ex) {
       rethrow;
     }

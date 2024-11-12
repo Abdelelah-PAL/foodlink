@@ -4,10 +4,12 @@ import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/screens/food_screens/meal_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/custom_meal_textfield.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../providers/users_provider.dart';
 
@@ -67,14 +69,15 @@ class AddMealScreen extends StatelessWidget {
                 ),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
-                  onTap: () {
-                    MealsProvider().addMeal(Meal(
+                  onTap: () async {
+                    var addedMeal = await MealsProvider().addMeal(Meal(
                         categoryId: categoryId,
                         name: mealController.nameController.text,
                         ingredients: mealController.ingredientsController.text,
                         recipe: mealController.recipeController.text,
                         imageUrl: mealsProvider.imageUrl,
                         userId: UsersProvider().selectedUser!.userId));
+                    Get.to(MealScreen(meal: addedMeal));
                   },
                   text: TranslationService().translate("confirm"),
                   width: SizeConfig.getProportionalWidth(126),

@@ -18,8 +18,9 @@ class MealsProvider with ChangeNotifier {
   bool imageIsUploaded = false;
   String? imageUrl;
 
-  void addMeal(Meal meal) async {
-    await _ms.addMeal(meal);
+  Future<Meal> addMeal(Meal meal) async {
+    var addedMeal = await _ms.addMeal(meal);
+    return meal;
   }
 
   void getAllMealsByCategory(categoryId, userId) async {
