@@ -8,6 +8,7 @@ import 'package:foodlink/screens/food_screens/widgets/custom_meal_textfield.dart
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:provider/provider.dart';
 import '../../providers/users_provider.dart';
 
 class AddMealScreen extends StatelessWidget {
@@ -18,7 +19,9 @@ class AddMealScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MealsProvider mealsProvider = context.read<MealsProvider>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -26,7 +29,8 @@ class AddMealScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MealImageContainer(isAddSource: true),
+                MealImageContainer(
+                    isAddSource: true, mealsProvider: mealsProvider),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -35,6 +39,9 @@ class AddMealScreen extends StatelessWidget {
                   icon: Assets.mealNameIcon,
                   controller: mealController.nameController,
                   maxLines: 2,
+                  iconSizeFactor: 31,
+                  hintTopPadding: 10,
+                  horizontalPosition: 5,
                 ),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -43,6 +50,9 @@ class AddMealScreen extends StatelessWidget {
                   icon: Assets.mealIngredients,
                   controller: mealController.ingredientsController,
                   maxLines: 5,
+                  iconSizeFactor: 33,
+                  hintTopPadding: 10,
+                  horizontalPosition: 5,
                 ),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -51,6 +61,9 @@ class AddMealScreen extends StatelessWidget {
                   icon: Assets.mealRecipe,
                   controller: mealController.recipeController,
                   maxLines: 10,
+                  iconSizeFactor: 48,
+                  hintTopPadding: 10,
+                  horizontalPosition: 0,
                 ),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
@@ -60,7 +73,7 @@ class AddMealScreen extends StatelessWidget {
                         name: mealController.nameController.text,
                         ingredients: mealController.ingredientsController.text,
                         recipe: mealController.recipeController.text,
-                        imageUrl: Assets.sweets,
+                        imageUrl: mealsProvider.imageUrl,
                         userId: UsersProvider().selectedUser!.userId));
                   },
                   text: TranslationService().translate("confirm"),

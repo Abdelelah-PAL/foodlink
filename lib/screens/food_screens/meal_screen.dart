@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/main.dart';
+import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/recipe_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/meal.dart';
 
@@ -19,7 +22,7 @@ class MealScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          MealImageContainer(isAddSource: false, meal: meal),
+          MealImageContainer(isAddSource: false, meal: meal, mealsProvider: context.watch<MealsProvider>()),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.getProportionalWidth(20),

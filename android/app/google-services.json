@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "474506091113",
     "project_id": "foodlink-6c41e",
-    "storage_bucket": "foodlink-6c41e.appspot.com"
+    "storage_bucket": "foodlink-6c41e.firebasestorage.app"
   },
   "client": [
     {

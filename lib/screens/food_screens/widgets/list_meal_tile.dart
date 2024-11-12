@@ -88,7 +88,7 @@ class ListMealTile extends StatelessWidget {
                                 width: 1, color: AppColors.defaultBorderColor),
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Image.asset(
+                          child: Image.network(
                             meal.imageUrl!,
                             fit: BoxFit.fill,
                           )),
