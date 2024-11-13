@@ -65,6 +65,8 @@
   "confirm": "تأكيد",
   "followup":  "متابعة",
   "edit": "تعديل",
-  "check_ingredients": "تفقّد المكونات"
+  "check_ingredients": "تفقّد المكونات",
+  "favorites": "المفضّلة",
+  "no_favorites": "أضف إلى قائمة المفضّلة"
 
 }

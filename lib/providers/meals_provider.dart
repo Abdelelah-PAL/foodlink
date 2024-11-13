@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +12,7 @@ class MealsProvider with ChangeNotifier {
   MealsProvider._internal();
 
   List<Meal> meals = [];
+  List<Meal> favoriteMeals = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsUploaded = false;
@@ -20,31 +20,65 @@ class MealsProvider with ChangeNotifier {
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
-    return meal;
+    return addedMeal;
+  }
+
+  Future<void> toggleIsFavorite(Meal meal, isFavorite) async {
+    await _ms.toggleIsFavorite(meal, isFavorite);
   }
 
   void getAllMealsByCategory(categoryId, userId) async {
     try {
-      meals = [];
       isLoading = true;
-      QuerySnapshot<Map<String, dynamic>> mealQuery =
-          await _ms.getAllMealsByCategory(categoryId, userId);
-      for (var doc in mealQuery.docs) {
+      meals.clear();
+      List<Meal> fetchedMeals = await _ms.getAllMealsByCategory(categoryId, userId);
+      for (var doc in fetchedMeals) {
         Meal meal = Meal(
-            name: doc['name'],
-            imageUrl: doc['image_url'],
-            categoryId: doc['category_id'],
-            ingredients: doc['ingredients'],
-            recipe: doc['recipe'],
-            userId: doc['user_id']);
+          documentId: doc.documentId,
+          name: doc.name,
+          imageUrl: doc.imageUrl,
+          categoryId: doc.categoryId,
+          ingredients: doc.ingredients,
+          recipe: doc.recipe,
+          userId: doc.userId,
+          isFavorite: doc.isFavorite
+        );
         meals.add(meal);
       }
       isLoading = false;
       notifyListeners();
     } catch (ex) {
+      isLoading = false;
       rethrow;
     }
   }
+
+  void getFavorites(userId) async {
+    try {
+      isLoading = true;
+      favoriteMeals.clear();
+      List<Meal> fetchedMeals = await _ms.getFavorites(userId);
+      for (var doc in fetchedMeals) {
+        Meal meal = Meal(
+          documentId: doc.documentId,
+          name: doc.name,
+          imageUrl: doc.imageUrl,
+          categoryId: doc.categoryId,
+          ingredients: doc.ingredients,
+          recipe: doc.recipe,
+          userId: doc.userId,
+          isFavorite: doc.isFavorite,
+        );
+        favoriteMeals.add(meal);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
 
   Future<String> pickImageFromSource(context) async {
     final picker = ImagePicker();
@@ -69,8 +103,9 @@ class MealsProvider with ChangeNotifier {
 
     final pickedFile = await picker.pickImage(source: source!);
     String? downloadUrl = await _ms.uploadImage(pickedFile!);
-    if (downloadUrl != null && downloadUrl!.isNotEmpty) {
+    if (downloadUrl != null && downloadUrl.isNotEmpty) {
       imageIsUploaded = true;
+      imageUrl = downloadUrl;
       notifyListeners();
     }
     return downloadUrl!;

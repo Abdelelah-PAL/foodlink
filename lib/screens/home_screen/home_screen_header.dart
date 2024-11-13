@@ -3,21 +3,21 @@ import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/assets.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/constants/fonts.dart';
-import '../../../core/utils/size_config.dart';
-import '../../../providers/general_provider.dart';
-import '../../../services/translation_services.dart';
+import '../../core/constants/assets.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
+import '../../core/utils/size_config.dart';
+import '../../providers/general_provider.dart';
+import '../../services/translation_services.dart';
 
-class Header extends StatefulWidget {
-  const Header({super.key});
+class HomeScreenHeader extends StatefulWidget {
+  const HomeScreenHeader({super.key});
 
   @override
-  State<Header> createState() => _HeaderState();
+  State<HomeScreenHeader> createState() => _HomeScreenHeaderState();
 }
 
-class _HeaderState extends State<Header> {
+class _HomeScreenHeaderState extends State<HomeScreenHeader> {
   @override
   Widget build(BuildContext context) {
     DashboardProvider dashboardProviderWatcher =
@@ -31,7 +31,7 @@ class _HeaderState extends State<Header> {
                 : TranslationService().translate("cooker")));
     return Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.getProportionalHeight(50.0),
+        top: SizeConfig.getProportionalHeight(50),
         left: SizeConfig.getProportionalWidth(24),
         right: SizeConfig.getProportionalWidth(24),
       ),
@@ -54,8 +54,8 @@ class _HeaderState extends State<Header> {
                       child: Container(
                         width: SizeConfig.getProportionalWidth(94),
                         height: SizeConfig.getProportionalHeight(22),
-                        margin: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.getProportionalWidth(75),
+                        margin: EdgeInsets.only(
+                          left: SizeConfig.getProportionalWidth(11),
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -127,11 +127,24 @@ class _HeaderState extends State<Header> {
                     width: SizeConfig.getProportionalWidth(94),
                     height: SizeConfig.getProportionalHeight(22),
                     decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.defaultBorderColor,
+                          blurRadius: 5
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(20),
                       color: AppColors.backgroundColor,
                     ),
                     child: Row(
                       children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              bottom: SizeConfig.getProportionalHeight(20),
+                              right: SizeConfig.getProportionalWidth(11)),
+                          width: SizeConfig.getProportionalWidth(8),
+                          height: SizeConfig.getProportionalHeight(6),
+                        ),
                         Expanded(
                           child: Text(
                             textAlign: TextAlign.center,
@@ -149,7 +162,7 @@ class _HeaderState extends State<Header> {
                           width: SizeConfig.getProportionalWidth(20),
                           height: SizeConfig.getProportionalHeight(18),
                           margin: EdgeInsets.only(
-                              right: SizeConfig.getProportionalWidth(10)),
+                              right: SizeConfig.getProportionalWidth(5)),
                           child: Image.asset(
                               UsersProvider().selectedUser!.userTypeId == 1
                                   ? Assets.userBlack

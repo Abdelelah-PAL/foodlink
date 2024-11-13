@@ -34,7 +34,7 @@ class UserBody extends StatelessWidget {
               bottom: SizeConfig.getProportionalHeight(25),
               left: SizeConfig.getProportionalWidth(15)),
           width: SizeConfig.getProportionalWidth(500),
-          height: SizeConfig.getProportionalHeight(250),
+          height: SizeConfig.getProportionalHeight(270),
           child: Consumer<MealCategoriesProvider>(
             builder: (context, mealCategoriesProvider, child) {
               return GridView.builder(

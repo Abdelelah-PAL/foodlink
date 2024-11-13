@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/home_screen/home_screen_header.dart';
 import 'package:foodlink/screens/home_screen/widgets/cooker_body.dart';
 import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return mealCategoriesProvider.isLoading == true
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
+            appBar: PreferredSize(
+              preferredSize:
+                  Size.fromHeight(SizeConfig.getProportionalHeight(135)),
+              child: const HomeScreenHeader(),
+            ),
             backgroundColor: AppColors.backgroundColor,
             body: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -40,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizeConfig.customSizedBox(null, 25, null),
+                    SizeConfig.customSizedBox(null, 15, null),
                     Container(
                       child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker

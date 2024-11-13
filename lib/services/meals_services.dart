@@ -16,25 +16,25 @@ class MealsServices with ChangeNotifier {
       await imageRef.putFile(file);
       String downloadURL = await imageRef.getDownloadURL();
       return downloadURL;
-    } catch (e) {
-      print('Failed to upload file: $e');
-    }
-  }
-
-  Future<void> addMeal(Meal meal) async {
-    try {
-      Future<DocumentReference<Map<String, dynamic>>> addMeal() async {
-        var addedMeal =
-            await _firebaseFireStore.collection('meals').add(meal.toMap());
-        return addedMeal;
-      }
     } catch (ex) {
       rethrow;
     }
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getAllMealsByCategory(
-      categoryId, userId) async {
+  Future<Meal> addMeal(meal) async {
+    try {
+      var addedMeal =
+          await _firebaseFireStore.collection('meals').add(meal.toMap());
+      var mealSnapshot = await addedMeal.get();
+
+      return Meal.fromJson(mealSnapshot.data()!, addedMeal.id);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<List<Meal>> getAllMealsByCategory(
+      int categoryId, String userId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore
           .collection('meals')
@@ -42,8 +42,40 @@ class MealsServices with ChangeNotifier {
           .where('user_id', isEqualTo: userId)
           .get();
 
-      return mealQuery;
-    } catch (e) {
+      List<Meal> meals = mealQuery.docs.map((doc) {
+        return Meal.fromJson(doc.data(), doc.id);
+      }).toList();
+
+      return meals;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<List<Meal>> getFavorites(String userId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore
+          .collection('meals')
+          .where('user_id', isEqualTo: userId)
+          .where('is_favorite', isEqualTo: true)
+          .get();
+
+      List<Meal> favoriteMeals = mealQuery.docs.map((doc) {
+        return Meal.fromJson(doc.data(), doc.id);
+      }).toList();
+
+      return favoriteMeals;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<void> toggleIsFavorite(Meal meal, bool isFavorite) async {
+    try {
+      await _firebaseFireStore.collection('meals').doc(meal.documentId).update({
+        'is_favorite': isFavorite,
+      });
+    } catch (ex) {
       rethrow;
     }
   }

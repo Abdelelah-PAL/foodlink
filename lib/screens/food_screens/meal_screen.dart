@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/main.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/screens/food_screens/meals_list_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/recipe_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/meal.dart';
@@ -41,7 +42,9 @@ class MealScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomButton(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(MealsListScreen(index: meal.categoryId - 1, categoryId: meal.categoryId));
+                  },
                   text: TranslationService().translate("followup"),
                   width: 216,
                   height: 45),

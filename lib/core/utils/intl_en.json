@@ -65,5 +65,7 @@
   "confirm": "Confirm",
   "followup": "Follow-up",
   "edit":  "Edit",
-  "check_ingredients": "Check Ingredients"
+  "check_ingredients": "Check Ingredients",
+  "favorites": "Favorite",
+  "no_favorites": "Add to favorites list"
 }

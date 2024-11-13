@@ -13,11 +13,25 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../providers/users_provider.dart';
 
-class AddMealScreen extends StatelessWidget {
-  AddMealScreen({super.key, required this.categoryId});
+class AddMealScreen extends StatefulWidget {
+  const AddMealScreen({super.key, required this.categoryId});
 
   final int categoryId;
+
+  @override
+  State<AddMealScreen> createState() => _AddMealScreenState();
+}
+
+class _AddMealScreenState extends State<AddMealScreen> {
   MealController mealController = MealController();
+
+  @override
+  void dispose() {
+    mealController.recipeController.dispose();
+    mealController.ingredientsController.dispose();
+    mealController.nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +85,15 @@ class AddMealScreen extends StatelessWidget {
                 CustomButton(
                   onTap: () async {
                     var addedMeal = await MealsProvider().addMeal(Meal(
-                        categoryId: categoryId,
+                        categoryId: widget.categoryId,
                         name: mealController.nameController.text,
                         ingredients: mealController.ingredientsController.text,
                         recipe: mealController.recipeController.text,
                         imageUrl: mealsProvider.imageUrl,
                         userId: UsersProvider().selectedUser!.userId));
+                    mealController.recipeController.clear();
+                    mealController.ingredientsController.clear();
+                    mealController.nameController.clear();
                     Get.to(MealScreen(meal: addedMeal));
                   },
                   text: TranslationService().translate("confirm"),
