@@ -63,10 +63,12 @@
   "ingredients": "المكونات",
   "recipe": "الوصفة",
   "confirm": "تأكيد",
-  "followup":  "متابعة",
+  "proceed":  "متابعة",
   "edit": "تعديل",
   "check_ingredients": "تفقّد المكونات",
   "favorites": "المفضّلة",
-  "no_favorites": "أضف إلى قائمة المفضّلة"
+  "no_favorites": "أضف إلى قائمة المفضّلة",
+  "settings": "الإعدادات",
+  "edit_data": "تعديل معلومات الحساب"
 
 }

@@ -3,7 +3,6 @@ import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
 import 'package:foodlink/services/translation_services.dart';
@@ -40,7 +39,7 @@ class _FavoritesState extends State<Favorites> {
               child: SafeArea(
                 child: ListHeader(
                   text: TranslationService().translate("favorites"),
-                  isEmpty: mealsProviderWatcher.meals.isEmpty,
+                  isEmpty: mealsProviderWatcher.favoriteMeals.isEmpty,
                   favorites: true,
                 ),
               ),
@@ -49,7 +48,7 @@ class _FavoritesState extends State<Favorites> {
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.getProportionalWidth(20),
               ),
-              child: mealsProviderWatcher.meals.isEmpty
+              child: mealsProviderWatcher.favoriteMeals.isEmpty
                   ? SizeConfig.customSizedBox(
                       null,
                       null,
@@ -74,7 +73,7 @@ class _FavoritesState extends State<Favorites> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (ctx, index) {
                               return ListMealTile(
-                                  meal: mealsProvider.favoriteMeals[index], favorites: true,);
+                                  meal: mealsProvider.favoriteMeals[index], favorites: true);
                             },
                           ),
                         );

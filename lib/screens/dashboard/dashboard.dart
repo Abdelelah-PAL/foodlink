@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
-import 'package:foodlink/screens/home_screen/home_screen_header.dart';
 import 'package:provider/provider.dart';
-
 import '../../controllers/dashboard_controller.dart';
 import '../../core/constants/colors.dart';
 

@@ -23,44 +23,57 @@ class MealScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          MealImageContainer(isAddSource: false, meal: meal, mealsProvider: context.watch<MealsProvider>()),
+          MealImageContainer(
+              isAddSource: false,
+              meal: meal,
+              mealsProvider: context.watch<MealsProvider>()),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.getProportionalWidth(20),
-              vertical: SizeConfig.getProportionalHeight(20),
             ),
             child: Column(
               children: [
                 NameRow(meal: meal, fontSize: 30, textWidth: 250),
-                IngredientsRow(meal: meal, fontSize: 20, textWidth: 250),
+                IngredientsRow(
+                  meal: meal,
+                  fontSize: 20,
+                  textWidth: 250,
+                  maxLines: 7,
+                ),
                 SizeConfig.customSizedBox(null, 20, null),
                 RecipeRow(meal: meal, fontSize: 15)
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomButton(
-                  onTap: () {
-                    Get.to(MealsListScreen(index: meal.categoryId - 1, categoryId: meal.categoryId));
-                  },
-                  text: TranslationService().translate("followup"),
-                  width: 216,
-                  height: 45),
-              SizeConfig.customSizedBox(null, 20, null),
-              CustomButton(
-                  onTap: () {},
-                  text: TranslationService().translate("edit"),
-                  width: 216,
-                  height: 45),
-              SizeConfig.customSizedBox(null, 20, null),
-              CustomButton(
-                  onTap: () {},
-                  text: TranslationService().translate("check_ingredients"),
-                  width: 216,
-                  height: 45),
-            ],
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: SizeConfig.getProportionalHeight(20)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomButton(
+                    onTap: () {
+                      Get.to(MealsListScreen(
+                          index: meal.categoryId - 1,
+                          categoryId: meal.categoryId));
+                    },
+                    text: TranslationService().translate("proceed"),
+                    width: 216,
+                    height: 45),
+                SizeConfig.customSizedBox(null, 20, null),
+                CustomButton(
+                    onTap: () {},
+                    text: TranslationService().translate("edit"),
+                    width: 216,
+                    height: 45),
+                SizeConfig.customSizedBox(null, 20, null),
+                CustomButton(
+                    onTap: () {},
+                    text: TranslationService().translate("check_ingredients"),
+                    width: 216,
+                    height: 45),
+              ],
+            ),
           )
         ],
       ),

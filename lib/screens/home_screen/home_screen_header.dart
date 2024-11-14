@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/widgets/profile_circle.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
@@ -102,15 +103,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                   ],
                 ),
               ),
-              Container(
-                width: SizeConfig.getProportionalWidth(38),
-                height: SizeConfig.getProportionalHeight(38),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.widgetsColor,
-                ),
-                child: const Icon(Icons.person_outline_outlined),
-              ),
+              const ProfileCircle(height: 38, width: 38, iconSize: 25,),
             ],
           ),
           dashboardProviderWatcher.isExpanded
@@ -129,9 +122,7 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                     decoration: BoxDecoration(
                       boxShadow: const [
                         BoxShadow(
-                          color: AppColors.defaultBorderColor,
-                          blurRadius: 5
-                        ),
+                            color: AppColors.defaultBorderColor, blurRadius: 5),
                       ],
                       borderRadius: BorderRadius.circular(20),
                       color: AppColors.backgroundColor,

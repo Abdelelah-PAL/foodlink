@@ -23,15 +23,6 @@ class AddMealScreen extends StatefulWidget {
 }
 
 class _AddMealScreenState extends State<AddMealScreen> {
-  MealController mealController = MealController();
-
-  @override
-  void dispose() {
-    mealController.recipeController.dispose();
-    mealController.ingredientsController.dispose();
-    mealController.nameController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +44,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   height: SizeConfig.getProportionalHeight(37),
                   hintText: TranslationService().translate("meal_name"),
                   icon: Assets.mealNameIcon,
-                  controller: mealController.nameController,
+                  controller: MealController().nameController,
                   maxLines: 2,
                   iconSizeFactor: 31,
                   hintTopPadding: 10,
@@ -64,7 +55,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   height: SizeConfig.getProportionalHeight(161),
                   hintText: TranslationService().translate("ingredients"),
                   icon: Assets.mealIngredients,
-                  controller: mealController.ingredientsController,
+                  controller: MealController().ingredientsController,
                   maxLines: 5,
                   iconSizeFactor: 33,
                   hintTopPadding: 10,
@@ -75,7 +66,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   height: SizeConfig.getProportionalHeight(161),
                   hintText: TranslationService().translate("recipe"),
                   icon: Assets.mealRecipe,
-                  controller: mealController.recipeController,
+                  controller: MealController().recipeController,
                   maxLines: 10,
                   iconSizeFactor: 48,
                   hintTopPadding: 10,
@@ -84,16 +75,21 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
                   onTap: () async {
+                    String imageUrl = '';
+                    if(mealsProvider.imageIsPicked) {
+                       imageUrl = await MealsProvider()
+                          .uploadImage(mealsProvider.pickedFile);
+                    }
+
                     var addedMeal = await MealsProvider().addMeal(Meal(
                         categoryId: widget.categoryId,
-                        name: mealController.nameController.text,
-                        ingredients: mealController.ingredientsController.text,
-                        recipe: mealController.recipeController.text,
-                        imageUrl: mealsProvider.imageUrl,
+                        name: MealController().nameController.text,
+                        ingredients: MealController().ingredientsController.text,
+                        recipe: MealController().recipeController.text,
+                        imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
                         userId: UsersProvider().selectedUser!.userId));
-                    mealController.recipeController.clear();
-                    mealController.ingredientsController.clear();
-                    mealController.nameController.clear();
+
+                    mealsProvider.resetValues();
                     Get.to(MealScreen(meal: addedMeal));
                   },
                   text: TranslationService().translate("confirm"),

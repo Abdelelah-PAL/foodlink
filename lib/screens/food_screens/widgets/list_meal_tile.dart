@@ -68,7 +68,8 @@ class _ListMealTileState extends State<ListMealTile> {
                             IngredientsRow(
                               meal: widget.meal,
                               fontSize: 14,
-                              textWidth: 115,
+                              textWidth: 100,
+                              maxLines: 3,
                             ),
                           ],
                         ),
@@ -79,21 +80,20 @@ class _ListMealTileState extends State<ListMealTile> {
                 Positioned(
                   left: 0,
                   bottom: 0,
-                  child: widget.favorites
+                  child: !widget.favorites
                       ? IconButton(
-                      onPressed: () async {
-                        final newIsFavorite = !widget.meal.isFavorite;
-
-                        await MealsProvider()
-                            .toggleIsFavorite(widget.meal, newIsFavorite);
-                        setState(() {
-                          widget.meal.isFavorite = newIsFavorite;
-                        });
-                      },
-                      icon: widget.meal.isFavorite
-                          ? const Icon(Icons.favorite)
-                          : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite_outline),
+                          onPressed: () async {
+                            final newIsFavorite = !widget.meal.isFavorite;
+                            await MealsProvider()
+                                .toggleIsFavorite(widget.meal, newIsFavorite);
+                            setState(() {
+                              widget.meal.isFavorite = newIsFavorite;
+                            });
+                          },
+                          icon: widget.meal.isFavorite
+                              ? const Icon(Icons.favorite)
+                              : const Icon(Icons.favorite_outline))
+                      : const Icon(Icons.favorite),
                 )
               ],
             )
@@ -110,7 +110,11 @@ class _ListMealTileState extends State<ListMealTile> {
                               meal: widget.meal, fontSize: 15, textWidth: 115),
                           SizeConfig.customSizedBox(null, 10, null),
                           IngredientsRow(
-                              meal: widget.meal, fontSize: 14, textWidth: 115),
+                            meal: widget.meal,
+                            fontSize: 14,
+                            textWidth: 80,
+                            maxLines: 3,
+                          ),
                         ],
                       ),
                       SizeConfig.customSizedBox(10, null, null),
@@ -142,11 +146,10 @@ class _ListMealTileState extends State<ListMealTile> {
                 Positioned(
                   left: 0,
                   bottom: 0,
-                  child: widget.favorites
+                  child: !widget.favorites
                       ? IconButton(
                           onPressed: () async {
                             final newIsFavorite = !widget.meal.isFavorite;
-
                             await MealsProvider()
                                 .toggleIsFavorite(widget.meal, newIsFavorite);
                             setState(() {
@@ -156,7 +159,7 @@ class _ListMealTileState extends State<ListMealTile> {
                           icon: widget.meal.isFavorite
                               ? const Icon(Icons.favorite)
                               : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite_outline),
+                      : const Icon(Icons.favorite),
                 )
               ],
             ),

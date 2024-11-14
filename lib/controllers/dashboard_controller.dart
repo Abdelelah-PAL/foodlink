@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/screens/food_screens/favorites_screen.dart';
 import 'package:foodlink/screens/home_screen/home_screen.dart';
+import 'package:foodlink/screens/settings_screen/settings_screen.dart';
 
 class DashboardController {
   static final DashboardController _instance = DashboardController._internal();
@@ -19,6 +20,6 @@ class DashboardController {
     const HomeScreen(),
     const Favorites(),
     Container(),
-    Container(),
+    const SettingsScreen(),
   ];
 }

@@ -29,6 +29,7 @@ class NameRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   meal.name,
                   textAlign: TextAlign.left,
+                  textDirection: TextDirection.ltr,
                   style: TextStyle(
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,
@@ -48,6 +49,7 @@ class NameRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   meal.name,
                   textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       fontSize: fontSize,
                       fontWeight: FontWeight.bold,

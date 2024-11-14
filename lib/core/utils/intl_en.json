@@ -63,9 +63,11 @@
   "ingredients": "Ingredients",
   "recipe": "Recipe",
   "confirm": "Confirm",
-  "followup": "Follow-up",
-  "edit":  "Edit",
+  "proceed": "proceed",
+  "edit": "Edit",
   "check_ingredients": "Check Ingredients",
   "favorites": "Favorite",
-  "no_favorites": "Add to favorites list"
+  "no_favorites": "Add to favorites list",
+  "settings": "Settings",
+  "edit_data": "Edit account information"
 }

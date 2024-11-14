@@ -6,11 +6,12 @@ import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
 
 class IngredientsRow extends StatelessWidget {
-  const IngredientsRow({super.key, required this.meal, required this.fontSize, required this.textWidth});
+  const IngredientsRow({super.key, required this.meal, required this.fontSize, required this.textWidth, required this.maxLines});
 
   final Meal meal;
   final double fontSize;
   final double textWidth;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,9 @@ class IngredientsRow extends StatelessWidget {
                 null,
                 Text(
                   meal.ingredients,
-                  maxLines: 5,
+                  maxLines: maxLines,
                   overflow: TextOverflow.ellipsis,
+                  textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontSize: fontSize,
@@ -45,9 +47,10 @@ class IngredientsRow extends StatelessWidget {
                 null,
                 Text(
                   meal.ingredients,
-                  maxLines: 5,
+                  maxLines: maxLines,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       fontSize: fontSize,
                       fontFamily:

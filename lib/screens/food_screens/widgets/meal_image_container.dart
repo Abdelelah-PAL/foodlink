@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import '../../../core/constants/colors.dart';
@@ -33,9 +35,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                 color: AppColors.widgetsColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
-                  // Bottom-left corner radius
-                  bottomRight:
-                      Radius.circular(15), // Bottom-right corner radius
+                  bottomRight: Radius.circular(15),
                 ),
                 border: Border(
                   bottom:
@@ -56,7 +56,10 @@ class _MealImageContainerState extends State<MealImageContainer> {
               child: Center(
                 child: GestureDetector(
                   onTap: () async {
-                        await MealsProvider().pickImageFromSource(context);
+                    await widget.mealsProvider!.pickImageFromSource(context);
+                    Future.microtask(() {
+                      if (mounted) setState(() {});
+                    });
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -77,7 +80,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                 ),
               ),
             ),
-          if (widget.mealsProvider!.imageIsUploaded)
+          if (widget.mealsProvider!.imageIsPicked && widget.isAddSource)
             Container(
               width: SizeConfig.screenWidth,
               height: SizeConfig.getProportionalHeight(203),
@@ -92,13 +95,12 @@ class _MealImageContainerState extends State<MealImageContainer> {
                     bottom: BorderSide(
                         width: 1, color: AppColors.defaultBorderColor),
                   )),
-              child: Image.network(
-                widget.mealsProvider!.imageUrl!,
+              child: Image.file(
+                File(widget.mealsProvider!.pickedFile!.path),
                 fit: BoxFit.fill,
               ),
             ),
           const CustomBackButton(),
-
         ],
       ),
     );

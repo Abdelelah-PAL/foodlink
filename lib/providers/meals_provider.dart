@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
 import '../services/meals_services.dart';
@@ -15,34 +16,50 @@ class MealsProvider with ChangeNotifier {
   List<Meal> favoriteMeals = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
-  bool imageIsUploaded = false;
-  String? imageUrl;
+  bool imageIsPicked = false;
+  XFile? pickedFile;
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
     return addedMeal;
   }
 
-  Future<void> toggleIsFavorite(Meal meal, isFavorite) async {
+  Future<void> getFavorites(String userId, {bool forceRefresh = false}) async {
+    if (isLoading || (!forceRefresh && favoriteMeals.isNotEmpty)) return;
+    try {
+      isLoading = true;
+      favoriteMeals.clear();
+      List<Meal> fetchedMeals = await _ms.getFavorites(userId);
+      favoriteMeals.addAll(fetchedMeals);
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+  Future<void> toggleIsFavorite(Meal meal, bool isFavorite) async {
     await _ms.toggleIsFavorite(meal, isFavorite);
+    await getFavorites(meal.userId, forceRefresh: true);
   }
 
   void getAllMealsByCategory(categoryId, userId) async {
     try {
       isLoading = true;
       meals.clear();
-      List<Meal> fetchedMeals = await _ms.getAllMealsByCategory(categoryId, userId);
+      List<Meal> fetchedMeals =
+          await _ms.getAllMealsByCategory(categoryId, userId);
       for (var doc in fetchedMeals) {
         Meal meal = Meal(
-          documentId: doc.documentId,
-          name: doc.name,
-          imageUrl: doc.imageUrl,
-          categoryId: doc.categoryId,
-          ingredients: doc.ingredients,
-          recipe: doc.recipe,
-          userId: doc.userId,
-          isFavorite: doc.isFavorite
-        );
+            documentId: doc.documentId,
+            name: doc.name,
+            imageUrl: doc.imageUrl,
+            categoryId: doc.categoryId,
+            ingredients: doc.ingredients,
+            recipe: doc.recipe,
+            userId: doc.userId,
+            isFavorite: doc.isFavorite);
         meals.add(meal);
       }
       isLoading = false;
@@ -53,34 +70,7 @@ class MealsProvider with ChangeNotifier {
     }
   }
 
-  void getFavorites(userId) async {
-    try {
-      isLoading = true;
-      favoriteMeals.clear();
-      List<Meal> fetchedMeals = await _ms.getFavorites(userId);
-      for (var doc in fetchedMeals) {
-        Meal meal = Meal(
-          documentId: doc.documentId,
-          name: doc.name,
-          imageUrl: doc.imageUrl,
-          categoryId: doc.categoryId,
-          ingredients: doc.ingredients,
-          recipe: doc.recipe,
-          userId: doc.userId,
-          isFavorite: doc.isFavorite,
-        );
-        favoriteMeals.add(meal);
-      }
-      isLoading = false;
-      notifyListeners();
-    } catch (ex) {
-      isLoading = false;
-      rethrow;
-    }
-  }
-
-
-  Future<String> pickImageFromSource(context) async {
+  Future<void> pickImageFromSource(BuildContext context) async {
     final picker = ImagePicker();
     final ImageSource? source = await showDialog<ImageSource>(
       context: context,
@@ -101,13 +91,27 @@ class MealsProvider with ChangeNotifier {
       },
     );
 
-    final pickedFile = await picker.pickImage(source: source!);
-    String? downloadUrl = await _ms.uploadImage(pickedFile!);
-    if (downloadUrl != null && downloadUrl.isNotEmpty) {
-      imageIsUploaded = true;
-      imageUrl = downloadUrl;
-      notifyListeners();
+    XFile? file = await picker.pickImage(source: source!);
+
+    if (file != null) {
+      print('Moew');
+      pickedFile = XFile(file.path);
+      imageIsPicked = true;
     }
+    notifyListeners();
+  }
+
+  Future<String> uploadImage(image) async {
+    String? downloadUrl = await _ms.uploadImage(image);
     return downloadUrl!;
+  }
+
+  void resetValues() {
+    imageIsPicked = false;
+    pickedFile = null;
+    MealController().recipeController.clear();
+    MealController().ingredientsController.clear();
+    MealController().nameController.clear();
+    notifyListeners();
   }
 }
