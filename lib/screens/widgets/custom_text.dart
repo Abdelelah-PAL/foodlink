@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/services/translation_services.dart';
-
 import '../../core/constants/fonts.dart';
 
 class CustomText extends StatelessWidget {

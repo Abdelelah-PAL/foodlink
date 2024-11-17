@@ -82,6 +82,8 @@ class _ListMealTileState extends State<ListMealTile> {
                   bottom: 0,
                   child: !widget.favorites
                       ? IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () async {
                             final newIsFavorite = !widget.meal.isFavorite;
                             await MealsProvider()
@@ -148,18 +150,21 @@ class _ListMealTileState extends State<ListMealTile> {
                   bottom: 0,
                   child: !widget.favorites
                       ? IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () async {
                             final newIsFavorite = !widget.meal.isFavorite;
-                            await MealsProvider()
-                                .toggleIsFavorite(widget.meal, newIsFavorite);
                             setState(() {
                               widget.meal.isFavorite = newIsFavorite;
                             });
+                            await MealsProvider()
+                                .toggleIsFavorite(widget.meal, newIsFavorite);
                           },
                           icon: widget.meal.isFavorite
-                              ? const Icon(Icons.favorite)
+                              ? const Icon(Icons.favorite,
+                                  color: AppColors.errorColor)
                               : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite),
+                      : const Icon(Icons.favorite, color: AppColors.errorColor),
                 )
               ],
             ),

@@ -64,7 +64,7 @@ class CookerBody extends StatelessWidget {
                       width: 66,
                       height: 55,
                       index: index,
-                      categoryId: category.id,
+                      categoryId: category!.id!,
                     );
                   },
                 );

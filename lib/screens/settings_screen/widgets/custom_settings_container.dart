@@ -20,9 +20,6 @@ class CustomSettingsContainer extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             vertical: SizeConfig.getProportionalHeight(10),
             horizontal: SizeConfig.getProportionalWidth(20)),
-        padding: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(10),
-            ),
         decoration: BoxDecoration(
             color: AppColors.backgroundColor,
             borderRadius: BorderRadius.circular(15),

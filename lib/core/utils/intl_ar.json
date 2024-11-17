@@ -69,6 +69,12 @@
   "favorites": "المفضّلة",
   "no_favorites": "أضف إلى قائمة المفضّلة",
   "settings": "الإعدادات",
-  "edit_data": "تعديل معلومات الحساب"
+  "edit_data": "تعديل معلومات الحساب",
+  "privacy":"الخصوصية",
+  "language": "اللغة",
+  "notifications": "الاشعارات",
+  "updates": "التحديثات",
+  "contact_us": "تواصل معنا",
+  "help_support": "المساعدة والدعم"
 
 }

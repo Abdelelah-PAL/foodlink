@@ -10,4 +10,7 @@ class AppColors {
   static const Color errorColor = Color(0xFFEA0000);
   static const Color widgetsColor = Color(0xFFFFC763);
   static const Color defaultBorderColor =  Color(0xD3D3D3D3);
+  static const Color languageContainerColor = Color(0xfff6f6f6);
+  static const Color inActiveThumbColor = Color(0xff454545);
+
 }

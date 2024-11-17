@@ -94,7 +94,6 @@ class MealsProvider with ChangeNotifier {
     XFile? file = await picker.pickImage(source: source!);
 
     if (file != null) {
-      print('Moew');
       pickedFile = XFile(file.path);
       imageIsPicked = true;
     }

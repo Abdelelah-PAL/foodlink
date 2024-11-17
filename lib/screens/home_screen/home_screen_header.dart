@@ -100,70 +100,92 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
                         ),
                       ),
                     ),
+                    dashboardProviderWatcher.isExpanded
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                UsersProvider().toggleSelectedUser(
+                                  UsersProvider().selectedUser!.userTypeId == 1
+                                      ? 2
+                                      : 1,
+                                );
+                                DashboardProvider().toggleExpanded();
+                              });
+                            },
+                            child: Container(
+                              width: SizeConfig.getProportionalWidth(94),
+                              height: SizeConfig.getProportionalHeight(22),
+                              margin: EdgeInsets.only(
+                                left: SizeConfig.getProportionalWidth(11),
+                              ),
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: AppColors.defaultBorderColor,
+                                      blurRadius: 5),
+                                ],
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColors.backgroundColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            SizeConfig.getProportionalHeight(
+                                                20),
+                                        right: SizeConfig.getProportionalWidth(
+                                            11)),
+                                    width: SizeConfig.getProportionalWidth(8),
+                                    height: SizeConfig.getProportionalHeight(6),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      UsersProvider()
+                                                  .selectedUser!
+                                                  .userTypeId ==
+                                              1
+                                          ? TranslationService()
+                                              .translate("user")
+                                          : TranslationService()
+                                              .translate("cooker"),
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.primaryFont,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: SizeConfig.getProportionalWidth(20),
+                                    height:
+                                        SizeConfig.getProportionalHeight(18),
+                                    margin: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.getProportionalWidth(5)),
+                                    child: Image.asset(UsersProvider()
+                                                .selectedUser!
+                                                .userTypeId ==
+                                            1
+                                        ? Assets.userBlack
+                                        : Assets.cookerBlack),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : SizeConfig.customSizedBox(94, 22, null),
                   ],
                 ),
               ),
-              const ProfileCircle(height: 38, width: 38, iconSize: 25,),
+              const ProfileCircle(
+                height: 38,
+                width: 38,
+                iconSize: 25,
+              ),
             ],
           ),
-          dashboardProviderWatcher.isExpanded
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      UsersProvider().toggleSelectedUser(
-                        UsersProvider().selectedUser!.userTypeId == 1 ? 2 : 1,
-                      );
-                      DashboardProvider().toggleExpanded();
-                    });
-                  },
-                  child: Container(
-                    width: SizeConfig.getProportionalWidth(94),
-                    height: SizeConfig.getProportionalHeight(22),
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                            color: AppColors.defaultBorderColor, blurRadius: 5),
-                      ],
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.backgroundColor,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              bottom: SizeConfig.getProportionalHeight(20),
-                              right: SizeConfig.getProportionalWidth(11)),
-                          width: SizeConfig.getProportionalWidth(8),
-                          height: SizeConfig.getProportionalHeight(6),
-                        ),
-                        Expanded(
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            UsersProvider().selectedUser!.userTypeId == 1
-                                ? TranslationService().translate("user")
-                                : TranslationService().translate("cooker"),
-                            style: TextStyle(
-                              fontFamily: AppFonts.primaryFont,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: SizeConfig.getProportionalWidth(20),
-                          height: SizeConfig.getProportionalHeight(18),
-                          margin: EdgeInsets.only(
-                              right: SizeConfig.getProportionalWidth(5)),
-                          child: Image.asset(
-                              UsersProvider().selectedUser!.userTypeId == 1
-                                  ? Assets.userBlack
-                                  : Assets.cookerBlack),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : SizeConfig.customSizedBox(94, 22, null),
           Align(
             alignment: GeneralProvider().language == 'en'
                 ? Alignment.centerLeft

@@ -148,18 +148,12 @@ class UserTile extends StatelessWidget {
                     color: AppColors.backgroundColor,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.shade600,
-                        offset: const Offset(6, 6),
-                        blurRadius: 5,
-                        spreadRadius: 1,
+                        color: Colors.grey.shade300,
+                        blurRadius: 7,
+                        spreadRadius: 4,
+                       
                       ),
-                      // Light shadow for highlight
-                      const BoxShadow(
-                        color: Colors.white,
-                        offset: Offset(-10, -10),
-                        blurRadius: 5,
-                        spreadRadius: 1,
-                      ),
+
                     ],
                   ),
                   child: Center(

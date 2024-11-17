@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/auth_screens/sign_up_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
@@ -183,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return;
                       } else {
                         await UsersProvider().getUsersById(user.user!.uid);
+                        await SettingsProvider().getSettingsByUserId(user.user!.uid);
                         Get.to(RolesScreen(
                           user: user.user!,
                         ));

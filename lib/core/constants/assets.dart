@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Assets {
   static String rootImages = 'assets/images';
   static String rootIcons = 'assets/icons';
@@ -29,6 +31,14 @@ class Assets {
   static String mealNameIcon = "$rootIcons/meal_name_icon.png";
   static String mealIngredients = "$rootIcons/meal_ingredients.png";
   static String mealRecipe = "$rootIcons/meal_recipe.png";
+  static String editInfo = "$rootIcons/edit_info.png";
+  static String contactUs = "$rootIcons/contact_us.png";
+  static String support = "$rootIcons/support.png";
+  static String updates = "$rootIcons/updates.png";
+  static String privacy = "$rootIcons/privacy.png";
+  static String notifications =  "$rootIcons/notifications.png";
+  static String language ="$rootIcons/language.png";
+
 
 
 }

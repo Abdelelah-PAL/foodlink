@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/models/user_details.dart';
+import 'package:foodlink/models/user_settings.dart';
 import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
@@ -15,6 +16,7 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/authentication_provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -89,9 +91,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: TranslationService().translate('confirm_password'),
                   obscureText: true,
                   textEditingController:
-                      _authController.confirmedPasswordController,
+                  _authController.confirmedPasswordController,
                   borderColor:
-                      _authController.confirmPasswordTextFieldBorderColor,
+                  _authController.confirmPasswordTextFieldBorderColor,
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthBtn(
@@ -108,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     } else {
                       if (_authController.isMatched) {
                         var user =
-                            await AuthProvider().signUpWithEmailAndPassword(
+                        await AuthProvider().signUpWithEmailAndPassword(
                           _authController.emailController.text,
                           _authController.passwordController.text,
                         );
@@ -122,6 +124,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() {
                           _authController.changeTextFieldsColors(false);
                         });
+                        await SettingsProvider()
+                            .addSettings(user!.uid);
                         Get.to(() => const LoginScreen());
                       }
                     }

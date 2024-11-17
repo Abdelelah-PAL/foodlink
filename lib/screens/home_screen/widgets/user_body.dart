@@ -55,7 +55,7 @@ class UserBody extends StatelessWidget {
                     width: 85,
                     height: 85,
                     index: index,
-                    categoryId: category.id,
+                    categoryId: category!.id!,
                   );
                 },
               );

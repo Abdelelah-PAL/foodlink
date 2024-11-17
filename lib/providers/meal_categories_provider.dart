@@ -31,7 +31,7 @@ class MealCategoriesProvider with ChangeNotifier {
           mealCategories.add(mealCategory);
         }
         isLoading = false;
-        mealCategories.sort((a, b) => a.id.compareTo(b.id));
+        mealCategories.sort((a, b) => a.id!.compareTo(b.id!));
         notifyListeners();
     } catch (ex) {
       rethrow;

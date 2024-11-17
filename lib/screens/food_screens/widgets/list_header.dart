@@ -54,11 +54,12 @@ class ListHeader extends StatelessWidget {
                           fontFamily: AppFonts.primaryFont),
                     ),
                     SizeConfig.customSizedBox(20, null, null),
-                    GestureDetector(
+                    if(favorites)
+                      GestureDetector(
                       onTap: () {
                         Get.to(AddMealScreen(categoryId: categoryId!));
                       },
-                      child: Container(
+                      child:  Container(
                         width: SizeConfig.getProportionalWidth(30),
                         height: SizeConfig.getProportionalHeight(30),
                         decoration: const BoxDecoration(
@@ -79,7 +80,8 @@ class ListHeader extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
+                    if(favorites)
+                      GestureDetector(
                       onTap: () {
                         Get.to(AddMealScreen(categoryId: categoryId!));
                       },

@@ -1,19 +1,19 @@
 class MealCategory {
-  int id;
+  int? id;
   String name;
   String imageUrl;
   String mealsName;
 
   MealCategory({
-    required this.id,
+     this.id,
     required this.name,
     required this.imageUrl,
     required this.mealsName
   });
 
-  factory MealCategory.fromJson(Map<String, dynamic> json) {
+  factory MealCategory.fromJson(Map<String, dynamic> json, id) {
     return MealCategory(
-      id: json['id'],
+      id: id,
       name: json['name'],
       imageUrl: json['image_url'],
       mealsName: json['meals_name'],
