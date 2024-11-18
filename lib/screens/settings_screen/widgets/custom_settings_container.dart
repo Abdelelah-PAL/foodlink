@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
-
 import '../../../core/constants/colors.dart';
+import '../../../providers/settings_provider.dart';
 
 class CustomSettingsContainer extends StatelessWidget {
   const CustomSettingsContainer(
-      {super.key, required this.height, required this.children});
+      {super.key, required this.height, required this.children, required this.settingsProvider});
 
   final double height;
   final List<Widget> children;
+  final SettingsProvider settingsProvider;
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,8 @@ class CustomSettingsContainer extends StatelessWidget {
               BoxShadow(blurRadius: 2),
             ]),
         child: Column(
-          crossAxisAlignment: GeneralProvider().language == "en"
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: settingsProvider.language == "en"
               ? CrossAxisAlignment.start
               : CrossAxisAlignment.end,
           children: children,

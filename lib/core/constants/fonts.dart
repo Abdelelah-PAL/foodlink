@@ -1,9 +1,9 @@
-import 'package:foodlink/providers/general_provider.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 
 
 
 class AppFonts {
   static String titleFont = 'salsa';
   static String primaryFont =
-      GeneralProvider().language == "en" ? 'salsa' : 'MyriadArabic';
+      SettingsProvider().language == "en" ? 'salsa' : 'MyriadArabic';
 }

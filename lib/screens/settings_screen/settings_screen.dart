@@ -42,77 +42,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
           iconSize: 50,
         ),
         SizeConfig.customSizedBox(null, 50, null),
-        CustomSettingsContainer(height: 125, children: [
-          CustomSettingTile(icon: Assets.editInfo, text: "edit_data"),
-          CustomSettingTile(icon: Assets.privacy, text: "privacy"),
-          CustomSettingTile(
-              icon: Assets.language,
-              text: "language",
-              trailing: GestureDetector(
-                onTap: ()  {
-                  var language = settingsProvider.settings.language == "en" ? "ar" : "en";
-                  setState(() {
-                    settingsProvider.settings.language = language;
-                    settingsProvider.changeLanguage(language, userId);
-                  });
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: SizeConfig.getProportionalHeight(22),
-                  width: SizeConfig.getProportionalWidth(65),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.languageContainerColor,
-                      border:
-                          Border.all(width: 1, color: AppColors.widgetsColor)),
-                  child: Text(settingsProvider.settings.language == "en"
-                      ? "English"
-                      : "العربية"),
+        CustomSettingsContainer(
+            height: 125,
+            settingsProvider: settingsProvider,
+            children: [
+              CustomSettingTile(icon: Assets.editInfo, text: "edit_data"),
+              CustomSettingTile(icon: Assets.privacy, text: "privacy"),
+              CustomSettingTile(
+                  icon: Assets.language,
+                  text: "language",
+                  trailing: GestureDetector(
+                    onTap: () {
+                      var language =
+                          settingsProvider.language == "en" ? "ar" : "en";
+                      settingsProvider.changeLanguage(
+                          language, userId, context);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: SizeConfig.getProportionalHeight(22),
+                      width: SizeConfig.getProportionalWidth(65),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.languageContainerColor,
+                          border: Border.all(
+                              width: 1, color: AppColors.widgetsColor)),
+                      child: Text(settingsProvider.language == "en"
+                          ? "العربية"
+                          : "English"),
+                    ),
+                  )),
+            ]),
+        CustomSettingsContainer(
+            height: 103,
+            settingsProvider: settingsProvider,
+            children: [
+              CustomSettingTile(
+                icon: Assets.notifications,
+                text: "notifications",
+                trailing: Transform.scale(
+                  scale: .7,
+                  child: Switch(
+                    thumbColor: WidgetStateProperty.all(
+                        settingsProvider.settings.activeNotifications == true
+                            ? AppColors.widgetsColor
+                            : AppColors.inActiveThumbColor),
+                    activeTrackColor: AppColors.fontColor,
+                    value: settingsProvider.settings.activeNotifications,
+                    onChanged: (value) {
+                      settingsProvider.toggleNotifications(userId);
+                    },
+                  ),
                 ),
-              )),
-        ]),
-        CustomSettingsContainer(height: 103, children: [
-          CustomSettingTile(
-            icon: Assets.notifications,
-            text: "notifications",
-            trailing: Switch(
-              thumbColor: WidgetStateProperty.all(
-                  settingsProvider.activeNotification == true
-                      ? AppColors.widgetsColor
-                      : AppColors.inActiveThumbColor),
-              activeTrackColor: AppColors.fontColor,
-              value: settingsProvider.activeNotification,
-              onChanged: (value) {
-                setState(() {
-                  settingsProvider.settings.activeNotifications = value;
-                });
-                settingsProvider.toggleNotifications(userId);
-              },
-            ),
-          ),
-          CustomSettingTile(
-            icon: Assets.updates,
-            text: "updates",
-            trailing: Switch(
-              thumbColor: WidgetStateProperty.all(
-                  settingsProvider.activeUpdates == true
-                      ? AppColors.widgetsColor
-                      : AppColors.inActiveThumbColor),
-              activeTrackColor: AppColors.fontColor,
-              value: settingsProvider.activeUpdates,
-              onChanged: (value) {
-                setState(() {
-                  settingsProvider.activeUpdates = value;
-                });
-                settingsProvider.toggleUpdates(userId);
-              },
-            ),
-          ),
-        ]),
-        CustomSettingsContainer(height: 103, children: [
-          CustomSettingTile(icon: Assets.contactUs, text: "contact_us"),
-          CustomSettingTile(icon: Assets.support, text: "help_support")
-        ])
+              ),
+              CustomSettingTile(
+                icon: Assets.updates,
+                text: "updates",
+                trailing: Transform.scale(
+                  scale: .7,
+                  child: Switch(
+                    thumbColor: WidgetStateProperty.all(
+                        settingsProvider.settings.activeUpdates == true
+                            ? AppColors.widgetsColor
+                            : AppColors.inActiveThumbColor),
+                    activeTrackColor: AppColors.fontColor,
+                    value: settingsProvider.settings.activeUpdates,
+                    onChanged: (value) {
+                      settingsProvider.toggleUpdates(userId);
+                    },
+                  ),
+                ),
+              ),
+            ]),
+        CustomSettingsContainer(
+            settingsProvider: settingsProvider,
+            height: 103,
+            children: [
+              CustomSettingTile(icon: Assets.contactUs, text: "contact_us"),
+              CustomSettingTile(icon: Assets.support, text: "help_support")
+            ])
       ],
     );
   }

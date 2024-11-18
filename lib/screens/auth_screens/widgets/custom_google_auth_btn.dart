@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
-import '../../../providers/general_provider.dart';
+import '../../../providers/settings_provider.dart';
 
 class CustomGoogleAuthBtn extends StatelessWidget {
-  CustomGoogleAuthBtn({super.key, required this.onTap, required this.text});
+  CustomGoogleAuthBtn({super.key, required this.onTap, required this.text, required this.settingsProvider});
 
   String text;
   VoidCallback? onTap;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class CustomGoogleAuthBtn extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: SizeConfig.getProportionalWidth(40)),
                 child: Directionality(
-                  textDirection: GeneralProvider().language == "en"
+                  textDirection: settingsProvider.language == "en"
                       ? TextDirection.ltr
                       : TextDirection.rtl,
                   child: Text.rich(

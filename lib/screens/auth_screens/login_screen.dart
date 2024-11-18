@@ -13,6 +13,7 @@ import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dar
 import 'package:foodlink/screens/roles_screen/roles_screen.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
@@ -38,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: false,
@@ -66,26 +68,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 CustomErrorTxt(
-                    text: TranslationService()
-                        .translate(_authController.errorText)),
+                  text:
+                      TranslationService().translate(_authController.errorText),
+                  settingsProvider: settingsProvider,
+                ),
                 SizeConfig.customSizedBox(null, 6, null),
                 CustomAuthTextFieldHeader(
-                    text: TranslationService().translate('email')),
+                    text: TranslationService().translate('email'),
+                    settingsProvider: settingsProvider),
                 CustomAuthenticationTextField(
-                  hintText: 'example@example.com',
-                  obscureText: false,
-                  textEditingController: _authController.emailController,
-                  borderColor: _authController.emailTextFieldBorderColor,
-                ),
+                    hintText: 'example@example.com',
+                    obscureText: false,
+                    textEditingController: _authController.emailController,
+                    borderColor: _authController.emailTextFieldBorderColor,
+                    settingsProvider: settingsProvider),
                 SizeConfig.customSizedBox(
                   null,
                   15,
                   null,
                 ),
                 CustomAuthTextFieldHeader(
-                    text: TranslationService().translate('password')),
+                    text: TranslationService().translate('password'),
+                    settingsProvider: settingsProvider),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_password'),
+                  settingsProvider: settingsProvider,
                   obscureText: true,
                   textEditingController: _authController.passwordController,
                   borderColor: _authController.passwordTextFieldBorderColor,
@@ -184,7 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         return;
                       } else {
                         await UsersProvider().getUsersById(user.user!.uid);
-                        await SettingsProvider().getSettingsByUserId(user.user!.uid);
+                        await SettingsProvider()
+                            .getSettingsByUserId(user.user!.uid);
                         Get.to(RolesScreen(
                           user: user.user!,
                         ));
@@ -205,15 +213,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const CustomAuthDivider(),
                 ),
                 CustomGoogleAuthBtn(
-                  text: TranslationService().translate("google_login"),
-                  onTap: () {},
-                ),
+                    text: TranslationService().translate("google_login"),
+                    onTap: () {},
+                    settingsProvider: settingsProvider),
                 SizeConfig.customSizedBox(null, 15, null),
                 CustomAuthFooter(
-                  headingText: "do_not_have_account",
-                  tailText: "signup",
-                  onTap: () => {Get.to(() => const SignUpScreen())},
-                )
+                    headingText: "do_not_have_account",
+                    tailText: "signup",
+                    onTap: () => {Get.to(() => const SignUpScreen())},
+                    settingsProvider: settingsProvider)
               ])),
         ));
   }

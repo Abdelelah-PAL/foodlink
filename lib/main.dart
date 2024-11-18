@@ -32,16 +32,15 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadTranslations();
   }
 
   Future<void> _loadTranslations() async {
@@ -53,6 +52,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    _loadTranslations();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

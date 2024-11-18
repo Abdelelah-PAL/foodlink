@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/models/user_details.dart';
-import 'package:foodlink/models/user_settings.dart';
 import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
@@ -11,6 +10,7 @@ import 'package:foodlink/screens/auth_screens/widgets/custom_error_txt.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
@@ -43,6 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.backgroundColor,
@@ -74,18 +76,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 CustomErrorTxt(
                     text: TranslationService()
-                        .translate(_authController.errorText)),
+                        .translate(_authController.errorText),
+                  settingsProvider: settingsProvider,
+                ),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_email'),
                   obscureText: false,
                   textEditingController: _authController.emailController,
                   borderColor: _authController.emailTextFieldBorderColor,
+                  settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_password'),
                   obscureText: true,
                   textEditingController: _authController.passwordController,
                   borderColor: _authController.passwordTextFieldBorderColor,
+                  settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('confirm_password'),
@@ -94,6 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   _authController.confirmedPasswordController,
                   borderColor:
                   _authController.confirmPasswordTextFieldBorderColor,
+                  settingsProvider: settingsProvider,
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthBtn(
@@ -125,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _authController.changeTextFieldsColors(false);
                         });
                         await SettingsProvider()
-                            .addSettings(user!.uid);
+                            .addSettings(user.uid);
                         Get.to(() => const LoginScreen());
                       }
                     }
@@ -139,12 +146,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 CustomGoogleAuthBtn(
                   text: TranslationService().translate("google_signup"),
+                  settingsProvider: settingsProvider,
                   onTap: () {},
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthFooter(
                   headingText: "have_account",
                   tailText: "login",
+                  settingsProvider: settingsProvider,
                   onTap: () {
                     Get.to(() => const LoginScreen());
                   },

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import '../../../controllers/meal_controller.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
+import '../../../providers/settings_provider.dart';
 
 class IngredientsRow extends StatelessWidget {
-  const IngredientsRow({super.key, required this.meal, required this.fontSize, required this.textWidth, required this.maxLines});
+  const IngredientsRow({super.key, required this.meal, required this.fontSize, required this.textWidth, required this.maxLines, required this.settingsProvider});
 
   final Meal meal;
   final double fontSize;
   final double textWidth;
   final int maxLines;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
     String writtenLanguage = MealController().detectLanguage(meal.ingredients);
-    return GeneralProvider().language == 'en'
+    return settingsProvider.language == 'en'
         ? Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

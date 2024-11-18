@@ -3,7 +3,6 @@ import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
@@ -11,27 +10,30 @@ import '../../../controllers/user_types.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../providers/settings_provider.dart';
 import 'username_textfield.dart';
 
 class CookerTile extends StatelessWidget {
-  const CookerTile({super.key, required this.dashboardProvider});
+  const CookerTile({super.key, required this.dashboardProvider, required this.settingsProvider});
 
   final DashboardProvider dashboardProvider;
+  final SettingsProvider settingsProvider;
+
 
   @override
   Widget build(BuildContext context) {
     UsersProvider usersProvider = context.read<UsersProvider>();
-
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: SizeConfig.getProportionalWidth(20),
           horizontal: SizeConfig.getProportionalWidth(20)),
       child: Row(
-        mainAxisAlignment: GeneralProvider().language == "en"
+        mainAxisAlignment: settingsProvider.language == "en"
             ? MainAxisAlignment.start
             : MainAxisAlignment.end,
         children: [
-          if (GeneralProvider().language == "en") ...[
+          if (settingsProvider.language == "en") ...[
             GestureDetector(
               onTap: () {
                 DashboardProvider().changeRole(UserTypes.cooker);

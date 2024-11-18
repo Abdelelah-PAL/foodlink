@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
-
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
+import '../../../providers/settings_provider.dart';
 
 class CustomMealTextField extends StatelessWidget {
   const CustomMealTextField(
@@ -16,7 +15,8 @@ class CustomMealTextField extends StatelessWidget {
       required this.maxLines,
       required this.iconSizeFactor,
       required this.hintTopPadding,
-      required this.horizontalPosition});
+      required this.horizontalPosition,
+      required this.settingsProvider});
 
   final double width;
   final double height;
@@ -27,6 +27,7 @@ class CustomMealTextField extends StatelessWidget {
   final double iconSizeFactor;
   final double hintTopPadding;
   final double horizontalPosition;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class CustomMealTextField extends StatelessWidget {
         child: TextField(
           maxLines: maxLines,
           controller: controller,
-          textAlign: GeneralProvider().language == 'en'
+          textAlign: settingsProvider.language == 'en'
               ? TextAlign.left
               : TextAlign.right,
           decoration: InputDecoration(
@@ -62,10 +63,10 @@ class CustomMealTextField extends StatelessWidget {
         ),
       ),
       Positioned(
-          left: GeneralProvider().language == 'en'
+          left: settingsProvider.language == 'en'
               ? SizeConfig.getProportionalHeight(horizontalPosition)
               : null,
-          right: GeneralProvider().language == 'en'
+          right: settingsProvider.language == 'en'
               ? null
               : SizeConfig.getProportionalHeight(horizontalPosition),
           top: SizeConfig.getProportionalHeight(15),

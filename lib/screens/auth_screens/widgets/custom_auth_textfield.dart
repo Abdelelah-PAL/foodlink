@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/providers/general_provider.dart';
-
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../providers/settings_provider.dart';
 
 class CustomAuthenticationTextField extends StatefulWidget {
   const CustomAuthenticationTextField({
@@ -11,13 +10,14 @@ class CustomAuthenticationTextField extends StatefulWidget {
     required this.hintText,
     required this.obscureText,
     required this.textEditingController,
-    required this.borderColor,
+    required this.borderColor, required this.settingsProvider,
   });
 
   final String hintText;
   final bool obscureText;
   final TextEditingController textEditingController;
   final Color borderColor;
+  final SettingsProvider settingsProvider;
 
   @override
   State<CustomAuthenticationTextField> createState() =>
@@ -31,7 +31,8 @@ class _CustomAuthenticationTextFieldState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(12)),
+      padding:
+          EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(12)),
       child: Container(
         width: SizeConfig.getProportionalWidth(312),
         height: SizeConfig.getProportionalHeight(48),
@@ -41,11 +42,11 @@ class _CustomAuthenticationTextFieldState
           color: Colors.white,
         ),
         child: Padding(
-          padding: GeneralProvider().language == 'en'
+          padding: widget.settingsProvider.language == 'en'
               ? EdgeInsets.only(left: SizeConfig.getProportionalWidth(10))
               : EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
           child: TextField(
-              textAlign: GeneralProvider().language == 'en'
+              textAlign: widget.settingsProvider.language == 'en'
                   ? TextAlign.left
                   : TextAlign.right,
               controller: widget.textEditingController,
@@ -55,7 +56,7 @@ class _CustomAuthenticationTextFieldState
                   horizontal: SizeConfig.getProportionalWidth(10),
                   vertical: SizeConfig.getProportionalWidth(5),
                 ),
-                suffixIcon: GeneralProvider().language == "en"
+                suffixIcon: widget.settingsProvider.language == "en"
                     ? widget.obscureText
                         ? IconButton(
                             icon: !showPassword
@@ -69,7 +70,7 @@ class _CustomAuthenticationTextFieldState
                           )
                         : null
                     : null,
-                prefixIcon: GeneralProvider().language == "ar"
+                prefixIcon: widget.settingsProvider.language == "ar"
                     ? widget.obscureText
                         ? IconButton(
                             icon: !showPassword
@@ -83,15 +84,12 @@ class _CustomAuthenticationTextFieldState
                           )
                         : null
                     : null,
-
                 hintText: widget.hintText,
                 hintStyle: TextStyle(
                     color: AppColors.hintTextColor,
                     fontFamily: AppFonts.primaryFont),
                 border: InputBorder.none,
-              )
-          )
-          ,
+              )),
         ),
       ),
     );

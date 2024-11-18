@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/food_screens/meal_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../../models/meal.dart';
 import '../../../providers/meals_provider.dart';
+import '../../../providers/settings_provider.dart';
 import 'name_row.dart';
 
 class ListMealTile extends StatefulWidget {
@@ -30,9 +31,10 @@ class _ListMealTileState extends State<ListMealTile> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Padding(
       padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(15)),
-      child: GeneralProvider().language == "en"
+      child: settingsProvider.language == "en"
           ? Stack(
               children: [
                 GestureDetector(
@@ -63,6 +65,7 @@ class _ListMealTileState extends State<ListMealTile> {
                               meal: widget.meal,
                               fontSize: 15,
                               textWidth: 115,
+                              settingsProvider: settingsProvider,
                             ),
                             SizeConfig.customSizedBox(null, 10, null),
                             IngredientsRow(
@@ -70,6 +73,7 @@ class _ListMealTileState extends State<ListMealTile> {
                               fontSize: 14,
                               textWidth: 100,
                               maxLines: 3,
+                              settingsProvider: settingsProvider,
                             ),
                           ],
                         ),
@@ -109,13 +113,18 @@ class _ListMealTileState extends State<ListMealTile> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           NameRow(
-                              meal: widget.meal, fontSize: 15, textWidth: 115),
+                            meal: widget.meal,
+                            fontSize: 15,
+                            textWidth: 115,
+                            settingsProvider: settingsProvider,
+                          ),
                           SizeConfig.customSizedBox(null, 10, null),
                           IngredientsRow(
                             meal: widget.meal,
                             fontSize: 14,
                             textWidth: 80,
                             maxLines: 3,
+                            settingsProvider: settingsProvider,
                           ),
                         ],
                       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/roles_screen/widgets/username_textfield.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
@@ -11,12 +10,14 @@ import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/user_details.dart';
+import '../../../providers/settings_provider.dart';
 import '../../../providers/users_provider.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key, required this.dashboardProvider});
+  const UserTile({super.key, required this.dashboardProvider, required this.settingsProvider});
 
   final DashboardProvider dashboardProvider;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,11 @@ class UserTile extends StatelessWidget {
           vertical: SizeConfig.getProportionalWidth(2),
           horizontal: SizeConfig.getProportionalWidth(20)),
       child: Row(
-        mainAxisAlignment: GeneralProvider().language == "en"
+        mainAxisAlignment: settingsProvider.language == "en"
             ? MainAxisAlignment.start
             : MainAxisAlignment.end,
         children: [
-          if (GeneralProvider().language == "en") ...[
+          if (settingsProvider.language == "en") ...[
             GestureDetector(
               onTap: () {
                 DashboardProvider().changeRole(UserTypes.user);

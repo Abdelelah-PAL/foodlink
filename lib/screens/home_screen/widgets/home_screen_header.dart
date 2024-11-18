@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
 import 'package:provider/provider.dart';
-import '../../core/constants/assets.dart';
-import '../../core/constants/colors.dart';
-import '../../core/constants/fonts.dart';
-import '../../core/utils/size_config.dart';
-import '../../providers/general_provider.dart';
-import '../../services/translation_services.dart';
+import '../../../core/constants/assets.dart';
+import '../../../core/constants/colors.dart';
+import '../../../core/constants/fonts.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../services/translation_services.dart';
 
 class HomeScreenHeader extends StatefulWidget {
   const HomeScreenHeader({super.key});
@@ -21,6 +21,7 @@ class HomeScreenHeader extends StatefulWidget {
 class _HomeScreenHeaderState extends State<HomeScreenHeader> {
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     DashboardProvider dashboardProviderWatcher =
         context.watch<DashboardProvider>();
     String template = TranslationService().translate("greeting");
@@ -187,12 +188,12 @@ class _HomeScreenHeaderState extends State<HomeScreenHeader> {
             ],
           ),
           Align(
-            alignment: GeneralProvider().language == 'en'
+            alignment: settingsProvider.language == 'en'
                 ? Alignment.centerLeft
                 : Alignment.centerRight,
             child: Text(
               template,
-              textDirection: GeneralProvider().language == 'en'
+              textDirection: settingsProvider.language == 'en'
                   ? TextDirection.ltr
                   : TextDirection.rtl,
               style: TextStyle(

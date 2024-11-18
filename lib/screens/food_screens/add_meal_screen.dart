@@ -11,6 +11,7 @@ import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 
 class AddMealScreen extends StatefulWidget {
@@ -23,10 +24,10 @@ class AddMealScreen extends StatefulWidget {
 }
 
 class _AddMealScreenState extends State<AddMealScreen> {
-
   @override
   Widget build(BuildContext context) {
     MealsProvider mealsProvider = context.read<MealsProvider>();
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -49,6 +50,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   iconSizeFactor: 31,
                   hintTopPadding: 10,
                   horizontalPosition: 5,
+                  settingsProvider: settingsProvider,
                 ),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -60,6 +62,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   iconSizeFactor: 33,
                   hintTopPadding: 10,
                   horizontalPosition: 5,
+                  settingsProvider: settingsProvider,
                 ),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -71,20 +74,22 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   iconSizeFactor: 48,
                   hintTopPadding: 10,
                   horizontalPosition: 0,
+                  settingsProvider: settingsProvider,
                 ),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
                   onTap: () async {
                     String imageUrl = '';
-                    if(mealsProvider.imageIsPicked) {
-                       imageUrl = await MealsProvider()
+                    if (mealsProvider.imageIsPicked) {
+                      imageUrl = await MealsProvider()
                           .uploadImage(mealsProvider.pickedFile);
                     }
 
                     var addedMeal = await MealsProvider().addMeal(Meal(
                         categoryId: widget.categoryId,
                         name: MealController().nameController.text,
-                        ingredients: MealController().ingredientsController.text,
+                        ingredients:
+                            MealController().ingredientsController.text,
                         recipe: MealController().recipeController.text,
                         imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
                         userId: UsersProvider().selectedUser!.userId));

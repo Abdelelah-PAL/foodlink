@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
 import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
+import '../../../providers/settings_provider.dart';
 
 class UserBody extends StatelessWidget {
-  const UserBody({super.key});
+  const UserBody({super.key, required this.settingsProvider});
+
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Align(
-          alignment: GeneralProvider().language == "en"
+          alignment: settingsProvider.language == "en"
               ? Alignment.centerLeft
               : Alignment.centerRight,
-          child: Text(
-            TranslationService().translate("wht_want_eat"),
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                fontFamily: AppFonts.primaryFont),
-          ),
+          child: CustomText(
+              text: TranslationService().translate("wht_want_eat"),
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              isCenter: false),
         ),
         Container(
           padding: EdgeInsets.only(
@@ -55,7 +55,7 @@ class UserBody extends StatelessWidget {
                     width: 85,
                     height: 85,
                     index: index,
-                    categoryId: category!.id!,
+                    categoryId: category.id!,
                   );
                 },
               );
@@ -63,13 +63,13 @@ class UserBody extends StatelessWidget {
           ),
         ),
         FeatureContainer(
-          imageUrl: Assets.healthyFood,
-          text: TranslationService().translate("healthy_food"),
-        ),
+            imageUrl: Assets.healthyFood,
+            text: TranslationService().translate("healthy_food"),
+            settingsProvider: settingsProvider),
         FeatureContainer(
-          imageUrl: Assets.aestheticFood,
-          text: TranslationService().translate("aesthetic_food"),
-        ),
+            imageUrl: Assets.aestheticFood,
+            text: TranslationService().translate("aesthetic_food"),
+            settingsProvider: settingsProvider),
       ],
     );
   }

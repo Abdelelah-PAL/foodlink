@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/home_screen/home_screen_header.dart';
+import 'package:foodlink/screens/home_screen/widgets/home_screen_header.dart';
 import 'package:foodlink/screens/home_screen/widgets/cooker_body.dart';
 import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/settings_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealCategoriesProvider mealCategoriesProvider =
         context.watch<MealCategoriesProvider>();
     UsersProvider usersProviderWatcher = context.watch<UsersProvider>();
@@ -50,8 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker
-                          ? const CookerBody()
-                          : const UserBody(),
+                          ? CookerBody(
+                              settingsProvider: settingsProvider,
+                            )
+                          : UserBody(settingsProvider: settingsProvider),
                     ),
                   ],
                 ),

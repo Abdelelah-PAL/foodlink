@@ -1,10 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
-import '../../../providers/general_provider.dart';
+import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
 
 class CustomAuthFooter extends StatelessWidget {
@@ -13,16 +12,19 @@ class CustomAuthFooter extends StatelessWidget {
     required this.headingText,
     required this.tailText,
     required this.onTap,
+    required this.settingsProvider
   });
 
   final String headingText;
   final String tailText;
   final VoidCallback? onTap;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
+
     return Directionality(
-      textDirection: GeneralProvider().language == "en"
+      textDirection: settingsProvider.language == "en"
           ? TextDirection.ltr
           : TextDirection.rtl,
       child: Text.rich(

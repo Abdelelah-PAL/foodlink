@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
+import 'package:provider/provider.dart';
 
 class CustomSettingTile extends StatelessWidget {
   const CustomSettingTile(
@@ -13,24 +14,47 @@ class CustomSettingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider =
+    Provider.of<SettingsProvider>(context, listen: true);
     return Container(
-      height: SizeConfig.getProportionalHeight(25),
-      margin:
-          EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(5)),
-      child: ListTile(
-        leading: GeneralProvider().language == 'en'
-            ? SizeConfig.customSizedBox(24, 24, Image.asset(icon))
-            : trailing,
-        title: CustomText(
-          text: text,
-          isCenter: false,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
+        height: SizeConfig.getProportionalHeight(27),
+        margin: EdgeInsets.symmetric(
+          vertical: SizeConfig.getProportionalHeight(7),
         ),
-        trailing: GeneralProvider().language == 'en'
-            ? trailing
-            : SizeConfig.customSizedBox(24, 24, Image.asset(icon)),
-      ),
-    );
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.getProportionalWidth(10),
+        ),
+        child: settingsProvider.language == "en"
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizeConfig.customSizedBox(34, 24, Image.asset(icon)),
+                  Expanded(
+                    child: CustomText(
+                      text: text,
+                      isCenter: false,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  if (trailing != null) trailing!
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (trailing != null) trailing!,
+                  Expanded(
+                    child: CustomText(
+                      text: text,
+                      isCenter: false,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizeConfig.customSizedBox(24, 24, Image.asset(icon)),
+                ],
+              )
+        );
   }
 }

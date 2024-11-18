@@ -1,4 +1,6 @@
 import 'package:foodlink/services/settings_services.dart';
+import 'package:foodlink/services/translation_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_settings.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,9 +13,8 @@ class SettingsProvider with ChangeNotifier {
 
   final SettingsServices _ss = SettingsServices();
   late UserSettings settings;
-  String language = 'ar';
-  bool activeNotification = true;
-  bool activeUpdates = true;
+  late String language;
+  late bool isLoading = false;
 
   Future<void> addSettings(userId) async {
     await _ss.addSettings(userId);
@@ -28,21 +29,24 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
-  void toggleNotifications(userId) {
-    activeNotification = !activeNotification;
+  void toggleNotifications(userId) async {
+    settings.activeNotifications = !settings.activeNotifications;
     notifyListeners();
-    _ss.toggleNotifications(userId, activeNotification);
+    await _ss.toggleNotifications(userId, settings.activeNotifications);
   }
 
-  void toggleUpdates(userId) {
-    activeUpdates = !activeUpdates;
+  void toggleUpdates(userId) async {
+    settings.activeUpdates = !settings.activeUpdates;
     notifyListeners();
-    _ss.toggleUpdates(userId, activeUpdates);
+    await _ss.toggleUpdates(userId, settings.activeUpdates);
   }
 
-  void changeLanguage(chosenLanguage, userId) {
+  void changeLanguage(chosenLanguage, userId, context) async {
     language = chosenLanguage;
     notifyListeners();
-    _ss.changeLanguage(userId, language);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('app_language', language);
+    await _ss.changeLanguage(userId, language);
+    await TranslationService().loadTranslations(context);
   }
 }

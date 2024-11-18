@@ -7,7 +7,7 @@ class SettingsServices with ChangeNotifier {
 
   Future<void> addSettings(userId) async {
     try {
-      UserSettings settings = UserSettings(userId: userId);
+      UserSettings settings = UserSettings(userId: userId, activeNotifications: true, activeUpdates: true);
 
       await _firebaseFireStore
           .collection('user_settings')

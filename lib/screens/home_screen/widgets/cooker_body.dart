@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
 import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
 
+import '../../../providers/settings_provider.dart';
+
 class CookerBody extends StatelessWidget {
-  const CookerBody({super.key});
+  const CookerBody({super.key, required this.settingsProvider});
+
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +31,14 @@ class CookerBody extends StatelessWidget {
           null,
         ),
         Align(
-          alignment: GeneralProvider().language == "en"
+          alignment: settingsProvider.language == "en"
               ? Alignment.centerLeft
               : Alignment.centerRight,
-          child: Text(
-            TranslationService().translate("meals"),
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                fontFamily: AppFonts.primaryFont),
+          child: CustomText(
+            text: TranslationService().translate("meals"),
+            isCenter: false,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
           ),
         ),
         SizeConfig.customSizedBox(
@@ -64,7 +66,7 @@ class CookerBody extends StatelessWidget {
                       width: 66,
                       height: 55,
                       index: index,
-                      categoryId: category!.id!,
+                      categoryId: category.id!,
                     );
                   },
                 );
@@ -75,10 +77,12 @@ class CookerBody extends StatelessWidget {
         FeatureContainer(
           imageUrl: Assets.healthyFood,
           text: TranslationService().translate("healthy_food"),
+          settingsProvider: settingsProvider,
         ),
         FeatureContainer(
           imageUrl: Assets.resourcesAdvertising,
           text: TranslationService().translate("resources_advertising"),
+          settingsProvider: settingsProvider,
         ),
       ],
     );

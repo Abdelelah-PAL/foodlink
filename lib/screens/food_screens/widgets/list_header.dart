@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
+import '../../../providers/settings_provider.dart';
 
 class ListHeader extends StatelessWidget {
   const ListHeader(
@@ -18,6 +19,7 @@ class ListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return isEmpty && !favorites
         ? Row(
             children: [
@@ -36,7 +38,7 @@ class ListHeader extends StatelessWidget {
               SizeConfig.customSizedBox(20, null, null),
             ],
           )
-        : GeneralProvider().language == 'en'
+        : settingsProvider.language == 'en'
             ? Padding(
                 padding: EdgeInsets.only(
                   top: SizeConfig.getProportionalHeight(10),

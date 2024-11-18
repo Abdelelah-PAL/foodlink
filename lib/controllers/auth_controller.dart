@@ -86,6 +86,7 @@ class AuthController {
     await prefs.setString('email', email);
     await prefs.setString('password', password);
     await prefs.setBool('saved for $email', true);
+
   }
 
   Future<Map<String, String>> getLoginInfo() async {

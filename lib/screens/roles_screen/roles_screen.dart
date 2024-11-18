@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/screens/roles_screen/widgets/cooker_tile.dart';
 import 'package:foodlink/screens/roles_screen/widgets/user_tile.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/users_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
 import '../dashboard/dashboard.dart';
@@ -28,6 +27,7 @@ class RolesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DashboardProvider dashboardProvider = context.watch<DashboardProvider>();
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.backgroundColor,
@@ -49,21 +49,20 @@ class RolesScreen extends StatelessWidget {
                       left: SizeConfig.getProportionalWidth(20),
                       right: SizeConfig.getProportionalWidth(20)),
                   child: Align(
-                    alignment: GeneralProvider().language == "en"
+                    alignment: settingsProvider.language == "en"
                         ? Alignment.centerLeft
                         : Alignment.centerRight,
                     child: Text(
                       TranslationService().translate("choose_role"),
-                      textDirection: GeneralProvider().language == "en"
+                      textDirection: settingsProvider.language == "en"
                           ? TextDirection.ltr
                           : TextDirection.rtl,
-                      textAlign: GeneralProvider().language == "en"
+                      textAlign: settingsProvider.language == "en"
                           ? TextAlign.left
                           : TextAlign.right,
                       style: TextStyle(
                           fontFamily: AppFonts.primaryFont,
-                          fontSize:
-                              GeneralProvider().language == "en" ? 25 : 30,
+                          fontSize: settingsProvider.language == "en" ? 25 : 30,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold),
                       softWrap: false,
@@ -71,11 +70,11 @@ class RolesScreen extends StatelessWidget {
                   ),
                 ),
                 UserTile(
-                  dashboardProvider: dashboardProvider,
-                ),
+                    dashboardProvider: dashboardProvider,
+                    settingsProvider: settingsProvider),
                 CookerTile(
-                  dashboardProvider: dashboardProvider,
-                ),
+                    dashboardProvider: dashboardProvider,
+                    settingsProvider: settingsProvider),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomButton(
                     onTap: () async {
