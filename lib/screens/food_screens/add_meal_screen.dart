@@ -15,9 +15,15 @@ import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 
 class AddMealScreen extends StatefulWidget {
-  const AddMealScreen({super.key, required this.categoryId});
+  const AddMealScreen(
+      {super.key,
+      required this.categoryId,
+      required this.isAddScreen,
+      this.meal});
 
   final int categoryId;
+  final bool isAddScreen;
+  final Meal? meal;
 
   @override
   State<AddMealScreen> createState() => _AddMealScreenState();
@@ -38,7 +44,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
             child: Column(
               children: [
                 MealImageContainer(
-                    isAddSource: true, mealsProvider: mealsProvider),
+                    isAddSource: widget.isAddScreen,
+                    mealsProvider: mealsProvider,
+                    meal: widget.meal),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomMealTextField(
                   width: SizeConfig.getProportionalWidth(348),
@@ -79,25 +87,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
                   onTap: () async {
-                    String imageUrl = '';
-                    if (mealsProvider.imageIsPicked) {
-                      imageUrl = await MealsProvider()
-                          .uploadImage(mealsProvider.pickedFile);
-                    }
-
-                    var addedMeal = await MealsProvider().addMeal(Meal(
-                        categoryId: widget.categoryId,
-                        name: MealController().nameController.text,
-                        ingredients:
-                            MealController().ingredientsController.text,
-                        recipe: MealController().recipeController.text,
-                        imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
-                        userId: UsersProvider().selectedUser!.userId));
-
-                    mealsProvider.resetValues();
-                    Get.to(MealScreen(meal: addedMeal));
+                    widget.isAddScreen
+                        ? await MealController()
+                            .addMeal(mealsProvider, widget.categoryId)
+                        : await MealController()
+                            .updateMeal(mealsProvider, widget.meal!);
                   },
-                  text: TranslationService().translate("confirm"),
+                  text: TranslationService()
+                      .translate(widget.isAddScreen ? "confirm" : "edit"),
                   width: SizeConfig.getProportionalWidth(126),
                   height: SizeConfig.getProportionalHeight(45),
                 )

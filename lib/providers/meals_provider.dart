@@ -24,6 +24,11 @@ class MealsProvider with ChangeNotifier {
     return addedMeal;
   }
 
+  Future<Meal> updateMeal(Meal meal) async {
+     Meal updatedMeal = await _ms.updateMeal(meal);
+     return updatedMeal;
+  }
+
   Future<void> getFavorites(String userId, {bool forceRefresh = false}) async {
     if (isLoading || (!forceRefresh && favoriteMeals.isNotEmpty)) return;
     try {

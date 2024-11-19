@@ -59,7 +59,7 @@ class ListHeader extends StatelessWidget {
                     if(favorites)
                       GestureDetector(
                       onTap: () {
-                        Get.to(AddMealScreen(categoryId: categoryId!));
+                        Get.to(AddMealScreen(categoryId: categoryId!, isAddScreen: true,));
                       },
                       child:  Container(
                         width: SizeConfig.getProportionalWidth(30),
@@ -85,7 +85,7 @@ class ListHeader extends StatelessWidget {
                     if(favorites)
                       GestureDetector(
                       onTap: () {
-                        Get.to(AddMealScreen(categoryId: categoryId!));
+                        Get.to(AddMealScreen(categoryId: categoryId!, isAddScreen: true,));
                       },
                       child: Container(
                         width: SizeConfig.getProportionalWidth(30),

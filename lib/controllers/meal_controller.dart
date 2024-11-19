@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/services/meals_services.dart';
+import 'package:get/get.dart';
+import '../models/meal.dart';
+import '../providers/meals_provider.dart';
+import '../providers/users_provider.dart';
+import '../screens/food_screens/meal_screen.dart';
 
 class MealController {
   static final MealController _instance = MealController._internal();
@@ -25,5 +30,42 @@ class MealController {
       languageCode = 'ar';
     }
     return languageCode;
+  }
+
+  Future<void> addMeal(mealsProvider, categoryId) async {
+    String imageUrl = '';
+    if (mealsProvider.imageIsPicked) {
+      imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
+    }
+
+    var addedMeal = await MealsProvider().addMeal(Meal(
+        categoryId: categoryId,
+        name: MealController().nameController.text,
+        ingredients: MealController().ingredientsController.text,
+        recipe: MealController().recipeController.text,
+        imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
+        userId: UsersProvider().selectedUser!.userId));
+
+    mealsProvider.resetValues();
+    Get.to(MealScreen(meal: addedMeal));
+  }
+
+  Future<void> updateMeal(mealsProvider, meal) async {
+    String imageUrl = '';
+    if (mealsProvider.imageIsPicked) {
+      imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
+    }
+
+    var updatedMeal = await MealsProvider().updateMeal(Meal(
+        documentId: meal.documentId,
+        categoryId: meal.categoryId,
+        name: MealController().nameController.text,
+        ingredients: MealController().ingredientsController.text,
+        recipe: MealController().recipeController.text,
+        imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
+        userId: UsersProvider().selectedUser!.userId,
+        isFavorite: meal.isFavorite));
+
+    Get.to(MealScreen(meal: updatedMeal));
   }
 }

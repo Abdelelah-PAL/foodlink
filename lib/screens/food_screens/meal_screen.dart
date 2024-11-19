@@ -78,7 +78,7 @@ class MealScreen extends StatelessWidget {
                       MealController().nameController.text = meal.name;
                       MealController().ingredientsController.text = meal.ingredients;
                       MealController().recipeController.text = meal.recipe ?? "";
-                      Get.to(AddMealScreen(categoryId: meal.categoryId));
+                      Get.to(AddMealScreen(categoryId: meal.categoryId, isAddScreen: false, meal: meal,));
                     },
                     text: TranslationService().translate("edit"),
                     width: 216,
