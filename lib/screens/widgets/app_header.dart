@@ -5,20 +5,20 @@ import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/assets.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/constants/fonts.dart';
-import '../../../core/utils/size_config.dart';
-import '../../../services/translation_services.dart';
+import '../../core/constants/assets.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
+import '../../core/utils/size_config.dart';
+import '../../services/translation_services.dart';
 
-class HomeScreenHeader extends StatefulWidget {
-  const HomeScreenHeader({super.key});
+class AppHeader extends StatefulWidget {
+  const AppHeader({super.key});
 
   @override
-  State<HomeScreenHeader> createState() => _HomeScreenHeaderState();
+  State<AppHeader> createState() => _AppHeaderState();
 }
 
-class _HomeScreenHeaderState extends State<HomeScreenHeader> {
+class _AppHeaderState extends State<AppHeader> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);

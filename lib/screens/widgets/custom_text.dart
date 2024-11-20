@@ -5,11 +5,12 @@ import '../../core/constants/fonts.dart';
 import '../../providers/settings_provider.dart';
 
 class CustomText extends StatelessWidget {
-  const CustomText({super.key, required this.isCenter, required this.text, required this.fontSize, required this.fontWeight});
+  const CustomText({super.key, required this.isCenter, required this.text, required this.fontSize, required this.fontWeight, this.color});
   final bool isCenter;
   final String text;
   final double fontSize;
   final FontWeight fontWeight;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class CustomText extends StatelessWidget {
         fontFamily: AppFonts.primaryFont,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        color: color
       ),
     );
   }

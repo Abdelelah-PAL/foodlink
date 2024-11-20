@@ -24,6 +24,8 @@ class Assets {
   static String healthyFood = "$rootImages/healthy_food.png";
   static String resourcesAdvertising = "$rootImages/resources_advertising.png";
   static String aestheticFood = "$rootImages/aesthetic_food.png";
+  static String healthyFoodHeaderImage = "$rootImages/healthy_food_header_image.png";
+  static String healthyDish = "$rootImages/healthy_dish.png";
 
   /// Icons
   static String googleIcon = "$rootIcons/ic_google.png";
@@ -37,6 +39,10 @@ class Assets {
   static String privacy = "$rootIcons/privacy.png";
   static String notifications =  "$rootIcons/notifications.png";
   static String language ="$rootIcons/language.png";
+  static String measurement ="$rootIcons/measurement.png";
+  static String calories ="$rootIcons/calories.png";
+  static String nutritionSystem ="$rootIcons/nutrition_system.png";
+
 
 
 

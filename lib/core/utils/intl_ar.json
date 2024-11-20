@@ -75,6 +75,15 @@
   "notifications": "الاشعارات",
   "updates": "التحديثات",
   "contact_us": "تواصل معنا",
-  "help_support": "المساعدة والدعم"
+  "help_support": "المساعدة والدعم",
+  "healthy_dish":"الطبق الصحي" ,
+  "vegetables_percent": "30% خضروات",
+  "fruits_percent":"20% فواكه",
+  "grains_percent":"25% حبوب",
+  "protiens_percent":"25% بروتينات",
+  "measurements": "معايير القياس",
+  "calories": "السعرات الحرارية",
+  "nutrition_system": "النظام الغذائي",
+  "chosen_healthy_meals": "وجبات صحية مُختارة"
 
 }

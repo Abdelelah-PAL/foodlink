@@ -75,6 +75,16 @@
   "notifications": "Notifications",
   "updates": "Updates" ,
   "contact_us": "Contact Us" ,
-  "help_support":"Help and Support"
+  "help_support":"Help and Support",
+  "healthy_dish":"Healthy Dish" ,
+  "vegetables_percent": "30% Vegetables",
+  "fruits_percent":"20% Vegetables",
+  "grains_percent":"25% Vegetables",
+  "protiens_percent":"25% Vegetables",
+  "measurements": "Measurements" ,
+  "calories": "Calories",
+  "nutrition_system": "Nutrition System",
+  "chosen_healthy_meals": "Chosen Healthy Meals"
+
 
 }

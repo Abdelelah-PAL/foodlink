@@ -6,8 +6,10 @@ import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../../food_screens/healthy_food.dart';
 
 class UserBody extends StatelessWidget {
   const UserBody({super.key, required this.settingsProvider});
@@ -63,13 +65,17 @@ class UserBody extends StatelessWidget {
           ),
         ),
         FeatureContainer(
-            imageUrl: Assets.healthyFood,
-            text: TranslationService().translate("healthy_food"),
-            settingsProvider: settingsProvider),
+          imageUrl: Assets.healthyFood,
+          text: TranslationService().translate("healthy_food"),
+          settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
+        ),
         FeatureContainer(
-            imageUrl: Assets.aestheticFood,
-            text: TranslationService().translate("aesthetic_food"),
-            settingsProvider: settingsProvider),
+          imageUrl: Assets.aestheticFood,
+          text: TranslationService().translate("aesthetic_food"),
+          settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
+        ),
       ],
     );
   }

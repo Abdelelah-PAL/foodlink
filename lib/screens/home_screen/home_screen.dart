@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/home_screen/widgets/home_screen_header.dart';
+import 'package:foodlink/screens/widgets/app_header.dart';
 import 'package:foodlink/screens/home_screen/widgets/cooker_body.dart';
 import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: PreferredSize(
               preferredSize:
                   Size.fromHeight(SizeConfig.getProportionalHeight(135)),
-              child: const HomeScreenHeader(),
+              child: const AppHeader(),
             ),
             backgroundColor: AppColors.backgroundColor,
             body: Padding(

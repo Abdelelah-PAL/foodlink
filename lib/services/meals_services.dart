@@ -86,10 +86,8 @@ class MealsServices with ChangeNotifier {
             meal.toMap(),
             SetOptions(merge: false),
           );
-      print(meal.documentId);
       var docRef = _firebaseFireStore.collection('meals').doc(meal.documentId);
       var docSnapshot = await docRef.get();
-      print(docSnapshot.data());
 
       Meal updatedMeal = Meal.fromJson(docSnapshot.data()!, meal.documentId);
       return updatedMeal;

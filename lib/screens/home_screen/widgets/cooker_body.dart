@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
+import 'package:foodlink/screens/food_screens/healthy_food.dart';
 import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
+import 'package:foodlink/screens/widgets/image_container.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/settings_provider.dart';
@@ -19,12 +22,7 @@ class CookerBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: SizeConfig.getProportionalWidth(332),
-          height: SizeConfig.getProportionalHeight(127),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-          child: Image.asset(Assets.dishOfTheWeek, fit: BoxFit.fill),
-        ),
+        ImageContainer(imageUrl: Assets.dishOfTheWeek),
         SizeConfig.customSizedBox(
           null,
           10,
@@ -78,11 +76,13 @@ class CookerBody extends StatelessWidget {
           imageUrl: Assets.healthyFood,
           text: TranslationService().translate("healthy_food"),
           settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
         ),
         FeatureContainer(
           imageUrl: Assets.resourcesAdvertising,
           text: TranslationService().translate("resources_advertising"),
           settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
         ),
       ],
     );

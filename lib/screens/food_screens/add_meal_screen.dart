@@ -4,15 +4,12 @@ import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/screens/food_screens/meal_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/custom_meal_textfield.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/services/translation_services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../providers/settings_provider.dart';
-import '../../providers/users_provider.dart';
 
 class AddMealScreen extends StatefulWidget {
   const AddMealScreen(
