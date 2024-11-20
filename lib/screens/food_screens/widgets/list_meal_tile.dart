@@ -51,7 +51,7 @@ class _ListMealTileState extends State<ListMealTile> {
                                   color: AppColors.defaultBorderColor),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Image.asset(
+                            child: Image.network(
                               widget.meal.imageUrl!,
                               fit: BoxFit.fill,
                             )),
@@ -82,7 +82,7 @@ class _ListMealTileState extends State<ListMealTile> {
                   ),
                 ),
                 Positioned(
-                  left: 0,
+                  left: 290,
                   bottom: 0,
                   child: !widget.favorites
                       ? IconButton(
@@ -97,9 +97,10 @@ class _ListMealTileState extends State<ListMealTile> {
                             });
                           },
                           icon: widget.meal.isFavorite
-                              ? const Icon(Icons.favorite)
+                              ? const Icon(Icons.favorite,
+                                  color: AppColors.errorColor)
                               : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite),
+                      : const Icon(Icons.favorite, color: AppColors.errorColor),
                 )
               ],
             )
