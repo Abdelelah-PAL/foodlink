@@ -17,6 +17,20 @@ class MealsProvider with ChangeNotifier {
   bool isLoading = false;
   bool imageIsPicked = false;
   XFile? pickedFile;
+  int numberOfIngredients = 8;
+  List<TextEditingController> ingredientsControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
+  bool isIngredientChecked = false;
+
+
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
@@ -24,8 +38,8 @@ class MealsProvider with ChangeNotifier {
   }
 
   Future<Meal> updateMeal(Meal meal) async {
-     Meal updatedMeal = await _ms.updateMeal(meal);
-     return updatedMeal;
+    Meal updatedMeal = await _ms.updateMeal(meal);
+    return updatedMeal;
   }
 
   Future<void> getFavorites(String userId, {bool forceRefresh = false}) async {
@@ -112,9 +126,43 @@ class MealsProvider with ChangeNotifier {
   void resetValues() {
     imageIsPicked = false;
     pickedFile = null;
+    numberOfIngredients = 8;
     MealController().recipeController.clear();
     MealController().ingredientsController.clear();
     MealController().nameController.clear();
+    ingredientsControllers = [
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+    ];
+    ingredientsControllers.map((controller) => {controller.clear()});
+    notifyListeners();
+  }
+
+  void increaseIngredients() {
+    numberOfIngredients++;
+    ingredientsControllers.add(TextEditingController());
+    notifyListeners();
+  }
+
+  void fillDataForEdition(meal) {
+    MealController().nameController.text = meal.name;
+    MealController().recipeController.text = meal.recipe ?? "";
+    numberOfIngredients = meal.ingredients.length;
+    meal.ingredients.asMap().forEach((index, controller) {
+      if(index + 1 > ingredientsControllers.length) {
+        ingredientsControllers.add(TextEditingController());
+      }
+      ingredientsControllers[index].text = meal.ingredients[index];
+    });
+    notifyListeners();
+  }
+  void toggleCheckedIngredient(value) {
+    isIngredientChecked = value;
     notifyListeners();
   }
 }

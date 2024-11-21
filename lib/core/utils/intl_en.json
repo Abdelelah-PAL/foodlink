@@ -84,7 +84,9 @@
   "measurements": "Measurements" ,
   "calories": "Calories",
   "nutrition_system": "Nutrition System",
-  "chosen_healthy_meals": "Chosen Healthy Meals"
+  "chosen_healthy_meals": "Chosen Healthy Meals",
+  "notify":"Notify" ,
+  "back": "Back"
 
 
 }

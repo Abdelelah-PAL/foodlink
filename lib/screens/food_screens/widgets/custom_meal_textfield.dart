@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../providers/settings_provider.dart';
@@ -9,29 +10,66 @@ class CustomMealTextField extends StatelessWidget {
       {super.key,
       required this.width,
       required this.height,
-      required this.hintText,
+      required this.headerText,
       required this.icon,
       required this.controller,
       required this.maxLines,
       required this.iconSizeFactor,
-      required this.hintTopPadding,
-      required this.horizontalPosition,
       required this.settingsProvider});
 
   final double width;
   final double height;
-  final String hintText;
+  final String headerText;
   final String icon;
   final TextEditingController controller;
   final int maxLines;
   final double iconSizeFactor;
-  final double hintTopPadding;
-  final double horizontalPosition;
   final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return Column(children: [
+      settingsProvider.language == 'en'
+          ? Padding(
+              padding:
+                  EdgeInsets.only(left: SizeConfig.getProportionalWidth(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizeConfig.customSizedBox(
+                        iconSizeFactor, iconSizeFactor, Image.asset(icon)),
+                  ),
+                  CustomText(
+                    isCenter: false,
+                    text: headerText,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            )
+          : Padding(
+              padding:
+                  EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomText(
+                    isCenter: false,
+                    text: headerText,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizeConfig.customSizedBox(
+                        iconSizeFactor, iconSizeFactor, Image.asset(icon)),
+                  ),
+                ],
+              ),
+            ),
       Container(
         width: width,
         height: height,
@@ -49,11 +87,10 @@ class CustomMealTextField extends StatelessWidget {
               : TextAlign.right,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(
-                SizeConfig.getProportionalWidth(40),
-                SizeConfig.getProportionalHeight(hintTopPadding),
-                SizeConfig.getProportionalWidth(40),
+                SizeConfig.getProportionalWidth(10),
+                SizeConfig.getProportionalHeight(2),
+                SizeConfig.getProportionalWidth(10),
                 SizeConfig.getProportionalHeight(2)),
-            hintText: hintText,
             hintStyle: TextStyle(
                 fontSize: 20,
                 color: AppColors.hintTextColor,
@@ -62,16 +99,6 @@ class CustomMealTextField extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
-          left: settingsProvider.language == 'en'
-              ? SizeConfig.getProportionalHeight(horizontalPosition)
-              : null,
-          right: settingsProvider.language == 'en'
-              ? null
-              : SizeConfig.getProportionalHeight(horizontalPosition),
-          top: SizeConfig.getProportionalHeight(15),
-          child: SizeConfig.customSizedBox(
-              iconSizeFactor, iconSizeFactor, Image.asset(icon))),
     ]);
   }
 }

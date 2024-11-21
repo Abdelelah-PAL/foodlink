@@ -18,6 +18,7 @@ class MealController {
   TextEditingController recipeController = TextEditingController();
   MealsServices ms = MealsServices();
 
+
   String detectLanguage(String string) {
     String languageCode = 'en';
 
@@ -37,11 +38,12 @@ class MealController {
     if (mealsProvider.imageIsPicked) {
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
+    List<String> ingredients = MealsProvider().ingredientsControllers.map((controller) => controller.text).toList();
 
     var addedMeal = await MealsProvider().addMeal(Meal(
         categoryId: categoryId,
         name: MealController().nameController.text,
-        ingredients: MealController().ingredientsController.text,
+        ingredients: ingredients,
         recipe: MealController().recipeController.text,
         imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
         userId: UsersProvider().selectedUser!.userId));
@@ -60,7 +62,7 @@ class MealController {
         documentId: meal.documentId,
         categoryId: meal.categoryId,
         name: MealController().nameController.text,
-        ingredients: MealController().ingredientsController.text,
+        ingredients: [MealController().ingredientsController.text],
         recipe: MealController().recipeController.text,
         imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
         userId: UsersProvider().selectedUser!.userId,

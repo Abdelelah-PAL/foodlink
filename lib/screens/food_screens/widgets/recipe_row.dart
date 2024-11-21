@@ -15,7 +15,7 @@ class RecipeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String writtenLanguage = MealController().detectLanguage(meal.ingredients);
+    String writtenLanguage = MealController().detectLanguage(meal.recipe!);
 
     return settingsProvider.language == 'en'
         ? Row(
@@ -48,8 +48,8 @@ class RecipeRow extends StatelessWidget {
                 Text(
                   maxLines: 10,
                   meal.recipe!,
-                  textAlign: TextAlign.end,
-                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       fontSize: fontSize,
                       fontFamily:

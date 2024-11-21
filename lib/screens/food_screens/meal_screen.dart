@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
@@ -14,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../models/meal.dart';
 import '../../providers/settings_provider.dart';
+import 'check_ingredients_screen.dart';
 
 class MealScreen extends StatelessWidget {
   const MealScreen({super.key, required this.meal});
@@ -75,17 +75,22 @@ class MealScreen extends StatelessWidget {
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
                     onTap: () {
-                      MealController().nameController.text = meal.name;
-                      MealController().ingredientsController.text = meal.ingredients;
-                      MealController().recipeController.text = meal.recipe ?? "";
-                      Get.to(AddMealScreen(categoryId: meal.categoryId, isAddScreen: false, meal: meal,));
+                      MealsProvider().fillDataForEdition(meal);
+                      Get.to(AddMealScreen(
+                          categoryId: meal.categoryId,
+                          isAddScreen: false,
+                          meal: meal));
                     },
                     text: TranslationService().translate("edit"),
                     width: 216,
                     height: 45),
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(CheckIngredientsScreen(
+                        meal: meal,
+                      ));
+                    },
                     text: TranslationService().translate("check_ingredients"),
                     width: 216,
                     height: 45),

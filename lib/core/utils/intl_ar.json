@@ -84,6 +84,8 @@
   "measurements": "معايير القياس",
   "calories": "السعرات الحرارية",
   "nutrition_system": "النظام الغذائي",
-  "chosen_healthy_meals": "وجبات صحية مُختارة"
+  "chosen_healthy_meals": "وجبات صحية مُختارة",
+  "notify": "أرسل إشعارًا ",
+  "back": "رجوع"
 
 }

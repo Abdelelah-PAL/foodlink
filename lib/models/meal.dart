@@ -3,7 +3,7 @@ class Meal {
   int categoryId;
   String name;
   String? imageUrl;
-  String ingredients;
+  List<String> ingredients;
   String? recipe;
   String userId;
   bool isFavorite;
@@ -24,7 +24,7 @@ class Meal {
         categoryId: json['category_id'],
         name: json['name'],
         imageUrl: json['image_url'],
-        ingredients: json['ingredients'],
+        ingredients: List<String>.from(json['ingredients']),
         recipe: json['recipe'],
         userId: json['user_id'],
         isFavorite: json['is_favorite']);
