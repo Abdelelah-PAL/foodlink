@@ -6,12 +6,26 @@ import '../../../providers/settings_provider.dart';
 
 class FeatureContainer extends StatelessWidget {
   const FeatureContainer(
-      {super.key, required this.imageUrl, required this.text, required this.settingsProvider, required this.onTap});
+      {
+        super.key,
+        required this.imageUrl,
+        required this.text,
+        required this.settingsProvider,
+        required this.onTap,
+        this.left,
+        this.right,
+        this.top,
+        this.bottom
+      });
 
   final String imageUrl;
   final String text;
   final SettingsProvider settingsProvider;
   final VoidCallback onTap;
+  final double? left;
+  final double? right;
+  final double? top;
+  final double? bottom;
 
 
   @override
@@ -30,20 +44,42 @@ class FeatureContainer extends StatelessWidget {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
               child: Image.asset(imageUrl, fit: BoxFit.fill),
             ),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: settingsProvider.language == "en" ? 25 : 45,
-                fontFamily: AppFonts.primaryFont,
-                fontWeight: FontWeight.bold,
-                shadows: const <Shadow>[
-                  Shadow(
-                    offset: Offset(0.5, 0.5),
-                    blurRadius: 8.0,
-                    color: AppColors.primaryColor,
+            Positioned(
+              left: left,
+              right: right,
+              top: top,
+              bottom: bottom,
+              child: Stack(
+                children: [
+                  // Stroke (Outer layer)
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppFonts.primaryFont,
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 2
+                        ..color = AppColors.primaryColor, // Stroke color
+                    ),
+                  ),
+                  // Fill (Inner layer)
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+
+                    style: TextStyle(
+                      fontFamily: AppFonts.primaryFont,
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.fontColor, // Fill color
+                    ),
                   ),
                 ],
-              ),
+              )
+
             )
           ],
         ),

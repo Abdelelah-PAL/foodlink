@@ -66,13 +66,14 @@ class UserBody extends StatelessWidget {
         ),
         FeatureContainer(
           imageUrl: Assets.healthyFood,
-          text: TranslationService().translate("healthy_food"),
+          text: TranslationService().translate("healthy_life"),
           settingsProvider: settingsProvider,
           onTap: () => Get.to(const HealthyFood()),
         ),
         FeatureContainer(
-          imageUrl: Assets.aestheticFood,
-          text: TranslationService().translate("aesthetic_food"),
+          left: SizeConfig.getProportionalWidth(30),
+          imageUrl: Assets.mealPlanning,
+          text: TranslationService().translate("meal_planning"),
           settingsProvider: settingsProvider,
           onTap: () => Get.to(const HealthyFood()),
         ),

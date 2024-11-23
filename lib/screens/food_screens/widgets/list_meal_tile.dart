@@ -42,20 +42,26 @@ class _ListMealTileState extends State<ListMealTile> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Container(
-                            width: SizeConfig.getProportionalWidth(182),
-                            height: SizeConfig.getProportionalHeight(95),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1,
-                                  color: AppColors.defaultBorderColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Image.network(
-                              widget.meal.imageUrl!,
-                              fit: BoxFit.fill,
-                            )),
-                      ),
+                          child: Container(
+                        width: SizeConfig.getProportionalWidth(182),
+                        height: SizeConfig.getProportionalHeight(95),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1, color: AppColors.defaultBorderColor),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: widget.meal.imageUrl != null &&
+                                widget.meal.imageUrl!.isNotEmpty
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                // Apply the same radius here
+                                child: Image.network(
+                                  widget.meal.imageUrl!,
+                                  fit: BoxFit.fill,
+                                ),
+                              )
+                            : const Icon(Icons.camera_alt_outlined),
+                      )),
                       SizeConfig.customSizedBox(10, null, null),
                       Expanded(
                         child: Column(

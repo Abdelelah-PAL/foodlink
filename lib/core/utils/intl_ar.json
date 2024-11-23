@@ -42,7 +42,7 @@
   "snacks": "سناك",
   "sweets": "حلويات",
   "drinks": "مشروبات",
-  "healthy_food": "أطعمة صحية",
+  "healthy_life": "حياة صحية",
   "resources_advertising": "أعلن عن منتجاتك",
   "aesthetic_food": "أجمل الأطعمة",
   "wht_want_eat": "ماذا تريد أن تأكل؟",
@@ -86,6 +86,8 @@
   "nutrition_system": "النظام الغذائي",
   "chosen_healthy_meals": "وجبات صحية مُختارة",
   "notify": "أرسل إشعارًا ",
-  "back": "رجوع"
+  "back": "رجوع",
+  "meal_planning": "جدولة\nالوجبات"
+
 
 }

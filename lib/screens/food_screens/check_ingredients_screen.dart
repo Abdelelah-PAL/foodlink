@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
-import 'package:foodlink/screens/food_screens/meals_list_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/checkbox_tile.dart';
-import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
-import 'package:foodlink/screens/food_screens/widgets/recipe_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';

@@ -42,7 +42,7 @@
   "snacks": "Snacks",
   "sweets": "Sweets",
   "drinks": "Drinks",
-  "healthy_food": "Healthy Food",
+  "healthy_life": "Healthy Life",
   "resources_advertising": "Resources Advertising",
   "aesthetic_food": "Aesthetic Food",
   "wht_want_eat": "What do you want to eat? ",
@@ -86,7 +86,6 @@
   "nutrition_system": "Nutrition System",
   "chosen_healthy_meals": "Chosen Healthy Meals",
   "notify":"Notify" ,
-  "back": "Back"
-
-
+  "back": "Back",
+  "meal_planning": "Meal\nPlanning"
 }

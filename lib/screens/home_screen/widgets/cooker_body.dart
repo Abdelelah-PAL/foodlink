@@ -74,13 +74,27 @@ class CookerBody extends StatelessWidget {
         ),
         FeatureContainer(
           imageUrl: Assets.healthyFood,
-          text: TranslationService().translate("healthy_food"),
+          text: TranslationService().translate("healthy_life"),
           settingsProvider: settingsProvider,
           onTap: () => Get.to(const HealthyFood()),
         ),
         FeatureContainer(
           imageUrl: Assets.resourcesAdvertising,
           text: TranslationService().translate("resources_advertising"),
+          settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
+        ),
+        FeatureContainer(
+          left: SizeConfig.getProportionalWidth(18),
+          imageUrl: Assets.aestheticFood,
+          text: TranslationService().translate("aesthetic_food"),
+          settingsProvider: settingsProvider,
+          onTap: () => Get.to(const HealthyFood()),
+        ),
+        FeatureContainer(
+          left: SizeConfig.getProportionalWidth(35),
+          imageUrl: Assets.mealPlanning,
+          text: TranslationService().translate("meal_planning"),
           settingsProvider: settingsProvider,
           onTap: () => Get.to(const HealthyFood()),
         ),
