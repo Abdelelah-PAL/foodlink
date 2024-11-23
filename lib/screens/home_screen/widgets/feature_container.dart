@@ -15,7 +15,7 @@ class FeatureContainer extends StatelessWidget {
         this.left,
         this.right,
         this.top,
-        this.bottom
+        this.bottom,
       });
 
   final String imageUrl;
@@ -57,7 +57,7 @@ class FeatureContainer extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: AppFonts.primaryFont,
-                      fontSize: 23,
+                      fontSize: settingsProvider.language == 'en' ? 23 : 30,
                       fontWeight: FontWeight.bold,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
@@ -72,7 +72,7 @@ class FeatureContainer extends StatelessWidget {
 
                     style: TextStyle(
                       fontFamily: AppFonts.primaryFont,
-                      fontSize: 23,
+                      fontSize: settingsProvider.language == 'en' ? 23 : 30,
                       fontWeight: FontWeight.bold,
                       color: AppColors.fontColor, // Fill color
                     ),

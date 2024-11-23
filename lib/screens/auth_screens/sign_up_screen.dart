@@ -18,6 +18,7 @@ import '../../core/utils/size_config.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
+import '../widgets/custom_text.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -64,15 +65,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
                       bottom: SizeConfig.getProportionalHeight(13)),
-                  child: Text(
-                    TranslationService().translate("create_an_account"),
-                    style: TextStyle(
-                      fontFamily: AppFonts.primaryFont,
-                      fontSize: 24,
-                      color: AppColors.fontColor,
-                    ),
-                    softWrap: false,
-                  ),
+                  child:
+                  const CustomText(
+                    isCenter: true,
+                    text: "create_an_account",
+                    fontSize: 24,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.fontColor,
+                  )
                 ),
                 CustomErrorTxt(
                     text: TranslationService()

@@ -11,6 +11,7 @@ import 'package:foodlink/screens/auth_screens/widgets/custom_auth_textfield_head
 import 'package:foodlink/screens/auth_screens/widgets/custom_error_txt.dart';
 import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dart';
 import 'package:foodlink/screens/roles_screen/roles_screen.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -57,15 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.only(
                       top: SizeConfig.getProportionalHeight(10),
                       bottom: SizeConfig.getProportionalHeight(13)),
-                  child: Text(
-                    TranslationService().translate("welcome_back"),
-                    style: TextStyle(
-                      fontFamily: AppFonts.primaryFont,
+                  child: const CustomText(
+                      isCenter: true,
+                      text: "welcome_back",
                       fontSize: 24,
-                      color: AppColors.fontColor,
-                    ),
-                    softWrap: false,
-                  ),
+                      fontWeight: FontWeight.normal,
+                    color: AppColors.fontColor,
+                  )
                 ),
                 CustomErrorTxt(
                   text:

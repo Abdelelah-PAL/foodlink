@@ -37,7 +37,7 @@ class HealthyFood extends StatelessWidget {
                 child: SizeConfig.customSizedBox(
                     137, 134, Image.asset(Assets.healthyDish))),
             Positioned(
-              left: SizeConfig.getProportionalWidth(245),
+              left: SizeConfig.getProportionalWidth(230),
               child: Column(
                 children: [
                   Text(
@@ -130,12 +130,12 @@ class HealthyFood extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     HealthyIconText(
-                        icon: Assets.measurement, text: "measurements"),
+                        icon: Assets.measurement, text: "measurements", settingsProvider: settingsProvider,),
                     SizeConfig.customSizedBox(20, null, null),
-                    HealthyIconText(icon: Assets.calories, text: "calories"),
+                    HealthyIconText(icon: Assets.calories, text: "calories", settingsProvider: settingsProvider),
                     SizeConfig.customSizedBox(20, null, null),
                     HealthyIconText(
-                        icon: Assets.nutritionSystem, text: "nutrition_system"),
+                        icon: Assets.nutritionSystem, text: "nutrition_system", settingsProvider: settingsProvider),
                   ],
                 )
               : Row(
@@ -143,12 +143,12 @@ class HealthyFood extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     HealthyIconText(
-                        icon: Assets.nutritionSystem, text: "nutrition_system"),
+                        icon: Assets.nutritionSystem, text: "nutrition_system", settingsProvider: settingsProvider),
                     SizeConfig.customSizedBox(20, null, null),
-                    HealthyIconText(icon: Assets.calories, text: "calories"),
+                    HealthyIconText(icon: Assets.calories, text: "calories", settingsProvider: settingsProvider),
                     SizeConfig.customSizedBox(20, null, null),
                     HealthyIconText(
-                        icon: Assets.measurement, text: "measurements"),
+                        icon: Assets.measurement, text: "measurements", settingsProvider: settingsProvider),
                   ],
                 ),
         ),
