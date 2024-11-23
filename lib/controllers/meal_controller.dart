@@ -72,7 +72,7 @@ class MealController {
         name: MealController().nameController.text,
         ingredients: ingredients,
         recipe: MealController().recipeController.text,
-        imagweUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
+        imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
         userId: UsersProvider().selectedUser!.userId,
         isFavorite: meal.isFavorite));
 
