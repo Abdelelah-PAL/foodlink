@@ -28,9 +28,9 @@ class MealsProvider with ChangeNotifier {
     TextEditingController(),
     TextEditingController(),
   ];
+  List<bool> checkboxValues = [];
+
   bool isIngredientChecked = false;
-
-
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
@@ -154,15 +154,16 @@ class MealsProvider with ChangeNotifier {
     MealController().recipeController.text = meal.recipe ?? "";
     numberOfIngredients = meal.ingredients.length;
     meal.ingredients.asMap().forEach((index, controller) {
-      if(index + 1 > ingredientsControllers.length) {
+      if (index + 1 > ingredientsControllers.length) {
         ingredientsControllers.add(TextEditingController());
       }
       ingredientsControllers[index].text = meal.ingredients[index];
     });
     notifyListeners();
   }
-  void toggleCheckedIngredient(value) {
-    isIngredientChecked = value;
+
+  void toggleCheckedIngredient(value, listIndex) {
+    checkboxValues[listIndex] = value;
     notifyListeners();
   }
 }

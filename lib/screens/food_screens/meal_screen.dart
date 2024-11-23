@@ -23,6 +23,7 @@ class MealScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    MealsProvider mealsProvider = Provider.of<MealsProvider>(context, listen: true);
     return Scaffold(
       body: Column(
         children: [
@@ -87,6 +88,7 @@ class MealScreen extends StatelessWidget {
                 SizeConfig.customSizedBox(null, 20, null),
                 CustomButton(
                     onTap: () {
+                      mealsProvider.checkboxValues = List.generate(meal.ingredients.length, (index) => false);
                       Get.to(CheckIngredientsScreen(
                         meal: meal,
                       ));

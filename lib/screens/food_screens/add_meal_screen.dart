@@ -103,10 +103,10 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
+                            crossAxisCount: 3,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 0,
-                            childAspectRatio: 1.5),
+                            childAspectRatio: 2),
                     itemCount: mealsProvider.numberOfIngredients,
                     itemBuilder: (context, index) {
                       if (index == mealsProvider.numberOfIngredients - 1) {

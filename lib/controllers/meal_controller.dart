@@ -18,7 +18,6 @@ class MealController {
   TextEditingController recipeController = TextEditingController();
   MealsServices ms = MealsServices();
 
-
   String detectLanguage(String string) {
     String languageCode = 'en';
 
@@ -38,7 +37,11 @@ class MealController {
     if (mealsProvider.imageIsPicked) {
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
-    List<String> ingredients = MealsProvider().ingredientsControllers.map((controller) => controller.text).toList();
+    List<String> ingredients = MealsProvider()
+        .ingredientsControllers
+        .map((controller) => controller.text)
+        .where((text) => text.isNotEmpty)
+        .toList();
 
     var addedMeal = await MealsProvider().addMeal(Meal(
         categoryId: categoryId,
@@ -57,14 +60,19 @@ class MealController {
     if (mealsProvider.imageIsPicked) {
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
+    List<String> ingredients = MealsProvider()
+        .ingredientsControllers
+        .map((controller) => controller.text)
+        .where((text) => text.isNotEmpty)
+        .toList();
 
     var updatedMeal = await MealsProvider().updateMeal(Meal(
         documentId: meal.documentId,
         categoryId: meal.categoryId,
         name: MealController().nameController.text,
-        ingredients: [MealController().ingredientsController.text],
+        ingredients: ingredients,
         recipe: MealController().recipeController.text,
-        imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
+        imagweUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
         userId: UsersProvider().selectedUser!.userId,
         isFavorite: meal.isFavorite));
 

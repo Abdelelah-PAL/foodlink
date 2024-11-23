@@ -14,7 +14,7 @@ class IngredientBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizeConfig.getProportionalWidth(80),
+      width: SizeConfig.getProportionalWidth(110),
       height: SizeConfig.getProportionalHeight(40),
       margin: EdgeInsets.symmetric(
         vertical: SizeConfig.getProportionalHeight(10),
@@ -26,9 +26,15 @@ class IngredientBox extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        textDirection: settingsProvider.language == 'en'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        // For right-to-left text
         textAlign: settingsProvider.language == 'en'
             ? TextAlign.left
             : TextAlign.right,
+        style: const TextStyle(fontSize: 12),
+        // Set font size here
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(
               SizeConfig.getProportionalWidth(10),

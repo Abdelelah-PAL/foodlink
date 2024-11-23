@@ -82,6 +82,8 @@ class MealsServices with ChangeNotifier {
 
   Future<Meal> updateMeal(Meal meal) async {
     try {
+      print(meal.ingredients);
+
       await _firebaseFireStore.collection('meals').doc(meal.documentId).set(
             meal.toMap(),
             SetOptions(merge: false),

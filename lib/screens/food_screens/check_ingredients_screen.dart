@@ -78,7 +78,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                       ),
                 SizeConfig.customSizedBox(
                   null,
-                  221,
+                  300,
                   ListView.builder(
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
@@ -88,6 +88,8 @@ class CheckIngredientsScreen extends StatelessWidget {
                         text: meal.ingredients[index],
                         settingsProvider: settingsProvider,
                         mealsProvider: mealsProvider,
+                        index: index,
+                        ingredientsLength:  meal.ingredients.length
                       );
                     },
                   ),
