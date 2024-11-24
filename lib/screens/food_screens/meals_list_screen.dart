@@ -71,7 +71,9 @@ class _MealsListScreenState extends State<MealsListScreen> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(AddMealScreen(
-                                    categoryId: widget.categoryId, isAddScreen: true,));
+                                  categoryId: widget.categoryId,
+                                  isAddScreen: true,
+                                ));
                               },
                               child: Container(
                                 width: SizeConfig.getProportionalWidth(105),
@@ -106,7 +108,8 @@ class _MealsListScreenState extends State<MealsListScreen> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (ctx, index) {
                               return ListMealTile(
-                                  meal: mealsProvider.meals[index], favorites: false,);
+                                  meal: mealsProvider.meals[index],
+                                  favorites: false);
                             },
                           ),
                         );

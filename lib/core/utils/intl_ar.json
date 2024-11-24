@@ -21,7 +21,7 @@
   "google_signup": "قم بالتسجيل عن طريق",
   "all_fields_required": "*جميع الحقول مطلوبة",
   "password_not_matched": "*كلمة المرور غير متطابقة",
-  "welcome_back": "أهلَا بك مجددًا!",
+  "welcome_back": "أهلًا بك مجددًا!",
   "google_login": "تسجيل الدخول عن طريق",
   "do_not_have_account": "ليس لديك حساب ؟ ",
   "email": "البريد الإلكتروني",
@@ -87,7 +87,9 @@
   "chosen_healthy_meals": "وجبات صحية مُختارة",
   "notify": "أرسل إشعارًا ",
   "back": "رجوع",
-  "meal_planning": "جدولة\nالوجبات"
+  "meal_planning": "جدولة\nالوجبات",
+  "meal_planning_inline": "جدولة الوجبات",
+  "meal_plan": "خطة أسبوعية مُختارة"
 
 
 }

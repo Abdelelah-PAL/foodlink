@@ -27,6 +27,7 @@ class Assets {
   static String healthyFoodHeaderImage = "$rootImages/healthy_food_header_image.png";
   static String healthyDish = "$rootImages/healthy_dish.png";
   static String mealPlanning = "$rootImages/meal_planning.png";
+  static String mealPlanningHeaderImage = "$rootImages/meal_planning_header_image.png";
 
   /// Icons
   static String googleIcon = "$rootIcons/ic_google.png";

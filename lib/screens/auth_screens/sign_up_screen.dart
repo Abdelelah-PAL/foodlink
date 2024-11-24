@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
 import '../../core/constants/colors.dart';
-import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/settings_provider.dart';

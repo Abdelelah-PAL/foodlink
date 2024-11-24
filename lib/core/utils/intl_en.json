@@ -87,5 +87,7 @@
   "chosen_healthy_meals": "Chosen Healthy Meals",
   "notify":"Notify" ,
   "back": "Back",
-  "meal_planning": "Meal\nPlanning"
+  "meal_planning": "Meal\nPlanning",
+  "meal_planning_inline": "Meal Planning",
+  "meal_plan":"Chosen Meal Plan"
 }
