@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/checkbox_tile.dart';
@@ -98,7 +99,9 @@ class CheckIngredientsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomButton(
-                        onTap: () {},
+                        onTap: () {
+                          MealController().addUserNotification(mealsProvider, meal);
+                        },
                         text: TranslationService().translate("notify"),
                         width: 137,
                         height: 45),
@@ -120,7 +123,9 @@ class CheckIngredientsScreen extends StatelessWidget {
                         height: 45),
                     SizeConfig.customSizedBox(20, null, null),
                     CustomButton(
-                        onTap: () {},
+                        onTap: () {
+                          MealController().addUserNotification(mealsProvider, meal);
+                        },
                         text: TranslationService().translate("notify"),
                         width: 137,
                         height: 45),

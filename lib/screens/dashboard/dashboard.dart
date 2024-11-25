@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
+import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/dashboard_controller.dart';
@@ -22,6 +24,9 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     DashboardProvider dashboardProviderWatcher =
         context.watch<DashboardProvider>();
+    UsersProvider usersProvider = context.watch<UsersProvider>();
+    MealsProvider().getAlNotifications(usersProvider.selectedUser!.userTypeId, usersProvider.selectedUser!.userId);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(

@@ -4,7 +4,6 @@ import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
-import 'package:foodlink/screens/food_screens/plan_meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/screens/widgets/image_container.dart';

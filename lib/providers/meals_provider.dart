@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
+import '../models/notification.dart';
 import '../services/meals_services.dart';
 
 class MealsProvider with ChangeNotifier {
@@ -13,6 +14,7 @@ class MealsProvider with ChangeNotifier {
 
   List<Meal> meals = [];
   List<Meal> favoriteMeals = [];
+  List<Notifications> notifications = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsPicked = false;
@@ -121,6 +123,28 @@ class MealsProvider with ChangeNotifier {
   Future<String> uploadImage(image) async {
     String? downloadUrl = await _ms.uploadImage(image);
     return downloadUrl!;
+  }
+
+  Future<Notifications> addNotification(Notifications notification) async {
+    var addedNotification = await _ms.addNotification(notification);
+    return addedNotification;
+  }
+  void getAlNotifications(userTypeId, userId) async {
+    try {
+      isLoading = true;
+      notifications.clear();
+      List<Notifications> fetchedNotifications =
+      await _ms.getAllNotifications(userTypeId, userId);
+      for (var doc in fetchedNotifications) {
+        Notifications notification =Notifications(text: doc.text, userId: doc.userId, userTypeId: doc.userTypeId, mealId: doc.mealId);
+        notifications.add(notification);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
   }
 
   void resetValues() {

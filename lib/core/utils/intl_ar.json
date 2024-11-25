@@ -72,7 +72,7 @@
   "edit_data": "تعديل معلومات الحساب",
   "privacy":"الخصوصية",
   "language": "اللغة",
-  "notifications": "الاشعارات",
+  "notifications": "الإشعارات",
   "updates": "التحديثات",
   "contact_us": "تواصل معنا",
   "help_support": "المساعدة والدعم",
@@ -89,7 +89,8 @@
   "back": "رجوع",
   "meal_planning": "جدولة\nالوجبات",
   "meal_planning_inline": "جدولة الوجبات",
-  "meal_plan": "خطة أسبوعية مُختارة"
+  "meal_plan": "خطة أسبوعية مُختارة",
+  "user_notification_text": "شريكك يقترح {meal_name} لهذا اليوم، أنقر للاطّلاع على المكونات اللازمة."
 
 
 }

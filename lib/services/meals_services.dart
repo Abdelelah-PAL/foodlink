@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../models/notification.dart';
+
 class MealsServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;
 
@@ -91,6 +93,40 @@ class MealsServices with ChangeNotifier {
 
       Meal updatedMeal = Meal.fromJson(docSnapshot.data()!, meal.documentId);
       return updatedMeal;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<Notifications> addNotification(Notifications notification) async {
+    try {
+      var addedNotification = await _firebaseFireStore
+          .collection('notifications')
+          .add(notification.toMap());
+      var mealSnapshot = await addedNotification.get();
+
+      return Notifications.fromJson(mealSnapshot.data()!);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<List<Notifications>> getAllNotifications(
+      int userTypeId, String userId) async {
+    try {
+
+      QuerySnapshot<Map<String, dynamic>> notificationsQuery =
+          await _firebaseFireStore
+              .collection('notifications')
+              .where('user_type_id', isEqualTo: userTypeId)
+              .where('user_id', isEqualTo: userId)
+              .get();
+
+      List<Notifications> notifications = notificationsQuery.docs.map((doc) {
+        return Notifications.fromJson(doc.data());
+      }).toList();
+
+      return notifications;
     } catch (ex) {
       rethrow;
     }

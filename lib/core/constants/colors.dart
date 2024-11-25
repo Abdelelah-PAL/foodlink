@@ -12,5 +12,6 @@ class AppColors {
   static const Color defaultBorderColor =  Color(0xD3D3D3D3);
   static const Color languageContainerColor = Color(0xfff6f6f6);
   static const Color inActiveThumbColor = Color(0xff454545);
+  static const Color tabBarIndicatorColor =Color(0xff104A51);
 
 }

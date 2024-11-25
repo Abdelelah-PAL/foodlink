@@ -3,7 +3,9 @@ import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/notifications_screen/notifications_screen.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
@@ -24,8 +26,8 @@ class _AppHeaderState extends State<AppHeader> {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     DashboardProvider dashboardProviderWatcher =
         context.watch<DashboardProvider>();
-    String template = TranslationService().translate("greeting");
-    template = template.replaceFirst(
+    String greeting = TranslationService().translate("greeting");
+    greeting = greeting.replaceFirst(
         '{name}',
         UsersProvider().selectedUser?.username ??
             (UsersProvider().selectedUser?.userTypeId == UserTypes.user
@@ -45,8 +47,11 @@ class _AppHeaderState extends State<AppHeader> {
               SizeConfig.customSizedBox(
                 24,
                 24,
-                const Icon(
-                    color: Colors.black, Icons.notifications_none_outlined),
+                IconButton(
+                  onPressed: () => Get.to(const NotificationsScreen()),
+                  icon: const Icon(
+                      color: Colors.black, Icons.notifications_none_outlined),
+                ),
               ),
               Expanded(
                 child: Column(
@@ -192,7 +197,7 @@ class _AppHeaderState extends State<AppHeader> {
                 ? Alignment.centerLeft
                 : Alignment.centerRight,
             child: Text(
-              template,
+              greeting,
               textDirection: settingsProvider.language == 'en'
                   ? TextDirection.ltr
                   : TextDirection.rtl,
