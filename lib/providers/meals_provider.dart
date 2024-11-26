@@ -3,7 +3,9 @@ import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
 import '../models/notification.dart';
+import '../models/user_details.dart';
 import '../services/meals_services.dart';
+import '../services/translation_services.dart';
 
 class MealsProvider with ChangeNotifier {
   static final MealsProvider _instance = MealsProvider._internal();
@@ -129,20 +131,28 @@ class MealsProvider with ChangeNotifier {
     var addedNotification = await _ms.addNotification(notification);
     return addedNotification;
   }
-  void getAlNotifications(userTypeId, userId) async {
+  Future<void> getAllNotifications(userTypeId, userId) async {
     try {
       isLoading = true;
       notifications.clear();
+
+
       List<Notifications> fetchedNotifications =
       await _ms.getAllNotifications(userTypeId, userId);
       for (var doc in fetchedNotifications) {
-        Notifications notification =Notifications(text: doc.text, userId: doc.userId, userTypeId: doc.userTypeId, mealId: doc.mealId);
+        Notifications notification = Notifications(
+            userId: doc.userId,
+            imageUrl: doc.imageUrl,
+            userTypeId: doc.userTypeId,
+            mealName: doc.mealName,
+            timestamp: doc.timestamp
+        );
         notifications.add(notification);
       }
       isLoading = false;
       notifyListeners();
     } catch (ex) {
-      isLoading = false;
+        isLoading = false;
       rethrow;
     }
   }

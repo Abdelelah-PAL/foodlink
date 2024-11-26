@@ -90,7 +90,6 @@
   "meal_planning": "جدولة\nالوجبات",
   "meal_planning_inline": "جدولة الوجبات",
   "meal_plan": "خطة أسبوعية مُختارة",
-  "user_notification_text": "شريكك يقترح {meal_name} لهذا اليوم، أنقر للاطّلاع على المكونات اللازمة."
-
-
+  "user_notification_text_1": "شريكك يقترح ",
+  "user_notification_text_2":" لهذا اليوم، أنقر للاطّلاع على المكونات اللازمة للإعداد."
 }

@@ -24,8 +24,6 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     DashboardProvider dashboardProviderWatcher =
         context.watch<DashboardProvider>();
-    UsersProvider usersProvider = context.watch<UsersProvider>();
-    MealsProvider().getAlNotifications(usersProvider.selectedUser!.userTypeId, usersProvider.selectedUser!.userId);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,

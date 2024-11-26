@@ -12,40 +12,44 @@ import '../widgets/custom_text.dart';
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
-
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: true);
-    MealsProvider mealsProvider = Provider.of<MealsProvider>(context, listen: true);
+    SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: true);
+    MealsProvider mealsProvider =
+        Provider.of<MealsProvider>(context, listen: true);
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        bottomNavigationBar: const CustomBottomNavigationBar(fromDashboard: false),
+        bottomNavigationBar:
+            const CustomBottomNavigationBar(fromDashboard: false),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalWidth(50),
-                horizontal: SizeConfig.getProportionalWidth(20)),
-            child:  Row(
-              children: [
-                const CustomBackButton(),
-                SizeConfig.customSizedBox(90, null, null),
-                const CustomText(
-                    isCenter: true,
-                    text: "notifications",
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ],
-            ),
-          )),
-      body:  CustomTabBar(settingsProvider:settingsProvider, notifications: mealsProvider.notifications,)
-    );
+            preferredSize:
+                Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.getProportionalWidth(50),
+                  horizontal: SizeConfig.getProportionalWidth(20)),
+              child: Row(
+                children: [
+                  const CustomBackButton(),
+                  SizeConfig.customSizedBox(90, null, null),
+                  const CustomText(
+                      isCenter: true,
+                      text: "notifications",
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ],
+              ),
+            )),
+        body: CustomTabBar(
+          settingsProvider: settingsProvider,
+          notifications: mealsProvider.notifications,
+          meals: mealsProvider.meals,
+        ));
   }
 }

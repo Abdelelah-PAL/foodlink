@@ -11,10 +11,14 @@ import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/meals_provider.dart';
 import '../../services/translation_services.dart';
 
 class AppHeader extends StatefulWidget {
-  const AppHeader({super.key});
+  const AppHeader({super.key, required this.userId, required this.userTypeId});
+
+  final String userId;
+  final int userTypeId;
 
   @override
   State<AppHeader> createState() => _AppHeaderState();
@@ -48,7 +52,11 @@ class _AppHeaderState extends State<AppHeader> {
                 24,
                 24,
                 IconButton(
-                  onPressed: () => Get.to(const NotificationsScreen()),
+                  onPressed: () async {
+                    await MealsProvider()
+                        .getAllNotifications(widget.userTypeId, widget.userId);
+                    Get.to(const NotificationsScreen());
+                  },
                   icon: const Icon(
                       color: Colors.black, Icons.notifications_none_outlined),
                 ),

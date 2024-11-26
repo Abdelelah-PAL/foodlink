@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/screens/food_screens/widgets/healthy_icon_text.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
@@ -20,10 +21,15 @@ class HealthyFood extends StatelessWidget {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
+    UsersProvider usersProvider =
+        Provider.of<UsersProvider>(context, listen: true);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-        child: const AppHeader(),
+        child: AppHeader(
+          userId: usersProvider.selectedUser!.userId,
+          userTypeId: usersProvider.selectedUser!.userTypeId!,
+        ),
       ),
       backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar:
@@ -130,12 +136,20 @@ class HealthyFood extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     HealthyIconText(
-                        icon: Assets.measurement, text: "measurements", settingsProvider: settingsProvider,),
-                    SizeConfig.customSizedBox(20, null, null),
-                    HealthyIconText(icon: Assets.calories, text: "calories", settingsProvider: settingsProvider),
+                      icon: Assets.measurement,
+                      text: "measurements",
+                      settingsProvider: settingsProvider,
+                    ),
                     SizeConfig.customSizedBox(20, null, null),
                     HealthyIconText(
-                        icon: Assets.nutritionSystem, text: "nutrition_system", settingsProvider: settingsProvider),
+                        icon: Assets.calories,
+                        text: "calories",
+                        settingsProvider: settingsProvider),
+                    SizeConfig.customSizedBox(20, null, null),
+                    HealthyIconText(
+                        icon: Assets.nutritionSystem,
+                        text: "nutrition_system",
+                        settingsProvider: settingsProvider),
                   ],
                 )
               : Row(
@@ -143,12 +157,19 @@ class HealthyFood extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     HealthyIconText(
-                        icon: Assets.nutritionSystem, text: "nutrition_system", settingsProvider: settingsProvider),
-                    SizeConfig.customSizedBox(20, null, null),
-                    HealthyIconText(icon: Assets.calories, text: "calories", settingsProvider: settingsProvider),
+                        icon: Assets.nutritionSystem,
+                        text: "nutrition_system",
+                        settingsProvider: settingsProvider),
                     SizeConfig.customSizedBox(20, null, null),
                     HealthyIconText(
-                        icon: Assets.measurement, text: "measurements", settingsProvider: settingsProvider),
+                        icon: Assets.calories,
+                        text: "calories",
+                        settingsProvider: settingsProvider),
+                    SizeConfig.customSizedBox(20, null, null),
+                    HealthyIconText(
+                        icon: Assets.measurement,
+                        text: "measurements",
+                        settingsProvider: settingsProvider),
                   ],
                 ),
         ),

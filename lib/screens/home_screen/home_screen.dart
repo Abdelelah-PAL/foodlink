@@ -8,6 +8,7 @@ import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: PreferredSize(
               preferredSize:
                   Size.fromHeight(SizeConfig.getProportionalHeight(135)),
-              child: const AppHeader(),
+              child: AppHeader(
+                userId: usersProviderWatcher.selectedUser!.userId,
+                userTypeId: usersProviderWatcher.selectedUser!.userTypeId!,),
             ),
             backgroundColor: AppColors.backgroundColor,
             body: Padding(

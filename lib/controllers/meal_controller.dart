@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/models/notification.dart';
 import 'package:foodlink/models/user_details.dart';
@@ -83,17 +84,21 @@ class MealController {
   }
 
   Future<void> addUserNotification(mealsProvider, Meal meal) async {
-    String notificationText =
-        TranslationService().translate("user_notification_text");
     UserDetails userToNotify = UsersProvider().loggedInUsers.firstWhere(
         (user) => user.userTypeId != UsersProvider().selectedUser!.userTypeId);
 
-    notificationText = notificationText.replaceFirst('{meal_name}', meal.name);
-    var addedNotification = await mealsProvider.addNotification(Notifications(
-        text: notificationText,
-        imageUrl: meal.imageUrl,
-        userId: userToNotify.userId,
-        userTypeId: userToNotify.userTypeId!,
-        mealId: meal.documentId!));
+    await mealsProvider.addNotification(Notifications(
+      imageUrl: meal.imageUrl,
+      userId: userToNotify.userId,
+      userTypeId: userToNotify.userTypeId!,
+      mealName: meal.name,
+      timestamp: Timestamp.now(),
+    ));
+  }
+
+  Meal findMealById(meals, id) {
+    Meal meal = meals.firstWhere((meal) => meal.documentId == id);
+    print(meal);
+    return meal;
   }
 }

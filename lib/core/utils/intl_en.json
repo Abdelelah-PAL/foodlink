@@ -90,5 +90,7 @@
   "meal_planning": "Meal\nPlanning",
   "meal_planning_inline": "Meal Planning",
   "meal_plan":"Chosen Meal Plan",
-  "user_notification_text":"your FoodLink partner suggests {meal_name} for today, tap to recognize missing ingredients."
+  "user_notification_text_1":"your FoodLink partner suggests ",
+  "user_notification_text_2":" for today, tap to recognize missing ingredients to prepare it."
+
 }
