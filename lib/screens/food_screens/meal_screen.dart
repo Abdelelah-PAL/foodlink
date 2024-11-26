@@ -29,7 +29,7 @@ class MealScreen extends StatelessWidget {
         children: [
           MealImageContainer(
               isAddSource: false,
-              meal: meal,
+              imageUrl: meal.imageUrl,
               mealsProvider: context.watch<MealsProvider>()),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -38,7 +38,7 @@ class MealScreen extends StatelessWidget {
             child: Column(
               children: [
                 NameRow(
-                  meal: meal,
+                  name: meal.name,
                   fontSize: 30,
                   textWidth: 250,
                   settingsProvider: settingsProvider,

@@ -1,20 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
-import '../../../models/meal.dart';
 import '../../../services/translation_services.dart';
 import '../../widgets/custom_back_button.dart';
 
 class MealImageContainer extends StatefulWidget {
   const MealImageContainer(
-      {super.key, required this.isAddSource, this.meal, this.mealsProvider});
+      {super.key, required this.isAddSource, this.imageUrl, this.mealsProvider});
 
   final bool isAddSource;
-  final Meal? meal;
+  final String? imageUrl;
   final MealsProvider? mealsProvider;
 
   @override
@@ -42,11 +40,10 @@ class _MealImageContainerState extends State<MealImageContainer> {
                       BorderSide(width: 1, color: AppColors.defaultBorderColor),
                 )),
             child: !widget.isAddSource &&
-                    widget.meal != null &&
-                    widget.meal!.imageUrl != null &&
-                    widget.meal!.imageUrl!.isNotEmpty
+                    widget.imageUrl != null &&
+                    widget.imageUrl!.isNotEmpty
                 ? Image.network(
-                    widget.meal!.imageUrl!,
+                    widget.imageUrl!,
                     fit: BoxFit.fill,
                   )
                 : null,

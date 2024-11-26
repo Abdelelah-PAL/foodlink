@@ -4,7 +4,7 @@ import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/screens/food_screens/widgets/custom_meal_textfield.dart';
+import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredient_box.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
@@ -44,12 +44,13 @@ class _AddMealScreenState extends State<AddMealScreen> {
               MealImageContainer(
                   isAddSource: widget.isAddScreen,
                   mealsProvider: mealsProvider,
-                  meal: widget.meal),
+                  imageUrl: widget.meal?.imageUrl
+              ),
               SizeConfig.customSizedBox(null, 20, null),
-              CustomMealTextField(
-                width: SizeConfig.getProportionalWidth(348),
-                height: SizeConfig.getProportionalHeight(37),
-                headerText: TranslationService().translate("meal_name"),
+              CustomAppTextField(
+                width: 348,
+                height: 37,
+                headerText: "meal_name",
                 icon: Assets.mealNameIcon,
                 controller: MealController().nameController,
                 maxLines: 2,
@@ -117,10 +118,10 @@ class _AddMealScreenState extends State<AddMealScreen> {
                           controller: mealsProvider.ingredientsControllers[index]);
                     },
                   )),
-              CustomMealTextField(
-                width: SizeConfig.getProportionalWidth(348),
-                height: SizeConfig.getProportionalHeight(161),
-                headerText: TranslationService().translate("recipe"),
+              CustomAppTextField(
+                width: 348,
+                height: 161,
+                headerText: "recipe",
                 icon: Assets.mealRecipe,
                 controller: MealController().recipeController,
                 maxLines: 10,

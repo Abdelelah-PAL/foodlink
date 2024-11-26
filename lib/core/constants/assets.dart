@@ -44,6 +44,7 @@ class Assets {
   static String measurement ="$rootIcons/measurement.png";
   static String calories ="$rootIcons/calories.png";
   static String nutritionSystem ="$rootIcons/nutrition_system.png";
+  static String note ="$rootIcons/note.png";
 
 
 

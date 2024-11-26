@@ -68,7 +68,7 @@ class _ListMealTileState extends State<ListMealTile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NameRow(
-                              meal: widget.meal,
+                              name: widget.meal.name,
                               fontSize: 15,
                               textWidth: 115,
                               settingsProvider: settingsProvider,
@@ -120,7 +120,7 @@ class _ListMealTileState extends State<ListMealTile> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           NameRow(
-                            meal: widget.meal,
+                            name: widget.meal.name,
                             fontSize: 15,
                             textWidth: 115,
                             settingsProvider: settingsProvider,

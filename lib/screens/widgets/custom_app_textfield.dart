@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/constants/fonts.dart';
-import '../../../providers/settings_provider.dart';
+import 'package:foodlink/services/translation_services.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
+import '../../providers/settings_provider.dart';
 
-class CustomMealTextField extends StatelessWidget {
-  const CustomMealTextField(
+class CustomAppTextField extends StatelessWidget {
+  const CustomAppTextField(
       {super.key,
       required this.width,
       required this.height,
@@ -43,7 +44,7 @@ class CustomMealTextField extends StatelessWidget {
                   ),
                   CustomText(
                     isCenter: false,
-                    text: headerText,
+                    text: TranslationService().translate(headerText),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -58,7 +59,7 @@ class CustomMealTextField extends StatelessWidget {
                 children: [
                   CustomText(
                     isCenter: false,
-                    text: headerText,
+                    text: TranslationService().translate(headerText),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -71,8 +72,8 @@ class CustomMealTextField extends StatelessWidget {
               ),
             ),
       Container(
-        width: width,
-        height: height,
+        width:SizeConfig.getProportionalWidth(width),
+        height: SizeConfig.getProportionalHeight(height),
         margin: EdgeInsets.symmetric(
             vertical: SizeConfig.getProportionalHeight(10)),
         decoration: BoxDecoration(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/screens/notifications_screen/missing_ingredients_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../models/meal.dart';
@@ -25,10 +27,11 @@ class NotificationsTab extends StatelessWidget {
     return ListView.builder(
       itemCount: notifications.length,
       itemBuilder: (context, index) {
-        Duration diff = DateTime.now().difference(notifications[index].timestamp.toDate());
-
+        String duration = MealController().getDuration(
+            notifications[index].timestamp, settingsProvider.language);
 
         return ListTile(
+          onTap: () => Get.to(MissingIngredientsScreen(notification: notifications[index])),
           leading: settingsProvider.language == "en"
               ? notifications[index].imageUrl != null
                   ? CircleAvatar(
@@ -93,7 +96,8 @@ class NotificationsTab extends StatelessWidget {
           ),
           subtitle: CustomText(
             isCenter: false,
-            text: diff.toString(),
+            text: duration,
+            color: AppColors.notificationDurationColor,
             fontSize: 12,
             fontWeight: FontWeight.normal,
           ),

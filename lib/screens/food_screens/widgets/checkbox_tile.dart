@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
@@ -57,6 +58,9 @@ class CheckboxTile extends StatelessWidget {
                     value: mealsProvider.checkboxValues[index],
                     onChanged: (bool? value) {
                       mealsProvider.toggleCheckedIngredient(value, index);
+                      if(value == true) {
+                        MealController().missingIngredients.add(text);
+                      }
                     },
                   )
                 ],

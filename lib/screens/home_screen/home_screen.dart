@@ -8,7 +8,6 @@ import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
-import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
 
 class HomeScreen extends StatefulWidget {

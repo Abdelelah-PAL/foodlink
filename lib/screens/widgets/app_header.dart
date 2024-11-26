@@ -48,19 +48,20 @@ class _AppHeaderState extends State<AppHeader> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizeConfig.customSizedBox(
-                24,
-                24,
-                IconButton(
-                  onPressed: () async {
-                    await MealsProvider()
-                        .getAllNotifications(widget.userTypeId, widget.userId);
-                    Get.to(const NotificationsScreen());
-                  },
-                  icon: const Icon(
-                      color: Colors.black, Icons.notifications_none_outlined),
+                Material(
+                  type: MaterialType.transparency,
+                  child: IconButton(
+                    onPressed: () async {
+                      await MealsProvider()
+                          .getAllNotifications(widget.userTypeId, widget.userId);
+                      Get.to(const NotificationsScreen());
+                    },
+                    icon: const Icon(
+                        color: Colors.black, Icons.notifications_none_outlined),
+                    splashColor: Colors.transparent, // Remove splash effect
+                    highlightColor: Colors.transparent,
+                  ),
                 ),
-              ),
               Expanded(
                 child: Column(
                   children: [

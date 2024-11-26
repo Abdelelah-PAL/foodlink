@@ -13,5 +13,6 @@ class AppColors {
   static const Color languageContainerColor = Color(0xfff6f6f6);
   static const Color inActiveThumbColor = Color(0xff454545);
   static const Color tabBarIndicatorColor =Color(0xff104A51);
+  static const Color notificationDurationColor = Color(0xff6C6C6C);
 
 }
