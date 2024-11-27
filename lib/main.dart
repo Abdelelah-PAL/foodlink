@@ -59,7 +59,13 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           checkboxTheme: CheckboxThemeData(
-        fillColor: WidgetStateProperty.all(AppColors.primaryColor),
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors
+                .primaryColor; // Change this to the color you want when checked
+          }
+          return AppColors.backgroundColor;
+        }),
         checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
       )),
       home: _isLoading
