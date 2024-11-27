@@ -38,12 +38,12 @@ class NotificationsServices with ChangeNotifier {
     }
   }
 
-  Future<void> setNotificationsToSeen() async {
+  Future<void> setNotificationsToSeen(userTypeId) async {
     try {
       final collectionRef =
           FirebaseFirestore.instance.collection('notifications');
       final querySnapshot =
-          await collectionRef.where('seen', isEqualTo: false).get();
+          await collectionRef.where('seen', isEqualTo: false).where('user_type_id', isEqualTo: userTypeId).get();
 
       final batch = FirebaseFirestore.instance.batch();
 

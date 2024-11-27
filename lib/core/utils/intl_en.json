@@ -90,8 +90,9 @@
   "meal_planning": "Meal\nPlanning",
   "meal_planning_inline": "Meal Planning",
   "meal_plan": "Chosen Meal Plan",
-  "user_notification_text_1": "Your FoodLink partner suggests ",
+  "notification_text": "Your FoodLink partner suggests ",
   "user_notification_text_2": " for today, tap to recognize missing ingredients to prepare it.",
+  "cooker_notification_text_2": " for today, tap to recognize ingredients and recipe.",
   "since": "ago",
   "duration": "Since {duration} ",
   "second": " second ",
@@ -112,5 +113,6 @@
   "add_notes": "ِAdd your notes",
   "notification_sent": "Notification has been sent successfully",
   "no_notifications": "You have no notifications",
-  "no_updates": "You have no updates"
+  "no_updates": "You have no updates",
+  "request_meal": "Request Meal"
 }

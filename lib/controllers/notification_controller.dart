@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/models/notification.dart';
 import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/providers/notification_provider.dart';
@@ -26,14 +27,14 @@ class NotificationController {
 
   Future<void> addUserNotification(meal) async {
     UserDetails userToNotify = UsersProvider().loggedInUsers.firstWhere(
-        (user) => user.userTypeId != UsersProvider().selectedUser!.userTypeId);
+        (user) => user.userTypeId == UserTypes.user);
     if (MealController().missingIngredients.isNotEmpty) {
       await NotificationsProvider().addNotification(Notifications(
         imageUrl: meal.imageUrl,
         userId: userToNotify.userId,
         userTypeId: userToNotify.userTypeId!,
         mealName: meal.name,
-        missingIngredients: MealController().missingIngredients,
+        missingIngredients:  MealController().missingIngredients,
         notes: addNoteController.text,
         seen: false,
         timestamp: Timestamp.now(),
@@ -41,6 +42,21 @@ class NotificationController {
     }
     MealController().missingIngredients.clear();
     MealController().addNoteController.clear();
+  }
+
+  Future<void> addCookerNotification(meal) async {
+    UserDetails userToNotify = UsersProvider().loggedInUsers.firstWhere(
+            (user) => user.userTypeId == UserTypes.cooker);
+      await NotificationsProvider().addNotification(Notifications(
+        imageUrl: meal.imageUrl,
+        userId: userToNotify.userId,
+        userTypeId: userToNotify.userTypeId!,
+        mealName: meal.name,
+        missingIngredients:  [],
+        notes: null,
+        seen: false,
+        timestamp: Timestamp.now(),
+      ));
   }
 
   String getDuration(Timestamp notificationTime, String language) {

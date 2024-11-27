@@ -59,7 +59,7 @@ class _AppHeaderState extends State<AppHeader> {
                     child: IconButton(
                       onPressed: () async {
                         Get.to(const NotificationsScreen());
-                        await NotificationsProvider().clearUnseenNotification();
+                        await NotificationsProvider().clearUnseenNotification(usersProvider.selectedUser!.userTypeId);
                       },
                       icon: const Icon(
                           color: Colors.black,
@@ -68,7 +68,7 @@ class _AppHeaderState extends State<AppHeader> {
                       highlightColor: Colors.transparent,
                     ),
                   ),
-                  if (notificationsProvider.unseenNotifications.isNotEmpty)
+                  if (usersProvider.selectedUser!.userTypeId == UserTypes.user && notificationsProvider.userUnseenNotifications.isNotEmpty)
                     Positioned(
                       left: SizeConfig.getProportionalWidth(25),
                       top: SizeConfig.getProportionalHeight(7),
@@ -80,7 +80,26 @@ class _AppHeaderState extends State<AppHeader> {
                             color: AppColors.primaryColor),
                         child: Center(
                           child: Text(
-                            notificationsProvider.unseenNotifications.length
+                            notificationsProvider.userUnseenNotifications.length
+                                .toString(),
+                            style: const TextStyle(fontSize: 8),
+                          ),
+                        ),
+                      ),
+                    )
+                  else if(usersProvider.selectedUser!.userTypeId == UserTypes.cooker && notificationsProvider.cookerUnseenNotifications.isNotEmpty)
+                    Positioned(
+                      left: SizeConfig.getProportionalWidth(25),
+                      top: SizeConfig.getProportionalHeight(7),
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primaryColor),
+                        child: Center(
+                          child: Text(
+                            notificationsProvider.cookerUnseenNotifications.length
                                 .toString(),
                             style: const TextStyle(fontSize: 8),
                           ),

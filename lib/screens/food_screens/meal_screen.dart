@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/controllers/notification_controller.dart';
+import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
 import 'package:foodlink/screens/food_screens/meals_list_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
@@ -24,6 +28,7 @@ class MealScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context, listen: true);
+    UsersProvider usersProvider = Provider.of<UsersProvider>(context, listen: true);
     return Scaffold(
       body: Column(
         children: [
@@ -61,7 +66,8 @@ class MealScreen extends StatelessWidget {
           Padding(
             padding:
                 EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
-            child: Column(
+            child: usersProvider.selectedUser!.userTypeId == UserTypes.cooker ?
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomButton(
@@ -95,8 +101,31 @@ class MealScreen extends StatelessWidget {
                     },
                     text: TranslationService().translate("check_ingredients"),
                     width: 216,
-                    height: 45),
-              ],
+                    height: 45),]
+            )
+            :Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                      onTap: () {
+                        Get.to(MealsListScreen(
+                            index: meal.categoryId - 1,
+                            categoryId: meal.categoryId));
+                      },
+                      text: TranslationService().translate("proceed"),
+                      width: 150,
+                      height: 45),
+                  SizeConfig.customSizedBox(20, null, null),
+                  CustomButton(
+                      onTap: () async {
+                       await NotificationController().addCookerNotification(meal);
+                        MealController().showSuccessDialog(context, settingsProvider);
+                      },
+                      text: TranslationService().translate("request_meal"),
+                      width: 150,
+                      height: 45),
+                  SizeConfig.customSizedBox(null, 20, null),
+                  ]
             ),
           )
         ],

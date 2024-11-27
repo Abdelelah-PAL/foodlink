@@ -86,7 +86,6 @@ class MealController {
     Get.to(MealScreen(meal: updatedMeal));
   }
 
-
   Meal findMealById(meals, id) {
     Meal meal = meals.firstWhere((meal) => meal.documentId == id);
     return meal;

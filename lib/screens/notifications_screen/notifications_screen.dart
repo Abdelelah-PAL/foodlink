@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/notifications_screen/widgets/custom_tab_bar.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/user_types.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
 import '../dashboard/widgets/custom_bottom_navigation_bar.dart';
@@ -24,8 +26,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         Provider.of<SettingsProvider>(context, listen: true);
     MealsProvider mealsProvider =
         Provider.of<MealsProvider>(context, listen: true);
+    UsersProvider usersProvider =
+        Provider.of<UsersProvider>(context, listen: true);
     NotificationsProvider notificationsProvider =
-    Provider.of<NotificationsProvider>(context, listen: true);
+        Provider.of<NotificationsProvider>(context, listen: true);
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         bottomNavigationBar:
@@ -51,8 +55,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             )),
         body: CustomTabBar(
           settingsProvider: settingsProvider,
-          notifications: notificationsProvider.notifications,
+          notifications:
+              usersProvider.selectedUser!.userTypeId == UserTypes.user
+                  ? notificationsProvider.userNotifications
+                  : notificationsProvider.cookerNotifications,
           meals: mealsProvider.meals,
+          usersProvider: usersProvider,
         ));
   }
 }

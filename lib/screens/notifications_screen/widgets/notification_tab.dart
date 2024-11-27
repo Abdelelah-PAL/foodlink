@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/notification_controller.dart';
+import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/food_screens/meal_screen.dart';
 import 'package:foodlink/screens/notifications_screen/missing_ingredients_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
@@ -16,11 +19,13 @@ class NotificationsTab extends StatelessWidget {
       {super.key,
       required this.notifications,
       required this.meals,
-      required this.settingsProvider});
+      required this.settingsProvider,
+      required this.usersProvider});
 
   final List<Notifications> notifications;
   final List<Meal> meals;
   final SettingsProvider settingsProvider;
+  final UsersProvider usersProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +43,10 @@ class NotificationsTab extends StatelessWidget {
                   notifications[index].timestamp, settingsProvider.language);
 
               return ListTile(
-                onTap: () => Get.to(MissingIngredientsScreen(
-                    notification: notifications[index])),
+                onTap: () => usersProvider.selectedUser!.userTypeId == UserTypes.user
+                  ?Get.to(MissingIngredientsScreen(
+                    notification: notifications[index]))
+                    :Get.to(MealScreen(meal: meals[index])),
                 leading: settingsProvider.language == "en"
                     ? notifications[index].imageUrl != null
                         ? CircleAvatar(
@@ -75,8 +82,7 @@ class NotificationsTab extends StatelessWidget {
                       : TextDirection.rtl,
                   text: TextSpan(children: [
                     TextSpan(
-                      text: TranslationService()
-                          .translate('user_notification_text_1'),
+                      text: TranslationService().translate('notification_text'),
                       style: TextStyle(
                           fontSize: 12,
                           color: AppColors.fontColor,
@@ -92,8 +98,12 @@ class NotificationsTab extends StatelessWidget {
                           fontFamily: AppFonts.primaryFont),
                     ),
                     TextSpan(
-                      text: TranslationService()
-                          .translate('user_notification_text_2'),
+                      text: usersProvider.selectedUser!.userTypeId ==
+                              UserTypes.user
+                          ? TranslationService()
+                              .translate('user_notification_text_2')
+                          : TranslationService()
+                              .translate('cooker_notification_text_2'),
                       style: TextStyle(
                           fontSize: 12,
                           color: AppColors.fontColor,
