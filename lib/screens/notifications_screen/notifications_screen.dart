@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/notifications_screen/widgets/custom_tab_bar.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         Provider.of<SettingsProvider>(context, listen: true);
     MealsProvider mealsProvider =
         Provider.of<MealsProvider>(context, listen: true);
+    NotificationsProvider notificationsProvider =
+    Provider.of<NotificationsProvider>(context, listen: true);
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         bottomNavigationBar:
@@ -48,7 +51,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             )),
         body: CustomTabBar(
           settingsProvider: settingsProvider,
-          notifications: mealsProvider.notifications,
+          notifications: notificationsProvider.notifications,
           meals: mealsProvider.meals,
         ));
   }

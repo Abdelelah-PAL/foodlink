@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/controllers/notification_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/screens/notifications_screen/missing_ingredients_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
@@ -24,85 +24,93 @@ class NotificationsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: notifications.length,
-      itemBuilder: (context, index) {
-        String duration = MealController().getDuration(
-            notifications[index].timestamp, settingsProvider.language);
+    return notifications.isEmpty
+        ? const Center(
+            child: CustomText(
+                isCenter: true,
+                text: "no_notifications",
+                fontSize: 16,
+                fontWeight: FontWeight.normal))
+        : ListView.builder(
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              String duration = NotificationController().getDuration(
+                  notifications[index].timestamp, settingsProvider.language);
 
-        return ListTile(
-          onTap: () => Get.to(MissingIngredientsScreen(notification: notifications[index])),
-          leading: settingsProvider.language == "en"
-              ? notifications[index].imageUrl != null
-                  ? CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(notifications[index].imageUrl!))
-                  : Container(
-                      width: SizeConfig.getProportionalWidth(42),
-                      height: SizeConfig.getProportionalHeight(42),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.widgetsColor),
-                    )
-              : null,
-          trailing: settingsProvider.language == "en"
-              ? null
-              : notifications[index].imageUrl != null
-                  ? CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(notifications[index].imageUrl!))
-                  : Container(
-                      width: SizeConfig.getProportionalWidth(42),
-                      height: SizeConfig.getProportionalHeight(42),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.widgetsColor),
+              return ListTile(
+                onTap: () => Get.to(MissingIngredientsScreen(
+                    notification: notifications[index])),
+                leading: settingsProvider.language == "en"
+                    ? notifications[index].imageUrl != null
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(notifications[index].imageUrl!))
+                        : Container(
+                            width: SizeConfig.getProportionalWidth(42),
+                            height: SizeConfig.getProportionalHeight(42),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.widgetsColor),
+                          )
+                    : null,
+                trailing: settingsProvider.language == "en"
+                    ? null
+                    : notifications[index].imageUrl != null
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(notifications[index].imageUrl!))
+                        : Container(
+                            width: SizeConfig.getProportionalWidth(42),
+                            height: SizeConfig.getProportionalHeight(42),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.widgetsColor),
+                          ),
+                title: RichText(
+                  textAlign: settingsProvider.language == "en"
+                      ? TextAlign.left
+                      : TextAlign.right,
+                  textDirection: settingsProvider.language == "en"
+                      ? TextDirection.ltr
+                      : TextDirection.rtl,
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: TranslationService()
+                          .translate('user_notification_text_1'),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.fontColor,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: AppFonts.primaryFont),
                     ),
-          title: RichText(
-            textAlign: settingsProvider.language == "en"
-                ? TextAlign.left
-                : TextAlign.right,
-            textDirection: settingsProvider.language == "en"
-                ? TextDirection.ltr
-                : TextDirection.rtl,
-            text: TextSpan(children: [
-              TextSpan(
-                text:
-                    TranslationService().translate('user_notification_text_1'),
-                style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.fontColor,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: AppFonts.primaryFont),
-              ),
-              TextSpan(
-                text: notifications[index].mealName,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.fontColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: AppFonts.primaryFont),
-              ),
-              TextSpan(
-                text:
-                    TranslationService().translate('user_notification_text_2'),
-                style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.fontColor,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: AppFonts.primaryFont),
-              ),
-            ]),
-          ),
-          subtitle: CustomText(
-            isCenter: false,
-            text: duration,
-            color: AppColors.notificationDurationColor,
-            fontSize: 12,
-            fontWeight: FontWeight.normal,
-          ),
-        );
-      },
-    );
+                    TextSpan(
+                      text: notifications[index].mealName,
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.fontColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: AppFonts.primaryFont),
+                    ),
+                    TextSpan(
+                      text: TranslationService()
+                          .translate('user_notification_text_2'),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.fontColor,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: AppFonts.primaryFont),
+                    ),
+                  ]),
+                ),
+                subtitle: CustomText(
+                  isCenter: false,
+                  text: duration,
+                  color: AppColors.notificationDurationColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                ),
+              );
+            },
+          );
   }
 }

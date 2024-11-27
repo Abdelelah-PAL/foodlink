@@ -110,5 +110,8 @@
   "ignore": "تجاهل",
   "notes": "ملاحظات",
   "add_notes": "أضف ملاحظاتك",
-  "notification_sent": "تم إرسال إشعار بنجاح"
+  "notification_sent": "تم إرسال إشعار بنجاح",
+  "no_notifications": "لا يوجد لديك إشعارات",
+  "no_updates": "لا يوجد لديك تحديثات"
+
 }

@@ -109,6 +109,8 @@
   "send_confirmation": "Send Confirmation",
   "ignore": "Ignore",
   "notes": "Notes",
-  "add_notes":"ِAdd your notes",
-  "notification_sent":"Notification has been sent successfully"
+  "add_notes": "ِAdd your notes",
+  "notification_sent": "Notification has been sent successfully",
+  "no_notifications": "You have no notifications",
+  "no_updates": "You have no updates"
 }

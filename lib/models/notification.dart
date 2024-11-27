@@ -6,8 +6,9 @@ class Notifications {
   int userTypeId;
   String mealName;
   List<String> missingIngredients;
-  Timestamp timestamp;
   String? notes;
+  bool seen;
+  Timestamp timestamp;
 
   Notifications(
       {this.imageUrl,
@@ -15,8 +16,9 @@ class Notifications {
       required this.userTypeId,
       required this.mealName,
       required this.missingIngredients,
-      required this.timestamp,
-      required this.notes});
+      required this.notes,
+      required this.seen,
+      required this.timestamp});
 
   factory Notifications.fromJson(Map<String, dynamic> json) {
     return Notifications(
@@ -25,8 +27,9 @@ class Notifications {
         userTypeId: json['user_type_id'],
         mealName: json['meal_name'],
         missingIngredients: List<String>.from(json['missing_ingredients']),
-        timestamp: json['timestamp'],
-        notes: json['notes']);
+        notes: json['notes'],
+        seen: json['seen'],
+        timestamp: json['timestamp']);
   }
 
   Map<String, dynamic> toMap() {
@@ -36,8 +39,9 @@ class Notifications {
       'user_type_id': userTypeId,
       'meal_name': mealName,
       'missing_ingredients': missingIngredients,
-      'timestamp': timestamp,
-      'notes': notes
+      'notes': notes,
+      'seen': seen,
+      'timestamp': timestamp
     };
   }
 }

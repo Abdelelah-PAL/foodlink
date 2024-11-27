@@ -6,6 +6,7 @@ import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/splash_screen/splash_screen.dart';
@@ -27,6 +28,7 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => DashboardProvider()),
     ChangeNotifierProvider(create: (ctx) => MealsProvider()),
     ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
+    ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
   ], child: const MyApp()));
 }
 
@@ -62,7 +64,7 @@ class MyAppState extends State<MyApp> {
         fillColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return AppColors
-                .primaryColor; // Change this to the color you want when checked
+                .primaryColor; 
           }
           return AppColors.backgroundColor;
         }),

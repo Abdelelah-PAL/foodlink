@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
-import '../models/notification.dart';
 import '../services/meals_services.dart';
 
 class MealsProvider with ChangeNotifier {
@@ -14,12 +13,11 @@ class MealsProvider with ChangeNotifier {
 
   List<Meal> meals = [];
   List<Meal> favoriteMeals = [];
-  List<Notifications> notifications = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsPicked = false;
   XFile? pickedFile;
-  int numberOfIngredients = 8;
+  int numberOfIngredients = 2;
   List<TextEditingController> ingredientsControllers = [
     TextEditingController(),
     TextEditingController(),
@@ -125,44 +123,10 @@ class MealsProvider with ChangeNotifier {
     return downloadUrl!;
   }
 
-  Future<Notifications> addNotification(Notifications notification) async {
-    var addedNotification = await _ms.addNotification(notification);
-    return addedNotification;
-  }
-
-  Future<void> getAllNotifications(userTypeId, userId) async {
-    try {
-      isLoading = true;
-      notifications.clear();
-
-      List<Notifications> fetchedNotifications =
-          await _ms.getAllNotifications(userTypeId, userId);
-      for (var doc in fetchedNotifications) {
-        Notifications notification = Notifications(
-          userId: doc.userId,
-          imageUrl: doc.imageUrl,
-          userTypeId: doc.userTypeId,
-          mealName: doc.mealName,
-          missingIngredients: doc.missingIngredients,
-          timestamp: doc.timestamp,
-          notes: doc.notes,
-        );
-        notifications.add(notification);
-        notifications.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-      }
-      isLoading = false;
-      notifyListeners();
-    } catch (ex) {
-      isLoading = false;
-      rethrow;
-    }
-  }
-
   void resetValues() {
     imageIsPicked = false;
     pickedFile = null;
-    numberOfIngredients = 8;
+    numberOfIngredients = 2;
     MealController().recipeController.clear();
     MealController().ingredientsController.clear();
     MealController().nameController.clear();
@@ -188,7 +152,7 @@ class MealsProvider with ChangeNotifier {
   void fillDataForEdition(meal) {
     MealController().nameController.text = meal.name;
     MealController().recipeController.text = meal.recipe ?? "";
-    numberOfIngredients = meal.ingredients.length;
+    numberOfIngredients = meal.ingredients.length + 1;
     meal.ingredients.asMap().forEach((index, controller) {
       if (index + 1 > ingredientsControllers.length) {
         ingredientsControllers.add(TextEditingController());

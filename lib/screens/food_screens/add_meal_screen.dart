@@ -33,6 +33,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
   Widget build(BuildContext context) {
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context, listen: true);
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -101,22 +102,27 @@ class _AddMealScreenState extends State<AddMealScreen> {
               SizeConfig.customSizedBox(
                   347,
                   130,
-                  GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 0,
-                            childAspectRatio: 2),
-                    itemCount: mealsProvider.numberOfIngredients,
-                    itemBuilder: (context, index) {
-                      if (index == mealsProvider.numberOfIngredients - 1) {
-                        return  AddIngredientBox(mealsProvider: mealsProvider,);
-                      }
-                      return IngredientBox(
-                          settingsProvider: settingsProvider,
-                          controller: mealsProvider.ingredientsControllers[index]);
-                    },
+                  Directionality(
+                    textDirection: settingsProvider.language == 'ar'
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 0,
+                              childAspectRatio: 2),
+                      itemCount: mealsProvider.numberOfIngredients,
+                      itemBuilder: (context, index) {
+                        if (index == mealsProvider.numberOfIngredients - 1) {
+                          return  AddIngredientBox(mealsProvider: mealsProvider,);
+                        }
+                        return IngredientBox(
+                            settingsProvider: settingsProvider,
+                            controller: mealsProvider.ingredientsControllers[index]);
+                      },
+                    ),
                   )),
               CustomAppTextField(
                 width: 348,

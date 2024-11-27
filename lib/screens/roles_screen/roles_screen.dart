@@ -14,6 +14,7 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/notification_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
@@ -89,6 +90,8 @@ class RolesScreen extends StatelessWidget {
                           .getUserByRoleAndId(
                               user.uid, dashboardProvider.roleId);
                       MealCategoriesProvider().getAllMealCategories();
+                      await NotificationsProvider()
+                          .getAllNotifications(UsersProvider().selectedUser!.userTypeId, UsersProvider().selectedUser!.userId);
                       Get.to(const Dashboard());
                     },
                     text: TranslationService().translate("next"),

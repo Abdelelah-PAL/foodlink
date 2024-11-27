@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/controllers/notification_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/checkbox_tile.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
@@ -25,8 +27,10 @@ class CheckIngredientsScreen extends StatelessWidget {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider =
         Provider.of<MealsProvider>(context, listen: true);
-
-    return Scaffold(  resizeToAvoidBottomInset: false,
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context, listen: true);
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => FocusScope.of(context).unfocus(),
@@ -105,50 +109,51 @@ class CheckIngredientsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizeConfig.customSizedBox(null, 30
-                , null),
-            if (settingsProvider.language == 'en') Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                          onTap: () {
-                            MealController()
-                                .addUserNotification(mealsProvider, meal);
-                          },
-                          text: TranslationService().translate("notify"),
-                          width: 137,
-                          height: 45),
-                      SizeConfig.customSizedBox(20, null, null),
-                      CustomButton(
-                          onTap: Get.back,
-                          text: TranslationService().translate("back"),
-                          width: 137,
-                          height: 45),
-                    ],
-                  ) else Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                          onTap: Get.back,
-                          text: TranslationService().translate("back"),
-                          width: 137,
-                          height: 45),
-                      SizeConfig.customSizedBox(20, null, null),
-                      CustomButton(
-                          onTap: () async {
-                            await MealController()
-                                .addUserNotification(mealsProvider, meal);
-                            MealController().showSuccessDialog(context, settingsProvider);
-                          },
-                          text: TranslationService().translate("notify"),
-                          width: 137,
-                          height: 45),
-                    ],
-                  )
+            SizeConfig.customSizedBox(null, 30, null),
+            if (settingsProvider.language == 'en')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                      onTap: () {
+                        NotificationController().addUserNotification(meal);
+                      },
+                      text: TranslationService().translate("notify"),
+                      width: 137,
+                      height: 45),
+                  SizeConfig.customSizedBox(20, null, null),
+                  CustomButton(
+                      onTap: Get.back,
+                      text: TranslationService().translate("back"),
+                      width: 137,
+                      height: 45),
+                ],
+              )
+            else
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                      onTap: Get.back,
+                      text: TranslationService().translate("back"),
+                      width: 137,
+                      height: 45),
+                  SizeConfig.customSizedBox(20, null, null),
+                  CustomButton(
+                      onTap: () async {
+                        await NotificationController()
+                            .addUserNotification(meal);
+                        MealController()
+                            .showSuccessDialog(context, settingsProvider);
+                      },
+                      text: TranslationService().translate("notify"),
+                      width: 137,
+                      height: 45),
+                ],
+              )
           ],
         ),
       ),
     );
   }
-
 }

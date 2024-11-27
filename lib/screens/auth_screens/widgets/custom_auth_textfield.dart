@@ -46,9 +46,7 @@ class _CustomAuthenticationTextFieldState
               ? EdgeInsets.only(left: SizeConfig.getProportionalWidth(10))
               : EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
           child: TextField(
-              textAlign: widget.settingsProvider.language == 'en'
-                  ? TextAlign.left
-                  : TextAlign.right,
+              textAlign:TextAlign.left,
               controller: widget.textEditingController,
               obscureText: widget.obscureText && !showPassword,
               decoration: InputDecoration(
@@ -56,8 +54,7 @@ class _CustomAuthenticationTextFieldState
                   horizontal: SizeConfig.getProportionalWidth(10),
                   vertical: SizeConfig.getProportionalWidth(5),
                 ),
-                suffixIcon: widget.settingsProvider.language == "en"
-                    ? widget.obscureText
+                suffixIcon:  widget.obscureText
                         ? IconButton(
                             icon: !showPassword
                                 ? const Icon(Icons.visibility)
@@ -68,21 +65,6 @@ class _CustomAuthenticationTextFieldState
                               });
                             },
                           )
-                        : null
-                    : null,
-                prefixIcon: widget.settingsProvider.language == "ar"
-                    ? widget.obscureText
-                        ? IconButton(
-                            icon: !showPassword
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                          )
-                        : null
                     : null,
                 hintText: widget.hintText,
                 hintStyle: TextStyle(

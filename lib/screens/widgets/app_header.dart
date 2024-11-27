@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
+import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/notifications_screen/notifications_screen.dart';
@@ -11,7 +12,6 @@ import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
-import '../../providers/meals_provider.dart';
 import '../../services/translation_services.dart';
 
 class AppHeader extends StatefulWidget {
@@ -28,13 +28,17 @@ class _AppHeaderState extends State<AppHeader> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context, listen: true);
+    UsersProvider usersProvider =
+        Provider.of<UsersProvider>(context, listen: true);
     DashboardProvider dashboardProviderWatcher =
         context.watch<DashboardProvider>();
     String greeting = TranslationService().translate("greeting");
     greeting = greeting.replaceFirst(
         '{name}',
-        UsersProvider().selectedUser?.username ??
-            (UsersProvider().selectedUser?.userTypeId == UserTypes.user
+        usersProvider.selectedUser?.username ??
+            (usersProvider.selectedUser?.userTypeId == UserTypes.user
                 ? TranslationService().translate("user")
                 : TranslationService().translate("cooker")));
     return Padding(
@@ -48,20 +52,43 @@ class _AppHeaderState extends State<AppHeader> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                Material(
-                  type: MaterialType.transparency,
-                  child: IconButton(
-                    onPressed: () async {
-                      await MealsProvider()
-                          .getAllNotifications(widget.userTypeId, widget.userId);
-                      Get.to(const NotificationsScreen());
-                    },
-                    icon: const Icon(
-                        color: Colors.black, Icons.notifications_none_outlined),
-                    splashColor: Colors.transparent, // Remove splash effect
-                    highlightColor: Colors.transparent,
+              Stack(
+                children: [
+                  Material(
+                    type: MaterialType.transparency,
+                    child: IconButton(
+                      onPressed: () async {
+                        Get.to(const NotificationsScreen());
+                        await NotificationsProvider().clearUnseenNotification();
+                      },
+                      icon: const Icon(
+                          color: Colors.black,
+                          Icons.notifications_none_outlined),
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                    ),
                   ),
-                ),
+                  if (notificationsProvider.unseenNotifications.isNotEmpty)
+                    Positioned(
+                      left: SizeConfig.getProportionalWidth(25),
+                      top: SizeConfig.getProportionalHeight(7),
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primaryColor),
+                        child: Center(
+                          child: Text(
+                            notificationsProvider.unseenNotifications.length
+                                .toString(),
+                            style: const TextStyle(fontSize: 8),
+                          ),
+                        ),
+                      ),
+                    )
+                ],
+              ),
               Expanded(
                 child: Column(
                   children: [
@@ -90,7 +117,7 @@ class _AppHeaderState extends State<AppHeader> {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  UsersProvider().selectedUser!.userTypeId == 1
+                                  usersProvider.selectedUser!.userTypeId == 1
                                       ? TranslationService().translate("cooker")
                                       : TranslationService().translate("user"),
                                   style: TextStyle(
@@ -107,7 +134,7 @@ class _AppHeaderState extends State<AppHeader> {
                               margin: EdgeInsets.only(
                                   right: SizeConfig.getProportionalWidth(5)),
                               child: Image.asset(
-                                  UsersProvider().selectedUser!.userTypeId == 1
+                                  usersProvider.selectedUser!.userTypeId == 1
                                       ? Assets.cookerBlack
                                       : Assets.userBlack),
                             ),
@@ -117,15 +144,18 @@ class _AppHeaderState extends State<AppHeader> {
                     ),
                     dashboardProviderWatcher.isExpanded
                         ? GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               setState(() {
-                                UsersProvider().toggleSelectedUser(
-                                  UsersProvider().selectedUser!.userTypeId == 1
+                                usersProvider.toggleSelectedUser(
+                                  usersProvider.selectedUser!.userTypeId == 1
                                       ? 2
                                       : 1,
                                 );
                                 DashboardProvider().toggleExpanded();
                               });
+                              await NotificationsProvider().getAllNotifications(
+                                  usersProvider.selectedUser!.userTypeId,
+                                  usersProvider.selectedUser!.userId);
                             },
                             child: Container(
                               width: SizeConfig.getProportionalWidth(94),
@@ -157,9 +187,7 @@ class _AppHeaderState extends State<AppHeader> {
                                   Expanded(
                                     child: Text(
                                       textAlign: TextAlign.center,
-                                      UsersProvider()
-                                                  .selectedUser!
-                                                  .userTypeId ==
+                                      usersProvider.selectedUser!.userTypeId ==
                                               1
                                           ? TranslationService()
                                               .translate("user")
@@ -179,9 +207,8 @@ class _AppHeaderState extends State<AppHeader> {
                                     margin: EdgeInsets.only(
                                         right:
                                             SizeConfig.getProportionalWidth(5)),
-                                    child: Image.asset(UsersProvider()
-                                                .selectedUser!
-                                                .userTypeId ==
+                                    child: Image.asset(usersProvider
+                                                .selectedUser!.userTypeId ==
                                             1
                                         ? Assets.userBlack
                                         : Assets.cookerBlack),

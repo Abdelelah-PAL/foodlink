@@ -4,11 +4,15 @@ import 'package:foodlink/providers/settings_provider.dart';
 import '../../../models/meal.dart';
 import '../../../models/notification.dart';
 import '../../../services/translation_services.dart';
+import '../../widgets/custom_text.dart';
 import 'notification_tab.dart';
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar(
-      {super.key, required this.settingsProvider, required this.notifications, required this.meals});
+      {super.key,
+      required this.settingsProvider,
+      required this.notifications,
+      required this.meals});
 
   final SettingsProvider settingsProvider;
   final List<Notifications> notifications;
@@ -45,10 +49,10 @@ class CustomTabBar extends StatelessWidget {
                         Tab(text: TranslationService().translate('updates')),
                       ]
                     : [
-                        Tab(text: TranslationService().translate('updates')),
                         Tab(
                             text: TranslationService()
                                 .translate('notifications')),
+                        Tab(text: TranslationService().translate('updates')),
                       ],
               ),
             ),
@@ -57,12 +61,20 @@ class CustomTabBar extends StatelessWidget {
         body: TabBarView(
           children: settingsProvider.language == 'en'
               ? [
-                  NotificationsTab(notifications: notifications, meals: meals, settingsProvider: settingsProvider,),
+                  NotificationsTab(
+                    notifications: notifications,
+                    meals: meals,
+                    settingsProvider: settingsProvider,
+                  ),
                   const UpdatesTab(),
                 ]
               : [
+                  NotificationsTab(
+                    notifications: notifications,
+                    meals: meals,
+                    settingsProvider: settingsProvider,
+                  ),
                   const UpdatesTab(),
-                  NotificationsTab(notifications: notifications, meals: meals, settingsProvider: settingsProvider,),
                 ],
         ),
       ),
@@ -76,10 +88,11 @@ class UpdatesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        'No Updates',
-        style: TextStyle(color: Colors.grey),
-      ),
+      child: CustomText(
+          isCenter: true,
+          text: "no_updates",
+          fontSize: 16,
+          fontWeight: FontWeight.normal),
     );
   }
 }
