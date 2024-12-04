@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/controllers/user_types.dart';
+import 'package:foodlink/providers/beyond_calories_articles_provider.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/screens/roles_screen/widgets/cooker_tile.dart';
 import 'package:foodlink/screens/roles_screen/widgets/user_tile.dart';
@@ -89,6 +90,7 @@ class RolesScreen extends StatelessWidget {
                       UsersProvider().selectedUser = await UsersProvider()
                           .getUserByRoleAndId(
                               user.uid, dashboardProvider.roleId);
+                      BeyondCaloriesArticlesProvider().getAllArticles();
                       MealCategoriesProvider().getAllMealCategories();
                       await NotificationsProvider()
                           .getAllNotifications(UsersProvider().selectedUser!.userTypeId, UsersProvider().selectedUser!.userId);

@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/settings_provider.dart';
+import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
 
 class CookerBody extends StatelessWidget {
   const CookerBody({super.key, required this.settingsProvider});
@@ -77,7 +78,7 @@ class CookerBody extends StatelessWidget {
           imageUrl: Assets.healthyFood,
           text: TranslationService().translate("healthy_life"),
           settingsProvider: settingsProvider,
-          onTap: () => Get.to(const HealthyFood()),
+          onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
         ),
         FeatureContainer(
           imageUrl: Assets.resourcesAdvertising,

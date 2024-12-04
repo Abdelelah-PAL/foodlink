@@ -2,6 +2,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/authentication_provider.dart';
+import 'package:foodlink/providers/beyond_calories_articles_provider.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/general_provider.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
@@ -29,6 +30,7 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => MealsProvider()),
     ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
     ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
+    ChangeNotifierProvider(create: (ctx) => BeyondCaloriesArticlesProvider()),
   ], child: const MyApp()));
 }
 
