@@ -22,85 +22,111 @@ class CookerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ImageContainer(imageUrl: Assets.dishOfTheWeek),
-        SizeConfig.customSizedBox(
-          null,
-          10,
-          null,
-        ),
-        Align(
-          alignment: settingsProvider.language == "en"
-              ? Alignment.centerLeft
-              : Alignment.centerRight,
-          child: CustomText(
-            text: TranslationService().translate("meals"),
-            isCenter: false,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizeConfig.customSizedBox(
-          null,
-          5,
-          null,
-        ),
-        Padding(
-          padding:
-              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(25)),
-          child: SizeConfig.customSizedBox(
-            332,
-            95,
-            Consumer<MealCategoriesProvider>(
-              builder: (context, mealCategoriesProvider, child) {
-                return ListView.builder(
-                  itemCount: mealCategoriesProvider.mealCategories.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (ctx, index) {
-                    final category =
-                        mealCategoriesProvider.mealCategories[index];
-                    return MealTile(
-                      name: category.name,
-                      imageUrl: category.imageUrl,
-                      width: 66,
-                      height: 55,
-                      index: index,
-                      categoryId: category.id!,
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-        FeatureContainer(
-          imageUrl: Assets.healthyFood,
-          text: TranslationService().translate("healthy_life"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
-        ),
-        FeatureContainer(
-          imageUrl: Assets.resourcesAdvertising,
-          text: TranslationService().translate("resources_advertising"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const HealthyFood()),
-        ),
-        FeatureContainer(
-          left: SizeConfig.getProportionalWidth(18),
-          imageUrl: Assets.aestheticFood,
-          text: TranslationService().translate("aesthetic_food"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const HealthyFood()),
-        ),
-        FeatureContainer(
-          left: SizeConfig.getProportionalWidth(35),
-          imageUrl: Assets.mealPlanning,
-          text: TranslationService().translate("meal_planning"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const MealPlanning()),
-        ),
-      ],
-    );
+    bool dowExists = true;
+    return FutureBuilder(
+        future: Assets.dishOfTheWeekReference,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
+            dowExists = false;
+          }
+
+          return Column(
+            children: [
+              Stack(
+                children: [
+                  ImageContainer(imageUrl: Assets.dishOfTheWeek),
+                  Positioned(
+                    left: SizeConfig.getProportionalWidth(80),
+                    bottom: SizeConfig.getProportionalHeight(10),
+                    top: SizeConfig.getProportionalHeight(10),
+                    child: SizeConfig.customSizedBox(
+                      138,
+                      138,
+                      dowExists == false ? null : Image.network(snapshot.data!),
+                    ),
+                  ),
+                ],
+              ),
+              SizeConfig.customSizedBox(
+                null,
+                10,
+                null,
+              ),
+              Align(
+                alignment: settingsProvider.language == "en"
+                    ? Alignment.centerLeft
+                    : Alignment.centerRight,
+                child: CustomText(
+                  text: TranslationService().translate("meals"),
+                  isCenter: false,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizeConfig.customSizedBox(
+                null,
+                5,
+                null,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: SizeConfig.getProportionalHeight(25)),
+                child: SizeConfig.customSizedBox(
+                  332,
+                  95,
+                  Consumer<MealCategoriesProvider>(
+                    builder: (context, mealCategoriesProvider, child) {
+                      return ListView.builder(
+                        itemCount: mealCategoriesProvider.mealCategories.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) {
+                          final category =
+                              mealCategoriesProvider.mealCategories[index];
+                          return MealTile(
+                            name: category.name,
+                            imageUrl: category.imageUrl,
+                            width: 66,
+                            height: 55,
+                            index: index,
+                            categoryId: category.id!,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              FeatureContainer(
+                imageUrl: Assets.healthyFood,
+                text: TranslationService().translate("healthy_life"),
+                settingsProvider: settingsProvider,
+                onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
+              ),
+              FeatureContainer(
+                imageUrl: Assets.resourcesAdvertising,
+                text: TranslationService().translate("resources_advertising"),
+                settingsProvider: settingsProvider,
+                onTap: () => Get.to(const HealthyFood()),
+              ),
+              FeatureContainer(
+                left: SizeConfig.getProportionalWidth(18),
+                imageUrl: Assets.aestheticFood,
+                text: TranslationService().translate("aesthetic_food"),
+                settingsProvider: settingsProvider,
+                onTap: () => Get.to(const HealthyFood()),
+              ),
+              FeatureContainer(
+                left: SizeConfig.getProportionalWidth(35),
+                imageUrl: Assets.mealPlanning,
+                text: TranslationService().translate("meal_planning"),
+                settingsProvider: settingsProvider,
+                onTap: () => Get.to(const MealPlanning()),
+              ),
+            ],
+          );
+        });
   }
 }

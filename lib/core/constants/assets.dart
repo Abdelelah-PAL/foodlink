@@ -1,4 +1,6 @@
 
+import 'package:firebase_storage/firebase_storage.dart';
+
 class Assets {
   static String rootImages = 'assets/images';
   static String rootIcons = 'assets/icons';
@@ -48,7 +50,21 @@ class Assets {
   static String nutritionSystem ="$rootIcons/nutrition_system.png";
   static String note ="$rootIcons/note.png";
 
+  static Future<String?> get dishOfTheWeekReference async {
+    try {
+      final Reference ref = FirebaseStorage.instance.ref('dish_of_the_week');
+      final listResult = await ref.listAll();
 
+      if (listResult.items.isNotEmpty) {
+        return await listResult.items.first.getDownloadURL();
+      } else {
+        print('No images found in the dish_of_the_week folder.');
+      }
+    } catch (e) {
+      print('Error fetching image: $e');
+    }
+    return null;
+  }
 
 
 }
