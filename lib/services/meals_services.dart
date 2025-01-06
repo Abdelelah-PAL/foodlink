@@ -33,7 +33,6 @@ class MealsServices with ChangeNotifier {
       rethrow;
     }
   }
-
   Future<List<Meal>> getAllMealsByCategory(
       int categoryId, String userId) async {
     try {
@@ -52,6 +51,19 @@ class MealsServices with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<List<Meal>> getAllPlannedMeals() async {
+    try {
+      final querySnapshot = await _firebaseFireStore.collection('planned_meals').get();
+      return querySnapshot.docs.map((doc) {
+        return Meal.fromJson(doc.data(), doc.id);
+      }).toList();
+    } catch (ex) {
+      print("Error fetching planned meals: ${ex.toString()}");
+      rethrow;
+    }
+  }
+
 
   Future<List<Meal>> getFavorites(String userId) async {
     try {

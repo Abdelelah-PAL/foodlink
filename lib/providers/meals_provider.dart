@@ -12,6 +12,7 @@ class MealsProvider with ChangeNotifier {
   MealsProvider._internal();
 
   List<Meal> meals = [];
+  List<Meal> plannedMeals=[];
   List<Meal> favoriteMeals = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
@@ -79,6 +80,31 @@ class MealsProvider with ChangeNotifier {
             userId: doc.userId,
             isFavorite: doc.isFavorite);
         meals.add(meal);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+  void getAllPlannedMeals() async {
+    try {
+      isLoading = true;
+      plannedMeals.clear();
+      List<Meal> fetchedMeals = await _ms.getAllPlannedMeals();
+      for (var doc in fetchedMeals) {
+        Meal meal = Meal(
+          documentId: doc.documentId,
+          name: doc.name,
+          imageUrl: doc.imageUrl,
+          categoryId: doc.categoryId,
+          ingredients: doc.ingredients,
+          recipe: doc.recipe,
+          userId: '',
+        );
+        plannedMeals.add(meal);
       }
       isLoading = false;
       notifyListeners();
