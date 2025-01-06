@@ -59,7 +59,6 @@ class MealsServices with ChangeNotifier {
         return Meal.fromJson(doc.data(), doc.id);
       }).toList();
     } catch (ex) {
-      print("Error fetching planned meals: ${ex.toString()}");
       rethrow;
     }
   }
