@@ -33,157 +33,84 @@ class _ListMealTileState extends State<ListMealTile> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(15)),
-      child: settingsProvider.language == "en"
-          ? Stack(
-              children: [
-                GestureDetector(
-                  onTap: onTap,
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Container(
-                        width: SizeConfig.getProportionalWidth(182),
-                        height: SizeConfig.getProportionalHeight(95),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: AppColors.defaultBorderColor),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: widget.meal.imageUrl != null &&
-                                widget.meal.imageUrl!.isNotEmpty
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                // Apply the same radius here
-                                child: Image.network(
-                                  widget.meal.imageUrl!,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                            : const Icon(Icons.camera_alt_outlined),
-                      )),
-                      SizeConfig.customSizedBox(10, null, null),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            NameRow(
-                              name: widget.meal.name,
-                              fontSize: 15,
-                              textWidth: 115,
-                              settingsProvider: settingsProvider,
+        padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(15)),
+        child: Stack(
+          children: [
+            GestureDetector(
+              onTap: onTap,
+              child: Row(
+                textDirection: settingsProvider.language == "en"
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                children: [
+                  Expanded(
+                      child: Container(
+                    width: SizeConfig.getProportionalWidth(182),
+                    height: SizeConfig.getProportionalHeight(95),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1, color: AppColors.defaultBorderColor),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: widget.meal.imageUrl != null &&
+                            widget.meal.imageUrl!.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            // Apply the same radius here
+                            child: Image.network(
+                              widget.meal.imageUrl!,
+                              fit: BoxFit.fill,
                             ),
-                            SizeConfig.customSizedBox(null, 10, null),
-                            IngredientsRow(
-                              meal: widget.meal,
-                              fontSize: 14,
-                              textWidth: 80,
-                              maxLines: 3,
-                              settingsProvider: settingsProvider,
-                            ),
-                          ],
+                          )
+                        : const Icon(Icons.camera_alt_outlined),
+                  )),
+                  SizeConfig.customSizedBox(10, null, null),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        NameRow(
+                          name: widget.meal.name,
+                          fontSize: 15,
+                          textWidth: 115,
+                          settingsProvider: settingsProvider,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 290,
-                  bottom: 0,
-                  child: !widget.favorites
-                      ? IconButton(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onPressed: () async {
-                            final newIsFavorite = !widget.meal.isFavorite;
-                            await MealsProvider()
-                                .toggleIsFavorite(widget.meal, newIsFavorite);
-                            setState(() {
-                              widget.meal.isFavorite = newIsFavorite;
-                            });
-                          },
-                          icon: widget.meal.isFavorite
-                              ? const Icon(Icons.favorite,
-                                  color: AppColors.errorColor)
-                              : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite, color: AppColors.errorColor),
-                )
-              ],
-            )
-          : Stack(
-              children: [
-                GestureDetector(
-                  onTap: onTap,
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          NameRow(
-                            name: widget.meal.name,
-                            fontSize: 15,
-                            textWidth: 115,
-                            settingsProvider: settingsProvider,
-                          ),
-                          SizeConfig.customSizedBox(null, 10, null),
-                          IngredientsRow(
-                            meal: widget.meal,
-                            fontSize: 14,
-                            textWidth: 80,
-                            maxLines: 3,
-                            settingsProvider: settingsProvider,
-                          ),
-                        ],
-                      ),
-                      SizeConfig.customSizedBox(10, null, null),
-                      Expanded(
-                          child: Container(
-                        width: SizeConfig.getProportionalWidth(182),
-                        height: SizeConfig.getProportionalHeight(95),
-                        decoration: BoxDecoration(
-                          color: AppColors.widgetsColor,
-                          border: Border.all(
-                              width: 1, color: AppColors.defaultBorderColor),
-                          borderRadius: BorderRadius.circular(15),
+                        SizeConfig.customSizedBox(null, 10, null),
+                        IngredientsRow(
+                          meal: widget.meal,
+                          fontSize: 14,
+                          textWidth: 80,
+                          maxLines: 3,
+                          settingsProvider: settingsProvider,
                         ),
-                        child: widget.meal.imageUrl != null &&
-                                widget.meal.imageUrl!.isNotEmpty
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                // Apply the same radius here
-                                child: Image.network(
-                                  widget.meal.imageUrl!,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                            : const Icon(Icons.camera_alt_outlined),
-                      )),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  child: !widget.favorites
-                      ? IconButton(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onPressed: () async {
-                            final newIsFavorite = !widget.meal.isFavorite;
-                            setState(() {
-                              widget.meal.isFavorite = newIsFavorite;
-                            });
-                            await MealsProvider()
-                                .toggleIsFavorite(widget.meal, newIsFavorite);
-                          },
-                          icon: widget.meal.isFavorite
-                              ? const Icon(Icons.favorite,
-                                  color: AppColors.errorColor)
-                              : const Icon(Icons.favorite_outline))
-                      : const Icon(Icons.favorite, color: AppColors.errorColor),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-    );
+            Positioned(
+              left: settingsProvider.language == "en" ? 290  : 0,
+              bottom: 0,
+              child: !widget.favorites
+                  ? IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onPressed: () async {
+                        final newIsFavorite = !widget.meal.isFavorite!;
+                        await MealsProvider()
+                            .toggleIsFavorite(widget.meal, newIsFavorite);
+                        setState(() {
+                          widget.meal.isFavorite = newIsFavorite;
+                        });
+                      },
+                      icon: widget.meal.isFavorite!
+                          ? const Icon(Icons.favorite,
+                              color: AppColors.errorColor)
+                          : const Icon(Icons.favorite_outline))
+                  : const Icon(Icons.favorite, color: AppColors.errorColor),
+            )
+          ],
+        ));
   }
 }

@@ -54,7 +54,16 @@ class MealsServices with ChangeNotifier {
 
   Future<List<Meal>> getAllPlannedMeals() async {
     try {
-      final querySnapshot = await _firebaseFireStore.collection('planned_meals').get();
+      DateTime now = DateTime.now();
+      DateTime startOfDay = DateTime(now.year, now.month, now.day);
+      DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+      Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
+      Timestamp endTimestamp = Timestamp.fromDate(endOfDay);
+      final querySnapshot = await _firebaseFireStore.collection('planned_meals')
+          .where('date', isGreaterThanOrEqualTo: startTimestamp)
+          .orderBy('date', descending: false)
+          .limit(7)
+          .get();
       return querySnapshot.docs.map((doc) {
         return Meal.fromJson(doc.data(), doc.id);
       }).toList();

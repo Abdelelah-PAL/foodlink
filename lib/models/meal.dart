@@ -1,23 +1,23 @@
 class Meal {
   String? documentId;
-  int categoryId;
+  int? categoryId;
   String name;
   String? imageUrl;
   List<String> ingredients;
   String? recipe;
-  String userId;
-  bool isFavorite;
-  String? date;
+  String? userId;
+  bool? isFavorite;
+  DateTime? date;
   String? day;
 
   Meal({
     this.documentId,
-    required this.categoryId,
+    this.categoryId,
     required this.name,
     this.imageUrl,
     required this.ingredients,
     this.recipe,
-    required this.userId,
+    this.userId,
     this.isFavorite = false,
     this.date,
     this.day,
@@ -33,7 +33,7 @@ class Meal {
       recipe: json['recipe'],
       userId: json['user_id'],
       isFavorite: json['is_favorite'],
-      date: json['date'],
+      date: json['date'].toDate(),
       day: json['day'],
     );
   }

@@ -115,5 +115,12 @@
   "no_notifications": "لا يوجد لديك إشعارات",
   "no_updates": "لا يوجد لديك تحديثات",
   "request_meal": "طلب الوجبة",
-  "beyond_calories": "ما وراء السعرات"
+  "beyond_calories": "ما وراء السعرات",
+  "Saturday": "السبت",
+  "Sunday": "الأحد",
+  "Monday": "الإثنين",
+  "Tuesday": "الثلاثاء",
+  "Wednesday": "الأربعاء",
+  "Thursday": "الخميس",
+  "Friday": "الجمعة"
 }

@@ -15,6 +15,7 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/meals_provider.dart';
 import '../../providers/notification_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
@@ -95,6 +96,9 @@ class RolesScreen extends StatelessWidget {
                       await NotificationsProvider()
                           .getAllNotifications(UsersProvider().selectedUser!.userTypeId, UsersProvider().selectedUser!.userId);
                       Get.to(const Dashboard());
+                      if(dashboardProvider.roleId == UserTypes.cooker) {
+                         MealsProvider().getAllPlannedMeals();
+                      }
                     },
                     text: TranslationService().translate("next"),
                     width: SizeConfig.getProportionalWidth(216),

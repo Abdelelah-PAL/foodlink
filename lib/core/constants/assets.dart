@@ -1,5 +1,6 @@
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 class Assets {
   static String rootImages = 'assets/images';
@@ -58,10 +59,14 @@ class Assets {
       if (listResult.items.isNotEmpty) {
         return await listResult.items.first.getDownloadURL();
       } else {
-        print('No images found in the dish_of_the_week folder.');
+        if (kDebugMode) {
+          print('No images found in the dish_of_the_week folder.');
+        }
       }
     } catch (e) {
-      print('Error fetching image: $e');
+      if (kDebugMode) {
+        print('Error fetching image: $e');
+      }
     }
     return null;
   }

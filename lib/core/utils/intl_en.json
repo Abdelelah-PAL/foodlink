@@ -115,5 +115,12 @@
   "no_notifications": "You have no notifications",
   "no_updates": "You have no updates",
   "request_meal": "Request Meal",
-  "beyond_calories":"Beyond Calories"
+  "beyond_calories":"Beyond Calories",
+  "Saturday": "Saturday",
+  "Sunday": "Sunday",
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday"
 }

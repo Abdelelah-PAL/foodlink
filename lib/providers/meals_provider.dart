@@ -60,7 +60,7 @@ class MealsProvider with ChangeNotifier {
 
   Future<void> toggleIsFavorite(Meal meal, bool isFavorite) async {
     await _ms.toggleIsFavorite(meal, isFavorite);
-    await getFavorites(meal.userId, forceRefresh: true);
+    await getFavorites(meal.userId!, forceRefresh: true);
   }
 
   void getAllMealsByCategory(categoryId, userId) async {
@@ -99,13 +99,14 @@ class MealsProvider with ChangeNotifier {
           documentId: doc.documentId,
           name: doc.name,
           imageUrl: doc.imageUrl,
-          categoryId: doc.categoryId,
           ingredients: doc.ingredients,
           recipe: doc.recipe,
-          userId: '',
+          day: doc.day,
+          date: doc.date,
         );
         plannedMeals.add(meal);
       }
+
       isLoading = false;
       notifyListeners();
     } catch (ex) {

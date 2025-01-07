@@ -3,14 +3,12 @@ import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/screens/widgets/image_container.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../providers/meals_provider.dart';
@@ -23,13 +21,6 @@ class MealPlanning extends StatefulWidget {
 }
 
 class _MealPlanningState extends State<MealPlanning> {
-  @override
-  void initState() {
-    MealsProvider()
-        .getAllMealsByCategory(2, UsersProvider().selectedUser!.userId);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
@@ -76,17 +67,24 @@ class _MealPlanningState extends State<MealPlanning> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        ListView.builder(
-            itemCount: mealsProvider.plannedMeals.length,
-            itemBuilder: (ctx, index) {
-              Meal selectedMeal = mealsProvider.plannedMeals[index];
-              return PlanMealTile(
-                  meal: mealsProvider.plannedMeals[index],
-                  day: selectedMeal.day!,
-                  date: selectedMeal.date!,
-                  index: index,
-                  mealsProvider: mealsProvider);
-            })
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.getProportionalWidth(20)),
+            child: ListView.builder(
+                itemCount: mealsProvider.plannedMeals.length,
+                itemBuilder: (ctx, index) {
+                  Meal selectedMeal = mealsProvider.plannedMeals[index];
+                  return PlanMealTile(
+                      meal: mealsProvider.plannedMeals[index],
+                      day: selectedMeal.day!,
+                      date: selectedMeal.date!,
+                      index: index,
+                      mealsProvider: mealsProvider,
+                      settingsProvider: settingsProvider);
+                }),
+          ),
+        )
       ]),
     );
   }
