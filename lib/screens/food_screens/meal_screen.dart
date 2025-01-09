@@ -65,7 +65,7 @@ class MealScreen extends StatelessWidget {
                   RecipeRow(
                       meal: meal,
                       fontSize: 15,
-                      settingsProvider: settingsProvider)
+                      )
                 ],
               ),
             ),

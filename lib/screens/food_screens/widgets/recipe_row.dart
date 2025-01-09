@@ -10,11 +10,10 @@ class RecipeRow extends StatelessWidget {
       {super.key,
       required this.meal,
       required this.fontSize,
-      required this.settingsProvider});
+      });
 
   final Meal meal;
   final double fontSize;
-  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
