@@ -33,17 +33,20 @@ class RecipeRow extends StatelessWidget {
               SizeConfig.customSizedBox(
                 280,
                 200,
-                Text(
-                  maxLines: 20,
-                  meal.recipe!,
-                  textDirection: writtenLanguage == 'en'
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
-                  textAlign: writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
-                  style: TextStyle(
-                      fontSize: fontSize,
-                      fontFamily:
-                          writtenLanguage == 'en' ? 'salsa' : 'MyriadArabic'),
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Text(
+                    maxLines: 100,
+                    meal.recipe!,
+                    textDirection: writtenLanguage == 'en'
+                        ? TextDirection.ltr
+                        : TextDirection.rtl,
+                    textAlign: writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+                    style: TextStyle(
+                        fontSize: fontSize,
+                        fontFamily:
+                            writtenLanguage == 'en' ? 'salsa' : 'MyriadArabic'),
+                  ),
                 ),
               ),
             ],

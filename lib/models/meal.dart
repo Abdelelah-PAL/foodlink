@@ -7,6 +7,7 @@ class Meal {
   String? recipe;
   String? userId;
   bool? isFavorite;
+  bool isPlanned;
   DateTime? date;
   String? day;
 
@@ -19,6 +20,7 @@ class Meal {
     this.recipe,
     this.userId,
     this.isFavorite = false,
+    required this.isPlanned,
     this.date,
     this.day,
   });
@@ -33,7 +35,8 @@ class Meal {
       recipe: json['recipe'],
       userId: json['user_id'],
       isFavorite: json['is_favorite'],
-      date: json['date'].toDate(),
+      isPlanned: json['is_planned'],
+      date: json['date']?.toDate(),
       day: json['day'],
     );
   }
@@ -47,6 +50,7 @@ class Meal {
       'recipe': recipe,
       'user_id': userId,
       'is_favorite': isFavorite,
+      'is_planned':isPlanned,
       'date': date,
       'day': day,
     };

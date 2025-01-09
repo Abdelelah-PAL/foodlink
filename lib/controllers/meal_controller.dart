@@ -56,10 +56,11 @@ class MealController {
         ingredients: ingredients,
         recipe: MealController().recipeController.text,
         imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
-        userId: UsersProvider().selectedUser!.userId));
+        userId: UsersProvider().selectedUser!.userId,
+        isPlanned: false));
 
     mealsProvider.resetValues();
-    Get.to(MealScreen(meal: addedMeal));
+    Get.to(MealScreen(meal: addedMeal, source: 'default',));
   }
 
   Future<void> updateMeal(mealsProvider, meal) async {
@@ -81,9 +82,10 @@ class MealController {
         recipe: MealController().recipeController.text,
         imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
         userId: UsersProvider().selectedUser!.userId,
-        isFavorite: meal.isFavorite));
+        isFavorite: meal.isFavorite,
+        isPlanned: false));
 
-    Get.to(MealScreen(meal: updatedMeal));
+    Get.to(MealScreen(meal: updatedMeal, source: 'default',));
   }
 
   Meal findMealById(meals, id) {

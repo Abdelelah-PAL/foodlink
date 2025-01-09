@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
@@ -24,8 +23,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
-    MealsProvider mealsProvider =
-        Provider.of<MealsProvider>(context, listen: true);
     UsersProvider usersProvider =
         Provider.of<UsersProvider>(context, listen: true);
     NotificationsProvider notificationsProvider =
@@ -59,7 +56,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               usersProvider.selectedUser!.userTypeId == UserTypes.user
                   ? notificationsProvider.userNotifications
                   : notificationsProvider.cookerNotifications,
-          meals: mealsProvider.meals,
           usersProvider: usersProvider,
         ));
   }

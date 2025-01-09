@@ -39,7 +39,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
   late String formattedDate;
 
   onTap() {
-    Get.to(MealScreen(meal: widget.meal));
+    Get.to(MealScreen(meal: widget.meal, source: 'planning',));
   }
 
   @override
@@ -47,18 +47,22 @@ class _PlanMealTileState extends State<PlanMealTile> {
     super.initState();
     initializeDateFormatting('ar_SA', null).then((_) {
       setState(() {
-        formattedDate = intl.DateFormat.yMMMMd('ar_SA').format(widget.meal.date!);
+        formattedDate =
+            intl.DateFormat.yMMMMd('ar_SA').format(widget.meal.date!);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = intl.DateFormat.yMMMMd('ar_SA').format(widget.mealsProvider.plannedMeals[widget.index].date!);
+    String formattedDate = intl.DateFormat.yMMMMd('ar_SA')
+        .format(widget.mealsProvider.plannedMeals[widget.index].date!);
 
     return Column(children: [
       Row(
-        textDirection: SettingsProvider().language == "en" ? TextDirection.ltr : TextDirection.rtl,
+        textDirection: SettingsProvider().language == "en"
+            ? TextDirection.ltr
+            : TextDirection.rtl,
         children: [
           CustomText(
               isCenter: false,
@@ -94,10 +98,10 @@ class _PlanMealTileState extends State<PlanMealTile> {
                             width: 1, color: AppColors.defaultBorderColor),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: widget.meal.imageUrl != null && widget.meal.imageUrl!.isNotEmpty
+                      child: widget.meal.imageUrl != null &&
+                              widget.meal.imageUrl!.isNotEmpty
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              // Apply the same radius here
                               child: Image.network(
                                 widget.meal.imageUrl!,
                                 fit: BoxFit.fill,

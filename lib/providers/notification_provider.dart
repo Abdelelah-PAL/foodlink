@@ -35,11 +35,13 @@ class NotificationsProvider with ChangeNotifier {
           userId: doc.userId,
           imageUrl: doc.imageUrl,
           userTypeId: doc.userTypeId,
+          mealId: doc.mealId,
           mealName: doc.mealName,
           missingIngredients: doc.missingIngredients,
           notes: doc.notes,
           seen: doc.seen,
           timestamp: doc.timestamp,
+          isMealPlanned: doc.isMealPlanned
         );
         if (doc.userTypeId == UserTypes.user) {
           userNotifications.add(notification);

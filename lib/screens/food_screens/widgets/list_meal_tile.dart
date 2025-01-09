@@ -26,7 +26,7 @@ class ListMealTile extends StatefulWidget {
 
 class _ListMealTileState extends State<ListMealTile> {
   onTap() {
-    Get.to(MealScreen(meal: widget.meal));
+    Get.to(MealScreen(meal: widget.meal, source: 'default'));
   }
 
   @override
@@ -90,26 +90,40 @@ class _ListMealTileState extends State<ListMealTile> {
               ),
             ),
             Positioned(
-              left: settingsProvider.language == "en" ? 290  : 0,
-              bottom: 0,
-              child: !widget.favorites
-                  ? IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () async {
-                        final newIsFavorite = !widget.meal.isFavorite!;
-                        await MealsProvider()
-                            .toggleIsFavorite(widget.meal, newIsFavorite);
-                        setState(() {
-                          widget.meal.isFavorite = newIsFavorite;
-                        });
-                      },
-                      icon: widget.meal.isFavorite!
-                          ? const Icon(Icons.favorite,
-                              color: AppColors.errorColor)
-                          : const Icon(Icons.favorite_outline))
-                  : const Icon(Icons.favorite, color: AppColors.errorColor),
-            )
+                left: settingsProvider.language == "en" ? 290 : 0,
+                bottom: 0,
+                child: Column(
+                  children: [
+                    !widget.favorites
+                        ? IconButton(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onPressed: () async {
+                              final newIsFavorite = !widget.meal.isFavorite!;
+                              await MealsProvider()
+                                  .toggleIsFavorite(widget.meal, newIsFavorite);
+                              setState(() {
+                                widget.meal.isFavorite = newIsFavorite;
+                              });
+                            },
+                            icon: widget.meal.isFavorite!
+                                ? const Icon(Icons.favorite,
+                                    color: AppColors.errorColor)
+                                : const Icon(Icons.favorite_outline))
+                        : const Icon(Icons.favorite,
+                            color: AppColors.errorColor),
+                    IconButton(
+                        onPressed: () async {
+                          await MealsProvider()
+                              .deleteMeal(widget.meal.documentId!);
+                          setState(() {
+                            MealsProvider().getAllMealsByCategory(
+                                widget.meal.categoryId, widget.meal.userId);
+                          });
+                        },
+                        icon: const Icon(Icons.delete)),
+                  ],
+                ))
           ],
         ));
   }

@@ -93,12 +93,11 @@ class RolesScreen extends StatelessWidget {
                               user.uid, dashboardProvider.roleId);
                       BeyondCaloriesArticlesProvider().getAllArticles();
                       MealCategoriesProvider().getAllMealCategories();
-                      await NotificationsProvider()
-                          .getAllNotifications(UsersProvider().selectedUser!.userTypeId, UsersProvider().selectedUser!.userId);
+                      MealsProvider().getAllPlannedMeals();
+                      await NotificationsProvider().getAllNotifications(
+                          UsersProvider().selectedUser!.userTypeId,
+                          UsersProvider().selectedUser!.userId);
                       Get.to(const Dashboard());
-                      if(dashboardProvider.roleId == UserTypes.cooker) {
-                         MealsProvider().getAllPlannedMeals();
-                      }
                     },
                     text: TranslationService().translate("next"),
                     width: SizeConfig.getProportionalWidth(216),

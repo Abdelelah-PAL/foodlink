@@ -12,7 +12,7 @@ class MealsProvider with ChangeNotifier {
   MealsProvider._internal();
 
   List<Meal> meals = [];
-  List<Meal> plannedMeals=[];
+  List<Meal> plannedMeals = [];
   List<Meal> favoriteMeals = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
@@ -41,6 +41,19 @@ class MealsProvider with ChangeNotifier {
   Future<Meal> updateMeal(Meal meal) async {
     Meal updatedMeal = await _ms.updateMeal(meal);
     return updatedMeal;
+  }
+
+  Future<void> deleteMeal(String docId) async {
+    await _ms.deleteMeal(docId);
+  }
+
+  Future<Meal> getMealById(String docId) async {
+    Meal meal = await _ms.getMealById(docId);
+    return meal;
+  }
+  Future<Meal> getPlannedMealById(String docId) async {
+    Meal meal = await _ms.getPlannedMealById(docId);
+    return meal;
   }
 
   Future<void> getFavorites(String userId, {bool forceRefresh = false}) async {
@@ -78,7 +91,8 @@ class MealsProvider with ChangeNotifier {
             ingredients: doc.ingredients,
             recipe: doc.recipe,
             userId: doc.userId,
-            isFavorite: doc.isFavorite);
+            isFavorite: doc.isFavorite,
+            isPlanned: doc.isPlanned);
         meals.add(meal);
       }
       isLoading = false;
@@ -96,14 +110,14 @@ class MealsProvider with ChangeNotifier {
       List<Meal> fetchedMeals = await _ms.getAllPlannedMeals();
       for (var doc in fetchedMeals) {
         Meal meal = Meal(
-          documentId: doc.documentId,
-          name: doc.name,
-          imageUrl: doc.imageUrl,
-          ingredients: doc.ingredients,
-          recipe: doc.recipe,
-          day: doc.day,
-          date: doc.date,
-        );
+            documentId: doc.documentId,
+            name: doc.name,
+            imageUrl: doc.imageUrl,
+            ingredients: doc.ingredients,
+            recipe: doc.recipe,
+            day: doc.day,
+            date: doc.date,
+            isPlanned: doc.isPlanned);
         plannedMeals.add(meal);
       }
 

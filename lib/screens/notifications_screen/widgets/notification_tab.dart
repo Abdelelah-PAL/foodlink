@@ -12,18 +12,17 @@ import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../models/meal.dart';
 import '../../../models/notification.dart';
+import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
 
 class NotificationsTab extends StatelessWidget {
   const NotificationsTab(
       {super.key,
       required this.notifications,
-      required this.meals,
       required this.settingsProvider,
       required this.usersProvider});
 
   final List<Notifications> notifications;
-  final List<Meal> meals;
   final SettingsProvider settingsProvider;
   final UsersProvider usersProvider;
 
@@ -43,10 +42,21 @@ class NotificationsTab extends StatelessWidget {
                   notifications[index].timestamp, settingsProvider.language);
 
               return ListTile(
-                onTap: () => usersProvider.selectedUser!.userTypeId == UserTypes.user
-                  ?Get.to(MissingIngredientsScreen(
-                    notification: notifications[index]))
-                    :Get.to(MealScreen(meal: meals[index])),
+                onTap: () async {
+                  print( notifications[index].isMealPlanned);
+                  Meal meal = notifications[index].isMealPlanned
+                      ? await MealsProvider()
+                          .getPlannedMealById(notifications[index].mealId)
+                      : await MealsProvider()
+                          .getMealById(notifications[index].mealId);
+                  usersProvider.selectedUser!.userTypeId == UserTypes.user
+                      ? Get.to(MissingIngredientsScreen(
+                          notification: notifications[index]))
+                      : Get.to(MealScreen(
+                          meal: meal,
+                          source: 'notifications',
+                        ));
+                },
                 leading: settingsProvider.language == "en"
                     ? notifications[index].imageUrl != null
                         ? CircleAvatar(

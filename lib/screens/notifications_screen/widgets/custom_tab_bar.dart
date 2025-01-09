@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
-import '../../../models/meal.dart';
 import '../../../models/notification.dart';
 import '../../../services/translation_services.dart';
 import '../../widgets/custom_text.dart';
@@ -13,12 +12,10 @@ class CustomTabBar extends StatelessWidget {
       {super.key,
       required this.settingsProvider,
       required this.notifications,
-      required this.meals,
       required this.usersProvider});
 
   final SettingsProvider settingsProvider;
   final List<Notifications> notifications;
-  final List<Meal> meals;
   final UsersProvider usersProvider;
 
   @override
@@ -66,7 +63,6 @@ class CustomTabBar extends StatelessWidget {
               ? [
                   NotificationsTab(
                     notifications: notifications,
-                    meals: meals,
                     settingsProvider: settingsProvider,
                     usersProvider: usersProvider,
                   ),
@@ -75,7 +71,6 @@ class CustomTabBar extends StatelessWidget {
               : [
                   NotificationsTab(
                     notifications: notifications,
-                    meals: meals,
                     settingsProvider: settingsProvider,
                     usersProvider: usersProvider,
                   ),

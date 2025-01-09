@@ -35,21 +35,24 @@ class IngredientsRow extends StatelessWidget {
         SizeConfig.customSizedBox(
           textWidth,
           null,
-          Text(
-            meal.ingredients.join('-'),
-            maxLines: maxLines,
-            overflow: TextOverflow.ellipsis,
-            textDirection: settingsProvider.language == 'en'
-                ? TextDirection.ltr
-                : TextDirection.rtl,
-            textAlign: settingsProvider.language == 'en'
-                ? TextAlign.left
-                : TextAlign.right,
-            style: TextStyle(
-                fontSize: fontSize,
-                fontFamily: settingsProvider.language == 'en'
-                    ? 'salsa'
-                    : 'MyriadArabic'),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Text(
+              meal.ingredients.join('-'),
+              maxLines: maxLines,
+              overflow: TextOverflow.ellipsis,
+              textDirection: settingsProvider.language == 'en'
+                  ? TextDirection.ltr
+                  : TextDirection.rtl,
+              textAlign: settingsProvider.language == 'en'
+                  ? TextAlign.left
+                  : TextAlign.right,
+              style: TextStyle(
+                  fontSize: fontSize,
+                  fontFamily: settingsProvider.language == 'en'
+                      ? 'salsa'
+                      : 'MyriadArabic'),
+            ),
           ),
         )
       ],

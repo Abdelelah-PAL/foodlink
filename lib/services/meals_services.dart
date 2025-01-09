@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class MealsServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;
 
@@ -33,6 +32,7 @@ class MealsServices with ChangeNotifier {
       rethrow;
     }
   }
+
   Future<List<Meal>> getAllMealsByCategory(
       int categoryId, String userId) async {
     try {
@@ -56,10 +56,9 @@ class MealsServices with ChangeNotifier {
     try {
       DateTime now = DateTime.now();
       DateTime startOfDay = DateTime(now.year, now.month, now.day);
-      DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
       Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
-      Timestamp endTimestamp = Timestamp.fromDate(endOfDay);
-      final querySnapshot = await _firebaseFireStore.collection('planned_meals')
+      final querySnapshot = await _firebaseFireStore
+          .collection('planned_meals')
           .where('date', isGreaterThanOrEqualTo: startTimestamp)
           .orderBy('date', descending: false)
           .limit(7)
@@ -71,7 +70,6 @@ class MealsServices with ChangeNotifier {
       rethrow;
     }
   }
-
 
   Future<List<Meal>> getFavorites(String userId) async {
     try {
@@ -112,6 +110,37 @@ class MealsServices with ChangeNotifier {
 
       Meal updatedMeal = Meal.fromJson(docSnapshot.data()!, meal.documentId);
       return updatedMeal;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteMeal(String docId) async {
+    await _firebaseFireStore.collection('meals').doc(docId).delete();
+  }
+
+  Future<Meal> getMealById(String docId) async {
+    try {
+      DocumentSnapshot mealSnapshot =
+          await _firebaseFireStore.collection('meals').doc(docId).get();
+      return Meal.fromJson(
+        mealSnapshot.data() as Map<String, dynamic>,
+        mealSnapshot.id,
+      );
+    } catch (ex) {
+      rethrow;
+    }
+  }
+  Future<Meal> getPlannedMealById(String docId) async {
+    try {
+      DocumentSnapshot mealSnapshot =
+      await _firebaseFireStore.collection('planned_meals').doc(docId).get();
+      print(docId);
+      print(mealSnapshot.data());
+      return Meal.fromJson(
+        mealSnapshot.data() as Map<String, dynamic>,
+        mealSnapshot.id,
+      );
     } catch (ex) {
       rethrow;
     }

@@ -26,18 +26,21 @@ class NotificationController {
   MealsServices ms = MealsServices();
 
   Future<void> addUserNotification(meal) async {
-    UserDetails userToNotify = UsersProvider().loggedInUsers.firstWhere(
-        (user) => user.userTypeId == UserTypes.user);
+    UserDetails userToNotify = UsersProvider()
+        .loggedInUsers
+        .firstWhere((user) => user.userTypeId == UserTypes.user);
     if (MealController().missingIngredients.isNotEmpty) {
       await NotificationsProvider().addNotification(Notifications(
         imageUrl: meal.imageUrl,
         userId: userToNotify.userId,
         userTypeId: userToNotify.userTypeId!,
+        mealId: meal.documentId,
         mealName: meal.name,
-        missingIngredients:  MealController().missingIngredients,
+        missingIngredients: MealController().missingIngredients,
         notes: addNoteController.text,
         seen: false,
         timestamp: Timestamp.now(),
+        isMealPlanned: meal.isPlanned,
       ));
     }
     MealController().missingIngredients.clear();
@@ -45,18 +48,21 @@ class NotificationController {
   }
 
   Future<void> addCookerNotification(meal) async {
-    UserDetails userToNotify = UsersProvider().loggedInUsers.firstWhere(
-            (user) => user.userTypeId == UserTypes.cooker);
-      await NotificationsProvider().addNotification(Notifications(
-        imageUrl: meal.imageUrl,
-        userId: userToNotify.userId,
-        userTypeId: userToNotify.userTypeId!,
-        mealName: meal.name,
-        missingIngredients:  [],
-        notes: null,
-        seen: false,
-        timestamp: Timestamp.now(),
-      ));
+    UserDetails userToNotify = UsersProvider()
+        .loggedInUsers
+        .firstWhere((user) => user.userTypeId == UserTypes.cooker);
+    await NotificationsProvider().addNotification(Notifications(
+      imageUrl: meal.imageUrl,
+      userId: userToNotify.userId,
+      userTypeId: userToNotify.userTypeId!,
+      mealId: meal.documentId,
+      mealName: meal.name,
+      missingIngredients: [],
+      notes: null,
+      seen: false,
+      timestamp: Timestamp.now(),
+      isMealPlanned: meal.isPlanned
+    ));
   }
 
   String getDuration(Timestamp notificationTime, String language) {
