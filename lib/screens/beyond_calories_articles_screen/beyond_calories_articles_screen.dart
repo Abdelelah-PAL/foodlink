@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/beyond_calories_articles_controller.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/colors.dart';
@@ -6,7 +7,6 @@ import '../../core/constants/assets.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/beyond_calories_articles_provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_container.dart';
@@ -27,7 +27,7 @@ class _BeyondCaloriesArticlesScreenState
     final BeyondCaloriesArticlesProvider beyondCaloriesArticlesProvider =
         Provider.of<BeyondCaloriesArticlesProvider>(context, listen: true);
     final SettingsProvider settingsProvider =
-    Provider.of<SettingsProvider>(context, listen: true);
+        Provider.of<SettingsProvider>(context, listen: true);
     return Scaffold(
         appBar: PreferredSize(
             preferredSize:
@@ -56,13 +56,13 @@ class _BeyondCaloriesArticlesScreenState
             ImageContainer(imageUrl: Assets.healthyLifeHeaderImage),
             // Custom Text
             Padding(
-              padding:  EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(10),
                   horizontal: SizeConfig.getProportionalWidth(25)),
               child: Align(
                 alignment: settingsProvider.language == 'en'
-                ?Alignment.topLeft
-                :Alignment.topRight,
+                    ? Alignment.topLeft
+                    : Alignment.topRight,
                 child: const CustomText(
                   isCenter: false,
                   text: "beyond_calories",
@@ -74,30 +74,43 @@ class _BeyondCaloriesArticlesScreenState
 
             // GridView inside a fixed-height container
             Expanded(
-
-               child: GridView.custom(
-                 padding: EdgeInsets.symmetric(
-                   horizontal: SizeConfig.getProportionalWidth(5),
-                 ),
-                 gridDelegate: SliverWovenGridDelegate.count(
-                   crossAxisCount: 2,
-                   pattern: [
-                     const WovenGridTile(1),
-                     const WovenGridTile(
-                       5 / 7,
-                       crossAxisRatio: 0.9,
-                       alignment: AlignmentDirectional.center,
-                     ),
-                   ],
-                 ),
-                 childrenDelegate: SliverChildBuilderDelegate(
-                   (context, index) {
-                     return Image.asset(Assets.resourcesAdvertising, fit: BoxFit.fill,);
-                   },
-                   childCount: beyondCaloriesArticlesProvider.articles.length, // Define the number of items
-                 ),
-               ),
-            ),
+              child: GridView.custom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getProportionalWidth(5),
+                ),
+                gridDelegate: SliverWovenGridDelegate.count(
+                  crossAxisCount: 2,
+                  pattern: [
+                    const WovenGridTile(1),
+                    const WovenGridTile(
+                      5 / 7,
+                      crossAxisRatio: 0.9,
+                      alignment: AlignmentDirectional.center,
+                    ),
+                  ],
+                ),
+                childrenDelegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                    return GestureDetector(
+                      onTap: () => BeyondCaloriesArticlesController()
+                          .launchURL(
+                          context,
+                          Uri.parse(beyondCaloriesArticlesProvider
+                              .articles[index].url)),
+                      child: Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                        child: Image.network(
+                          beyondCaloriesArticlesProvider
+                              .articles[index].imageUrl,
+                          fit: BoxFit.cover,  // Adjust the image to fit the circular shape
+                        ),
+                      ),
+                    );
+                  },
+                  childCount: beyondCaloriesArticlesProvider.articles.length,
+                ),
+              ),
+            )
           ],
         ));
   }

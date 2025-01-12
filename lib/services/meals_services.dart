@@ -63,6 +63,7 @@ class MealsServices with ChangeNotifier {
           .orderBy('date', descending: false)
           .limit(7)
           .get();
+
       return querySnapshot.docs.map((doc) {
         return Meal.fromJson(doc.data(), doc.id);
       }).toList();
@@ -135,8 +136,6 @@ class MealsServices with ChangeNotifier {
     try {
       DocumentSnapshot mealSnapshot =
       await _firebaseFireStore.collection('planned_meals').doc(docId).get();
-      print(docId);
-      print(mealSnapshot.data());
       return Meal.fromJson(
         mealSnapshot.data() as Map<String, dynamic>,
         mealSnapshot.id,

@@ -60,7 +60,10 @@ class MealController {
         isPlanned: false));
 
     mealsProvider.resetValues();
-    Get.to(MealScreen(meal: addedMeal, source: 'default',));
+    Get.to(MealScreen(
+      meal: addedMeal,
+      source: 'default',
+    ));
   }
 
   Future<void> updateMeal(mealsProvider, meal) async {
@@ -85,7 +88,10 @@ class MealController {
         isFavorite: meal.isFavorite,
         isPlanned: false));
 
-    Get.to(MealScreen(meal: updatedMeal, source: 'default',));
+    Get.to(MealScreen(
+      meal: updatedMeal,
+      source: 'default',
+    ));
   }
 
   Meal findMealById(meals, id) {
@@ -105,28 +111,18 @@ class MealController {
             205,
             56,
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: settingsProvider.language == 'en'
-                  ? [
-                      const Icon(Icons.check_circle,
-                          size: 30, color: Colors.green),
-                      const CustomText(
-                          isCenter: true,
-                          text: 'notification_sent',
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal)
-                    ]
-                  : [
-                      const CustomText(
-                          isCenter: true,
-                          text: 'notification_sent',
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal),
-                      SizeConfig.customSizedBox(10, null, null),
-                      const Icon(Icons.check_circle,
-                          size: 30, color: Colors.green),
-                    ],
-            ),
+                textDirection: settingsProvider.language == 'en'
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.check_circle, size: 30, color: Colors.green),
+                  CustomText(
+                      isCenter: true,
+                      text: 'notification_sent',
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal)
+                ]),
           ),
         );
       },
