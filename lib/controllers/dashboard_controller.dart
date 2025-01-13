@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/screens/food_screens/favorites_screen.dart';
+import 'package:foodlink/screens/food_screens/weekly_meals_planning_screen.dart';
 import 'package:foodlink/screens/home_screen/home_screen.dart';
 import 'package:foodlink/screens/settings_screen/settings_screen.dart';
 
@@ -19,7 +20,7 @@ class DashboardController {
   List<Widget> dashBoardList = [
     const HomeScreen(),
     const Favorites(),
-    Container(),
+    const WeeklyMealsPlanningScreen(),
     const SettingsScreen(),
   ];
 }

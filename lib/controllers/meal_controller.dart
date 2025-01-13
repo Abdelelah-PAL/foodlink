@@ -21,6 +21,9 @@ class MealController {
   TextEditingController addNoteController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
+  List<TextEditingController> dayMealsControllers =
+      List.generate(7, (_) => TextEditingController());
+
   MealsServices ms = MealsServices();
 
   List<String> missingIngredients = [];
@@ -127,5 +130,19 @@ class MealController {
         );
       },
     );
+  }
+
+  String getDayOfWeek(DateTime date) {
+    const days = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+
+    return days[date.weekday - 1];
   }
 }

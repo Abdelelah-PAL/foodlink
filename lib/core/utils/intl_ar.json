@@ -122,5 +122,20 @@
   "Tuesday": "الثلاثاء",
   "Wednesday": "الأربعاء",
   "Thursday": "الخميس",
-  "Friday": "الجمعة"
+  "Friday": "الجمعة",
+  "January": "يناير",
+  "February": "فبراير",
+  "March": "مارس",
+  "April": "أبريل",
+  "May": "مايو",
+  "June": "يونيو",
+  "July": "يوليو",
+  "August": "أغسطس",
+  "September": "سبتمبر",
+  "October": "أوكتوبر",
+  "November": "نوفمبر",
+  "December": "ديسمبر",
+  "weekly_plan": "خطة الطعام الأسبوعية",
+  "month": "شهر",
+  "insert_meal_name": "أدخل إسم الوجبة"
 }

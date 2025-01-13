@@ -17,6 +17,8 @@ class MealsProvider with ChangeNotifier {
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsPicked = false;
+  bool monthIsPicked = false;
+  bool dayIsPicked = false;
   XFile? pickedFile;
   int numberOfIngredients = 2;
   List<TextEditingController> ingredientsControllers = [
@@ -32,6 +34,25 @@ class MealsProvider with ChangeNotifier {
   List<bool> checkboxValues = [];
 
   bool isIngredientChecked = false;
+  final List<String> months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  List<String> days = List.generate(31, (index) => '${index + 1}');
+  String? selectedDay;
+  String? selectedMonth;
+  String? selectedDayName;
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
@@ -51,6 +72,7 @@ class MealsProvider with ChangeNotifier {
     Meal meal = await _ms.getMealById(docId);
     return meal;
   }
+
   Future<Meal> getPlannedMealById(String docId) async {
     Meal meal = await _ms.getPlannedMealById(docId);
     return meal;
@@ -205,6 +227,37 @@ class MealsProvider with ChangeNotifier {
 
   void toggleCheckedIngredient(value, listIndex) {
     checkboxValues[listIndex] = value;
+    notifyListeners();
+  }
+
+  void updateDays() {
+    if (selectedMonth == null) return;
+    var year = DateTime.now().year;
+
+    final int month = months.indexOf(selectedMonth!) + 1;
+
+    final int daysInMonth = DateTime(year, month + 1, 0).day;
+
+    days = List.generate(daysInMonth, (index) => '${index + 1}');
+    if (selectedDay != null && int.parse(selectedDay!) > daysInMonth) {
+      selectedDay = null;
+    }
+    notifyListeners();
+  }
+
+  onDayChange(value) {
+    selectedDay = value;
+    selectedDayName = MealController().getDayOfWeek(DateTime(
+        DateTime.now().year,
+        months.indexOf(selectedMonth!) + 1,
+        days.indexOf(selectedDay!) + 1));
+    dayIsPicked = true;
+    notifyListeners();
+  }
+
+  onMonthChange(value) {
+    selectedMonth = value;
+    monthIsPicked = true;
     notifyListeners();
   }
 }

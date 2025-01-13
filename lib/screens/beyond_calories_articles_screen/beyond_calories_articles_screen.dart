@@ -102,7 +102,7 @@ class _BeyondCaloriesArticlesScreenState
                         child: Image.network(
                           beyondCaloriesArticlesProvider
                               .articles[index].imageUrl,
-                          fit: BoxFit.cover,  // Adjust the image to fit the circular shape
+                          fit: BoxFit.cover,
                         ),
                       ),
                     );
