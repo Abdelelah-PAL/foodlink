@@ -145,4 +145,10 @@ class MealController {
 
     return days[date.weekday - 1];
   }
+
+  void clearDayMealController() {
+    for (var controller in dayMealsControllers) {
+      controller.clear();
+    }
+  }
 }

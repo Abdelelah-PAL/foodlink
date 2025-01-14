@@ -22,11 +22,16 @@ class WeeklyMealsPlanningScreen extends StatefulWidget {
 
 class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
   @override
+  void initState() {
+    MealsProvider().setDefaultDate();
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    MealController().dayMealsControllers.map((controller) => {
-      controller.clear(),
-      controller.dispose(),
-    });
+    for (var controller in MealController().dayMealsControllers) {
+      controller.clear();
+    }
     super.dispose();
   }
 
@@ -35,6 +40,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
           child: GestureDetector(
@@ -61,59 +67,63 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.getProportionalWidth(20)),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: settingsProvider.language == "en"
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              textDirection: settingsProvider.language == "en"
-                  ? TextDirection.ltr
-                  : TextDirection.rtl,
-              children: [
-                DateDropdown(
-                    list: mealsProvider.days,
-                    tag: "day",
-                    width: 60,
-                    height: 35),
-                SizeConfig.customSizedBox(20, null, null),
-                DateDropdown(
-                    list: mealsProvider.months,
-                    tag: "month",
-                    width: 75,
-                    height: 35),
-              ],
-            ),
-            SizeConfig.customSizedBox(null, 50, null),
-            if (mealsProvider.dayIsPicked == true &&
-                mealsProvider.monthIsPicked == true)
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 7,
-                  itemBuilder: (ctx, index) {
-                    DateTime initialDate = DateTime(
-                        DateTime.now().year,
-                        mealsProvider.months
-                                .indexOf(mealsProvider.selectedMonth!) +
-                            1,
-                        int.parse(mealsProvider.selectedDay!));
-                    DateTime futureDate =
-                        initialDate.add(Duration(days: index));
-                    var dayName = MealController().getDayOfWeek(futureDate);
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: settingsProvider.language == "en"
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            textDirection: settingsProvider.language == "en"
+                ? TextDirection.ltr
+                : TextDirection.rtl,
+            children: [
+              DateDropdown(
+                  list: mealsProvider.days, tag: "day", width: 60, height: 35),
+              SizeConfig.customSizedBox(20, null, null),
+              DateDropdown(
+                  list: mealsProvider.months,
+                  tag: "month",
+                  width: 75,
+                  height: 35),
+            ],
+          ),
+          SizeConfig.customSizedBox(null, 50, null),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 7,
+              itemBuilder: (ctx, index) {
+                DateTime initialDate = DateTime(
+                    DateTime.now().year,
+                    mealsProvider.months.indexOf(mealsProvider.selectedMonth!) +
+                        1,
+                    int.parse(mealsProvider.selectedDay!));
+                DateTime futureDate = initialDate.add(Duration(days: index));
+                var dayName = MealController().getDayOfWeek(futureDate);
 
-                    return DayMealRow(
-                      day: futureDate.day,
-                      month: mealsProvider.months[futureDate.month - 1],
-                      dayName: dayName,
-                      index: index,
-                    );
-                  },
-                ),
-              ),
-            SizeConfig.customSizedBox(null, 30, null),
-            CustomButton(onTap: () {}, text: 'confirm', width: 126, height: 45)
-          ],
-        ),
+                return Padding(
+                  padding: EdgeInsets.only(
+                      bottom: SizeConfig.getProportionalHeight(10)),
+                  child: DayMealRow(
+                    day: futureDate.day,
+                    month: mealsProvider.months[futureDate.month - 1],
+                    dayName: dayName,
+                    index: index,
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(75)),
+            child: CustomButton(
+                onTap: () {
+                  MealController().clearDayMealController();
+                },
+                text: 'confirm',
+                width: 126,
+                height: 45),
+          )
+        ]),
       ),
     );
   }

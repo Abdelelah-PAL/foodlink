@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +45,7 @@ class DayMealRow extends StatelessWidget {
                 fontWeight: FontWeight.normal),
           ],
         ),
-        SizeConfig.customSizedBox(20, null, null),
+        SizeConfig.customSizedBox(10, null, null),
         Container(
           width: SizeConfig.getProportionalWidth(245),
           height: SizeConfig.getProportionalHeight(40),

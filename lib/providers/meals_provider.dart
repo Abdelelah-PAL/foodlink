@@ -245,6 +245,11 @@ class MealsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setDefaultDate() {
+    selectedDay = DateTime.now().day.toString();
+    selectedMonth = months[DateTime.now().month - 1];
+  }
+
   onDayChange(value) {
     selectedDay = value;
     selectedDayName = MealController().getDayOfWeek(DateTime(
