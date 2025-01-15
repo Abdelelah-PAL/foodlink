@@ -7,6 +7,7 @@ import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:provider/provider.dart';
 import '../../../../models/meal.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
@@ -39,7 +40,10 @@ class _PlanMealTileState extends State<PlanMealTile> {
   late String formattedDate;
 
   onTap() {
-    Get.to(MealScreen(meal: widget.meal, source: 'planning',));
+    Get.to(MealScreen(
+      meal: widget.meal,
+      source: 'planning',
+    ));
   }
 
   @override
@@ -55,7 +59,13 @@ class _PlanMealTileState extends State<PlanMealTile> {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = intl.DateFormat.yMMMMd('ar_SA')
+    SettingsProvider settingsProvider =
+    Provider.of<SettingsProvider>(context, listen: true);
+
+    String formattedDate = settingsProvider.language == "en"
+    ?intl.DateFormat.yMMMMd('en_US')
+        .format(widget.mealsProvider.plannedMeals[widget.index].date!)
+    :  intl.DateFormat.yMMMMd('ar_SA')
         .format(widget.mealsProvider.plannedMeals[widget.index].date!);
 
     return Column(children: [
@@ -64,11 +74,15 @@ class _PlanMealTileState extends State<PlanMealTile> {
             ? TextDirection.ltr
             : TextDirection.rtl,
         children: [
-          CustomText(
-              isCenter: false,
-              text: TranslationService().translate(widget.day),
-              fontSize: 20,
-              fontWeight: FontWeight.bold),
+          SizeConfig.customSizedBox(
+            60,
+            null,
+            CustomText(
+                isCenter: false,
+                text: TranslationService().translate(widget.day),
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
           SizeConfig.customSizedBox(10, null, null),
           CustomText(
               isCenter: false,
@@ -124,7 +138,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                           IngredientsRow(
                             meal: widget.meal,
                             fontSize: 14,
-                            textWidth: 80,
+                            textWidth: 115,
                             maxLines: 3,
                             settingsProvider: widget.settingsProvider,
                           ),

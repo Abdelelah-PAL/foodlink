@@ -6,7 +6,7 @@ import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
-import 'package:foodlink/screens/food_screens/meal_planning.dart';
+import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
 import 'package:foodlink/screens/food_screens/meals_list_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
@@ -89,7 +89,7 @@ class MealScreen extends StatelessWidget {
                                     Get.to(const NotificationsScreen());
                                     break;
                                   case 'planning':
-                                    Get.to(const MealPlanning());
+                                    Get.to(const MealPlanningScreen());
                                     break;
                                 }
                               },
@@ -140,7 +140,7 @@ class MealScreen extends StatelessWidget {
                                 Get.to(const NotificationsScreen());
                                 break;
                               case 'planning':
-                                Get.to(const MealPlanning());
+                                Get.to(const MealPlanningScreen());
                                 break;
                             }
                           },

@@ -42,7 +42,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(135)),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => FocusScope.of(context).unfocus(),
@@ -70,7 +70,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
         child: Column(children: [
           Row(
             mainAxisAlignment: settingsProvider.language == "en"
-                ? MainAxisAlignment.end
+                ? MainAxisAlignment.start
                 : MainAxisAlignment.start,
             textDirection: settingsProvider.language == "en"
                 ? TextDirection.ltr
@@ -82,7 +82,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
               DateDropdown(
                   list: mealsProvider.months,
                   tag: "month",
-                  width: 75,
+                  width: 100,
                   height: 35),
             ],
           ),
@@ -114,7 +114,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
           ),
           Padding(
             padding:
-                EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(75)),
+                EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(35)),
             child: CustomButton(
                 onTap: () {
                   MealController().clearDayMealController();

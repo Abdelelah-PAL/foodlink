@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meal_categories_provider.dart';
-import 'package:foodlink/screens/food_screens/healthy_food.dart';
-import 'package:foodlink/screens/food_screens/meal_planning.dart';
+import 'package:foodlink/screens/food_screens/healthy_food_screen.dart';
+import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
 import 'package:foodlink/screens/food_screens/weekly_meals_planning_screen.dart';
 import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
 import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
@@ -117,14 +117,14 @@ class CookerBody extends StatelessWidget {
                 imageUrl: Assets.aestheticFood,
                 text: TranslationService().translate("aesthetic_food"),
                 settingsProvider: settingsProvider,
-                onTap: () => Get.to(const HealthyFood()),
+                onTap: () => Get.to(const HealthyFoodScreen()),
               ),
               FeatureContainer(
                 left: SizeConfig.getProportionalWidth(35),
                 imageUrl: Assets.mealPlanning,
                 text: TranslationService().translate("meal_planning"),
                 settingsProvider: settingsProvider,
-                onTap: () => Get.to(const MealPlanning()),
+                onTap: () => Get.to(const MealPlanningScreen()),
               ),
             ],
           );

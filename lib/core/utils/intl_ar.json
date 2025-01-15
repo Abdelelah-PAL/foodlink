@@ -89,7 +89,8 @@
   "back": "رجوع",
   "meal_planning": "جدولة\nالوجبات",
   "meal_planning_inline": "جدولة الوجبات",
-  "meal_plan": "خطة أسبوعية مُختارة",
+  "chosen_meal_plan": "خطة أسبوعية\nمُختارة",
+  "chosen_meal_plan_inline": "خطة أسبوعية مُختارة",
   "notification_text": "شريكك في التطبيق يقترح ",
   "user_notification_text_2": " لهذا اليوم، أنقر للاطّلاع على المكونات اللازمة للإعداد.",
   "cooker_notification_text_2": "لهذا اليوم، أنقر للاطّلاع على المكونات والوصفة",
@@ -137,5 +138,6 @@
   "December": "ديسمبر",
   "weekly_plan": "خطة الطعام الأسبوعية",
   "month": "شهر",
-  "insert_meal_name": "أدخل إسم الوجبة"
+  "insert_meal_name": "أدخل إسم الوجبة",
+  "your_weekly_plan": "خطتك الأسبوعية"
 }

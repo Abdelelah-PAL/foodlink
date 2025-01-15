@@ -17,8 +17,9 @@ class MealsProvider with ChangeNotifier {
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsPicked = false;
-  bool monthIsPicked = false;
-  bool dayIsPicked = false;
+  bool chosenPressed = true;
+  bool selfPressed = false;
+
   XFile? pickedFile;
   int numberOfIngredients = 2;
   List<TextEditingController> ingredientsControllers = [
@@ -256,13 +257,23 @@ class MealsProvider with ChangeNotifier {
         DateTime.now().year,
         months.indexOf(selectedMonth!) + 1,
         days.indexOf(selectedDay!) + 1));
-    dayIsPicked = true;
     notifyListeners();
   }
 
   onMonthChange(value) {
     selectedMonth = value;
-    monthIsPicked = true;
+    notifyListeners();
+  }
+
+  onChosenTapped() {
+    chosenPressed = true;
+    selfPressed = false;
+    notifyListeners();
+  }
+
+  onSelfTapped() {
+    chosenPressed = false;
+    selfPressed = true;
     notifyListeners();
   }
 }

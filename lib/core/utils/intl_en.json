@@ -89,7 +89,8 @@
   "back": "Back",
   "meal_planning": "Meal\nPlanning",
   "meal_planning_inline": "Meal Planning",
-  "meal_plan": "Chosen Meal Plan",
+  "chosen_meal_plan": "Chosen Meal\nPlan",
+  "chosen_meal_plan_inline": "Chosen Meal Plan",
   "notification_text": "Your FoodLink partner suggests ",
   "user_notification_text_2": " for today, tap to recognize missing ingredients to prepare it.",
   "cooker_notification_text_2": " for today, tap to recognize ingredients and recipe.",
@@ -138,5 +139,7 @@
   "weekly_plan":"Weekly Meals Plan",
   "month":"Month",
   "day": "Day",
-  "insert_meal_name": "Insert Meal Name"
+  "insert_meal_name": "Insert Meal Name",
+  "your_weekly_plan": "Your Weekly Plan"
+
 }

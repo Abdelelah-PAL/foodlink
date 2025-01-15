@@ -4,23 +4,22 @@ import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
+import 'package:foodlink/screens/food_screens/weekly_meals_planning_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/screens/widgets/image_container.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../core/constants/assets.dart';
 import '../../providers/meals_provider.dart';
 
-class MealPlanning extends StatefulWidget {
-  const MealPlanning({super.key});
+class SelfMealPlanningScreen extends StatefulWidget {
+  const SelfMealPlanningScreen({super.key});
 
   @override
-  State<MealPlanning> createState() => _MealPlanningState();
+  State<SelfMealPlanningScreen> createState() => _SelfMealPlanningScreenState();
 }
 
-class _MealPlanningState extends State<MealPlanning> {
+class _SelfMealPlanningScreenState extends State<SelfMealPlanningScreen> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
@@ -29,21 +28,34 @@ class _MealPlanningState extends State<MealPlanning> {
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(135)),
           child: Padding(
             padding: EdgeInsets.symmetric(
                 vertical: SizeConfig.getProportionalWidth(50),
                 horizontal: SizeConfig.getProportionalWidth(20)),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomBackButton(),
-                CustomText(
+                GestureDetector(
+                  onTap: () => {Get.to(const WeeklyMealsPlanningScreen())},
+                  child: Container(
+                    width: SizeConfig.getProportionalWidth(30),
+                    height: SizeConfig.getProportionalHeight(30),
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.widgetsColor),
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+                const CustomText(
                     isCenter: true,
                     text: "meal_planning_inline",
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
-                ProfileCircle(height: 50, width: 50, iconSize: 25)
+                const ProfileCircle(
+                  height: 38,
+                  width: 38,
+                  iconSize: 25,
+                ),
               ],
             ),
           )),
@@ -51,26 +63,11 @@ class _MealPlanningState extends State<MealPlanning> {
       bottomNavigationBar:
           const CustomBottomNavigationBar(fromDashboard: false),
       body: Column(children: [
-        ImageContainer(imageUrl: Assets.mealPlanningHeaderImage),
-        Align(
-          alignment: settingsProvider.language == 'en'
-              ? Alignment.centerLeft
-              : Alignment.centerRight,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalHeight(20),
-                horizontal: SizeConfig.getProportionalWidth(20)),
-            child: const CustomText(
-                isCenter: false,
-                text: "meal_plan",
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.getProportionalWidth(20)),
+                horizontal: SizeConfig.getProportionalWidth(20),
+                vertical: SizeConfig.getProportionalWidth(20)),
             child: ListView.builder(
                 itemCount: mealsProvider.plannedMeals.length,
                 itemBuilder: (ctx, index) {

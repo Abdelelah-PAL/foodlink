@@ -3,7 +3,6 @@ import 'package:foodlink/core/utils/size_config.dart';
 import '../../../controllers/meal_controller.dart';
 import '../../../core/constants/assets.dart';
 import '../../../models/meal.dart';
-import '../../../providers/settings_provider.dart';
 
 class RecipeRow extends StatelessWidget {
   const RecipeRow(

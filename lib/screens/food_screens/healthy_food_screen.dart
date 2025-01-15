@@ -14,8 +14,8 @@ import '../../core/constants/assets.dart';
 import '../../core/constants/fonts.dart';
 import '../widgets/app_header.dart';
 
-class HealthyFood extends StatelessWidget {
-  const HealthyFood({super.key});
+class HealthyFoodScreen extends StatelessWidget {
+  const HealthyFoodScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
