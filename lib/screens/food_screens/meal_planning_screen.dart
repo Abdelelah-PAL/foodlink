@@ -5,6 +5,7 @@ import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/screens/food_screens/widgets/custom_changeable_color_button.dart';
+import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
@@ -34,35 +35,15 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(135)),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalWidth(50),
-                horizontal: SizeConfig.getProportionalWidth(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => {Get.to(const WeeklyMealsPlanningScreen())},
-                  child: Container(
-                    width: SizeConfig.getProportionalWidth(30),
-                    height: SizeConfig.getProportionalHeight(30),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColors.widgetsColor),
-                    child: const Icon(Icons.add),
-                  ),
-                ),
-                const CustomText(
-                    isCenter: true,
-                    text: "weekly_plan",
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-                const ProfileCircle(
-                  height: 38,
-                  width: 38,
-                  iconSize: 25,
-                ),
-              ],
-            ),
-          )),
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.getProportionalWidth(50),
+                  horizontal: SizeConfig.getProportionalWidth(20)),
+              child: ListHeader(
+                text: "weekly_plan",
+                favorites: false,
+                onTap: () => {Get.to(const WeeklyMealsPlanningScreen())},
+                isEmpty: false,
+              ))),
       backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar:
           const CustomBottomNavigationBar(fromDashboard: false),

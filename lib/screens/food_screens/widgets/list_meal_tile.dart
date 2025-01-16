@@ -90,8 +90,9 @@ class _ListMealTileState extends State<ListMealTile> {
               ),
             ),
             Positioned(
-                left: settingsProvider.language == "en" ? 290 : 0,
-                bottom: 0,
+                left: settingsProvider.language == "en" ? 295 : -12,
+                top: 0,
+                bottom: -5,
                 child: Column(
                   children: [
                     !widget.favorites

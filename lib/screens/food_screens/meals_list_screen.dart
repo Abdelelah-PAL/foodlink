@@ -48,8 +48,11 @@ class _MealsListScreenState extends State<MealsListScreen> {
                   text: TranslationService()
                       .translate(mealCategories[widget.index].mealsName),
                   isEmpty: mealsProviderWatcher.meals.isEmpty,
-                  categoryId: widget.categoryId,
                   favorites: false,
+                  onTap: () {  Get.to(AddMealScreen(
+                    categoryId: widget.categoryId!,
+                    isAddScreen: true,
+                  )); },
                 ),
               ),
             ),

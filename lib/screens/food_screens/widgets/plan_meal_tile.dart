@@ -60,13 +60,13 @@ class _PlanMealTileState extends State<PlanMealTile> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
-    Provider.of<SettingsProvider>(context, listen: true);
+        Provider.of<SettingsProvider>(context, listen: true);
 
     String formattedDate = settingsProvider.language == "en"
-    ?intl.DateFormat.yMMMMd('en_US')
-        .format(widget.mealsProvider.plannedMeals[widget.index].date!)
-    :  intl.DateFormat.yMMMMd('ar_SA')
-        .format(widget.mealsProvider.plannedMeals[widget.index].date!);
+        ? intl.DateFormat.yMMMMd('en_US')
+            .format(widget.mealsProvider.plannedMeals[widget.index].date!)
+        : intl.DateFormat.yMMMMd('ar_SA')
+            .format(widget.mealsProvider.plannedMeals[widget.index].date!);
 
     return Column(children: [
       Row(
@@ -75,20 +75,26 @@ class _PlanMealTileState extends State<PlanMealTile> {
             : TextDirection.rtl,
         children: [
           SizeConfig.customSizedBox(
-            60,
+            80,
             null,
             CustomText(
                 isCenter: false,
                 text: TranslationService().translate(widget.day),
-                fontSize: 20,
+                fontSize: SettingsProvider().language == "en"
+                    ? 12
+                    : 20,
                 fontWeight: FontWeight.bold),
           ),
-          SizeConfig.customSizedBox(10, null, null),
-          CustomText(
-              isCenter: false,
-              text: formattedDate,
-              fontSize: 18,
-              fontWeight: FontWeight.normal),
+          SizeConfig.customSizedBox(
+              120,
+              null,
+            CustomText(
+                isCenter: false,
+                text: formattedDate,
+                fontSize: SettingsProvider().language == "en"
+                    ? 10
+                    : 18,
+                fontWeight: FontWeight.normal),)
         ],
       ),
       Padding(

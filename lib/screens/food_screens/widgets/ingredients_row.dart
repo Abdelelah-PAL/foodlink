@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/core/constants/fonts.dart';
+import '../../../controllers/meal_controller.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
@@ -21,13 +23,12 @@ class IngredientsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String writtenLanguage = MealController().detectLanguage(meal.recipe!);
+
     return Row(
-      textDirection: settingsProvider.language == 'en'
-          ? TextDirection.ltr
-          : TextDirection.rtl,
-      mainAxisAlignment: settingsProvider.language == 'en'
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
+      textDirection:
+          writtenLanguage == 'en' ? TextDirection.ltr : TextDirection.rtl,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.asset(Assets.mealIngredients),
@@ -41,17 +42,14 @@ class IngredientsRow extends StatelessWidget {
               meal.ingredients.join('-'),
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
-              textDirection: settingsProvider.language == 'en'
+              textDirection: writtenLanguage == 'en'
                   ? TextDirection.ltr
                   : TextDirection.rtl,
-              textAlign: settingsProvider.language == 'en'
+              textAlign: writtenLanguage == 'en'
                   ? TextAlign.left
                   : TextAlign.right,
               style: TextStyle(
-                  fontSize: fontSize,
-                  fontFamily: settingsProvider.language == 'en'
-                      ? 'salsa'
-                      : 'MyriadArabic'),
+                  fontSize: fontSize, fontFamily: AppFonts.primaryFont),
             ),
           ),
         )

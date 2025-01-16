@@ -5,6 +5,7 @@ import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
@@ -36,13 +37,13 @@ class _FavoritesState extends State<Favorites> {
             appBar: PreferredSize(
               preferredSize:
                   Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-              child: SafeArea(
-                child: ListHeader(
-                  text: TranslationService().translate("favorites"),
-                  isEmpty: mealsProviderWatcher.favoriteMeals.isEmpty,
-                  favorites: true,
-                ),
-              ),
+              child: const SafeArea(
+                  child: CustomText(
+                isCenter: true,
+                text: "favorites",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(
@@ -73,7 +74,8 @@ class _FavoritesState extends State<Favorites> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (ctx, index) {
                               return ListMealTile(
-                                  meal: mealsProvider.favoriteMeals[index], favorites: true);
+                                  meal: mealsProvider.favoriteMeals[index],
+                                  favorites: true);
                             },
                           ),
                         );

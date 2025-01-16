@@ -22,9 +22,7 @@ class RecipeRow extends StatelessWidget {
             textDirection: writtenLanguage  == 'en'
                 ? TextDirection.ltr
                 : TextDirection.rtl,
-            mainAxisAlignment: writtenLanguage == 'en'
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.end,
+            mainAxisAlignment:  MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(Assets.mealRecipe),

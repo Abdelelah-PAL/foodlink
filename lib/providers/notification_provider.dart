@@ -26,7 +26,9 @@ class NotificationsProvider with ChangeNotifier {
   Future<void> getAllNotifications(userTypeId, userId) async {
     try {
       isLoading = true;
+      print(userNotifications.length);
       userNotifications.clear();
+      print(userNotifications.length);
 
       List<Notifications> fetchedNotifications =
           await _ns.getAllNotifications(userTypeId, userId);
@@ -58,6 +60,8 @@ class NotificationsProvider with ChangeNotifier {
               .toList();
         }
       }
+      print(userNotifications.length);
+
       isLoading = false;
       notifyListeners();
     } catch (ex) {
