@@ -9,7 +9,10 @@ import '../../widgets/custom_back_button.dart';
 
 class MealImageContainer extends StatefulWidget {
   const MealImageContainer(
-      {super.key, required this.isAddSource, this.imageUrl, this.mealsProvider});
+      {super.key,
+      required this.isAddSource,
+      this.imageUrl,
+      this.mealsProvider});
 
   final bool isAddSource;
   final String? imageUrl;
@@ -48,7 +51,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                   )
                 : null,
           ),
-          if (widget.isAddSource)
+          if (widget.isAddSource || widget.imageUrl == null)
             Positioned.fill(
               child: Center(
                 child: GestureDetector(

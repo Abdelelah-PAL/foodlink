@@ -63,9 +63,9 @@ class MealScreen extends StatelessWidget {
                   ),
                   SizeConfig.customSizedBox(null, 20, null),
                   RecipeRow(
-                      meal: meal,
-                      fontSize: 15,
-                      )
+                    meal: meal,
+                    fontSize: 15,
+                  )
                 ],
               ),
             ),
@@ -78,10 +78,9 @@ class MealScreen extends StatelessWidget {
                       children: [
                           CustomButton(
                               onTap: () {
-                                switch(source) {
+                                switch (source) {
                                   case 'default':
-                                    Get.to(
-                                        MealsListScreen(
+                                    Get.to(MealsListScreen(
                                         index: meal.categoryId! - 1,
                                         categoryId: meal.categoryId!));
                                     break;
@@ -97,22 +96,24 @@ class MealScreen extends StatelessWidget {
                               width: 216,
                               height: 45),
                           SizeConfig.customSizedBox(null, 20, null),
-                          if(source == 'planning')Column(
-                            children: [
-                              CustomButton(
-                                  onTap: () {
-                                    MealsProvider().fillDataForEdition(meal);
-                                    Get.to(AddMealScreen(
-                                        categoryId: meal.categoryId!,
-                                        isAddScreen: false,
-                                        meal: meal));
-                                  },
-                                  text: TranslationService().translate("edit"),
-                                  width: 216,
-                                  height: 45),
-                              SizeConfig.customSizedBox(null, 20, null),
-                            ],
-                          ),
+                          if (source != 'planning')
+                            Column(
+                              children: [
+                                CustomButton(
+                                    onTap: () {
+                                      MealsProvider().fillDataForEdition(meal);
+                                      Get.to(AddMealScreen(
+                                          categoryId: meal.categoryId!,
+                                          isAddScreen: false,
+                                          meal: meal));
+                                    },
+                                    text:
+                                        TranslationService().translate("edit"),
+                                    width: 216,
+                                    height: 45),
+                                SizeConfig.customSizedBox(null, 20, null),
+                              ],
+                            ),
                           CustomButton(
                               onTap: () {
                                 mealsProvider.checkboxValues = List.generate(
@@ -129,12 +130,11 @@ class MealScreen extends StatelessWidget {
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       CustomButton(
                           onTap: () {
-                            switch(source) {
+                            switch (source) {
                               case 'default':
-                                Get.to(
-                                    MealsListScreen(
-                                        index: meal.categoryId! - 1,
-                                        categoryId: meal.categoryId!));
+                                Get.to(MealsListScreen(
+                                    index: meal.categoryId! - 1,
+                                    categoryId: meal.categoryId!));
                                 break;
                               case 'notifications':
                                 Get.to(const NotificationsScreen());

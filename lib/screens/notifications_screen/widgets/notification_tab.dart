@@ -43,7 +43,6 @@ class NotificationsTab extends StatelessWidget {
 
               return ListTile(
                 onTap: () async {
-                  print( notifications[index].isMealPlanned);
                   Meal meal = notifications[index].isMealPlanned
                       ? await MealsProvider()
                           .getPlannedMealById(notifications[index].mealId)
