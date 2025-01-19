@@ -21,7 +21,7 @@ class CustomText extends StatelessWidget {
       TranslationService().translate(text),
       textDirection:  settingsProvider.language == 'en' ? TextDirection.ltr : TextDirection.rtl,
       style: TextStyle(
-        fontFamily: AppFonts.primaryFont,
+        fontFamily: AppFonts.getPrimaryFont(context),
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color

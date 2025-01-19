@@ -47,7 +47,7 @@ class CustomGoogleAuthBtn extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          fontFamily: AppFonts.primaryFont,
+                          fontFamily: AppFonts.getPrimaryFont(context),
                           color: AppColors.hintTextColor),
                     ),
                     TextSpan(
@@ -55,7 +55,7 @@ class CustomGoogleAuthBtn extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          fontFamily: AppFonts.primaryFont,
+                          fontFamily: AppFonts.getPrimaryFont(context),
                           color: AppColors.hintTextColor),
                     ),
                   ])),

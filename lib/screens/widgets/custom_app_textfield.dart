@@ -95,7 +95,7 @@ class CustomAppTextField extends StatelessWidget {
             hintStyle: TextStyle(
                 fontSize: 20,
                 color: AppColors.hintTextColor,
-                fontFamily: AppFonts.primaryFont),
+                fontFamily: AppFonts.getPrimaryFont(context)),
             border: InputBorder.none,
           ),
         ),

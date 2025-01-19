@@ -7,10 +7,7 @@ import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.
 import 'package:foodlink/screens/food_screens/widgets/custom_changeable_color_button.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_back_button.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/screens/widgets/image_container.dart';
-import 'package:foodlink/screens/widgets/profile_circle.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';

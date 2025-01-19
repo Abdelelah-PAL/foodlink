@@ -94,7 +94,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 30,
-                                  fontFamily: AppFonts.primaryFont,
+                                  fontFamily: AppFonts.getPrimaryFont(context),
                                   fontWeight: FontWeight.bold),
                             )
                           ],

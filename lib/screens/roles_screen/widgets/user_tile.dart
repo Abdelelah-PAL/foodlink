@@ -81,7 +81,7 @@ class UserTile extends StatelessWidget {
                         TranslationService().translate("user"),
                         style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontWeight: FontWeight.bold),
                       ),
                       SizeConfig.customSizedBox(
@@ -93,7 +93,7 @@ class UserTile extends StatelessWidget {
                           TranslationService().translate("use_one"),
                           style: TextStyle(
                             fontSize: 20,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                           ),
                         ),
                       ),
@@ -112,7 +112,7 @@ class UserTile extends StatelessWidget {
                         TranslationService().translate("user"),
                         style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontWeight: FontWeight.bold),
                       ),
                       SizeConfig.customSizedBox(
@@ -124,7 +124,7 @@ class UserTile extends StatelessWidget {
                           TranslationService().translate("use_one"),
                           style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                           ),
                         ),
                       ),

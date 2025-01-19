@@ -33,7 +33,7 @@ class CustomAuthFooter extends StatelessWidget {
             TextSpan(
               text: TranslationService().translate(headingText),
               style: TextStyle(
-                fontFamily: AppFonts.primaryFont,
+                fontFamily: AppFonts.getPrimaryFont(context),
                 fontSize: 16,
                 color: AppColors.fontColor,
               ),
@@ -44,7 +44,7 @@ class CustomAuthFooter extends StatelessWidget {
             TextSpan(
               text: TranslationService().translate(tailText),
               style: TextStyle(
-                fontFamily: AppFonts.primaryFont,
+                fontFamily: AppFonts.getPrimaryFont(context),
                 fontSize: 16,
                 color: AppColors.primaryColor,
                 decoration: TextDecoration.underline,

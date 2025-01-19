@@ -49,7 +49,7 @@ class IngredientsRow extends StatelessWidget {
                   ? TextAlign.left
                   : TextAlign.right,
               style: TextStyle(
-                  fontSize: fontSize, fontFamily: AppFonts.primaryFont),
+                  fontSize: fontSize, fontFamily: AppFonts.getPrimaryFont(context)),
             ),
           ),
         )

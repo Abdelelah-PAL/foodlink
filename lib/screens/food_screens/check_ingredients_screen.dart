@@ -3,7 +3,6 @@ import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/controllers/notification_controller.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/checkbox_tile.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
@@ -27,8 +26,6 @@ class CheckIngredientsScreen extends StatelessWidget {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider =
         Provider.of<MealsProvider>(context, listen: true);
-    NotificationsProvider notificationsProvider =
-        Provider.of<NotificationsProvider>(context, listen: true);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(

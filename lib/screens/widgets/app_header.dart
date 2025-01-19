@@ -140,7 +140,7 @@ class _AppHeaderState extends State<AppHeader> {
                                       ? TranslationService().translate("cooker")
                                       : TranslationService().translate("user"),
                                   style: TextStyle(
-                                    fontFamily: AppFonts.primaryFont,
+                                    fontFamily: AppFonts.getPrimaryFont(context),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -213,7 +213,7 @@ class _AppHeaderState extends State<AppHeader> {
                                           : TranslationService()
                                               .translate("cooker"),
                                       style: TextStyle(
-                                        fontFamily: AppFonts.primaryFont,
+                                        fontFamily: AppFonts.getPrimaryFont(context),
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -258,7 +258,7 @@ class _AppHeaderState extends State<AppHeader> {
                   : TextDirection.rtl,
               style: TextStyle(
                 fontSize: 15,
-                fontFamily: AppFonts.primaryFont,
+                fontFamily: AppFonts.getPrimaryFont(context),
                 fontWeight: FontWeight.w700,
               ),
             ),
