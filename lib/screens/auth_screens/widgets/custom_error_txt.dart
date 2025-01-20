@@ -25,7 +25,7 @@ class CustomErrorTxt extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 12,
-            fontFamily: AppFonts.primaryFont,
+            fontFamily: AppFonts.getPrimaryFont(context),
             color: AppColors.errorColor,
           ),
         ),

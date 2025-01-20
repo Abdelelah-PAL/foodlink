@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               TranslationService().translate("remember_me"),
                               style: TextStyle(
-                                fontFamily: AppFonts.primaryFont,
+                                fontFamily: AppFonts.getPrimaryFont(context),
                                 fontSize: 15,
                                 color: AppColors.fontColor,
                               ),
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           TranslationService().translate("forgot_password"),
                           style: TextStyle(
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontSize: 16,
                             color: AppColors.errorColor,
                           ),

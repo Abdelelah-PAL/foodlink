@@ -56,7 +56,7 @@ class FeatureContainer extends StatelessWidget {
                     text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: AppFonts.primaryFont,
+                      fontFamily: AppFonts.getPrimaryFont(context),
                       fontSize: settingsProvider.language == 'en' ? 23 : 30,
                       fontWeight: FontWeight.bold,
                       foreground: Paint()
@@ -71,7 +71,7 @@ class FeatureContainer extends StatelessWidget {
                     textAlign: TextAlign.center,
 
                     style: TextStyle(
-                      fontFamily: AppFonts.primaryFont,
+                      fontFamily: AppFonts.getPrimaryFont(context),
                       fontSize: settingsProvider.language == 'en' ? 23 : 30,
                       fontWeight: FontWeight.bold,
                       color: AppColors.fontColor, // Fill color

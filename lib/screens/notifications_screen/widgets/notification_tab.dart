@@ -96,7 +96,7 @@ class NotificationsTab extends StatelessWidget {
                           fontSize: 12,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.normal,
-                          fontFamily: AppFonts.primaryFont),
+                          fontFamily: AppFonts.getPrimaryFont(context)),
                     ),
                     TextSpan(
                       text: notifications[index].mealName,
@@ -104,7 +104,7 @@ class NotificationsTab extends StatelessWidget {
                           fontSize: 12,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold,
-                          fontFamily: AppFonts.primaryFont),
+                          fontFamily: AppFonts.getPrimaryFont(context)),
                     ),
                     TextSpan(
                       text: usersProvider.selectedUser!.userTypeId ==
@@ -117,7 +117,7 @@ class NotificationsTab extends StatelessWidget {
                           fontSize: 12,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.normal,
-                          fontFamily: AppFonts.primaryFont),
+                          fontFamily: AppFonts.getPrimaryFont(context)),
                     ),
                   ]),
                 ),

@@ -31,7 +31,7 @@ class ListHeader extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
+                        fontFamily: AppFonts.getPrimaryFont(context)),
                   ),
                 ),
               ),

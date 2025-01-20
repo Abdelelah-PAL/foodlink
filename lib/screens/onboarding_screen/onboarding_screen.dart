@@ -130,7 +130,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: AppColors.fontColor,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontSize: 16),
                       ),
                     )),

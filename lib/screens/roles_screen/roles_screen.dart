@@ -64,7 +64,7 @@ class RolesScreen extends StatelessWidget {
                           ? TextAlign.left
                           : TextAlign.right,
                       style: TextStyle(
-                          fontFamily: AppFonts.primaryFont,
+                          fontFamily: AppFonts.getPrimaryFont(context),
                           fontSize: settingsProvider.language == "en" ? 25 : 30,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold),

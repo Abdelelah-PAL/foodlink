@@ -50,7 +50,7 @@ class HealthyFoodScreen extends StatelessWidget {
                     TranslationService().translate("healthy_dish"),
                     style: TextStyle(
                         fontSize: 20,
-                        fontFamily: AppFonts.primaryFont,
+                        fontFamily: AppFonts.getPrimaryFont(context),
                         fontWeight: FontWeight.bold,
                         color: AppColors.backgroundColor,
                         shadows: const [
@@ -66,7 +66,7 @@ class HealthyFoodScreen extends StatelessWidget {
                     TranslationService().translate("vegetables_percent"),
                     style: TextStyle(
                         fontSize: 15,
-                        fontFamily: AppFonts.primaryFont,
+                        fontFamily: AppFonts.getPrimaryFont(context),
                         fontWeight: FontWeight.bold,
                         color: AppColors.backgroundColor,
                         shadows: const [
@@ -81,7 +81,7 @@ class HealthyFoodScreen extends StatelessWidget {
                     TranslationService().translate("fruits_percent"),
                     style: TextStyle(
                         fontSize: 15,
-                        fontFamily: AppFonts.primaryFont,
+                        fontFamily: AppFonts.getPrimaryFont(context),
                         fontWeight: FontWeight.bold,
                         color: AppColors.backgroundColor,
                         shadows: const [
@@ -96,7 +96,7 @@ class HealthyFoodScreen extends StatelessWidget {
                     TranslationService().translate("grains_percent"),
                     style: TextStyle(
                         fontSize: 15,
-                        fontFamily: AppFonts.primaryFont,
+                        fontFamily: AppFonts.getPrimaryFont(context),
                         fontWeight: FontWeight.bold,
                         color: AppColors.backgroundColor,
                         shadows: const [
@@ -111,7 +111,7 @@ class HealthyFoodScreen extends StatelessWidget {
                     TranslationService().translate("protiens_percent"),
                     style: TextStyle(
                         fontSize: 15,
-                        fontFamily: AppFonts.primaryFont,
+                        fontFamily: AppFonts.getPrimaryFont(context),
                         fontWeight: FontWeight.bold,
                         color: AppColors.backgroundColor,
                         shadows: const [

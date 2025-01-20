@@ -25,7 +25,7 @@ class CustomAuthBtn extends StatelessWidget {
             style:  TextStyle(
                 fontWeight: FontWeight.w600, // Semi-bold weight
                 fontSize: 16,
-                fontFamily: AppFonts.primaryFont,
+                fontFamily: AppFonts.getPrimaryFont(context),
                 color: AppColors.backgroundColor),
           ),
         ),

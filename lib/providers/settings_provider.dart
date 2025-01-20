@@ -49,4 +49,6 @@ class SettingsProvider with ChangeNotifier {
     await _ss.changeLanguage(userId, language);
     await TranslationService().loadTranslations(context);
   }
+
+  String getLanguage () => language;
 }

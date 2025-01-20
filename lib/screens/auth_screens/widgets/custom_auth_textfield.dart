@@ -69,7 +69,7 @@ class _CustomAuthenticationTextFieldState
                 hintText: widget.hintText,
                 hintStyle: TextStyle(
                     color: AppColors.hintTextColor,
-                    fontFamily: AppFonts.primaryFont),
+                    fontFamily: AppFonts.getPrimaryFont(context)),
                 border: InputBorder.none,
               )),
         ),

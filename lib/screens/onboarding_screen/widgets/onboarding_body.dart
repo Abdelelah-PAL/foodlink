@@ -37,7 +37,7 @@ class OnBoardingBody extends StatelessWidget {
                         fontSize: SettingsProvider().language == 'en' ? 30 : 45,
                         color: AppColors.fontColor,
                         fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
+                        fontFamily: AppFonts.getPrimaryFont(context)),
                   ),
                   TextSpan(
                     text: content.secondTextSpan,
@@ -45,7 +45,7 @@ class OnBoardingBody extends StatelessWidget {
                         fontSize: SettingsProvider().language == 'en' ? 30 : 45,
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold,
-                        fontFamily: AppFonts.primaryFont),
+                        fontFamily: AppFonts.getPrimaryFont(context)),
                   ),
                   content.thirdTextSpan == null
                       ? const TextSpan(
@@ -58,7 +58,7 @@ class OnBoardingBody extends StatelessWidget {
                                   SettingsProvider().language == 'en' ? 30 : 45,
                               color: AppColors.fontColor,
                               fontWeight: FontWeight.bold,
-                              fontFamily: AppFonts.primaryFont),
+                              fontFamily: AppFonts.getPrimaryFont(context)),
                         )
                 ])),
           ),

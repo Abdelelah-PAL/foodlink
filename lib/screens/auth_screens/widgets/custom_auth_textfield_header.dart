@@ -24,7 +24,7 @@ class CustomAuthTextFieldHeader extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 14,
-            fontFamily: AppFonts.primaryFont,
+            fontFamily: AppFonts.getPrimaryFont(context),
             color: AppColors.hintTextColor,
           ),
         ),

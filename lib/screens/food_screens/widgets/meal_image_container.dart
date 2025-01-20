@@ -68,7 +68,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              fontFamily: AppFonts.primaryFont)),
+                              fontFamily: AppFonts.getPrimaryFont(context))),
                       SizeConfig.customSizedBox(
                         10,
                         null,

@@ -38,55 +38,67 @@ class _ListMealTileState extends State<ListMealTile> {
           children: [
             GestureDetector(
               onTap: onTap,
-              child: Row(
-                textDirection: settingsProvider.language == "en"
-                    ? TextDirection.ltr
-                    : TextDirection.rtl,
-                children: [
-                  Expanded(
-                      child: Container(
-                    width: SizeConfig.getProportionalWidth(182),
-                    height: SizeConfig.getProportionalHeight(95),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1, color: AppColors.defaultBorderColor),
-                      borderRadius: BorderRadius.circular(15),
+              child: Container(
+                width: SizeConfig.getProportionalWidth(355),
+                height: SizeConfig.getProportionalHeight(95),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(6, 6),
+                      blurRadius: 5,
+                      spreadRadius: 1,
                     ),
-                    child: widget.meal.imageUrl != null &&
-                            widget.meal.imageUrl!.isNotEmpty
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            // Apply the same radius here
-                            child: Image.network(
-                              widget.meal.imageUrl!,
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        : const Icon(Icons.camera_alt_outlined),
-                  )),
-                  SizeConfig.customSizedBox(10, null, null),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        NameRow(
-                          name: widget.meal.name,
-                          fontSize: 15,
-                          textWidth: 115,
-                          settingsProvider: settingsProvider,
-                        ),
-                        SizeConfig.customSizedBox(null, 10, null),
-                        IngredientsRow(
-                          meal: widget.meal,
-                          fontSize: 14,
-                          textWidth: 80,
-                          maxLines: 3,
-                          settingsProvider: settingsProvider,
-                        ),
-                      ],
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-10, -10),
+                      blurRadius: 5,
+                      spreadRadius: 1,
                     ),
-                  )
-                ],
+                  ],
+                ),
+                child: Row(
+                  textDirection: settingsProvider.language == "en"
+                      ? TextDirection.ltr
+                      : TextDirection.rtl,
+                  children: [
+                    SizeConfig.customSizedBox(
+                      182,
+                      95,
+                      Expanded(
+                          child: widget.meal.imageUrl != null &&
+                                  widget.meal.imageUrl!.isNotEmpty
+                              ? Image.network(
+                                  widget.meal.imageUrl!,
+                                  fit: BoxFit.fill,
+                                )
+                              : const Icon(Icons.camera_alt_outlined)),
+                    ),
+                    SizeConfig.customSizedBox(10, null, null),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          NameRow(
+                            name: widget.meal.name,
+                            fontSize: 15,
+                            textWidth: 115,
+                            settingsProvider: settingsProvider,
+                          ),
+                          SizeConfig.customSizedBox(null, 10, null),
+                          IngredientsRow(
+                            meal: widget.meal,
+                            fontSize: 14,
+                            textWidth: 80,
+                            maxLines: 3,
+                            settingsProvider: settingsProvider,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Positioned(

@@ -89,7 +89,7 @@ class CookerTile extends StatelessWidget {
                         TranslationService().translate("cooker"),
                         style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontWeight: FontWeight.bold),
                       ),
                       SizeConfig.customSizedBox(
@@ -101,7 +101,7 @@ class CookerTile extends StatelessWidget {
                           TranslationService().translate("cook_one"),
                           style: TextStyle(
                             fontSize: 20,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                           ),
                         ),
                       ),
@@ -121,7 +121,7 @@ class CookerTile extends StatelessWidget {
                         TranslationService().translate("cooker"),
                         style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                             fontWeight: FontWeight.bold),
                       ),
                       SizeConfig.customSizedBox(
@@ -133,7 +133,7 @@ class CookerTile extends StatelessWidget {
                           TranslationService().translate("cook_one"),
                           style: TextStyle(
                             fontSize: 25,
-                            fontFamily: AppFonts.primaryFont,
+                            fontFamily: AppFonts.getPrimaryFont(context),
                           ),
                         ),
                       ),

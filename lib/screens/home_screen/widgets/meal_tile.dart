@@ -43,7 +43,7 @@ class MealTile extends StatelessWidget {
               Text(
                 TranslationService().translate(name),
                 style: TextStyle(
-                    fontFamily: AppFonts.primaryFont,
+                    fontFamily: AppFonts.getPrimaryFont(context),
                     fontSize: 15,
                     fontWeight: FontWeight.w700),
               )
