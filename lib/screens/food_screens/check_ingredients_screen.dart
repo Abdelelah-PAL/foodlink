@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../models/meal.dart';
 import '../../providers/settings_provider.dart';
-import '../widgets/custom_app_textfield.dart';
+import '../widgets/custom_app_iconic_textfield.dart';
 
 class CheckIngredientsScreen extends StatelessWidget {
   const CheckIngredientsScreen({super.key, required this.meal});
@@ -48,6 +48,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                     fontSize: 30,
                     textWidth: 250,
                     settingsProvider: settingsProvider,
+                    height: 35,
                   ),
                   SizeConfig.customSizedBox(null, 10, null),
                   settingsProvider.language == 'en'
@@ -94,7 +95,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  CustomAppTextField(
+                  CustomAppIconicTextField(
                       width: 263,
                       height: 79,
                       headerText: "add_notes",

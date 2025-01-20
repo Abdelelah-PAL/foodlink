@@ -50,5 +50,4 @@ class SettingsProvider with ChangeNotifier {
     await TranslationService().loadTranslations(context);
   }
 
-  String getLanguage () => language;
 }

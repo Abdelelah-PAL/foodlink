@@ -53,6 +53,7 @@ class MealScreen extends StatelessWidget {
                     fontSize: 30,
                     textWidth: 250,
                     settingsProvider: settingsProvider,
+                    height: 35,
                   ),
                   IngredientsRow(
                     meal: meal,
@@ -60,6 +61,7 @@ class MealScreen extends StatelessWidget {
                     textWidth: 250,
                     maxLines: 100,
                     settingsProvider: settingsProvider,
+                    height: 100,
                   ),
                   SizeConfig.customSizedBox(null, 20, null),
                   RecipeRow(

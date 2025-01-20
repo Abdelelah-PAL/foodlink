@@ -41,6 +41,8 @@ class ListHeader extends StatelessWidget {
         : Padding(
             padding: EdgeInsets.only(
               top: SizeConfig.getProportionalHeight(10),
+              left: SizeConfig.getProportionalWidth(10),
+              right: SizeConfig.getProportionalWidth(10),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/screens/day_system/add_day_task_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../widgets/profile_circle.dart';
 
-class DietFoodSystem extends StatefulWidget {
-  const DietFoodSystem({super.key});
+class Schedule extends StatefulWidget {
+  const Schedule({super.key});
 
   @override
-  State<DietFoodSystem> createState() => _DietFoodSystemState();
+  State<Schedule> createState() => _ScheduleState();
 }
 
-class _DietFoodSystemState extends State<DietFoodSystem> {
+class _ScheduleState extends State<Schedule> {
   DateTime _selectedDate = DateTime.now();
 
   @override
@@ -116,14 +118,37 @@ class _DietFoodSystemState extends State<DietFoodSystem> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
               ],
             ),
-            const CustomText(
-                isCenter: false,
-                text: "today_food_system",
-                fontSize: 30,
-                fontWeight: FontWeight.bold)
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getProportionalWidth(35)),
+              child: Column(
+                crossAxisAlignment: settingsProvider.language == "en"
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                children: [
+                  const CustomText(
+                      isCenter: false,
+                      text: "today_system",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(const AddDayTaskScreen());
+                    },
+                    child: Container(
+                      height: SizeConfig.getProportionalHeight(38),
+                      width: SizeConfig.getProportionalWidth(38),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.widgetsColor),
+                      child: const Icon(Icons.add),
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

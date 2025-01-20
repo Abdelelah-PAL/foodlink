@@ -13,47 +13,53 @@ class IngredientsRow extends StatelessWidget {
       required this.fontSize,
       required this.textWidth,
       required this.maxLines,
-      required this.settingsProvider});
+      required this.settingsProvider,
+      required this.height});
 
   final Meal meal;
   final double fontSize;
   final double textWidth;
   final int maxLines;
   final SettingsProvider settingsProvider;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     String writtenLanguage = MealController().detectLanguage(meal.recipe!);
 
-    return Row(
-      textDirection:
-          writtenLanguage == 'en' ? TextDirection.ltr : TextDirection.rtl,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset(Assets.mealIngredients),
-        SizeConfig.customSizedBox(10, null, null),
-        SizeConfig.customSizedBox(
-          textWidth,
-          null,
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Text(
-              meal.ingredients.join('-'),
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              textDirection: writtenLanguage == 'en'
-                  ? TextDirection.ltr
-                  : TextDirection.rtl,
-              textAlign: writtenLanguage == 'en'
-                  ? TextAlign.left
-                  : TextAlign.right,
-              style: TextStyle(
-                  fontSize: fontSize, fontFamily: AppFonts.getPrimaryFont(context)),
+    return SizeConfig.customSizedBox(
+      null,
+      height,
+      Row(
+        textDirection:
+            writtenLanguage == 'en' ? TextDirection.ltr : TextDirection.rtl,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(Assets.mealIngredients),
+          SizeConfig.customSizedBox(10, null, null),
+          SizeConfig.customSizedBox(
+            textWidth,
+            null,
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Text(
+                meal.ingredients.join('-'),
+                maxLines: maxLines,
+                overflow: TextOverflow.ellipsis,
+                textDirection: writtenLanguage == 'en'
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                textAlign:
+                    writtenLanguage == 'en' ? TextAlign.left : TextAlign.right,
+                style: TextStyle(
+                    fontSize: fontSize,
+                    fontFamily: AppFonts.getPrimaryFont(context)),
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

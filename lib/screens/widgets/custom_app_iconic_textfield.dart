@@ -6,8 +6,8 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../providers/settings_provider.dart';
 
-class CustomAppTextField extends StatelessWidget {
-  const CustomAppTextField(
+class CustomAppIconicTextField extends StatelessWidget {
+  const CustomAppIconicTextField(
       {super.key,
       required this.width,
       required this.height,
@@ -30,49 +30,30 @@ class CustomAppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      settingsProvider.language == 'en'
-          ? Padding(
-              padding:
-                  EdgeInsets.only(left: SizeConfig.getProportionalWidth(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizeConfig.customSizedBox(
-                        iconSizeFactor, iconSizeFactor, Image.asset(icon)),
-                  ),
-                  CustomText(
-                    isCenter: false,
-                    text: TranslationService().translate(headerText),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ],
-              ),
-            )
-          : Padding(
-              padding:
-                  EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomText(
-                    isCenter: false,
-                    text: TranslationService().translate(headerText),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: SizeConfig.customSizedBox(
-                        iconSizeFactor, iconSizeFactor, Image.asset(icon)),
-                  ),
-                ],
-              ),
+      Padding(
+        padding: EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
+        child: Row(
+          textDirection: settingsProvider.language == 'en'
+              ? TextDirection.ltr
+              : TextDirection.rtl,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CustomText(
+              isCenter: false,
+              text: TranslationService().translate(headerText),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizeConfig.customSizedBox(
+                  iconSizeFactor, iconSizeFactor, Image.asset(icon)),
+            ),
+          ],
+        ),
+      ),
       Container(
-        width:SizeConfig.getProportionalWidth(width),
+        width: SizeConfig.getProportionalWidth(width),
         height: SizeConfig.getProportionalHeight(height),
         margin: EdgeInsets.symmetric(
             vertical: SizeConfig.getProportionalHeight(10)),

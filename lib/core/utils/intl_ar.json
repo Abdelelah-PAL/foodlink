@@ -140,5 +140,9 @@
   "month": "شهر",
   "insert_meal_name": "أدخل إسم الوجبة",
   "your_weekly_plan": "خطتك الأسبوعية",
-  "today_food_system": "نظام الطعام اليوم"
+  "today_system": "نظام اليوم",
+  "task_name": "اسم المهمة",
+  "description": "الوصف",
+  "start_time": "وقت البدء",
+  "end_time": "وقت الانتهاء"
 }

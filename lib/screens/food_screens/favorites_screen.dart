@@ -3,7 +3,6 @@ import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/food_screens/diet_food_system.dart';
+import 'package:foodlink/screens/day_system/schedule.dart';
 import 'package:foodlink/screens/food_screens/favorites_screen.dart';
 import 'package:foodlink/screens/home_screen/home_screen.dart';
 import 'package:foodlink/screens/settings_screen/settings_screen.dart';
@@ -20,7 +20,7 @@ class DashboardController {
   List<Widget> dashBoardList = [
     const HomeScreen(),
     const Favorites(),
-    const DietFoodSystem(),
+    const Schedule(),
     const SettingsScreen(),
   ];
 }

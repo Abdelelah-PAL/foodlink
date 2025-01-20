@@ -4,7 +4,7 @@ import 'package:foodlink/core/constants/assets.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
+import 'package:foodlink/screens/widgets/custom_app_iconic_textfield.dart';
 import 'package:foodlink/screens/food_screens/widgets/ingredient_box.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
@@ -48,7 +48,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   imageUrl: widget.meal?.imageUrl
               ),
               SizeConfig.customSizedBox(null, 20, null),
-              CustomAppTextField(
+              CustomAppIconicTextField(
                 width: 348,
                 height: 37,
                 headerText: "meal_name",
@@ -124,7 +124,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       },
                     ),
                   )),
-              CustomAppTextField(
+              CustomAppIconicTextField(
                 width: 348,
                 height: 161,
                 headerText: "recipe",

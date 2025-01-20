@@ -5,7 +5,7 @@ import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
 import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
 import 'package:foodlink/screens/notifications_screen/widgets/missing_checkbox_tile.dart';
-import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
+import 'package:foodlink/screens/widgets/custom_app_iconic_textfield.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
@@ -43,6 +43,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                   fontSize: 30,
                   textWidth: 250,
                   settingsProvider: settingsProvider,
+                  height: 70,
                 ),
                 SizeConfig.customSizedBox(null, 10, null),
                 settingsProvider.language == 'en'
@@ -91,7 +92,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                CustomAppTextField(
+                CustomAppIconicTextField(
                     width: 263,
                     height: 79,
                     headerText: "notes",

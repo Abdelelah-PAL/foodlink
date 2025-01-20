@@ -110,9 +110,14 @@ class _MealsListScreenState extends State<MealsListScreen> {
                             itemCount: mealsProvider.meals.length,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (ctx, index) {
-                              return ListMealTile(
-                                  meal: mealsProvider.meals[index],
-                                  favorites: false);
+                              return Column(
+                                children: [
+                                  ListMealTile(
+                                      meal: mealsProvider.meals[index],
+                                      favorites: false),
+                                  SizeConfig.customSizedBox(null, 20, null)
+                                ],
+                              );
                             },
                           ),
                         );

@@ -80,21 +80,18 @@ class _PlanMealTileState extends State<PlanMealTile> {
             CustomText(
                 isCenter: false,
                 text: TranslationService().translate(widget.day),
-                fontSize: SettingsProvider().language == "en"
-                    ? 12
-                    : 20,
+                fontSize: SettingsProvider().language == "en" ? 12 : 20,
                 fontWeight: FontWeight.bold),
           ),
           SizeConfig.customSizedBox(
-              120,
-              null,
+            120,
+            null,
             CustomText(
                 isCenter: false,
                 text: formattedDate,
-                fontSize: SettingsProvider().language == "en"
-                    ? 10
-                    : 18,
-                fontWeight: FontWeight.normal),)
+                fontSize: SettingsProvider().language == "en" ? 10 : 18,
+                fontWeight: FontWeight.normal),
+          )
         ],
       ),
       Padding(
@@ -128,7 +125,8 @@ class _PlanMealTileState extends State<PlanMealTile> {
                               ),
                             )
                           : const Icon(Icons.camera_alt_outlined),
-                    )),
+                    )
+                    ),
                     SizeConfig.customSizedBox(10, null, null),
                     Expanded(
                       child: Column(
@@ -139,6 +137,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                             fontSize: 15,
                             textWidth: 115,
                             settingsProvider: widget.settingsProvider,
+                            height: 35,
                           ),
                           SizeConfig.customSizedBox(null, 10, null),
                           IngredientsRow(
@@ -147,6 +146,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                             textWidth: 115,
                             maxLines: 3,
                             settingsProvider: widget.settingsProvider,
+                            height: 50,
                           ),
                         ],
                       ),

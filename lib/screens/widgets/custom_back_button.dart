@@ -8,15 +8,11 @@ class CustomBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: ()  {
+      onPressed: () {
         MealsProvider().resetValues();
         Get.back();
-  },
-    icon: const Icon(
-    Icons.arrow_back_ios,
-    color: Colors.black,
-    size: 20
-    ),
+      },
+      icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
     );
   }
 }
