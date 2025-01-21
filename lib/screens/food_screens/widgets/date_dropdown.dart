@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/custom_text.dart';
 
@@ -11,12 +12,14 @@ class DateDropdown extends StatelessWidget {
       required this.list,
       required this.tag,
       required this.width,
-      required this.height});
+      required this.height,
+      required this.settingsProvider});
 
   final List<String> list;
   final String tag;
   final double width;
   final double height;
+  final SettingsProvider settingsProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class DateDropdown extends StatelessWidget {
             hint: CustomText(
                 isCenter: false,
                 text: tag,
-                fontSize: 18,
+                fontSize: settingsProvider.language == 'en' ? 12 : 18,
                 fontWeight: FontWeight.bold),
             items: list.map((element) {
               return DropdownMenuItem(
@@ -44,7 +47,7 @@ class DateDropdown extends StatelessWidget {
                 child: CustomText(
                   isCenter: false,
                   text: element,
-                  fontSize: 18,
+                  fontSize: settingsProvider.language == 'en' ? 12 : 18,
                   fontWeight: FontWeight.bold,
                 ),
               );

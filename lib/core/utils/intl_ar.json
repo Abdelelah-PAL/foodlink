@@ -144,5 +144,7 @@
   "task_name": "اسم المهمة",
   "description": "الوصف",
   "start_time": "وقت البدء",
-  "end_time": "وقت الانتهاء"
+  "end_time": "وقت الانتهاء",
+  "select_meal": "اختر الوجبة",
+  "search": "بحث"
 }

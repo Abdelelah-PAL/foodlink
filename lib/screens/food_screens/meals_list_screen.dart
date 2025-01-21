@@ -50,7 +50,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                   isEmpty: mealsProviderWatcher.meals.isEmpty,
                   favorites: false,
                   onTap: () {  Get.to(AddMealScreen(
-                    categoryId: widget.categoryId!,
+                    categoryId: widget.categoryId,
                     isAddScreen: true,
                   )); },
                 ),

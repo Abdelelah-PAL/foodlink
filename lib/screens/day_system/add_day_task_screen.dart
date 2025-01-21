@@ -38,12 +38,10 @@ class _AddDayTaskScreenState extends State<AddDayTaskScreen> {
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
-              child: Row(
-                  textDirection: settingsProvider.language == "en"
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
+              child: const Row(
+                  textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     ProfileCircle(
                       height: 38,
                       width: 38,
@@ -97,7 +95,7 @@ class _AddDayTaskScreenState extends State<AddDayTaskScreen> {
                           width: 142,
                           height: 63,
                           controller: ScheduleController().startTimeController,
-                          maxLines: 10,
+                          maxLines: 1,
                           settingsProvider: settingsProvider,
                           enabled: false,
                           onTap: () async {
@@ -122,7 +120,7 @@ class _AddDayTaskScreenState extends State<AddDayTaskScreen> {
                           width: 142,
                           height: 63,
                           controller: ScheduleController().endTimeController,
-                          maxLines: 10,
+                          maxLines: 1,
                           settingsProvider: settingsProvider,
                           enabled: false,
                           onTap: () async {

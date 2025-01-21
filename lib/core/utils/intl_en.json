@@ -145,5 +145,7 @@
   "task_name": "Task Name",
   "description": "Description",
   "start_time": "Start Time",
-  "end_time": "End Time"
+  "end_time": "End Time",
+  "select_meal": "Select a Meal",
+  "search": "Search"
 }

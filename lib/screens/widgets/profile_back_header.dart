@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/screens/widgets/profile_circle.dart';
 
 class ProfileBackHeader extends StatelessWidget {

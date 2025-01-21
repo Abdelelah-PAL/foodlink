@@ -146,7 +146,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                             textWidth: 115,
                             maxLines: 3,
                             settingsProvider: widget.settingsProvider,
-                            height: 50,
+                            height: 75,
                           ),
                         ],
                       ),
