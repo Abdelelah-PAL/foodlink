@@ -99,7 +99,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     ),
                   ],
                 ),
-                SizeConfig.customSizedBox(null, 50, null),
+                SizeConfig.customSizedBox(null, 35, null),
                 Expanded(
                   child: ListView.builder(
                     itemCount: 7,
@@ -124,8 +124,15 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                             mealsProvider: mealsProvider,
                           ),
                           if (index != 6)
-                            SizeConfig.customSizedBox(
-                                233, null, const Divider(color: Colors.grey))
+                            Align(
+                              child: SizeConfig.customSizedBox(
+                                  245, null,  Divider(
+                                color: Colors.grey,
+                                thickness: 1,
+                                indent: SizeConfig.getProportionalWidth(0), // Adjust left padding
+                                endIndent: SizeConfig.getProportionalWidth(30), // Adjust right padding
+                              )),
+                            )
                         ],
                       );
                     },

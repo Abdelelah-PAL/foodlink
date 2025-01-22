@@ -20,6 +20,8 @@ class MealController {
   TextEditingController recipeController = TextEditingController();
   TextEditingController addNoteController = TextEditingController();
   TextEditingController noteController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+
 
   List<TextEditingController> dayMealsControllers =
       List.generate(7, (_) => TextEditingController());
