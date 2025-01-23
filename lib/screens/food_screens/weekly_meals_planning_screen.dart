@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/date_dropdown.dart';
@@ -125,13 +126,28 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                           ),
                           if (index != 6)
                             Align(
-                              child: SizeConfig.customSizedBox(
-                                  245, null,  Divider(
-                                color: Colors.grey,
-                                thickness: 1,
-                                indent: SizeConfig.getProportionalWidth(0), // Adjust left padding
-                                endIndent: SizeConfig.getProportionalWidth(30), // Adjust right padding
-                              )),
+                              child: Padding(
+                                padding: settingsProvider.language == 'en'
+                                    ? EdgeInsets.symmetric(
+                                        vertical:
+                                            SizeConfig.getProportionalWidth(10))
+                                    : EdgeInsets.zero,
+                                child: SizeConfig.customSizedBox(
+                                    245,
+                                    null,
+                                    Divider(
+                                      color: AppColors.defaultBorderColor,
+                                      thickness: 1,
+                                      indent:settingsProvider.language ==
+                                      'en'
+                                          ? SizeConfig.getProportionalWidth(75)
+                                          :SizeConfig.getProportionalWidth(0),
+                                      endIndent: settingsProvider.language ==
+                                              'en'
+                                          ? SizeConfig.getProportionalWidth(0)
+                                          : SizeConfig.getProportionalWidth(30), // Adjust right padding
+                                    )),
+                              ),
                             )
                         ],
                       );

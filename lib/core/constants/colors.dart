@@ -14,5 +14,6 @@ class AppColors {
   static const Color inActiveThumbColor = Color(0xff454545);
   static const Color tabBarIndicatorColor =Color(0xff104A51);
   static const Color notificationDurationColor = Color(0xff6C6C6C);
+  static const Color defaultDividerColor = Color(0xFFE0E0E0);
 
 }
