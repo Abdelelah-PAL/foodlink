@@ -32,14 +32,6 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
   }
 
   @override
-  void dispose() {
-    for (var controller in MealController().dayMealsControllers) {
-      controller.clear();
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
@@ -89,6 +81,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       width: 60,
                       height: 35,
                       settingsProvider: settingsProvider,
+                      mealsProvider: mealsProvider,
                     ),
                     SizeConfig.customSizedBox(20, null, null),
                     DateDropdown(
@@ -97,6 +90,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       width: 100,
                       height: 35,
                       settingsProvider: settingsProvider,
+                      mealsProvider: mealsProvider,
                     ),
                   ],
                 ),
@@ -138,14 +132,13 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                     Divider(
                                       color: AppColors.defaultBorderColor,
                                       thickness: 1,
-                                      indent:settingsProvider.language ==
-                                      'en'
+                                      indent: settingsProvider.language == 'en'
                                           ? SizeConfig.getProportionalWidth(75)
-                                          :SizeConfig.getProportionalWidth(0),
+                                          : SizeConfig.getProportionalWidth(0),
                                       endIndent: settingsProvider.language ==
                                               'en'
                                           ? SizeConfig.getProportionalWidth(0)
-                                          : SizeConfig.getProportionalWidth(30), // Adjust right padding
+                                          : SizeConfig.getProportionalWidth(30),
                                     )),
                               ),
                             )
@@ -158,12 +151,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   padding: EdgeInsets.only(
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
-                      onTap: () {
-                        MealController().clearDayMealController();
-                      },
-                      text: 'confirm',
-                      width: 126,
-                      height: 45),
+                      onTap: () {}, text: 'confirm', width: 126, height: 45),
                 )
               ]),
             ),

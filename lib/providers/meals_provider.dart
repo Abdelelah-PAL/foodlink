@@ -54,6 +54,8 @@ class MealsProvider with ChangeNotifier {
   String? selectedDay;
   String? selectedMonth;
   String? selectedDayName;
+  String? selectedPlanningMealValue;
+
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
@@ -257,11 +259,13 @@ class MealsProvider with ChangeNotifier {
         DateTime.now().year,
         months.indexOf(selectedMonth!) + 1,
         days.indexOf(selectedDay!) + 1));
+    selectedPlanningMealValue = null;
     notifyListeners();
   }
 
   onMonthChange(value) {
     selectedMonth = value;
+    selectedPlanningMealValue = null;
     notifyListeners();
   }
 

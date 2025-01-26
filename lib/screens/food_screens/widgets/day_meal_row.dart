@@ -36,6 +36,11 @@ class _DayMealRowState extends State<DayMealRow> {
   @override
   void initState() {
     super.initState();
+    widget.mealsProvider.addListener(() {
+      setState(() {
+        selectedValue = null; // Reset selectedValue
+      });
+    });
     _filteredItems =
         widget.mealsProvider.meals.map((meal) => meal.name).toList();
   }

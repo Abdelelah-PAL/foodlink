@@ -23,9 +23,6 @@ class MealController {
   TextEditingController searchController = TextEditingController();
 
 
-  List<TextEditingController> dayMealsControllers =
-      List.generate(7, (_) => TextEditingController());
-
   MealsServices ms = MealsServices();
 
   List<String> missingIngredients = [];
@@ -146,11 +143,5 @@ class MealController {
     ];
 
     return days[date.weekday - 1];
-  }
-
-  void clearDayMealController() {
-    for (var controller in dayMealsControllers) {
-      controller.clear();
-    }
   }
 }
