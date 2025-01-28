@@ -4,12 +4,12 @@ import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
 import '../services/meals_services.dart';
 
-class MealsProvider with ChangeNotifier {
-  static final MealsProvider _instance = MealsProvider._internal();
+class ScheduleProvider with ChangeNotifier {
+  static final ScheduleProvider _instance = ScheduleProvider._internal();
 
-  factory MealsProvider() => _instance;
+  factory ScheduleProvider() => _instance;
 
-  MealsProvider._internal();
+  ScheduleProvider._internal();
 
   List<Meal> meals = [];
   List<Meal> plannedMeals = [];
@@ -19,7 +19,6 @@ class MealsProvider with ChangeNotifier {
   bool imageIsPicked = false;
   bool chosenPressed = true;
   bool selfPressed = false;
-  List<String?> selectedValues = List.filled(7, null);
 
   XFile? pickedFile;
   int numberOfIngredients = 2;
@@ -34,7 +33,6 @@ class MealsProvider with ChangeNotifier {
     TextEditingController(),
   ];
   List<bool> checkboxValues = [];
-  DateTime currentStartDate = MealController.getPreviousSaturday(DateTime.now());
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -51,17 +49,6 @@ class MealsProvider with ChangeNotifier {
     'November',
     'December'
   ];
-
-  Map<int, String> selectedMeals = {};
-
-  void updateSelectedMeal(int index, String mealName) {
-    selectedMeals[index] = mealName;
-    notifyListeners();
-  }
-
-  String? getSelectedMeal(int index) {
-    return selectedMeals[index];
-  }
 
   List<String> days = List.generate(31, (index) => '${index + 1}');
   String? selectedDay;
@@ -246,34 +233,24 @@ class MealsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateDays() {
+    if (selectedMonth == null) return;
+    var year = DateTime.now().year;
+
+    final int month = months.indexOf(selectedMonth!) + 1;
+
+    final int daysInMonth = DateTime(year, month + 1, 0).day;
+
+    days = List.generate(daysInMonth, (index) => '${index + 1}');
+    if (selectedDay != null && int.parse(selectedDay!) > daysInMonth) {
+      selectedDay = null;
+    }
+    notifyListeners();
+  }
+
   void setDefaultDate() {
     selectedDay = DateTime.now().day.toString();
     selectedMonth = months[DateTime.now().month - 1];
   }
 
-  onChosenTapped() {
-    chosenPressed = true;
-    selfPressed = false;
-    notifyListeners();
-  }
-
-  onSelfTapped() {
-    chosenPressed = false;
-    selfPressed = true;
-    notifyListeners();
-  }
-
-  void goToPreviousWeek() {
-      currentStartDate = currentStartDate.subtract(const Duration(days: 7));
-      notifyListeners();
-  }
-  void goToNextWeek() {
-      currentStartDate = currentStartDate.add(const Duration(days: 7));
-      notifyListeners();
-  }
-
-  void resetDropdownValues() {
-    selectedValues = List.filled(7, null);
-    notifyListeners(); // Notify widgets of the change
-  }
 }

@@ -3,6 +3,7 @@ import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/meals_services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 import '../models/meal.dart';
 import '../providers/meals_provider.dart';
 import '../providers/users_provider.dart';
@@ -144,4 +145,18 @@ class MealController {
 
     return days[date.weekday - 1];
   }
+
+  static DateTime getPreviousSaturday(DateTime date) {
+    int daysToPreviousSaturday = (date.weekday - 6) % 7;
+    if (daysToPreviousSaturday <= 0) {
+      daysToPreviousSaturday += 7;
+    }
+    return date.subtract(Duration(days: daysToPreviousSaturday));
+  }
+
+  String formatDate(DateTime date) {
+    return intl.DateFormat('MMM d').format(date);
+  }
+
+
 }

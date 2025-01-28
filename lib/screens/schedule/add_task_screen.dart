@@ -9,14 +9,14 @@ import '../../providers/settings_provider.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 
-class AddDayTaskScreen extends StatefulWidget {
-  const AddDayTaskScreen({super.key});
+class AddTaskScreen extends StatefulWidget {
+  const AddTaskScreen({super.key});
 
   @override
-  State<AddDayTaskScreen> createState() => _AddDayTaskScreenState();
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
 
-class _AddDayTaskScreenState extends State<AddDayTaskScreen> {
+class _AddTaskScreenState extends State<AddTaskScreen> {
   TimeOfDay? _selectedTime;
 
   @override

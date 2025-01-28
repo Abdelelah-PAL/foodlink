@@ -3,7 +3,7 @@ import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/food_screens/widgets/date_dropdown.dart';
+import 'package:foodlink/screens/food_screens/widgets/changeable_date.dart';
 import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
@@ -67,44 +67,17 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
               padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.getProportionalWidth(20)),
               child: Column(children: [
-                Row(
-                  mainAxisAlignment: settingsProvider.language == "en"
-                      ? MainAxisAlignment.start
-                      : MainAxisAlignment.start,
-                  textDirection: settingsProvider.language == "en"
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
-                  children: [
-                    DateDropdown(
-                      list: mealsProvider.days,
-                      tag: "day",
-                      width: 60,
-                      height: 35,
-                      settingsProvider: settingsProvider,
-                      mealsProvider: mealsProvider,
-                    ),
-                    SizeConfig.customSizedBox(20, null, null),
-                    DateDropdown(
-                      list: mealsProvider.months,
-                      tag: "month",
-                      width: 100,
-                      height: 35,
-                      settingsProvider: settingsProvider,
-                      mealsProvider: mealsProvider,
-                    ),
-                  ],
+                ChangeableDate(
+                  settingsProvider: settingsProvider,
+                  mealsProvider: mealsProvider,
                 ),
+                SizeConfig.customSizedBox(20, null, null),
                 SizeConfig.customSizedBox(null, 35, null),
                 Expanded(
                   child: ListView.builder(
                     itemCount: 7,
                     itemBuilder: (ctx, index) {
-                      DateTime initialDate = DateTime(
-                          DateTime.now().year,
-                          mealsProvider.months
-                                  .indexOf(mealsProvider.selectedMonth!) +
-                              1,
-                          int.parse(mealsProvider.selectedDay!));
+                      DateTime initialDate = mealsProvider.currentStartDate;
                       DateTime futureDate =
                           initialDate.add(Duration(days: index));
                       var dayName = MealController().getDayOfWeek(futureDate);

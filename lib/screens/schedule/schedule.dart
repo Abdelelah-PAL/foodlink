@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/day_system/add_day_task_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../widgets/profile_circle.dart';
+import 'add_task_screen.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({super.key});
@@ -135,7 +135,7 @@ class _ScheduleState extends State<Schedule> {
                       fontWeight: FontWeight.bold),
                   GestureDetector(
                     onTap: () {
-                      Get.to(const AddDayTaskScreen());
+                      Get.to(const AddTaskScreen());
                     },
                     child: Container(
                       height: SizeConfig.getProportionalHeight(38),

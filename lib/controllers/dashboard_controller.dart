@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/day_system/schedule.dart';
 import 'package:foodlink/screens/food_screens/favorites_screen.dart';
 import 'package:foodlink/screens/home_screen/home_screen.dart';
 import 'package:foodlink/screens/settings_screen/settings_screen.dart';
+
+import '../screens/schedule/schedule.dart';
 
 class DashboardController {
   static final DashboardController _instance = DashboardController._internal();
