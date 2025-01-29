@@ -19,7 +19,7 @@ class _ChangeableDateState extends State<ChangeableDate> {
   @override
   Widget build(BuildContext context) {
     DateTime endDate =
-        widget.mealsProvider.currentStartDate.add(const Duration(days: 6));
+        widget.mealsProvider.currentStartDate!.add(const Duration(days: 6));
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +30,9 @@ class _ChangeableDateState extends State<ChangeableDate> {
             color: AppColors.widgetsColor,
           ),
           onPressed: () {
-            widget.mealsProvider.goToPreviousWeek;
+            widget.settingsProvider.language == 'en'
+                ?widget.mealsProvider.goToPreviousWeek()
+                :widget.mealsProvider.goToNextWeek();
             widget.mealsProvider.resetDropdownValues();
           },
         ),
@@ -38,7 +40,7 @@ class _ChangeableDateState extends State<ChangeableDate> {
           textDirection: widget.settingsProvider.language == 'en'
               ? TextDirection.ltr
               : TextDirection.rtl,
-          '${widget.mealsProvider.currentStartDate.day.toString()} ${TranslationService().translate(widget.mealsProvider.months[widget.mealsProvider.currentStartDate.month - 1])} - ${endDate.day.toString()} ${TranslationService().translate(widget.mealsProvider.months[endDate.month - 1])}',
+          '${widget.mealsProvider.currentStartDate!.day.toString()} ${TranslationService().translate(widget.mealsProvider.months[widget.mealsProvider.currentStartDate!.month - 1])} - ${endDate.day.toString()} ${TranslationService().translate(widget.mealsProvider.months[endDate.month - 1])}',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 16,
@@ -51,7 +53,9 @@ class _ChangeableDateState extends State<ChangeableDate> {
             color: AppColors.widgetsColor,
           ),
           onPressed: () {
-            widget.mealsProvider.goToNextWeek;
+            widget.settingsProvider.language == 'en'
+            ?widget.mealsProvider.goToNextWeek()
+            :widget.mealsProvider.goToPreviousWeek();
             widget.mealsProvider.resetDropdownValues();
           },
         ),

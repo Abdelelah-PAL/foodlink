@@ -34,7 +34,7 @@ class MealsProvider with ChangeNotifier {
     TextEditingController(),
   ];
   List<bool> checkboxValues = [];
-  DateTime currentStartDate = MealController.getPreviousSaturday(DateTime.now());
+  DateTime? currentStartDate;
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -52,23 +52,11 @@ class MealsProvider with ChangeNotifier {
     'December'
   ];
 
-  Map<int, String> selectedMeals = {};
-
-  void updateSelectedMeal(int index, String mealName) {
-    selectedMeals[index] = mealName;
-    notifyListeners();
-  }
-
-  String? getSelectedMeal(int index) {
-    return selectedMeals[index];
-  }
-
   List<String> days = List.generate(31, (index) => '${index + 1}');
   String? selectedDay;
   String? selectedMonth;
   String? selectedDayName;
   String? selectedPlanningMealValue;
-
 
   Future<Meal> addMeal(Meal meal) async {
     var addedMeal = await _ms.addMeal(meal);
@@ -264,16 +252,22 @@ class MealsProvider with ChangeNotifier {
   }
 
   void goToPreviousWeek() {
-      currentStartDate = currentStartDate.subtract(const Duration(days: 7));
-      notifyListeners();
+    currentStartDate = currentStartDate!.subtract(const Duration(days: 7));
+    notifyListeners();
   }
+
   void goToNextWeek() {
-      currentStartDate = currentStartDate.add(const Duration(days: 7));
-      notifyListeners();
+    currentStartDate = currentStartDate!.add(const Duration(days: 7));
+    notifyListeners();
   }
 
   void resetDropdownValues() {
     selectedValues = List.filled(7, null);
-    notifyListeners(); // Notify widgets of the change
+    notifyListeners();
+  }
+
+  void setPlanInterval() {
+    currentStartDate =
+        MealController.getPreviousSaturday(DateTime.now());
   }
 }

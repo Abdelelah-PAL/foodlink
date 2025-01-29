@@ -28,6 +28,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     MealsProvider().setDefaultDate();
     MealsProvider()
         .getAllMealsByCategory(2, UsersProvider().selectedUser!.userId);
+    MealsProvider().setPlanInterval();
     super.initState();
   }
 
@@ -47,7 +48,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalWidth(50),
+                        vertical: SizeConfig.getProportionalWidth(40,),
                         horizontal: SizeConfig.getProportionalWidth(20)),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,48 +75,50 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                 SizeConfig.customSizedBox(20, null, null),
                 SizeConfig.customSizedBox(null, 35, null),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 7,
-                    itemBuilder: (ctx, index) {
-                      DateTime initialDate = mealsProvider.currentStartDate;
-                      DateTime futureDate =
-                          initialDate.add(Duration(days: index));
-                      var dayName = MealController().getDayOfWeek(futureDate);
-                      return Column(
-                        children: [
-                          DayMealRow(
-                            day: futureDate.day,
-                            month: mealsProvider.months[futureDate.month - 1],
-                            dayName: dayName,
-                            index: index,
-                            settingsProvider: settingsProvider,
-                            mealsProvider: mealsProvider,
-                          ),
-                          if (index != 6)
-                            Align(
-                              child: Padding(
-                                padding: settingsProvider.language == 'en'
-                                    ? EdgeInsets.symmetric(
-                                        vertical:
-                                            SizeConfig.getProportionalWidth(10))
-                                    : EdgeInsets.zero,
-                                child: SizeConfig.customSizedBox(
-                                    245,
-                                    null,
-                                    Divider(
-                                      color: AppColors.defaultBorderColor,
-                                      thickness: 1,
-                                      indent: settingsProvider.language == 'en'
-                                          ? SizeConfig.getProportionalWidth(75)
-                                          : SizeConfig.getProportionalWidth(0),
-                                      endIndent: settingsProvider.language ==
-                                              'en'
-                                          ? SizeConfig.getProportionalWidth(0)
-                                          : SizeConfig.getProportionalWidth(30),
-                                    )),
+                  child: Consumer<MealsProvider>(
+                    builder: (ctx, mealsProvider, child) {
+                      return ListView.builder(
+                        itemCount: 7,
+                        itemBuilder: (ctx, index) {
+                          DateTime initialDate = mealsProvider.currentStartDate!;
+                          DateTime futureDate = initialDate.add(Duration(days: index));
+                          var dayName = MealController().getDayOfWeek(futureDate);
+
+                          return Column(
+                            children: [
+                              DayMealRow(
+                                day: futureDate.day,
+                                month: mealsProvider.months[futureDate.month - 1],
+                                dayName: dayName,
+                                index: index,
+                                settingsProvider: settingsProvider,
+                                mealsProvider: mealsProvider,
                               ),
-                            )
-                        ],
+                              if (index != 6)
+                                Align(
+                                  child: Padding(
+                                    padding: settingsProvider.language == 'en'
+                                        ? EdgeInsets.symmetric(
+                                        vertical: SizeConfig.getProportionalWidth(10))
+                                        : EdgeInsets.zero,
+                                    child: SizeConfig.customSizedBox(
+                                        245,
+                                        null,
+                                        Divider(
+                                          color: AppColors.defaultBorderColor,
+                                          thickness: 1,
+                                          indent: settingsProvider.language == 'en'
+                                              ? SizeConfig.getProportionalWidth(75)
+                                              : SizeConfig.getProportionalWidth(0),
+                                          endIndent: settingsProvider.language == 'en'
+                                              ? SizeConfig.getProportionalWidth(0)
+                                              : SizeConfig.getProportionalWidth(30),
+                                        )),
+                                  ),
+                                )
+                            ],
+                          );
+                        },
                       );
                     },
                   ),
