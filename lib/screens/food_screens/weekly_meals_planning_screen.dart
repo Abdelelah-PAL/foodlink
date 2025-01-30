@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/constants/colors.dart';
+import 'package:foodlink/models/weekly_plan.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/food_screens/widgets/changeable_date.dart';
 import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/size_config.dart';
@@ -36,6 +38,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
+    UsersProvider usersProvider = Provider.of<UsersProvider>(context);
     return mealsProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
@@ -48,18 +51,25 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalWidth(40,),
+                        vertical: SizeConfig.getProportionalWidth(
+                          40,
+                        ),
                         horizontal: SizeConfig.getProportionalWidth(20)),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomBackButton(),
-                        CustomText(
+                        CustomBackButton(
+                          onPressed: () {
+                           MealsProvider().resetDropdownValues();
+                            Get.back();
+                          },
+                        ),
+                        const CustomText(
                             isCenter: true,
                             text: "weekly_plan",
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
-                        ProfileCircle(height: 50, width: 50, iconSize: 25)
+                        const ProfileCircle(height: 50, width: 50, iconSize: 25)
                       ],
                     ),
                   ),
@@ -80,26 +90,32 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       return ListView.builder(
                         itemCount: 7,
                         itemBuilder: (ctx, index) {
-                          DateTime initialDate = mealsProvider.currentStartDate!;
-                          DateTime futureDate = initialDate.add(Duration(days: index));
-                          var dayName = MealController().getDayOfWeek(futureDate);
-
+                          DateTime initialDate =
+                              mealsProvider.currentStartDate!;
+                          DateTime futureDate =
+                              initialDate.add(Duration(days: index));
+                          var dayName =
+                              MealController().getDayOfWeek(futureDate);
                           return Column(
                             children: [
                               DayMealRow(
                                 day: futureDate.day,
-                                month: mealsProvider.months[futureDate.month - 1],
+                                month:
+                                    mealsProvider.months[futureDate.month - 1],
                                 dayName: dayName,
                                 index: index,
                                 settingsProvider: settingsProvider,
                                 mealsProvider: mealsProvider,
+                                date: futureDate,
                               ),
                               if (index != 6)
                                 Align(
                                   child: Padding(
                                     padding: settingsProvider.language == 'en'
                                         ? EdgeInsets.symmetric(
-                                        vertical: SizeConfig.getProportionalWidth(10))
+                                            vertical:
+                                                SizeConfig.getProportionalWidth(
+                                                    10))
                                         : EdgeInsets.zero,
                                     child: SizeConfig.customSizedBox(
                                         245,
@@ -107,12 +123,19 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                         Divider(
                                           color: AppColors.defaultBorderColor,
                                           thickness: 1,
-                                          indent: settingsProvider.language == 'en'
-                                              ? SizeConfig.getProportionalWidth(75)
-                                              : SizeConfig.getProportionalWidth(0),
-                                          endIndent: settingsProvider.language == 'en'
-                                              ? SizeConfig.getProportionalWidth(0)
-                                              : SizeConfig.getProportionalWidth(30),
+                                          indent: settingsProvider.language ==
+                                                  'en'
+                                              ? SizeConfig.getProportionalWidth(
+                                                  75)
+                                              : SizeConfig.getProportionalWidth(
+                                                  0),
+                                          endIndent: settingsProvider
+                                                      .language ==
+                                                  'en'
+                                              ? SizeConfig.getProportionalWidth(
+                                                  0)
+                                              : SizeConfig.getProportionalWidth(
+                                                  30),
                                         )),
                                   ),
                                 )
@@ -127,7 +150,16 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   padding: EdgeInsets.only(
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
-                      onTap: () {}, text: 'confirm', width: 126, height: 45),
+                      onTap: () async{
+                        await mealsProvider.addWeeklyPlan(
+                          WeeklyPlan(
+                              daysMeals: mealsProvider.weeklyPlanList,
+                              userId:  usersProvider.selectedUser!.userId,
+                              intervalEndTime:   mealsProvider.currentStartDate!.add(const Duration(days: 6)),
+                              intervalStartTime: mealsProvider.currentStartDate!)
+                        );
+
+                      }, text: 'confirm', width: 126, height: 45),
                 )
               ]),
             ),

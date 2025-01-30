@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
@@ -13,6 +14,7 @@ class DayMealRow extends StatefulWidget {
     required this.day,
     required this.month,
     required this.dayName,
+    required this.date,
     required this.index,
     required this.settingsProvider,
     required this.mealsProvider,
@@ -21,6 +23,7 @@ class DayMealRow extends StatefulWidget {
   final int day;
   final String month;
   final String dayName;
+  final DateTime date;
   final int index;
   final SettingsProvider settingsProvider;
   final MealsProvider mealsProvider;
@@ -30,17 +33,19 @@ class DayMealRow extends StatefulWidget {
 }
 
 class _DayMealRowState extends State<DayMealRow> {
-  List<String> _filteredItems = [];
+  DateTime today = DateTime.now();
+
+  List<Meal> _filteredItems = [];
 
   @override
   void initState() {
     super.initState();
-    _filteredItems =
-        widget.mealsProvider.meals.map((meal) => meal.name).toList();
+    _filteredItems = widget.mealsProvider.meals.map((meal) => meal).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    DateTime onlyDateNow = DateTime(today.year, today.month, today.day);
     return Row(
       textDirection: widget.settingsProvider.language == 'en'
           ? TextDirection.ltr
@@ -69,42 +74,47 @@ class _DayMealRowState extends State<DayMealRow> {
         Padding(
           padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.getProportionalWidth(10)),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () => _showDropdown(
+          child: IgnorePointer(
+            ignoring: widget.date.isBefore(onlyDateNow),
+            child: GestureDetector(
+              onTap: () => {
+                _showDropdown(
                     context, widget.mealsProvider.selectedValues[widget.index]),
-                child: Container(
-                  width: SizeConfig.getProportionalWidth(225),
-                  height: SizeConfig.getProportionalWidth(40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    border:
-                        Border.all(width: 3.0, color: AppColors.widgetsColor),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      textDirection: widget.settingsProvider.language == 'en'
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      children: [
-                        CustomText(
-                          isCenter: false,
-                          text: widget
-                                  .mealsProvider.selectedValues[widget.index] ??
-                              "select_meal",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        const Icon(Icons.keyboard_arrow_down),
-                      ],
-                    ),
+              },
+              child: Container(
+                width: SizeConfig.getProportionalWidth(225),
+                height: SizeConfig.getProportionalWidth(40),
+                decoration: BoxDecoration(
+                  color: widget.date.isBefore(onlyDateNow)
+                      ? Colors.grey.shade200
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(width: 3.0, color: AppColors.widgetsColor),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    textDirection: widget.settingsProvider.language == 'en'
+                        ? TextDirection.ltr
+                        : TextDirection.rtl,
+                    children: [
+                      CustomText(
+                        isCenter: false,
+                        text: widget.date.isBefore(onlyDateNow)
+                            ? ""
+                            : widget.mealsProvider
+                                    .selectedValues[widget.index] ??
+                                "select_meal",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      const Icon(Icons.keyboard_arrow_down),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         )
       ],
@@ -112,8 +122,7 @@ class _DayMealRowState extends State<DayMealRow> {
   }
 
   void _showDropdown(BuildContext context, String? selectedValue) {
-    _filteredItems =
-        widget.mealsProvider.meals.map((meal) => meal.name).toList();
+    _filteredItems = widget.mealsProvider.meals.map((meal) => meal).toList();
     MealController().searchController.clear();
 
     showDialog(
@@ -169,7 +178,7 @@ class _DayMealRowState extends State<DayMealRow> {
                           ListTile(
                             title: CustomText(
                               isCenter: false,
-                              text: _filteredItems[index],
+                              text: _filteredItems[index].name,
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                               color: AppColors.fontColor,
@@ -177,7 +186,8 @@ class _DayMealRowState extends State<DayMealRow> {
                             onTap: () {
                               widget.mealsProvider
                                       .selectedValues[widget.index] =
-                                  _filteredItems[index];
+                                  _filteredItems[index].name;
+                              widget.mealsProvider.weeklyPlanList.add({_filteredItems[index]:widget.date});
                               Navigator.of(context).pop();
                             },
                           ),
@@ -202,9 +212,9 @@ class _DayMealRowState extends State<DayMealRow> {
   void _filterItems(String query) {
     setState(() {
       _filteredItems = widget.mealsProvider.meals
-          .map((meal) => meal.name)
-          .where((mealName) =>
-              mealName.toLowerCase().contains(query.toLowerCase()))
+          .map((meal) => meal)
+          .where(
+              (meal) => meal.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }

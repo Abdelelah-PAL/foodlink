@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:foodlink/models/meal.dart';
+import 'package:foodlink/models/weekly_plan.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MealsServices with ChangeNotifier {
@@ -140,6 +141,18 @@ class MealsServices with ChangeNotifier {
         mealSnapshot.data() as Map<String, dynamic>,
         mealSnapshot.id,
       );
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<WeeklyPlan> addWeeklyPlan(weeklyPlan) async {
+    try {
+      var addedMeal =
+      await _firebaseFireStore.collection('weekly_plan').add(weeklyPlan.toMap());
+      var mealSnapshot = await addedMeal.get();
+
+      return WeeklyPlan.fromJson(mealSnapshot.data()!, addedMeal.id);
     } catch (ex) {
       rethrow;
     }

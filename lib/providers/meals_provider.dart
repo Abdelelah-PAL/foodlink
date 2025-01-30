@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/models/weekly_plan.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/meal.dart';
 import '../services/meals_services.dart';
@@ -35,6 +36,7 @@ class MealsProvider with ChangeNotifier {
   ];
   List<bool> checkboxValues = [];
   DateTime? currentStartDate;
+  List<Map<Meal, DateTime>> weeklyPlanList = [];
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -261,13 +263,27 @@ class MealsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void resetDropdownValues() {
+  Future<void> resetDropdownValues() async {
     selectedValues = List.filled(7, null);
     notifyListeners();
   }
 
   void setPlanInterval() {
-    currentStartDate =
-        MealController.getPreviousSaturday(DateTime.now());
+    currentStartDate = MealController.getPreviousSaturday(DateTime.now());
+  }
+
+  Future<WeeklyPlan> addWeeklyPlan(WeeklyPlan weeklyPlan) async {
+    var addedWeeklyPlan = await _ms.addWeeklyPlan(weeklyPlan);
+    return addedWeeklyPlan;
+  }
+
+  void addWeeklyMeal(dayMeal) {
+    weeklyPlanList.add(dayMeal);
+    notifyListeners();
+  }
+
+  void resetWeeklyPlanList() {
+    weeklyPlanList.clear();
+    notifyListeners();
   }
 }
