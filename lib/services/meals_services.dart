@@ -34,6 +34,23 @@ class MealsServices with ChangeNotifier {
     }
   }
 
+  Future<List<WeeklyPlan>> getAllWeeklyPlans(String userId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> planQuery = await _firebaseFireStore
+          .collection('weekly_plan')
+          .where('user_id', isEqualTo: userId)
+          .get();
+
+      List<WeeklyPlan> weeklyPlans = planQuery.docs.map((doc) {
+        return WeeklyPlan.fromJson(doc.data(), doc.id);
+      }).toList();
+
+      return weeklyPlans;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
   Future<List<Meal>> getAllMealsByCategory(
       int categoryId, String userId) async {
     try {
@@ -133,6 +150,7 @@ class MealsServices with ChangeNotifier {
       rethrow;
     }
   }
+
   Future<Meal> getPlannedMealById(String docId) async {
     try {
       DocumentSnapshot mealSnapshot =

@@ -1,8 +1,6 @@
-import 'meal.dart';
-
 class WeeklyPlan {
   String? documentId;
-  List<Map<Meal, DateTime>> daysMeals;
+  List<Map<String, dynamic>> daysMeals;
   String userId;
   DateTime intervalEndTime;
   DateTime intervalStartTime;
@@ -18,7 +16,7 @@ class WeeklyPlan {
   factory WeeklyPlan.fromJson(Map<String, dynamic> json, docId) {
     return WeeklyPlan(
       documentId: docId,
-      daysMeals: List<Map<Meal, DateTime>>.from(json['days_meals']),
+      daysMeals: List<Map<String, dynamic>>.from(json['days_meals']),
       userId: json['user_id'],
       intervalEndTime: json['interval_end_time'].toDate(),
       intervalStartTime: json['interval_start_time'].toDate(),

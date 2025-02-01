@@ -15,6 +15,7 @@ class MealsProvider with ChangeNotifier {
   List<Meal> meals = [];
   List<Meal> plannedMeals = [];
   List<Meal> favoriteMeals = [];
+  List<WeeklyPlan> weeklyPlans = [];
   final MealsServices _ms = MealsServices();
   bool isLoading = false;
   bool imageIsPicked = false;
@@ -36,7 +37,7 @@ class MealsProvider with ChangeNotifier {
   ];
   List<bool> checkboxValues = [];
   DateTime? currentStartDate;
-  List<Map<Meal, DateTime>> weeklyPlanList = [];
+  List<Map<String, DateTime>> weeklyPlanList = [];
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -285,5 +286,41 @@ class MealsProvider with ChangeNotifier {
   void resetWeeklyPlanList() {
     weeklyPlanList.clear();
     notifyListeners();
+  }
+
+  void getAllWeeklyPlans(userId) async {
+    try {
+      isLoading = true;
+      meals.clear();
+      List<WeeklyPlan> fetchedWeeklyPlans =
+      await _ms.getAllWeeklyPlans(userId);
+      for (var doc in fetchedWeeklyPlans) {
+        WeeklyPlan fetchedWeeklyPlan = WeeklyPlan(
+            daysMeals: doc.daysMeals,
+            userId: userId,
+            intervalEndTime: doc.intervalEndTime,
+            intervalStartTime: doc.intervalStartTime);
+        weeklyPlans.add(fetchedWeeklyPlan);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+
+  WeeklyPlan? getCurrentWeekPlan() {
+    if (weeklyPlans.isNotEmpty) {
+      WeeklyPlan? currentWeeklyPlan = weeklyPlans.firstWhere(
+              (object) =>
+          object.intervalStartTime.year == currentStartDate!.year &&
+              object.intervalStartTime.month == currentStartDate!.month &&
+              object.intervalStartTime.day == currentStartDate!.day,
+         );
+      return currentWeeklyPlan;
+  }
+    return null;
   }
 }

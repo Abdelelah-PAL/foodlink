@@ -5,7 +5,6 @@ import 'package:foodlink/screens/food_screens/meal_screen.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 import '../../../../models/meal.dart';
@@ -37,7 +36,6 @@ class PlanMealTile extends StatefulWidget {
 }
 
 class _PlanMealTileState extends State<PlanMealTile> {
-  late String formattedDate;
 
   onTap() {
     Get.to(MealScreen(
@@ -46,27 +44,23 @@ class _PlanMealTileState extends State<PlanMealTile> {
     ));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    initializeDateFormatting('ar_SA', null).then((_) {
-      setState(() {
-        formattedDate =
-            intl.DateFormat.yMMMMd('ar_SA').format(widget.meal.date!);
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
 
-    String formattedDate = settingsProvider.language == "en"
+    String formattedDate =
+    settingsProvider.language == "en"
         ? intl.DateFormat.yMMMMd('en_US')
-            .format(widget.mealsProvider.plannedMeals[widget.index].date!)
+            .format(widget.date)
         : intl.DateFormat.yMMMMd('ar_SA')
-            .format(widget.mealsProvider.plannedMeals[widget.index].date!);
+            .format(widget.date);
+    // :  settingsProvider.language == "en"
+    //     ? intl.DateFormat.yMMMMd('en_US')
+    //     .format(widget.date)
+    //     : intl.DateFormat.yMMMMd('ar_SA')
+    //     .format(widget.date);
 
     return Column(children: [
       Row(

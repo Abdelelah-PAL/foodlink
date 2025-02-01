@@ -9,16 +9,16 @@ import '../../../core/utils/size_config.dart';
 import '../../../services/translation_services.dart';
 
 class DayMealRow extends StatefulWidget {
-  const DayMealRow({
-    super.key,
-    required this.day,
-    required this.month,
-    required this.dayName,
-    required this.date,
-    required this.index,
-    required this.settingsProvider,
-    required this.mealsProvider,
-  });
+  const DayMealRow(
+      {super.key,
+      required this.day,
+      required this.month,
+      required this.dayName,
+      required this.date,
+      required this.index,
+      required this.settingsProvider,
+      required this.mealsProvider,
+      this.value});
 
   final int day;
   final String month;
@@ -27,6 +27,7 @@ class DayMealRow extends StatefulWidget {
   final int index;
   final SettingsProvider settingsProvider;
   final MealsProvider mealsProvider;
+  final String? value;
 
   @override
   State<DayMealRow> createState() => _DayMealRowState();
@@ -103,7 +104,7 @@ class _DayMealRowState extends State<DayMealRow> {
                         isCenter: false,
                         text: widget.date.isBefore(onlyDateNow)
                             ? ""
-                            : widget.mealsProvider
+                            : widget.value ?? widget.mealsProvider
                                     .selectedValues[widget.index] ??
                                 "select_meal",
                         fontSize: 18,
@@ -187,7 +188,9 @@ class _DayMealRowState extends State<DayMealRow> {
                               widget.mealsProvider
                                       .selectedValues[widget.index] =
                                   _filteredItems[index].name;
-                              widget.mealsProvider.weeklyPlanList.add({_filteredItems[index]:widget.date});
+                              widget.mealsProvider.weeklyPlanList.add({
+                                _filteredItems[index].documentId!: widget.date
+                              });
                               Navigator.of(context).pop();
                             },
                           ),

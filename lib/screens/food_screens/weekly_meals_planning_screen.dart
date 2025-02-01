@@ -4,6 +4,7 @@ import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/models/weekly_plan.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/changeable_date.dart';
 import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/size_config.dart';
+import '../../models/meal.dart';
 import '../../providers/users_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
@@ -30,7 +32,6 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     MealsProvider().setDefaultDate();
     MealsProvider()
         .getAllMealsByCategory(2, UsersProvider().selectedUser!.userId);
-    MealsProvider().setPlanInterval();
     super.initState();
   }
 
@@ -39,6 +40,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
+    WeeklyPlan? currentWeeklyPlan = mealsProvider.getCurrentWeekPlan();
     return mealsProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
@@ -60,7 +62,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       children: [
                         CustomBackButton(
                           onPressed: () {
-                           MealsProvider().resetDropdownValues();
+                            MealsProvider().resetDropdownValues();
                             Get.back();
                           },
                         ),
@@ -90,6 +92,12 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       return ListView.builder(
                         itemCount: 7,
                         itemBuilder: (ctx, index) {
+                          Meal? meal = mealsProvider.meals.firstWhere(
+                                  (object) =>
+                              object.documentId ==
+                                  currentWeeklyPlan
+                                      ?.daysMeals[index].keys.first,
+                            orElse: () => null as Meal);
                           DateTime initialDate =
                               mealsProvider.currentStartDate!;
                           DateTime futureDate =
@@ -107,6 +115,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                 settingsProvider: settingsProvider,
                                 mealsProvider: mealsProvider,
                                 date: futureDate,
+                                value: meal.name
                               ),
                               if (index != 6)
                                 Align(
@@ -150,16 +159,19 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   padding: EdgeInsets.only(
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
-                      onTap: () async{
-                        await mealsProvider.addWeeklyPlan(
-                          WeeklyPlan(
-                              daysMeals: mealsProvider.weeklyPlanList,
-                              userId:  usersProvider.selectedUser!.userId,
-                              intervalEndTime:   mealsProvider.currentStartDate!.add(const Duration(days: 6)),
-                              intervalStartTime: mealsProvider.currentStartDate!)
-                        );
-
-                      }, text: 'confirm', width: 126, height: 45),
+                      onTap: () async {
+                        await mealsProvider.addWeeklyPlan(WeeklyPlan(
+                            daysMeals: mealsProvider.weeklyPlanList,
+                            userId: usersProvider.selectedUser!.userId,
+                            intervalEndTime: mealsProvider.currentStartDate!
+                                .add(const Duration(days: 6)),
+                            intervalStartTime:
+                                mealsProvider.currentStartDate!));
+                        Get.to(const MealPlanningScreen());
+                      },
+                      text: 'confirm',
+                      width: 126,
+                      height: 45),
                 )
               ]),
             ),

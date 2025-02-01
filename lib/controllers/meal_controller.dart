@@ -148,7 +148,7 @@ class MealController {
 
   static DateTime getPreviousSaturday(DateTime date) {
     int daysToPreviousSaturday = (date.weekday - 6) % 7;
-    if (daysToPreviousSaturday <= 0) {
+    if (daysToPreviousSaturday < 0) {
       daysToPreviousSaturday += 7;
     }
     return date.subtract(Duration(days: daysToPreviousSaturday));
@@ -157,6 +157,8 @@ class MealController {
   String formatDate(DateTime date) {
     return intl.DateFormat('MMM d').format(date);
   }
+
+  
 
 
 }
