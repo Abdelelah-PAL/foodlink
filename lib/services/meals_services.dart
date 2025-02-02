@@ -22,37 +22,7 @@ class MealsServices with ChangeNotifier {
     }
   }
 
-  Future<Meal> addMeal(meal) async {
-    try {
-      var addedMeal =
-          await _firebaseFireStore.collection('meals').add(meal.toMap());
-      var mealSnapshot = await addedMeal.get();
-
-      return Meal.fromJson(mealSnapshot.data()!, addedMeal.id);
-    } catch (ex) {
-      rethrow;
-    }
-  }
-
-  Future<List<WeeklyPlan>> getAllWeeklyPlans(String userId) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> planQuery = await _firebaseFireStore
-          .collection('weekly_plan')
-          .where('user_id', isEqualTo: userId)
-          .get();
-
-      List<WeeklyPlan> weeklyPlans = planQuery.docs.map((doc) {
-        return WeeklyPlan.fromJson(doc.data(), doc.id);
-      }).toList();
-
-      return weeklyPlans;
-    } catch (ex) {
-      rethrow;
-    }
-  }
-
-  Future<List<Meal>> getAllMealsByCategory(
-      int categoryId, String userId) async {
+  Future<List<Meal>> getAllMealsByCategory(int categoryId, String userId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore
           .collection('meals')
@@ -65,26 +35,6 @@ class MealsServices with ChangeNotifier {
       }).toList();
 
       return meals;
-    } catch (ex) {
-      rethrow;
-    }
-  }
-
-  Future<List<Meal>> getAllPlannedMeals() async {
-    try {
-      DateTime now = DateTime.now();
-      DateTime startOfDay = DateTime(now.year, now.month, now.day);
-      Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
-      final querySnapshot = await _firebaseFireStore
-          .collection('planned_meals')
-          .where('date', isGreaterThanOrEqualTo: startTimestamp)
-          .orderBy('date', descending: false)
-          .limit(7)
-          .get();
-
-      return querySnapshot.docs.map((doc) {
-        return Meal.fromJson(doc.data(), doc.id);
-      }).toList();
     } catch (ex) {
       rethrow;
     }
@@ -113,6 +63,18 @@ class MealsServices with ChangeNotifier {
       await _firebaseFireStore.collection('meals').doc(meal.documentId).update({
         'is_favorite': isFavorite,
       });
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<Meal> addMeal(meal) async {
+    try {
+      var addedMeal =
+      await _firebaseFireStore.collection('meals').add(meal.toMap());
+      var mealSnapshot = await addedMeal.get();
+
+      return Meal.fromJson(mealSnapshot.data()!, addedMeal.id);
     } catch (ex) {
       rethrow;
     }
@@ -164,15 +126,65 @@ class MealsServices with ChangeNotifier {
     }
   }
 
-  Future<WeeklyPlan> addWeeklyPlan(weeklyPlan) async {
+  Future<List<Meal>> getAllPlannedMeals() async {
     try {
-      var addedMeal =
-      await _firebaseFireStore.collection('weekly_plan').add(weeklyPlan.toMap());
-      var mealSnapshot = await addedMeal.get();
+      DateTime now = DateTime.now();
+      DateTime startOfDay = DateTime(now.year, now.month, now.day);
+      Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
+      final querySnapshot = await _firebaseFireStore
+          .collection('planned_meals')
+          .where('date', isGreaterThanOrEqualTo: startTimestamp)
+          .orderBy('date', descending: false)
+          .limit(7)
+          .get();
 
-      return WeeklyPlan.fromJson(mealSnapshot.data()!, addedMeal.id);
+      return querySnapshot.docs.map((doc) {
+        return Meal.fromJson(doc.data(), doc.id);
+      }).toList();
     } catch (ex) {
       rethrow;
     }
   }
+
+  Future<WeeklyPlan> addWeeklyPlan(weeklyPlan) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> planQuery = await _firebaseFireStore
+          .collection('weekly_plan')
+          .where('user_id', isEqualTo: weeklyPlan.userId)
+          .where('interval_end_time', isEqualTo: weeklyPlan.intervalEndTime)
+          .where('interval_start_time', isEqualTo: weeklyPlan.intervalStartTime)
+          .get();
+
+      for (var doc in planQuery.docs) {
+        await _firebaseFireStore.collection('weekly_plan').doc(doc.id).delete();
+      }
+
+
+      var addedWeeklyPlan =
+      await _firebaseFireStore.collection('weekly_plan').add(weeklyPlan.toMap());
+      var mealSnapshot = await addedWeeklyPlan.get();
+
+      return WeeklyPlan.fromJson(mealSnapshot.data()!, addedWeeklyPlan.id);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<List<WeeklyPlan>> getAllWeeklyPlans(String userId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> planQuery = await _firebaseFireStore
+          .collection('weekly_plan')
+          .where('user_id', isEqualTo: userId)
+          .get();
+
+      List<WeeklyPlan> weeklyPlans = planQuery.docs.map((doc) {
+        return WeeklyPlan.fromJson(doc.data(), doc.id);
+      }).toList();
+
+      return weeklyPlans;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
 }

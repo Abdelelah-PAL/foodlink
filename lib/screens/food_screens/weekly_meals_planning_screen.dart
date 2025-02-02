@@ -92,12 +92,14 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       return ListView.builder(
                         itemCount: 7,
                         itemBuilder: (ctx, index) {
-                          Meal? meal = mealsProvider.meals.firstWhere(
-                                  (object) =>
-                              object.documentId ==
-                                  currentWeeklyPlan
-                                      ?.daysMeals[index].keys.first,
-                            orElse: () => null as Meal);
+                          Meal? meal = mealsProvider.meals
+                              .where(
+                                (object) =>
+                                    object.documentId ==
+                                    currentWeeklyPlan
+                                        ?.daysMeals[index].keys.first,
+                              )
+                              .firstOrNull;
                           DateTime initialDate =
                               mealsProvider.currentStartDate!;
                           DateTime futureDate =
@@ -107,16 +109,15 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                           return Column(
                             children: [
                               DayMealRow(
-                                day: futureDate.day,
-                                month:
-                                    mealsProvider.months[futureDate.month - 1],
-                                dayName: dayName,
-                                index: index,
-                                settingsProvider: settingsProvider,
-                                mealsProvider: mealsProvider,
-                                date: futureDate,
-                                value: meal.name
-                              ),
+                                  day: futureDate.day,
+                                  month: mealsProvider
+                                      .months[futureDate.month - 1],
+                                  dayName: dayName,
+                                  index: index,
+                                  settingsProvider: settingsProvider,
+                                  mealsProvider: mealsProvider,
+                                  date: futureDate,
+                                  value: meal?.name),
                               if (index != 6)
                                 Align(
                                   child: Padding(

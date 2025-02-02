@@ -151,6 +151,7 @@ class MealController {
     if (daysToPreviousSaturday < 0) {
       daysToPreviousSaturday += 7;
     }
+
     return date.subtract(Duration(days: daysToPreviousSaturday));
   }
 

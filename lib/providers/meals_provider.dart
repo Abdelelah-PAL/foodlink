@@ -270,7 +270,8 @@ class MealsProvider with ChangeNotifier {
   }
 
   void setPlanInterval() {
-    currentStartDate = MealController.getPreviousSaturday(DateTime.now());
+    DateTime today = DateTime.now();
+    currentStartDate = MealController.getPreviousSaturday(DateTime(today.year, today.month, today.day));
   }
 
   Future<WeeklyPlan> addWeeklyPlan(WeeklyPlan weeklyPlan) async {
@@ -313,14 +314,13 @@ class MealsProvider with ChangeNotifier {
 
   WeeklyPlan? getCurrentWeekPlan() {
     if (weeklyPlans.isNotEmpty) {
-      WeeklyPlan? currentWeeklyPlan = weeklyPlans.firstWhere(
-              (object) =>
+        if (weeklyPlans.isNotEmpty) {
+          return weeklyPlans.where((object) =>
           object.intervalStartTime.year == currentStartDate!.year &&
               object.intervalStartTime.month == currentStartDate!.month &&
-              object.intervalStartTime.day == currentStartDate!.day,
-         );
-      return currentWeeklyPlan;
-  }
-    return null;
-  }
+              object.intervalStartTime.day == currentStartDate!.day).firstOrNull;
+        }
+        return null;
+      }
+    }
 }

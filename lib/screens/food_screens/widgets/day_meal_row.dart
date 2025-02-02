@@ -46,7 +46,6 @@ class _DayMealRowState extends State<DayMealRow> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime onlyDateNow = DateTime(today.year, today.month, today.day);
     return Row(
       textDirection: widget.settingsProvider.language == 'en'
           ? TextDirection.ltr
@@ -76,7 +75,8 @@ class _DayMealRowState extends State<DayMealRow> {
           padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.getProportionalWidth(10)),
           child: IgnorePointer(
-            ignoring: widget.date.isBefore(onlyDateNow),
+            ignoring: widget.date.isBefore(MealController.getPreviousSaturday(
+                DateTime(today.year, today.month, today.day))),
             child: GestureDetector(
               onTap: () => {
                 _showDropdown(
@@ -86,7 +86,9 @@ class _DayMealRowState extends State<DayMealRow> {
                 width: SizeConfig.getProportionalWidth(225),
                 height: SizeConfig.getProportionalWidth(40),
                 decoration: BoxDecoration(
-                  color: widget.date.isBefore(onlyDateNow)
+                  color: widget.date.isBefore(
+                          MealController.getPreviousSaturday(
+                              DateTime(today.year, today.month, today.day)))
                       ? Colors.grey.shade200
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
@@ -102,15 +104,26 @@ class _DayMealRowState extends State<DayMealRow> {
                     children: [
                       CustomText(
                         isCenter: false,
-                        text: widget.date.isBefore(onlyDateNow)
-                            ? ""
-                            : widget.value ?? widget.mealsProvider
-                                    .selectedValues[widget.index] ??
-                                "select_meal",
+                        text: widget.value != null
+                            ? widget.value!
+                            : widget.date.isBefore(
+                                    MealController.getPreviousSaturday(DateTime(
+                                        today.year, today.month, today.day)))
+                                ? ""
+                                : widget.value ??
+                                    widget.mealsProvider
+                                        .selectedValues[widget.index] ??
+                                    "select_meal",
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
-                      const Icon(Icons.keyboard_arrow_down),
+                      if (widget.date.isAfter(
+                              MealController.getPreviousSaturday(DateTime(
+                                  today.year, today.month, today.day))) ||
+                          widget.date.isAtSameMomentAs(
+                              MealController.getPreviousSaturday(DateTime(
+                                  today.year, today.month, today.day))))
+                        const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),
                 ),
