@@ -312,15 +312,17 @@ class MealsProvider with ChangeNotifier {
   }
 
 
-  WeeklyPlan? getCurrentWeekPlan() {
+  WeeklyPlan? getCurrentWeekPlan() async{
+    isLoading = false;
     if (weeklyPlans.isNotEmpty) {
         if (weeklyPlans.isNotEmpty) {
-          return weeklyPlans.where((object) =>
+          return await weeklyPlans.where((object) =>
           object.intervalStartTime.year == currentStartDate!.year &&
               object.intervalStartTime.month == currentStartDate!.month &&
               object.intervalStartTime.day == currentStartDate!.day).firstOrNull;
         }
         return null;
       }
+    return null;
     }
 }

@@ -10,7 +10,6 @@ import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
 import '../../providers/users_provider.dart';

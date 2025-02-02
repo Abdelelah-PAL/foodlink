@@ -42,6 +42,9 @@ class _DayMealRowState extends State<DayMealRow> {
   void initState() {
     super.initState();
     _filteredItems = widget.mealsProvider.meals.map((meal) => meal).toList();
+    if (widget.value != null) {
+      widget.mealsProvider.selectedValues[widget.index] = widget.value;
+    }
   }
 
   @override
@@ -104,16 +107,14 @@ class _DayMealRowState extends State<DayMealRow> {
                     children: [
                       CustomText(
                         isCenter: false,
-                        text: widget.value != null
-                            ? widget.value!
-                            : widget.date.isBefore(
-                                    MealController.getPreviousSaturday(DateTime(
-                                        today.year, today.month, today.day)))
-                                ? ""
-                                : widget.value ??
-                                    widget.mealsProvider
-                                        .selectedValues[widget.index] ??
-                                    "select_meal",
+                        text:
+                            widget
+                                    .mealsProvider.selectedValues[widget.index] ?? (widget.date.isBefore(
+                                        MealController.getPreviousSaturday(
+                                            DateTime(today.year, today.month,
+                                                today.day)))
+                                    ? ""
+                                    : "select_meal"),
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
