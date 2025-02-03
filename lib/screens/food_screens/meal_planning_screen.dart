@@ -104,7 +104,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                               itemCount: currentWeeklyPlan.daysMeals.length,
                               itemBuilder: (ctx, index) {
                                 DateTime date =  currentWeeklyPlan.daysMeals[index].entries.first.value.toDate();
-                                Meal meal = mealsProvider.meals.firstWhere(
+                                Meal? meal = mealsProvider.meals.firstWhere(
                                     (object) =>
                                         object.documentId ==
                                         currentWeeklyPlan

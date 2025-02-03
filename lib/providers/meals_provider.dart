@@ -21,6 +21,7 @@ class MealsProvider with ChangeNotifier {
   bool imageIsPicked = false;
   bool chosenPressed = true;
   bool selfPressed = false;
+  bool showSelectedValue = true;
   List<String?> selectedValues = List.filled(7, null);
 
   XFile? pickedFile;
@@ -271,7 +272,8 @@ class MealsProvider with ChangeNotifier {
 
   void setPlanInterval() {
     DateTime today = DateTime.now();
-    currentStartDate = MealController.getPreviousSaturday(DateTime(today.year, today.month, today.day));
+    currentStartDate = MealController.getPreviousSaturday(
+        DateTime(today.year, today.month, today.day));
   }
 
   Future<WeeklyPlan> addWeeklyPlan(WeeklyPlan weeklyPlan) async {
@@ -279,30 +281,29 @@ class MealsProvider with ChangeNotifier {
     return addedWeeklyPlan;
   }
 
-  void addWeeklyMeal(dayMeal) {
-    weeklyPlanList.add(dayMeal);
-    notifyListeners();
-  }
-
   void resetWeeklyPlanList() {
     weeklyPlanList.clear();
     notifyListeners();
   }
 
-  void getAllWeeklyPlans(userId) async {
+  Future<void> getAllWeeklyPlans(userId) async {
     try {
       isLoading = true;
       meals.clear();
-      List<WeeklyPlan> fetchedWeeklyPlans =
-      await _ms.getAllWeeklyPlans(userId);
+      List<WeeklyPlan> fetchedWeeklyPlans = await _ms.getAllWeeklyPlans(userId);
       for (var doc in fetchedWeeklyPlans) {
         WeeklyPlan fetchedWeeklyPlan = WeeklyPlan(
             daysMeals: doc.daysMeals,
             userId: userId,
             intervalEndTime: doc.intervalEndTime,
             intervalStartTime: doc.intervalStartTime);
+        doc.daysMeals.sort((a, b) => a.entries.first.value
+            .toDate()
+            .compareTo(b.entries.first.value.toDate()));
+
         weeklyPlans.add(fetchedWeeklyPlan);
       }
+
       isLoading = false;
       notifyListeners();
     } catch (ex) {
@@ -311,18 +312,28 @@ class MealsProvider with ChangeNotifier {
     }
   }
 
-
-  WeeklyPlan? getCurrentWeekPlan() async{
+  WeeklyPlan? getCurrentWeekPlan() {
     isLoading = false;
     if (weeklyPlans.isNotEmpty) {
-        if (weeklyPlans.isNotEmpty) {
-          return await weeklyPlans.where((object) =>
-          object.intervalStartTime.year == currentStartDate!.year &&
-              object.intervalStartTime.month == currentStartDate!.month &&
-              object.intervalStartTime.day == currentStartDate!.day).firstOrNull;
-        }
-        return null;
+      if (weeklyPlans.isNotEmpty) {
+        return weeklyPlans
+            .where((object) =>
+                object.intervalStartTime.year == currentStartDate!.year &&
+                object.intervalStartTime.month == currentStartDate!.month &&
+                object.intervalStartTime.day == currentStartDate!.day)
+            .firstOrNull;
       }
-    return null;
+      return null;
     }
+    return null;
+  }
+
+  void resetShowSelectedValue() {
+    showSelectedValue = false;
+    notifyListeners();
+  }
+  void setShowSelectedValue() {
+    showSelectedValue = true;
+    notifyListeners();
+  }
 }

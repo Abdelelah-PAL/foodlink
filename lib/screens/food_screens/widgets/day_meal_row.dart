@@ -41,10 +41,14 @@ class _DayMealRowState extends State<DayMealRow> {
   @override
   void initState() {
     super.initState();
-    _filteredItems = widget.mealsProvider.meals.map((meal) => meal).toList();
+
     if (widget.value != null) {
-      widget.mealsProvider.selectedValues[widget.index] = widget.value;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.mealsProvider.resetShowSelectedValue();
+      });
     }
+
+    _filteredItems = widget.mealsProvider.meals.map((meal) => meal).toList();
   }
 
   @override
@@ -107,14 +111,15 @@ class _DayMealRowState extends State<DayMealRow> {
                     children: [
                       CustomText(
                         isCenter: false,
-                        text:
-                            widget
-                                    .mealsProvider.selectedValues[widget.index] ?? (widget.date.isBefore(
-                                        MealController.getPreviousSaturday(
-                                            DateTime(today.year, today.month,
-                                                today.day)))
-                                    ? ""
-                                    : "select_meal"),
+                        text: widget.date.isBefore(
+                                MealController.getPreviousSaturday(DateTime(
+                                    today.year, today.month, today.day)))
+                            ? widget.value ?? ""
+                            : widget.mealsProvider.showSelectedValue == true
+                                ? widget.mealsProvider
+                                        .selectedValues[widget.index] ??
+                                    "select_meal"
+                                : widget.value ?? "select_meal",
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
@@ -202,9 +207,13 @@ class _DayMealRowState extends State<DayMealRow> {
                               widget.mealsProvider
                                       .selectedValues[widget.index] =
                                   _filteredItems[index].name;
+                              widget.mealsProvider.weeklyPlanList.removeWhere(
+                                (record) => record.containsValue(widget.date),
+                              );
                               widget.mealsProvider.weeklyPlanList.add({
                                 _filteredItems[index].documentId!: widget.date
                               });
+                              widget.mealsProvider.setShowSelectedValue();
                               Navigator.of(context).pop();
                             },
                           ),

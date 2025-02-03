@@ -10,6 +10,7 @@ import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
 import '../../providers/users_provider.dart';
@@ -31,6 +32,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     MealsProvider().setDefaultDate();
     MealsProvider()
         .getAllMealsByCategory(2, UsersProvider().selectedUser!.userId);
+
     super.initState();
   }
 
@@ -91,14 +93,18 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       return ListView.builder(
                         itemCount: 7,
                         itemBuilder: (ctx, index) {
-                          Meal? meal = mealsProvider.meals
-                              .where(
-                                (object) =>
-                                    object.documentId ==
-                                    currentWeeklyPlan
-                                        ?.daysMeals[index].keys.first,
-                              )
-                              .firstOrNull;
+                          Meal? meal = currentWeeklyPlan != null
+                              ? index + 1 > currentWeeklyPlan.daysMeals.length
+                                  ? null
+                                  : mealsProvider.meals
+                                      .where(
+                                        (object) =>
+                                            object.documentId ==
+                                            currentWeeklyPlan
+                                                .daysMeals[index].keys.first,
+                                      )
+                                      .firstOrNull
+                              : null;
                           DateTime initialDate =
                               mealsProvider.currentStartDate!;
                           DateTime futureDate =
