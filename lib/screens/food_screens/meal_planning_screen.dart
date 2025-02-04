@@ -10,6 +10,7 @@ import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.
 import 'package:foodlink/screens/food_screens/widgets/custom_changeable_color_button.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
 import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
+import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/screens/widgets/image_container.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,9 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
         Provider.of<SettingsProvider>(context, listen: true);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     WeeklyPlan? currentWeeklyPlan = mealsProvider.getCurrentWeekPlan();
+    print(currentWeeklyPlan!.daysMeals[0]);
+    print(currentWeeklyPlan!.daysMeals[1]);
+
     return mealsProvider.isLoading
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -91,34 +95,61 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                             Meal selectedMeal =
                                 mealsProvider.plannedMeals[index];
                             return PlanMealTile(
-                                meal: mealsProvider.plannedMeals[index],
-                                day: selectedMeal.day!,
-                                date: selectedMeal.date!,
-                                index: index,
-                                mealsProvider: mealsProvider,
-                                settingsProvider: settingsProvider,
-                             );
+                              meal: mealsProvider.plannedMeals[index],
+                              day: selectedMeal.day!,
+                              date: selectedMeal.date!,
+                              index: index,
+                              mealsProvider: mealsProvider,
+                              settingsProvider: settingsProvider,
+                            );
                           })
                       : currentWeeklyPlan != null
                           ? ListView.builder(
                               itemCount: currentWeeklyPlan.daysMeals.length,
                               itemBuilder: (ctx, index) {
-                                DateTime date =  currentWeeklyPlan.daysMeals[index].entries.first.value.toDate();
-                                Meal? meal = mealsProvider.meals.firstWhere(
-                                    (object) =>
-                                        object.documentId ==
-                                        currentWeeklyPlan
-                                            .daysMeals[index].keys.first);
-                                return PlanMealTile(
-                                    meal: meal,
-                                    day: MealController().getDayOfWeek(date),
-                                    date: date,
-                                    index: index,
-                                    mealsProvider: mealsProvider,
-                                    settingsProvider: settingsProvider,
-                                 );
-                              })
-                          : null,
+                                DateTime date = currentWeeklyPlan
+                                    .daysMeals[index].entries.first.value
+                                    .toDate();
+
+                                return FutureBuilder<Meal?>(
+                                  future: Future(() async {
+                                    return mealsProvider.meals.firstWhereOrNull(
+                                      (object) =>
+                                          object.documentId ==
+                                          currentWeeklyPlan
+                                              .daysMeals[index].keys.first,
+                                    );
+                                  }),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const CircularProgressIndicator();
+                                    }
+
+                                    Meal? meal = snapshot.data;
+                                    if (meal != null) {
+                                      return PlanMealTile(
+                                        meal: meal,
+                                        day:
+                                            MealController().getDayOfWeek(date),
+                                        date: date,
+                                        index: index,
+                                        mealsProvider: mealsProvider,
+                                        settingsProvider: settingsProvider,
+                                      );
+                                    } else {
+                                      return const SizedBox();
+                                    }
+                                  },
+                                );
+                              },
+                            )
+                          : const Center(
+                              child: CustomText(
+                                  isCenter: true,
+                                  text: "choose_weekly_plan",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                 ),
               )
             ]),

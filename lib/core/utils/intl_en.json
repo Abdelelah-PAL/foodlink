@@ -147,5 +147,6 @@
   "start_time": "Start Time",
   "end_time": "End Time",
   "select_meal": "Select a Meal",
-  "search": "Search"
+  "search": "Search",
+  "choose_weekly_plan":"Select your weekly plan"
 }

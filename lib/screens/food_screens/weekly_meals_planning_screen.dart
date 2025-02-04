@@ -173,6 +173,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                 .add(const Duration(days: 6)),
                             intervalStartTime:
                                 mealsProvider.currentStartDate!));
+                        await mealsProvider.getAllWeeklyPlans(usersProvider.selectedUser!.userId);
                         Get.to(const MealPlanningScreen());
                       },
                       text: 'confirm',

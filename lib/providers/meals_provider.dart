@@ -106,7 +106,7 @@ class MealsProvider with ChangeNotifier {
     await getFavorites(meal.userId!, forceRefresh: true);
   }
 
-  void getAllMealsByCategory(categoryId, userId) async {
+  Future<void> getAllMealsByCategory(categoryId, userId) async {
     try {
       isLoading = true;
       meals.clear();
@@ -313,17 +313,13 @@ class MealsProvider with ChangeNotifier {
   }
 
   WeeklyPlan? getCurrentWeekPlan() {
-    isLoading = false;
     if (weeklyPlans.isNotEmpty) {
-      if (weeklyPlans.isNotEmpty) {
-        return weeklyPlans
-            .where((object) =>
-                object.intervalStartTime.year == currentStartDate!.year &&
-                object.intervalStartTime.month == currentStartDate!.month &&
-                object.intervalStartTime.day == currentStartDate!.day)
-            .firstOrNull;
-      }
-      return null;
+      return weeklyPlans
+          .where((object) =>
+              object.intervalStartTime.year == currentStartDate!.year &&
+              object.intervalStartTime.month == currentStartDate!.month &&
+              object.intervalStartTime.day == currentStartDate!.day)
+          .firstOrNull;
     }
     return null;
   }
@@ -332,6 +328,7 @@ class MealsProvider with ChangeNotifier {
     showSelectedValue = false;
     notifyListeners();
   }
+
   void setShowSelectedValue() {
     showSelectedValue = true;
     notifyListeners();
