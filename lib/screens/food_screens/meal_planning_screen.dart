@@ -41,8 +41,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
         Provider.of<SettingsProvider>(context, listen: true);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     WeeklyPlan? currentWeeklyPlan = mealsProvider.getCurrentWeekPlan();
-    print(currentWeeklyPlan!.daysMeals[0]);
-    print(currentWeeklyPlan!.daysMeals[1]);
 
     return mealsProvider.isLoading
         ? const CircularProgressIndicator()

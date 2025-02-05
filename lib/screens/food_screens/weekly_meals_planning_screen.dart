@@ -93,35 +93,44 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       return ListView.builder(
                         itemCount: 7,
                         itemBuilder: (ctx, index) {
-                          Meal? meal = currentWeeklyPlan != null
-                              ? index + 1 > currentWeeklyPlan.daysMeals.length
-                                  ? null
-                                  : mealsProvider.meals
-                                      .where(
-                                        (object) =>
-                                            object.documentId ==
-                                            currentWeeklyPlan
-                                                .daysMeals[index].keys.first,
-                                      )
-                                      .firstOrNull
-                              : null;
+                          Meal? meal;
                           DateTime initialDate =
                               mealsProvider.currentStartDate!;
-                          DateTime futureDate =
+                          DateTime indexDate =
                               initialDate.add(Duration(days: index));
+                          if (currentWeeklyPlan != null) {
+                            var dayMeal = currentWeeklyPlan.daysMeals
+                                .where((object) =>
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        object.entries.first.value.seconds *
+                                            1000) ==
+                                    indexDate)
+                                .firstOrNull;
+
+                            meal = dayMeal != null
+                                ? mealsProvider.meals
+                                    .where(
+                                      (object) =>
+                                          object.documentId ==
+                                          dayMeal.keys.first,
+                                    )
+                                    .firstOrNull
+                                : null;
+                          }
+
                           var dayName =
-                              MealController().getDayOfWeek(futureDate);
+                              MealController().getDayOfWeek(indexDate);
                           return Column(
                             children: [
                               DayMealRow(
-                                  day: futureDate.day,
-                                  month: mealsProvider
-                                      .months[futureDate.month - 1],
+                                  day: indexDate.day,
+                                  month:
+                                      mealsProvider.months[indexDate.month - 1],
                                   dayName: dayName,
                                   index: index,
                                   settingsProvider: settingsProvider,
                                   mealsProvider: mealsProvider,
-                                  date: futureDate,
+                                  date: indexDate,
                                   value: meal?.name),
                               if (index != 6)
                                 Align(
@@ -173,7 +182,8 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                 .add(const Duration(days: 6)),
                             intervalStartTime:
                                 mealsProvider.currentStartDate!));
-                        await mealsProvider.getAllWeeklyPlans(usersProvider.selectedUser!.userId);
+                        await mealsProvider.getAllWeeklyPlans(
+                            usersProvider.selectedUser!.userId);
                         Get.to(const MealPlanningScreen());
                       },
                       text: 'confirm',
