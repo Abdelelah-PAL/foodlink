@@ -55,7 +55,9 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                     child: ListHeader(
                       text: "weekly_plan",
                       favorites: false,
-                      onTap: () => {Get.to(const WeeklyMealsPlanningScreen())},
+                      onTap: () => {
+                        mealsProvider.resetWeeklyPlanList(),
+                        Get.to(const WeeklyMealsPlanningScreen())},
                       isEmpty: false,
                     ))),
             backgroundColor: AppColors.backgroundColor,

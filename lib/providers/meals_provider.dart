@@ -289,7 +289,7 @@ class MealsProvider with ChangeNotifier {
   Future<void> getAllWeeklyPlans(userId) async {
     try {
       isLoading = true;
-      meals.clear();
+      weeklyPlans.clear();
       List<WeeklyPlan> fetchedWeeklyPlans = await _ms.getAllWeeklyPlans(userId);
       for (var doc in fetchedWeeklyPlans) {
         WeeklyPlan fetchedWeeklyPlan = WeeklyPlan(
@@ -303,7 +303,6 @@ class MealsProvider with ChangeNotifier {
 
         weeklyPlans.add(fetchedWeeklyPlan);
       }
-
       isLoading = false;
       notifyListeners();
     } catch (ex) {

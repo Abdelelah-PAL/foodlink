@@ -191,33 +191,53 @@ class _DayMealRowState extends State<DayMealRow> {
                 SizedBox(
                   height: SizeConfig.getProportionalHeight(300),
                   child: ListView.builder(
-                    itemCount: _filteredItems.length,
+                    itemCount: _filteredItems.length + 1,
                     itemBuilder: (ctx, index) {
                       return Column(
                         children: [
-                          ListTile(
-                            title: CustomText(
-                              isCenter: false,
-                              text: _filteredItems[index].name,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.fontColor,
+                          if (index == 0)
+                            ListTile(
+                              title: const CustomText(
+                                isCenter: false,
+                                text: 'select_meal',
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.fontColor,
+                              ),
+                              onTap: () {
+                                widget.mealsProvider
+                                        .selectedValues[widget.index] =
+                                    TranslationService()
+                                        .translate('select_meal');
+                                widget.mealsProvider.setShowSelectedValue();
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          else
+                            ListTile(
+                              title: CustomText(
+                                isCenter: false,
+                                text: _filteredItems[index - 1].name,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.fontColor,
+                              ),
+                              onTap: () {
+                                widget.mealsProvider
+                                        .selectedValues[widget.index] =
+                                    _filteredItems[index - 1].name;
+                                widget.mealsProvider.weeklyPlanList.removeWhere(
+                                  (record) => record.containsValue(widget.date),
+                                );
+                                widget.mealsProvider.weeklyPlanList.add({
+                                  _filteredItems[index - 1].documentId!:
+                                      widget.date
+                                });
+                                widget.mealsProvider.setShowSelectedValue();
+                                Navigator.of(context).pop();
+                              },
                             ),
-                            onTap: () {
-                              widget.mealsProvider
-                                      .selectedValues[widget.index] =
-                                  _filteredItems[index].name;
-                              widget.mealsProvider.weeklyPlanList.removeWhere(
-                                (record) => record.containsValue(widget.date),
-                              );
-                              widget.mealsProvider.weeklyPlanList.add({
-                                _filteredItems[index].documentId!: widget.date
-                              });
-                              widget.mealsProvider.setShowSelectedValue();
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          if (index != _filteredItems.length - 1)
+                          if (index != _filteredItems.length)
                             const Divider(
                               thickness: 1,
                               color: AppColors.defaultBorderColor,

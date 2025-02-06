@@ -175,6 +175,23 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
                       onTap: () async {
+                        if(currentWeeklyPlan != null) {
+                          currentWeeklyPlan.daysMeals.map((dayMeal) {
+                            var existingMeal = mealsProvider.weeklyPlanList
+                                .where((weeklyPlanObject) =>
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        dayMeal.entries.first.value.seconds *
+                                            1000) ==
+                                    weeklyPlanObject.entries.first.value)
+                                .firstOrNull;
+                            if (existingMeal != null) {
+                              mealsProvider.weeklyPlanList.add({
+                                dayMeal.keys.first:
+                                    dayMeal.entries.first.value.seconds * 1000
+                              });
+                            }
+                          });
+                        }
                         await mealsProvider.addWeeklyPlan(WeeklyPlan(
                             daysMeals: mealsProvider.weeklyPlanList,
                             userId: usersProvider.selectedUser!.userId,
