@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/controllers/notification_controller.dart';
 import 'package:foodlink/controllers/user_types.dart';
+import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
@@ -155,7 +156,7 @@ class MealScreen extends StatelessWidget {
                             await NotificationController()
                                 .addCookerNotification(meal);
                             MealController()
-                                .showSuccessDialog(context, settingsProvider);
+                                .showCustomDialog(context, settingsProvider,"notification_sent", Icons.check_circle, AppColors.successError);
                           },
                           text: TranslationService().translate("request_meal"),
                           width: 150,

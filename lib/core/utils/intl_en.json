@@ -148,5 +148,6 @@
   "end_time": "End Time",
   "select_meal": "Select a Meal",
   "search": "Search",
-  "choose_weekly_plan":"Select your weekly plan"
+  "choose_weekly_plan":"Select your weekly plan",
+  "add_plan_error":"Add a plan to proceed"
 }

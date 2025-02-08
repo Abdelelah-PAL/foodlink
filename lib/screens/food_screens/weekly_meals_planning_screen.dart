@@ -176,13 +176,19 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   child: CustomButton(
                       onTap: () async {
                         if(currentWeeklyPlan != null) {
+                          print(currentWeeklyPlan.daysMeals);
                           currentWeeklyPlan.daysMeals.map((dayMeal) {
                             var existingMeal = mealsProvider.weeklyPlanList
-                                .where((weeklyPlanObject) =>
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        dayMeal.entries.first.value.seconds *
-                                            1000) ==
-                                    weeklyPlanObject.entries.first.value)
+                                .where((weeklyPlanObject) {
+                              DateTime dayMealDateTime = DateTime.fromMillisecondsSinceEpoch(
+                                  dayMeal.entries.first.value.seconds * 1000);
+                              DateTime weeklyPlanDateTime = weeklyPlanObject.entries.first.value;
+
+                              print('dayMealDateTime: $dayMealDateTime');
+                              print('weeklyPlanDateTime: $weeklyPlanDateTime');
+
+                              return dayMealDateTime == weeklyPlanDateTime;
+                            })
                                 .firstOrNull;
                             if (existingMeal != null) {
                               mealsProvider.weeklyPlanList.add({
@@ -191,6 +197,10 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                               });
                             }
                           });
+                        }
+                        if(mealsProvider.weeklyPlanList.isEmpty) {
+                          MealController().showCustomDialog(context, settingsProvider, 'add_plan_error', Icons.error, AppColors.errorColor);
+                          return;
                         }
                         await mealsProvider.addWeeklyPlan(WeeklyPlan(
                             daysMeals: mealsProvider.weeklyPlanList,

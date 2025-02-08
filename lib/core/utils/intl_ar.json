@@ -147,5 +147,6 @@
   "end_time": "وقت الانتهاء",
   "select_meal": "اختر الوجبة",
   "search": "بحث",
-  "choose_weekly_plan": "اختر خطتك الأسبوعية"
+  "choose_weekly_plan": "اختر خطتك الأسبوعية",
+  "add_plan_error": "أضف خطة لتتمكن من الحفظ"
 }

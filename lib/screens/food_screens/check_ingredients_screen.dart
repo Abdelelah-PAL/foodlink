@@ -12,6 +12,7 @@ import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
+import '../../core/constants/colors.dart';
 import '../../models/meal.dart';
 import '../../providers/settings_provider.dart';
 import '../widgets/custom_app_iconic_textfield.dart';
@@ -142,7 +143,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                         await NotificationController()
                             .addUserNotification(meal);
                         MealController()
-                            .showSuccessDialog(context, settingsProvider);
+                            .showCustomDialog(context, settingsProvider,'notification_sent', Icons.check_circle, AppColors.successError);
                       },
                       text: TranslationService().translate("notify"),
                       width: 137,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/utils/size_config.dart';
+import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/meals_services.dart';
 import 'package:get/get.dart';
@@ -102,7 +103,7 @@ class MealController {
     return meal;
   }
 
-  void showSuccessDialog(BuildContext context, settingsProvider) {
+  void showCustomDialog(BuildContext context, SettingsProvider settingsProvider, String text, IconData icon, Color color) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -118,13 +119,14 @@ class MealController {
                     ? TextDirection.ltr
                     : TextDirection.rtl,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.check_circle, size: 30, color: Colors.green),
+                children:  [
+                  Icon(icon, size: 30, color: color),
+                  SizeConfig.customSizedBox(10, null, null),
                   CustomText(
                       isCenter: true,
-                      text: 'notification_sent',
+                      text: text,
                       fontSize: 20,
-                      fontWeight: FontWeight.normal)
+                      fontWeight: FontWeight.normal),
                 ]),
           ),
         );
