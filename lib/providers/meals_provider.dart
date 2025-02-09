@@ -323,7 +323,6 @@ class MealsProvider with ChangeNotifier {
 
       if (currentWeeklyPlan != null) {
         Future.microtask(() {
-          print(currentWeeklyPlan!.daysMeals);
           weeklyPlanList = currentWeeklyPlan!.daysMeals;
           notifyListeners();
         });
