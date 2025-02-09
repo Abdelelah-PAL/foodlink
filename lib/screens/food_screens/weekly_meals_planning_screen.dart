@@ -98,8 +98,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                               mealsProvider.currentStartDate!;
                           DateTime indexDate =
                               initialDate.add(Duration(days: index));
-                          if (currentWeeklyPlan != null) {
-                            var dayMeal = currentWeeklyPlan.daysMeals
+                            var dayMeal = mealsProvider.weeklyPlanList
                                 .where((object) =>
                                     DateTime.fromMillisecondsSinceEpoch(
                                         object.entries.first.value.seconds *
@@ -116,7 +115,6 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                                     )
                                     .firstOrNull
                                 : null;
-                          }
 
                           var dayName =
                               MealController().getDayOfWeek(indexDate);
@@ -175,31 +173,37 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
                       onTap: () async {
-                        if(currentWeeklyPlan != null) {
-                          print(currentWeeklyPlan.daysMeals);
-                          currentWeeklyPlan.daysMeals.map((dayMeal) {
-                            var existingMeal = mealsProvider.weeklyPlanList
-                                .where((weeklyPlanObject) {
-                              DateTime dayMealDateTime = DateTime.fromMillisecondsSinceEpoch(
-                                  dayMeal.entries.first.value.seconds * 1000);
-                              DateTime weeklyPlanDateTime = weeklyPlanObject.entries.first.value;
-
-                              print('dayMealDateTime: $dayMealDateTime');
-                              print('weeklyPlanDateTime: $weeklyPlanDateTime');
-
-                              return dayMealDateTime == weeklyPlanDateTime;
-                            })
-                                .firstOrNull;
-                            if (existingMeal != null) {
-                              mealsProvider.weeklyPlanList.add({
-                                dayMeal.keys.first:
-                                    dayMeal.entries.first.value.seconds * 1000
-                              });
-                            }
-                          });
-                        }
-                        if(mealsProvider.weeklyPlanList.isEmpty) {
-                          MealController().showCustomDialog(context, settingsProvider, 'add_plan_error', Icons.error, AppColors.errorColor);
+                        // if (currentWeeklyPlan != null) {
+                        //   var tempDaysMeals = currentWeeklyPlan!.daysMeals;
+                        //
+                        //   for(var dayMeal in tempDaysMeals) {
+                        //     var existingMeal = mealsProvider.weeklyPlanList
+                        //         .where((weeklyPlanObject) {
+                        //       DateTime dayMealDateTime =
+                        //           DateTime.fromMillisecondsSinceEpoch(
+                        //               dayMeal.entries.first.value.seconds *
+                        //                   1000);
+                        //       DateTime weeklyPlanDateTime =
+                        //           weeklyPlanObject.entries.first.value;
+                        //       return dayMealDateTime == weeklyPlanDateTime;
+                        //     }).firstOrNull;
+                        //
+                        //     if (existingMeal == null) {
+                        //       mealsProvider.weeklyPlanList.add({
+                        //         dayMeal.keys.first: DateTime.fromMillisecondsSinceEpoch(
+                        //           dayMeal.entries.first.value.seconds * 1000,
+                        //         )
+                        //       });
+                        //     }
+                        //   }
+                        // }
+                        if (mealsProvider.weeklyPlanList.isEmpty) {
+                          MealController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              'add_plan_error',
+                              Icons.error,
+                              AppColors.errorColor);
                           return;
                         }
                         await mealsProvider.addWeeklyPlan(WeeklyPlan(

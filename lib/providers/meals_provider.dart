@@ -38,7 +38,7 @@ class MealsProvider with ChangeNotifier {
   ];
   List<bool> checkboxValues = [];
   DateTime? currentStartDate;
-  List<Map<String, DateTime>> weeklyPlanList = [];
+  List<Map<String, dynamic>> weeklyPlanList = [];
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -312,15 +312,24 @@ class MealsProvider with ChangeNotifier {
   }
 
   WeeklyPlan? getCurrentWeekPlan() {
+    WeeklyPlan? currentWeeklyPlan;
     if (weeklyPlans.isNotEmpty) {
-      return weeklyPlans
+      currentWeeklyPlan = weeklyPlans
           .where((object) =>
-              object.intervalStartTime.year == currentStartDate!.year &&
-              object.intervalStartTime.month == currentStartDate!.month &&
-              object.intervalStartTime.day == currentStartDate!.day)
+      object.intervalStartTime.year == currentStartDate!.year &&
+          object.intervalStartTime.month == currentStartDate!.month &&
+          object.intervalStartTime.day == currentStartDate!.day)
           .firstOrNull;
+
+      if (currentWeeklyPlan != null) {
+        Future.microtask(() {
+          print(currentWeeklyPlan!.daysMeals);
+          weeklyPlanList = currentWeeklyPlan!.daysMeals;
+          notifyListeners();
+        });
+      }
     }
-    return null;
+    return currentWeeklyPlan;
   }
 
   void resetShowSelectedValue() {
