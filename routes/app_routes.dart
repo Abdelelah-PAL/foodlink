@@ -1,0 +1,36 @@
+class AppRoutes {
+  static const String splashScreen = '/splash_screen';
+  static const String onboardingScreen = '/onboarding_screen';
+  static const String logIn = '/login';
+  static const String signUp = '/signup';
+  static const String roles = '/roles';
+  static const String dashboard = '/dashboard';
+  static const String mealsList = '/meals_list';
+  static const String meal = '/meal';
+  static const String addMeal = '/add_meal';
+  static const String checkIngredients = '/check_ingredients';
+  static const String emailSent = '/email_sent';
+  static const String homeScreen = '/homeScreen';
+  static const String searchScreen = '/search_screen';
+  static const String chatNotification = '/chat_notification';
+  static const String notificationScreen = '/notification';
+  static const String profileScreen = '/profileScreen';
+  static const String searchItem = '/search_item';
+  static const String createRequest = '/create_request';
+  static const String decline = '/decline';
+  static const String requestSentSuccess = '/request_sent_success';
+  static const String editProfile = '/edit_profile';
+  static const String requesterPost = '/requester_post';
+  static const String travellerPost = '/traveller_post';
+  static const String deliveryDone = '/delivery_done';
+  static const String paymentDone = '/payment_done';
+  static const String createTrip = '/create_trip';
+  static const String destinationCardDetail = '/destination_card_detail';
+  static const String requestTravellerPost = '/request_traveller_post';
+  static const String paymentStuff = '/payment_stuff';
+  static const String showQRCode = '/show_qr_code';
+  static const String travellerPostAccept = '/traveller_post_accept';
+  static const String declineSentNewRequest = '/decline_sent_new_request';
+  static const String myRequest = '/my_request';
+  static const String chat = '/chat';
+}

@@ -11,6 +11,7 @@ class MealsProvider with ChangeNotifier {
   factory MealsProvider() => _instance;
 
   MealsProvider._internal();
+  DateTime today = DateTime.now();
 
   List<Meal> meals = [];
   List<Meal> plannedMeals = [];
@@ -273,7 +274,6 @@ class MealsProvider with ChangeNotifier {
   }
 
   void setPlanInterval() {
-    DateTime today = DateTime.now();
     currentStartDate = MealController.getPreviousSaturday(
         DateTime(today.year, today.month, today.day));
   }

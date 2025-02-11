@@ -35,7 +35,6 @@ class DayMealRow extends StatefulWidget {
 }
 
 class _DayMealRowState extends State<DayMealRow> {
-  DateTime today = DateTime.now();
 
   List<Meal> _filteredItems = [];
 
@@ -84,7 +83,7 @@ class _DayMealRowState extends State<DayMealRow> {
               horizontal: SizeConfig.getProportionalWidth(10)),
           child: IgnorePointer(
             ignoring: widget.date.isBefore(MealController.getPreviousSaturday(
-                DateTime(today.year, today.month, today.day))),
+                DateTime(widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))),
             child: GestureDetector(
               onTap: () => {
                 _showDropdown(
@@ -96,7 +95,7 @@ class _DayMealRowState extends State<DayMealRow> {
                 decoration: BoxDecoration(
                   color: widget.date.isBefore(
                           MealController.getPreviousSaturday(
-                              DateTime(today.year, today.month, today.day)))
+                              DateTime(widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day)))
                       ? Colors.grey.shade200
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
@@ -114,7 +113,7 @@ class _DayMealRowState extends State<DayMealRow> {
                         isCenter: false,
                         text: widget.date.isBefore(
                                 MealController.getPreviousSaturday(DateTime(
-                                    today.year, today.month, today.day)))
+                                    widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day)))
                             ? widget.value ?? ""
                             : widget.mealsProvider.showSelectedValues[widget.index] == true
                                 ? widget.mealsProvider
@@ -126,10 +125,10 @@ class _DayMealRowState extends State<DayMealRow> {
                       ),
                       if (widget.date.isAfter(
                               MealController.getPreviousSaturday(DateTime(
-                                  today.year, today.month, today.day))) ||
+                                  widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))) ||
                           widget.date.isAtSameMomentAs(
                               MealController.getPreviousSaturday(DateTime(
-                                  today.year, today.month, today.day))))
+                                  widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))))
                         const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),

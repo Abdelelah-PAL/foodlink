@@ -167,6 +167,8 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     },
                   ),
                 ),
+                if(!mealsProvider.currentStartDate!.isBefore(MealController.getPreviousSaturday(
+                    DateTime(mealsProvider.today.year, mealsProvider.today.month, mealsProvider.today.day))))
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: SizeConfig.getProportionalHeight(35)),
