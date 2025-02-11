@@ -4,10 +4,10 @@ import 'package:foodlink/core/utils/size_config.dart';
 import '../../../core/constants/fonts.dart';
 
 class CustomAuthBtn extends StatelessWidget {
-  CustomAuthBtn({super.key, required this.onTap , required this.text});
+  const CustomAuthBtn({super.key, required this.onTap, required this.text});
 
-  VoidCallback? onTap;
-  String text;
+  final VoidCallback? onTap;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CustomAuthBtn extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style:  TextStyle(
+            style: TextStyle(
                 fontWeight: FontWeight.w600, // Semi-bold weight
                 fontSize: 16,
                 fontFamily: AppFonts.getPrimaryFont(context),

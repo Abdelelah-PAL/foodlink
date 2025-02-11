@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/models/meal.dart';
@@ -44,7 +45,7 @@ class _DayMealRowState extends State<DayMealRow> {
 
     if (widget.value != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.mealsProvider.resetShowSelectedValue();
+        widget.mealsProvider.resetShowSelectedValue(widget.index);
       });
     }
 
@@ -115,7 +116,7 @@ class _DayMealRowState extends State<DayMealRow> {
                                 MealController.getPreviousSaturday(DateTime(
                                     today.year, today.month, today.day)))
                             ? widget.value ?? ""
-                            : widget.mealsProvider.showSelectedValue == true
+                            : widget.mealsProvider.showSelectedValues[widget.index] == true
                                 ? widget.mealsProvider
                                         .selectedValues[widget.index] ??
                                     "select_meal"
@@ -209,7 +210,13 @@ class _DayMealRowState extends State<DayMealRow> {
                                         .selectedValues[widget.index] =
                                     TranslationService()
                                         .translate('select_meal');
-                                widget.mealsProvider.setShowSelectedValue();
+                                widget.mealsProvider.weeklyPlanList.removeWhere(
+                                      (record) {
+                                        Timestamp dateTimestamp = Timestamp.fromDate(widget.date);
+                                        return record.containsValue(dateTimestamp);
+                                      },
+                                );
+                                widget.mealsProvider.setShowSelectedValue(widget.index);
                                 Navigator.of(context).pop();
                               },
                             )
@@ -223,17 +230,20 @@ class _DayMealRowState extends State<DayMealRow> {
                                 color: AppColors.fontColor,
                               ),
                               onTap: () {
+                                Timestamp dateTimestamp = Timestamp.fromDate(widget.date);
                                 widget.mealsProvider
                                         .selectedValues[widget.index] =
                                     _filteredItems[index - 1].name;
                                 widget.mealsProvider.weeklyPlanList.removeWhere(
-                                  (record) => record.containsValue(widget.date),
+                                      (record) {
+                                    return record.containsValue(dateTimestamp);
+                                  },
                                 );
                                 widget.mealsProvider.weeklyPlanList.add({
                                   _filteredItems[index - 1].documentId!:
-                                      widget.date
+                                  dateTimestamp
                                 });
-                                widget.mealsProvider.setShowSelectedValue();
+                                widget.mealsProvider.setShowSelectedValue(widget.index);
                                 Navigator.of(context).pop();
                               },
                             ),

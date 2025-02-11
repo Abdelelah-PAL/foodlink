@@ -21,8 +21,10 @@ class MealsProvider with ChangeNotifier {
   bool imageIsPicked = false;
   bool chosenPressed = true;
   bool selfPressed = false;
-  bool showSelectedValue = true;
+
   List<String?> selectedValues = List.filled(7, null);
+  List<bool> showSelectedValues = List.filled(7, true); // 10 items, all false
+
 
   XFile? pickedFile;
   int numberOfIngredients = 2;
@@ -303,6 +305,7 @@ class MealsProvider with ChangeNotifier {
 
         weeklyPlans.add(fetchedWeeklyPlan);
       }
+      getCurrentWeekPlan();
       isLoading = false;
       notifyListeners();
     } catch (ex) {
@@ -311,33 +314,30 @@ class MealsProvider with ChangeNotifier {
     }
   }
 
-  WeeklyPlan? getCurrentWeekPlan() {
-    WeeklyPlan? currentWeeklyPlan;
+  void getCurrentWeekPlan() {
+    WeeklyPlan? currentWeekPlan;
     if (weeklyPlans.isNotEmpty) {
-      currentWeeklyPlan = weeklyPlans
-          .where((object) =>
+      currentWeekPlan = weeklyPlans.where((object) =>
       object.intervalStartTime.year == currentStartDate!.year &&
           object.intervalStartTime.month == currentStartDate!.month &&
           object.intervalStartTime.day == currentStartDate!.day)
           .firstOrNull;
-
-      if (currentWeeklyPlan != null) {
+      if (currentWeekPlan != null) {
         Future.microtask(() {
-          weeklyPlanList = currentWeeklyPlan!.daysMeals;
+          weeklyPlanList = currentWeekPlan!.daysMeals;
           notifyListeners();
         });
       }
     }
-    return currentWeeklyPlan;
   }
 
-  void resetShowSelectedValue() {
-    showSelectedValue = false;
+  void resetShowSelectedValue(index) {
+    showSelectedValues[index] = false;
     notifyListeners();
   }
 
-  void setShowSelectedValue() {
-    showSelectedValue = true;
+  void setShowSelectedValue(index) {
+    showSelectedValues[index] = true;
     notifyListeners();
   }
 }

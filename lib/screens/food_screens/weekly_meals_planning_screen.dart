@@ -41,7 +41,6 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
-    WeeklyPlan? currentWeeklyPlan = mealsProvider.getCurrentWeekPlan();
     return mealsProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(

@@ -3,7 +3,6 @@ import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
-import 'package:foodlink/models/weekly_plan.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
@@ -40,7 +39,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
     MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
-    WeeklyPlan? currentWeeklyPlan = mealsProvider.getCurrentWeekPlan();
 
     return mealsProvider.isLoading
         ? const CircularProgressIndicator()
@@ -56,7 +54,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       text: "weekly_plan",
                       favorites: false,
                       onTap: () => {
-                        mealsProvider.resetWeeklyPlanList(),
                         Get.to(const WeeklyMealsPlanningScreen())},
                       isEmpty: false,
                     ))),
@@ -103,12 +100,11 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                               settingsProvider: settingsProvider,
                             );
                           })
-                      : currentWeeklyPlan != null
+                      : mealsProvider.weeklyPlanList.isNotEmpty
                           ? ListView.builder(
-                              itemCount: currentWeeklyPlan.daysMeals.length,
+                              itemCount: mealsProvider.weeklyPlanList.length,
                               itemBuilder: (ctx, index) {
-                                DateTime date = currentWeeklyPlan
-                                    .daysMeals[index].entries.first.value
+                                DateTime date = mealsProvider.weeklyPlanList[index].entries.first.value
                                     .toDate();
 
                                 return FutureBuilder<Meal?>(
@@ -116,8 +112,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                                     return mealsProvider.meals.firstWhereOrNull(
                                       (object) =>
                                           object.documentId ==
-                                          currentWeeklyPlan
-                                              .daysMeals[index].keys.first,
+                                          mealsProvider.weeklyPlanList[index].keys.first,
                                     );
                                   }),
                                   builder: (context, snapshot) {

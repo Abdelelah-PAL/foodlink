@@ -6,10 +6,10 @@ import '../../../core/utils/size_config.dart';
 import '../../../providers/settings_provider.dart';
 
 class CustomGoogleAuthBtn extends StatelessWidget {
-  CustomGoogleAuthBtn({super.key, required this.onTap, required this.text, required this.settingsProvider});
+  const CustomGoogleAuthBtn({super.key, required this.onTap, required this.text, required this.settingsProvider});
 
-  String text;
-  VoidCallback? onTap;
+  final String text;
+  final VoidCallback? onTap;
   final SettingsProvider settingsProvider;
 
   @override

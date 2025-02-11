@@ -38,6 +38,7 @@ class AuthService with ChangeNotifier {
       } else {
         AuthController().errorText = e.message!;
       }
+      return null; // Ensure the function always returns a value
     }
   }
 }
