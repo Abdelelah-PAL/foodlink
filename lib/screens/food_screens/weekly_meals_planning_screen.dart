@@ -174,30 +174,6 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                       bottom: SizeConfig.getProportionalHeight(35)),
                   child: CustomButton(
                       onTap: () async {
-                        // if (currentWeeklyPlan != null) {
-                        //   var tempDaysMeals = currentWeeklyPlan!.daysMeals;
-                        //
-                        //   for(var dayMeal in tempDaysMeals) {
-                        //     var existingMeal = mealsProvider.weeklyPlanList
-                        //         .where((weeklyPlanObject) {
-                        //       DateTime dayMealDateTime =
-                        //           DateTime.fromMillisecondsSinceEpoch(
-                        //               dayMeal.entries.first.value.seconds *
-                        //                   1000);
-                        //       DateTime weeklyPlanDateTime =
-                        //           weeklyPlanObject.entries.first.value;
-                        //       return dayMealDateTime == weeklyPlanDateTime;
-                        //     }).firstOrNull;
-                        //
-                        //     if (existingMeal == null) {
-                        //       mealsProvider.weeklyPlanList.add({
-                        //         dayMeal.keys.first: DateTime.fromMillisecondsSinceEpoch(
-                        //           dayMeal.entries.first.value.seconds * 1000,
-                        //         )
-                        //       });
-                        //     }
-                        //   }
-                        // }
                         if (mealsProvider.weeklyPlanList.isEmpty) {
                           MealController().showCustomDialog(
                               context,
