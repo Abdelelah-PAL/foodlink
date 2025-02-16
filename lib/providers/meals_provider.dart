@@ -11,6 +11,7 @@ class MealsProvider with ChangeNotifier {
   factory MealsProvider() => _instance;
 
   MealsProvider._internal();
+
   DateTime today = DateTime.now();
 
   List<Meal> meals = [];
@@ -25,7 +26,6 @@ class MealsProvider with ChangeNotifier {
 
   List<String?> selectedValues = List.filled(7, null);
   List<bool> showSelectedValues = List.filled(7, true); // 10 items, all false
-
 
   XFile? pickedFile;
   int numberOfIngredients = 2;
@@ -42,6 +42,7 @@ class MealsProvider with ChangeNotifier {
   List<bool> checkboxValues = [];
   DateTime? currentStartDate;
   List<Map<String, dynamic>> weeklyPlanList = [];
+  WeeklyPlan? currentWeekPlan;
 
   bool isIngredientChecked = false;
   final List<String> months = [
@@ -295,6 +296,7 @@ class MealsProvider with ChangeNotifier {
       List<WeeklyPlan> fetchedWeeklyPlans = await _ms.getAllWeeklyPlans(userId);
       for (var doc in fetchedWeeklyPlans) {
         WeeklyPlan fetchedWeeklyPlan = WeeklyPlan(
+            documentId: doc.documentId,
             daysMeals: doc.daysMeals,
             userId: userId,
             intervalEndTime: doc.intervalEndTime,
@@ -315,12 +317,14 @@ class MealsProvider with ChangeNotifier {
   }
 
   void getCurrentWeekPlan() {
-    WeeklyPlan? currentWeekPlan;
     if (weeklyPlans.isNotEmpty) {
-      currentWeekPlan = weeklyPlans.where((object) =>
-      object.intervalStartTime.year == currentStartDate!.year &&
-          object.intervalStartTime.month == currentStartDate!.month &&
-          object.intervalStartTime.day == currentStartDate!.day)
+      weeklyPlanList = [];
+      currentWeekPlan = null;
+      currentWeekPlan = weeklyPlans
+          .where((object) =>
+              object.intervalStartTime.year == currentStartDate!.year &&
+              object.intervalStartTime.month == currentStartDate!.month &&
+              object.intervalStartTime.day == currentStartDate!.day)
           .firstOrNull;
       if (currentWeekPlan != null) {
         Future.microtask(() {
@@ -339,5 +343,10 @@ class MealsProvider with ChangeNotifier {
   void setShowSelectedValue(index) {
     showSelectedValues[index] = true;
     notifyListeners();
+  }
+
+  Future<void> deleteWeeklyPlan() async {
+    print(currentWeekPlan!.documentId!);
+    await _ms.deleteWeeklyPlan(currentWeekPlan!.documentId!);
   }
 }

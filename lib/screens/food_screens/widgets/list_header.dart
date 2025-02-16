@@ -11,19 +11,23 @@ class ListHeader extends StatelessWidget {
       required this.text,
       required this.isEmpty,
       required this.favorites,
-      required this.onTap});
+      required this.onTap,
+      this.backOnTap});
 
   final String text;
   final bool isEmpty;
   final bool favorites;
   final VoidCallback onTap;
+  final VoidCallback? backOnTap;
 
   @override
   Widget build(BuildContext context) {
     return isEmpty && !favorites
         ? Row(
             children: [
-              const CustomBackButton(),
+              CustomBackButton(
+                onPressed: backOnTap,
+              ),
               Expanded(
                 child: Center(
                   child: Text(

@@ -18,7 +18,7 @@ class AppRoutes {
   static const String addMeal = '/add_meal';
   static const String checkIngredients = '/check_ingredients';
   static const String chatNotification = '/chat_notification';
-  static const String notificationScreen = '/notification';
+  static const String mealPlanningScreen = '/meal_planning_screen';
   static const String profileScreen = '/profileScreen';
   static const String searchItem = '/search_item';
   static const String createRequest = '/create_request';

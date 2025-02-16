@@ -187,4 +187,9 @@ class MealsServices with ChangeNotifier {
     }
   }
 
+
+  Future<void> deleteWeeklyPlan(String docId) async {
+    print(docId);
+    await _firebaseFireStore.collection('weekly_plan').doc(docId).delete();
+  }
 }

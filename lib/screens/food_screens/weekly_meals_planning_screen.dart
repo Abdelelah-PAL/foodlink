@@ -97,23 +97,22 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                               mealsProvider.currentStartDate!;
                           DateTime indexDate =
                               initialDate.add(Duration(days: index));
-                            var dayMeal = mealsProvider.weeklyPlanList
-                                .where((object) =>
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        object.entries.first.value.seconds *
-                                            1000) ==
-                                    indexDate)
-                                .firstOrNull;
+                          var dayMeal = mealsProvider.weeklyPlanList
+                              .where((object) =>
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      object.entries.first.value.seconds *
+                                          1000) ==
+                                  indexDate)
+                              .firstOrNull;
 
-                            meal = dayMeal != null
-                                ? mealsProvider.meals
-                                    .where(
-                                      (object) =>
-                                          object.documentId ==
-                                          dayMeal.keys.first,
-                                    )
-                                    .firstOrNull
-                                : null;
+                          meal = dayMeal != null
+                              ? mealsProvider.meals
+                                  .where(
+                                    (object) =>
+                                        object.documentId == dayMeal.keys.first,
+                                  )
+                                  .firstOrNull
+                              : null;
 
                           var dayName =
                               MealController().getDayOfWeek(indexDate);
@@ -167,37 +166,46 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     },
                   ),
                 ),
-                if(!mealsProvider.currentStartDate!.isBefore(MealController.getPreviousSaturday(
-                    DateTime(mealsProvider.today.year, mealsProvider.today.month, mealsProvider.today.day))))
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: SizeConfig.getProportionalHeight(35)),
-                  child: CustomButton(
-                      onTap: () async {
-                        if (mealsProvider.weeklyPlanList.isEmpty) {
-                          MealController().showCustomDialog(
-                              context,
-                              settingsProvider,
-                              'add_plan_error',
-                              Icons.error,
-                              AppColors.errorColor);
-                          return;
-                        }
-                        await mealsProvider.addWeeklyPlan(WeeklyPlan(
-                            daysMeals: mealsProvider.weeklyPlanList,
-                            userId: usersProvider.selectedUser!.userId,
-                            intervalEndTime: mealsProvider.currentStartDate!
-                                .add(const Duration(days: 6)),
-                            intervalStartTime:
-                                mealsProvider.currentStartDate!));
-                        await mealsProvider.getAllWeeklyPlans(
-                            usersProvider.selectedUser!.userId);
-                        Get.to(const MealPlanningScreen());
-                      },
-                      text: 'confirm',
-                      width: 126,
-                      height: 45),
-                )
+                if (!mealsProvider.currentStartDate!.isBefore(
+                    MealController.getPreviousSaturday(DateTime(
+                        mealsProvider.today.year,
+                        mealsProvider.today.month,
+                        mealsProvider.today.day))))
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: SizeConfig.getProportionalHeight(35)),
+                    child: CustomButton(
+                        onTap: () async {
+                          if (mealsProvider.weeklyPlanList.isEmpty) {
+                            if(mealsProvider.currentWeekPlan != null) {
+                             await mealsProvider.deleteWeeklyPlan();
+                             return;
+                            }
+                            else {
+                              MealController().showCustomDialog(
+                                  context,
+                                  settingsProvider,
+                                  'add_plan_error',
+                                  Icons.error,
+                                  AppColors.errorColor);
+                              return;
+                            }
+                          }
+                          await mealsProvider.addWeeklyPlan(WeeklyPlan(
+                              daysMeals: mealsProvider.weeklyPlanList,
+                              userId: usersProvider.selectedUser!.userId,
+                              intervalEndTime: mealsProvider.currentStartDate!
+                                  .add(const Duration(days: 6)),
+                              intervalStartTime:
+                                  mealsProvider.currentStartDate!));
+                          await mealsProvider.getAllWeeklyPlans(
+                              usersProvider.selectedUser!.userId);
+                          Get.off(const MealPlanningScreen());
+                        },
+                        text: 'confirm',
+                        width: 126,
+                        height: 45),
+                  )
               ]),
             ),
           );

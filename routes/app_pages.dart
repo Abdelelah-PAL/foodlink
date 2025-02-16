@@ -1,21 +1,22 @@
-// import 'package:foodlink/screens/auth_screens/login_screen.dart';
-// import 'package:get/get.dart';
-// import 'app_routes.dart';
-//
-// class AppPages {
-//   static var list = [
-//     GetPage(
-//       name: AppRoutes.logIn,
-//       page: () => const LoginScreen(),
-//     ),
+ import 'package:foodlink/screens/auth_screens/login_screen.dart';
+import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
+ import 'package:get/get.dart';
+ import 'app_routes.dart';
+
+ class AppPages {
+   static var list = [
+     GetPage(
+       name: AppRoutes.logIn,
+       page: () => const LoginScreen(),
+     ),
 //     GetPage(
 //       name: AppRoutes.createAccount,
 //       page: () => const CreateAccount(),
 //     ),
-//     GetPage(
-//       name: AppRoutes.mobileVerification,
-//       page: () => MobileVerification(),
-//     ),
+     GetPage(
+       name: AppRoutes.mealPlanningScreen,
+       page: () => const MealPlanningScreen(),
+     ),
 //     GetPage(
 //       name: AppRoutes.otpVerification,
 //       page: () {
@@ -143,5 +144,5 @@
 //       name: AppRoutes.chat,
 //       page: () => const ChatScreen(),
 //     ),
-//   ];
-// }
+   ];
+}

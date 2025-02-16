@@ -3,6 +3,7 @@ import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
 import 'package:foodlink/models/meal.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
@@ -55,6 +56,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       favorites: false,
                       onTap: () => {
                         Get.to(const WeeklyMealsPlanningScreen())},
+                      backOnTap: () => Get.to(DashboardProvider()),
                       isEmpty: false,
                     ))),
             backgroundColor: AppColors.backgroundColor,
