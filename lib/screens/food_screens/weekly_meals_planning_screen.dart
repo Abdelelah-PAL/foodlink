@@ -10,7 +10,6 @@ import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
 import '../../providers/users_provider.dart';
@@ -47,15 +46,13 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize:
-                    Size.fromHeight(SizeConfig.getProportionalHeight(135)),
+                    Size.fromHeight(SizeConfig.getProportionalHeight(150)),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalWidth(
-                          40,
-                        ),
+                        vertical: SizeConfig.getProportionalHeight(60),
                         horizontal: SizeConfig.getProportionalWidth(20)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +65,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                         ),
                         const CustomText(
                             isCenter: true,
-                            text: "weekly_plan",
+                            text: "your_weekly_plan",
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
                         const ProfileCircle(height: 50, width: 50, iconSize: 25)
@@ -166,8 +163,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     },
                   ),
                 ),
-                if (!mealsProvider.currentStartDate!.isBefore(
-                    MealController.getPreviousSaturday(DateTime(
+                if (!mealsProvider.currentStartDate!.isBefore(MealController.getPreviousSaturday(DateTime(
                         mealsProvider.today.year,
                         mealsProvider.today.month,
                         mealsProvider.today.day))))
@@ -177,11 +173,10 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     child: CustomButton(
                         onTap: () async {
                           if (mealsProvider.weeklyPlanList.isEmpty) {
-                            if(mealsProvider.currentWeekPlan != null) {
-                             await mealsProvider.deleteWeeklyPlan();
-                             return;
-                            }
-                            else {
+                            if (mealsProvider.currentWeekPlan != null) {
+                              await mealsProvider.deleteWeeklyPlan();
+                              return;
+                            } else {
                               MealController().showCustomDialog(
                                   context,
                                   settingsProvider,

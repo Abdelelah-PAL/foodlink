@@ -6,6 +6,7 @@ import 'package:foodlink/models/meal.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
+import 'package:foodlink/screens/dashboard/dashboard.dart';
 import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'package:foodlink/screens/food_screens/widgets/custom_changeable_color_button.dart';
 import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../providers/meals_provider.dart';
+import '../widgets/custom_back_button.dart';
 import 'weekly_meals_planning_screen.dart';
 
 class MealPlanningScreen extends StatefulWidget {
@@ -48,17 +50,38 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                 preferredSize:
                     Size.fromHeight(SizeConfig.getProportionalHeight(135)),
                 child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalWidth(50),
-                        horizontal: SizeConfig.getProportionalWidth(20)),
-                    child: ListHeader(
-                      text: "weekly_plan",
-                      favorites: false,
-                      onTap: () => {
-                        Get.to(const WeeklyMealsPlanningScreen())},
-                      backOnTap: () => Get.to(DashboardProvider()),
-                      isEmpty: false,
-                    ))),
+                  padding: EdgeInsets.only(
+                    top: SizeConfig.getProportionalHeight(75),
+                    bottom: SizeConfig.getProportionalHeight(75),
+                    left: SizeConfig.getProportionalWidth(10),
+                    right: SizeConfig.getProportionalWidth(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomBackButton(
+                          onPressed: () => Get.to(const Dashboard())),
+                      const CustomText(
+                        isCenter: true,
+                        text: "weekly_plan",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            {Get.to(const WeeklyMealsPlanningScreen())},
+                        child: Container(
+                          width: SizeConfig.getProportionalWidth(30),
+                          height: SizeConfig.getProportionalHeight(30),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.widgetsColor),
+                          child: const Icon(Icons.add),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
             backgroundColor: AppColors.backgroundColor,
             bottomNavigationBar:
                 const CustomBottomNavigationBar(fromDashboard: false),
@@ -106,7 +129,8 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                           ? ListView.builder(
                               itemCount: mealsProvider.weeklyPlanList.length,
                               itemBuilder: (ctx, index) {
-                                DateTime date = mealsProvider.weeklyPlanList[index].entries.first.value
+                                DateTime date = mealsProvider
+                                    .weeklyPlanList[index].entries.first.value
                                     .toDate();
 
                                 return FutureBuilder<Meal?>(
@@ -114,7 +138,8 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                                     return mealsProvider.meals.firstWhereOrNull(
                                       (object) =>
                                           object.documentId ==
-                                          mealsProvider.weeklyPlanList[index].keys.first,
+                                          mealsProvider
+                                              .weeklyPlanList[index].keys.first,
                                     );
                                   }),
                                   builder: (context, snapshot) {

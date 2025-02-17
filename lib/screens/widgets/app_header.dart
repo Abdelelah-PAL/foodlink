@@ -43,7 +43,7 @@ class _AppHeaderState extends State<AppHeader> {
                 : TranslationService().translate("cooker")));
     return Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.getProportionalHeight(50),
+        top: SizeConfig.getProportionalHeight(24),
         left: SizeConfig.getProportionalWidth(24),
         right: SizeConfig.getProportionalWidth(24),
       ),
@@ -51,6 +51,7 @@ class _AppHeaderState extends State<AppHeader> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
@@ -116,9 +117,6 @@ class _AppHeaderState extends State<AppHeader> {
                       child: Container(
                         width: SizeConfig.getProportionalWidth(94),
                         height: SizeConfig.getProportionalHeight(22),
-                        margin: EdgeInsets.only(
-                          left: SizeConfig.getProportionalWidth(11),
-                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: AppColors.widgetsColor,

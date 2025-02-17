@@ -33,6 +33,7 @@ class _ChangeableDateState extends State<ChangeableDate> {
             widget.settingsProvider.language == 'en'
                 ?widget.mealsProvider.goToPreviousWeek()
                 :widget.mealsProvider.goToNextWeek();
+            widget.mealsProvider.resetDropdownValues();
             widget.mealsProvider.getCurrentWeekPlan();
           },
         ),
@@ -56,6 +57,7 @@ class _ChangeableDateState extends State<ChangeableDate> {
             widget.settingsProvider.language == 'en'
             ?widget.mealsProvider.goToNextWeek()
             :widget.mealsProvider.goToPreviousWeek();
+            widget.mealsProvider.resetDropdownValues();
             widget.mealsProvider.getCurrentWeekPlan();
           },
         ),

@@ -51,7 +51,9 @@ class ListHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CustomBackButton(),
+                CustomBackButton(
+                  onPressed: backOnTap,
+                ),
                 CustomText(
                   isCenter: true,
                   text: text,
