@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/providers/task_provider.dart';
 import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,14 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  DateTime _selectedDate = DateTime.now();
-
+  DateTime selectedDate = DateTime.now();
+  
+  @override
+  void initState() {
+    TaskProvider().getAllTasksByDate(date, userId)
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
@@ -55,14 +62,14 @@ class _ScheduleState extends State<Schedule> {
                     itemBuilder: (context, index) {
                       DateTime currentDate =
                           DateTime.now().add(Duration(days: index));
-                      bool isSelected = _selectedDate.day == currentDate.day &&
-                          _selectedDate.month == currentDate.month &&
-                          _selectedDate.year == currentDate.year;
+                      bool isSelected = selectedDate.day == currentDate.day &&
+                          selectedDate.month == currentDate.month &&
+                          selectedDate.year == currentDate.year;
 
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            _selectedDate = currentDate;
+                            selectedDate = currentDate;
                           });
                         },
                         child: Container(
@@ -135,7 +142,7 @@ class _ScheduleState extends State<Schedule> {
                       fontWeight: FontWeight.bold),
                   GestureDetector(
                     onTap: () {
-                      Get.to(const AddTaskScreen());
+                      Get.to(AddTaskScreen(date: selectedDate));
                     },
                     child: Container(
                       height: SizeConfig.getProportionalHeight(38),

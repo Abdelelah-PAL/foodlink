@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 
-class ScheduleController {
-  static final ScheduleController _instance = ScheduleController._internal();
+class TaskController {
+  static final TaskController _instance = TaskController._internal();
 
-  factory ScheduleController() => _instance;
+  factory TaskController() => _instance;
 
-  ScheduleController._internal();
+  TaskController._internal();
 
   TextEditingController taskNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/schedule_controller.dart';
+import 'package:foodlink/controllers/task_controller.dart';
+import 'package:foodlink/models/task.dart';
+import 'package:foodlink/providers/task_provider.dart';
+import 'package:foodlink/screens/schedule/schedule.dart';
 import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/settings_provider.dart';
@@ -10,7 +14,9 @@ import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  const AddTaskScreen({super.key, required this.date});
+
+  final DateTime date;
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -21,8 +27,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   void initState() {
-    ScheduleController().startTimeController.text = "00:00";
-    ScheduleController().endTimeController.text = "00:00";
+    TaskController().startTimeController.text = "00:00";
+    TaskController().endTimeController.text = "00:00";
     super.initState();
   }
 
@@ -70,7 +76,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   width: 318,
                   height: 64,
                   hintText: "task_name",
-                  controller: ScheduleController().taskNameController,
+                  controller: TaskController().taskNameController,
                   maxLines: 2,
                   settingsProvider: settingsProvider,
                   enabled: true,
@@ -94,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         CustomAppTextField(
                           width: 142,
                           height: 63,
-                          controller: ScheduleController().startTimeController,
+                          controller: TaskController().startTimeController,
                           maxLines: 1,
                           settingsProvider: settingsProvider,
                           enabled: false,
@@ -119,7 +125,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         CustomAppTextField(
                           width: 142,
                           height: 63,
-                          controller: ScheduleController().endTimeController,
+                          controller: TaskController().endTimeController,
                           maxLines: 1,
                           settingsProvider: settingsProvider,
                           enabled: false,
@@ -141,7 +147,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   width: 318,
                   height: 151,
                   hintText: "description",
-                  controller: ScheduleController().descriptionController,
+                  controller: TaskController().descriptionController,
                   maxLines: 10,
                   settingsProvider: settingsProvider,
                   enabled: true,
@@ -150,7 +156,20 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizeConfig.customSizedBox(null, 100, null),
                 Center(
                   child: CustomButton(
-                      onTap: () {}, text: "confirm", width: 126, height: 45),
+                      onTap: () {
+                        TaskProvider().addTask(Task(
+                            taskName: TaskController().taskNameController.text,
+                            startTime:
+                                TaskController().startTimeController.text,
+                            endTime: TaskController().endTimeController.text,
+                            description:
+                                TaskController().descriptionController.text,
+                            date: widget.date));
+                        Get.to(const Schedule());
+                      },
+                      text: "confirm",
+                      width: 126,
+                      height: 45),
                 )
               ],
             ),
@@ -167,12 +186,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     if (pickedTime != null && pickedTime != _selectedTime) {
       setState(() {
         _selectedTime = pickedTime;
+        String formattedTime =
+            '${pickedTime.hour.toString()} : ${pickedTime.minute.toString().padLeft(2, '0')}';
         if (tag == "start") {
-          ScheduleController().startTimeController.text =
-              '${pickedTime.hour.toString()} : ${pickedTime.minute.toString()}';
+          TaskController().startTimeController.text = formattedTime;
         } else {
-          ScheduleController().endTimeController.text =
-              '${pickedTime.hour.toString()} : ${pickedTime.minute.toString()}';
+          TaskController().endTimeController.text = formattedTime;
         }
       });
     }

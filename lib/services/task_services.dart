@@ -5,13 +5,13 @@ import '../models/task.dart';
 class TaskServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;
 
-  Future<Task> addTask(task, docId) async {
+  Future<Task> addTask(task) async {
     try {
       var addedTask =
           await _firebaseFireStore.collection('tasks').add(task.toMap());
       var taskSnapshot = await addedTask.get();
 
-      return Task.fromJson(taskSnapshot.data()!, docId);
+      return Task.fromJson(taskSnapshot.data()!, addedTask.id);
     } catch (ex) {
       rethrow;
     }
