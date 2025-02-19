@@ -5,6 +5,8 @@ class Task {
   String endTime;
   String? description;
   DateTime date;
+  String userId;
+
 
   Task({
     this.documentId,
@@ -13,6 +15,7 @@ class Task {
     required this.endTime,
     this.description,
     required this.date,
+    required this.userId,
   });
 
   factory Task.fromJson(Map<String, dynamic> json, docId) {
@@ -23,6 +26,7 @@ class Task {
       endTime: json['end_time'],
       description: json['description'],
       date: json['date'].toDate(),
+      userId: json['user_id'],
     );
   }
 
@@ -33,6 +37,7 @@ class Task {
       'end_time': endTime,
       'description': description,
       'date': date,
+      'user_id': userId,
     };
   }
 }

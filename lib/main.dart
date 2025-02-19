@@ -9,6 +9,7 @@ import 'package:foodlink/providers/meal_categories_provider.dart';
 import 'package:foodlink/providers/meals_provider.dart';
 import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/providers/task_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/screens/splash_screen/splash_screen.dart';
 import 'package:foodlink/services/translation_services.dart';
@@ -31,6 +32,7 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
     ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
     ChangeNotifierProvider(create: (ctx) => BeyondCaloriesArticlesProvider()),
+    ChangeNotifierProvider(create: (ctx) => TaskProvider()),
   ], child: const MyApp()));
 }
 

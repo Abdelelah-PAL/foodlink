@@ -22,18 +22,18 @@ class TaskTile extends StatelessWidget {
           : TextDirection.rtl,
       children: [
         SizeConfig.customSizedBox(
-          42,
+          60,
           67,
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text(task.startTime), Text(task.endTime)],
           ),
         ),
+        SizeConfig.customSizedBox(20, null, null),
         Container(
           height: SizeConfig.getProportionalHeight(73),
           width: SizeConfig.getProportionalWidth(242),
           decoration: BoxDecoration(
-              color: Colors.transparent,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: AppColors.widgetsColor, width: 3)),
           child: Column(
@@ -44,13 +44,13 @@ class TaskTile extends StatelessWidget {
                   fontSize: 18,
                   color: AppColors.hintTextColor,
                   fontWeight: FontWeight.normal),
-              task.description != null ?
-              CustomText(
-                  isCenter: false,
-                  text: task.description! ,
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal)
-              :const SizedBox(),
+              task.description != null
+                  ? CustomText(
+                      isCenter: false,
+                      text: task.description!,
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal)
+                  : const SizedBox(),
             ],
           ),
         )

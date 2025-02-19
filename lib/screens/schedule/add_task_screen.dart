@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/task_controller.dart';
 import 'package:foodlink/models/task.dart';
 import 'package:foodlink/providers/task_provider.dart';
-import 'package:foodlink/screens/schedule/schedule.dart';
+import 'package:foodlink/screens/dashboard/dashboard.dart';
 import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
@@ -14,9 +14,10 @@ import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key, required this.date});
+  const AddTaskScreen({super.key, required this.date, required this.userId});
 
   final DateTime date;
+  final String userId;
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -164,8 +165,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             endTime: TaskController().endTimeController.text,
                             description:
                                 TaskController().descriptionController.text,
-                            date: widget.date));
-                        Get.to(const Schedule());
+                            date: widget.date,
+                            userId: widget.userId));
+                        Get.to(const Dashboard());
                       },
                       text: "confirm",
                       width: 126,

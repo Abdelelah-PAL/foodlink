@@ -42,7 +42,8 @@ class TaskProvider with ChangeNotifier {
             taskName: doc.taskName,
             startTime: doc.startTime,
             endTime: doc.endTime,
-            date: doc.date);
+            date: doc.date,
+            userId:  doc.userId);
         tasks.add(task);
       }
       isLoading = false;
