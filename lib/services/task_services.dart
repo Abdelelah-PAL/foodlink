@@ -24,6 +24,11 @@ class TaskServices with ChangeNotifier {
           .where('date', isEqualTo: date)
           .where('user_id', isEqualTo: userId)
           .get();
+      print(date);
+
+      print(taskQuery.docs.length);
+      print(userId);
+
 
       List<Task> tasks = taskQuery.docs.map((doc) {
         return Task.fromJson(doc.data(), doc.id);

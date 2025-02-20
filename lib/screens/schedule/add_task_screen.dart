@@ -184,12 +184,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       context: context,
       initialTime: _selectedTime ?? TimeOfDay.now(),
     );
-
     if (pickedTime != null && pickedTime != _selectedTime) {
       setState(() {
         _selectedTime = pickedTime;
         String formattedTime =
-            '${pickedTime.hour.toString()} : ${pickedTime.minute.toString().padLeft(2, '0')}';
+            '${pickedTime.hour.toString().padLeft(2, '0')} : ${pickedTime.minute.toString().padLeft(2, '0')}';
         if (tag == "start") {
           TaskController().startTimeController.text = formattedTime;
         } else {

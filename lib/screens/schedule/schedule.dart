@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
@@ -25,12 +26,10 @@ class _ScheduleState extends State<Schedule> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final usersProvider = Provider.of<UsersProvider>(context, listen: false);
-      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
-      taskProvider.getAllTasksByDate(
-          selectedDate, usersProvider.selectedUser!.userId);
-    });
+    final usersProvider = Provider.of<UsersProvider>(context, listen: false);
+
+    TaskProvider()
+        .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
   }
 
   @override
@@ -61,31 +60,33 @@ class _ScheduleState extends State<Schedule> {
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20)
-                ),
+                    horizontal: SizeConfig.getProportionalWidth(20)),
                 child: Column(
                   crossAxisAlignment: settingsProvider.language == "en"
                       ? CrossAxisAlignment.start
                       : CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     SizedBox(
-                      height: 100,
+                      height: SizeConfig.getProportionalHeight(100),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: 7,
                         itemBuilder: (context, index) {
                           DateTime currentDate =
                               DateTime.now().add(Duration(days: index));
-                          bool isSelected = selectedDate.day == currentDate.day &&
-                              selectedDate.month == currentDate.month &&
-                              selectedDate.year == currentDate.year;
-                
+                          bool isSelected =
+                              selectedDate.day == currentDate.day &&
+                                  selectedDate.month == currentDate.month &&
+                                  selectedDate.year == currentDate.year;
+
                           return GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               setState(() {
                                 selectedDate = currentDate;
                               });
-                              taskProvider.getAllTasksByDate(currentDate,
+                              await TaskProvider().getAllTasksByDate(
+                                  currentDate,
                                   usersProvider.selectedUser!.userId);
                             },
                             child: Container(
@@ -146,49 +147,51 @@ class _ScheduleState extends State<Schedule> {
                         text: "today_system",
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
-                    SizedBox(
-                      height: 500,
-                      child: Consumer<TaskProvider>(
-                        builder: (ctx, taskProvider, child) {
-                          return ListView.builder(
-                            itemCount: taskProvider.tasks.length + 1,
-                            itemBuilder: (ctx, index) {
-                              return index == taskProvider.tasks.length
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        Get.to(AddTaskScreen(
-                                            date: selectedDate,
-                                            userId: usersProvider
-                                                .selectedUser!.userId));
-                                      },
+                    Consumer<TaskProvider>(
+                      builder: (ctx, taskProvider, child) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: taskProvider.tasks.length + 1,
+                          itemBuilder: (ctx, index) {
+                            return index == taskProvider.tasks.length
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Get.to(AddTaskScreen(
+                                          date: selectedDate,
+                                          userId: usersProvider
+                                              .selectedUser!.userId));
+                                    },
+                                    child: Align(
+                                      alignment:
+                                          settingsProvider.language == 'en'
+                                              ? Alignment.topLeft
+                                              : Alignment.topRight,
                                       child: Container(
                                         height:
                                             SizeConfig.getProportionalHeight(
                                                 38),
                                         width:
-                                            SizeConfig.getProportionalWidth(
-                                                38),
+                                            SizeConfig.getProportionalWidth(38),
                                         decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: AppColors.widgetsColor),
                                         child: const Icon(Icons.add),
                                       ),
-                                    )
-                                  : Column(
-                                      children: [
-                                        TaskTile(
-                                            settingsProvider:
-                                                settingsProvider,
-                                            task: taskProvider.tasks[index]),
-                                        SizeConfig.customSizedBox(
-                                            null, 10, null)
-                                      ],
-                                    );
-                            },
-                          );
-                        },
-                      ),
-                    )
+                                    ),
+                                  )
+                                : Column(
+                                    children: [
+                                      TaskTile(
+                                          settingsProvider: settingsProvider,
+                                          task: taskProvider.tasks[index]),
+                                      SizeConfig.customSizedBox(null, 10, null)
+                                    ],
+                                  );
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

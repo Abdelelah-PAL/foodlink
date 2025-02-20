@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/core/utils/size_config.dart';
@@ -33,10 +32,12 @@ class TaskTile extends StatelessWidget {
         Container(
           height: SizeConfig.getProportionalHeight(73),
           width: SizeConfig.getProportionalWidth(242),
+          padding: EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(15)),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: AppColors.widgetsColor, width: 3)),
           child: Column(
+            crossAxisAlignment: settingsProvider.language == 'en' ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               CustomText(
                   isCenter: false,

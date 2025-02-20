@@ -43,9 +43,12 @@ class TaskProvider with ChangeNotifier {
             startTime: doc.startTime,
             endTime: doc.endTime,
             date: doc.date,
+            description: doc.description,
             userId:  doc.userId);
         tasks.add(task);
       }
+      tasks.sort((a, b) => a.startTime
+          .compareTo(b.endTime));
       isLoading = false;
       notifyListeners();
     } catch (ex) {
