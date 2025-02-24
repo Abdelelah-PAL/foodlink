@@ -77,8 +77,8 @@ class NotificationController {
       switch (days) {
         case 1:
           arabicDuration = TranslationService().translate("since") +
-              TranslationService().translate("day");
-          englishDuration = TranslationService().translate("day") +
+              TranslationService().translate("a_day");
+          englishDuration = TranslationService().translate("a_day") +
               TranslationService().translate("since");
           break;
         case 2:
@@ -97,7 +97,7 @@ class NotificationController {
                   TranslationService().translate("days")
               : TranslationService().translate("since") +
                   days.toString() +
-                  TranslationService().translate("day");
+                  TranslationService().translate("a_day");
           englishDuration = days.toString() +
               TranslationService().translate("days") +
               TranslationService().translate("since");

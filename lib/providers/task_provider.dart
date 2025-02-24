@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../services/task_services.dart';
+import 'package:intl/intl.dart';
 
 class TaskProvider with ChangeNotifier {
   static final TaskProvider _instance = TaskProvider._internal();
@@ -34,7 +35,10 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> getAllTasksByDate(date, userId) async {
     try {
+      if (isLoading) return;
+
       isLoading = true;
+
       tasks.clear();
       List<Task> fetchedTasks = await _ms.getAllTasksByDate(date, userId);
       for (var doc in fetchedTasks) {
@@ -44,16 +48,60 @@ class TaskProvider with ChangeNotifier {
             endTime: doc.endTime,
             date: doc.date,
             description: doc.description,
-            userId:  doc.userId);
+            userId: doc.userId);
         tasks.add(task);
       }
-      tasks.sort((a, b) => a.startTime
-          .compareTo(b.endTime));
+
+      tasks.sort((a, b) => a.startTime.compareTo(b.endTime));
       isLoading = false;
+
       notifyListeners();
     } catch (ex) {
       isLoading = false;
       rethrow;
     }
   }
+
+  bool checkTimeOverlapping(startTime, endTime) {
+    List<Task> overLappedTasks = tasks.where(
+      (task) {
+        final DateFormat timeFormat = DateFormat("HH:mm");
+        String taskStartClean = task.startTime.replaceAll(" ", "");
+        String taskEndClean = task.endTime.replaceAll(" ", "");
+        String startClean = startTime.replaceAll(" ", "");
+        String endClean = endTime.replaceAll(" ", "");
+
+        DateTime taskStartDateTime = timeFormat.parse(taskStartClean);
+        DateTime taskEndDateTime = timeFormat.parse(taskEndClean);
+        DateTime startDateTime = timeFormat.parse(startClean);
+        DateTime endDateTime = timeFormat.parse(endClean);
+
+        Duration taskStart = Duration(
+          hours: taskStartDateTime.hour,
+          minutes: taskStartDateTime.minute,
+        );
+        Duration taskEnd = Duration(
+          hours: taskEndDateTime.hour,
+          minutes: taskEndDateTime.minute,
+        );
+        Duration start = Duration(
+          hours: startDateTime.hour,
+          minutes: startDateTime.minute,
+        );
+        Duration end = Duration(
+          hours: endDateTime.hour,
+          minutes: endDateTime.minute,
+        );
+        return (taskStart > start && taskStart < end) ||
+            (taskEnd > start && taskEnd < end);
+      },
+    ).toList();
+    if (overLappedTasks.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 }

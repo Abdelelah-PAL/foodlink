@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:foodlink/services/meals_services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
@@ -101,37 +98,6 @@ class MealController {
   Meal findMealById(meals, id) {
     Meal meal = meals.firstWhere((meal) => meal.documentId == id);
     return meal;
-  }
-
-  void showCustomDialog(BuildContext context, SettingsProvider settingsProvider, String text, IconData icon, Color color) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: SizeConfig.customSizedBox(
-            205,
-            56,
-            Row(
-                textDirection: settingsProvider.language == 'en'
-                    ? TextDirection.ltr
-                    : TextDirection.rtl,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:  [
-                  Icon(icon, size: 30, color: color),
-                  SizeConfig.customSizedBox(10, null, null),
-                  CustomText(
-                      isCenter: true,
-                      text: text,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                ]),
-          ),
-        );
-      },
-    );
   }
 
   String getDayOfWeek(DateTime date) {

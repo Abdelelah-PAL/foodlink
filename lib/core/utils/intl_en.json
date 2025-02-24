@@ -97,7 +97,7 @@
   "since": "ago",
   "duration": "Since {duration} ",
   "second": " second ",
-  "day": " 1 day ",
+  "a_day": " 1 day ",
   "hour": " 1 hour ",
   "minute": " 1 minute ",
   "2seconds": " 2 seconds ",
@@ -148,6 +148,9 @@
   "end_time": "End Time",
   "select_meal": "Select a Meal",
   "search": "Search",
-  "choose_weekly_plan":"Select your weekly plan",
-  "add_plan_error":"Add a plan to proceed"
+  "choose_weekly_plan": "Select your weekly plan",
+  "add_plan_error": "Add a plan to proceed",
+  "task_overlapping": "Task time overlaps with another task",
+  "task_name_is_mandatory": "Enter task name",
+  "bigger_end_time": "End time must be after the start time"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/controllers/task_controller.dart';
+import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/models/task.dart';
 import 'package:foodlink/providers/task_provider.dart';
 import 'package:foodlink/screens/dashboard/dashboard.dart';
@@ -8,6 +9,7 @@ import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/general_controller.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/settings_provider.dart';
 import '../widgets/custom_text.dart';
@@ -36,6 +38,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    TaskProvider taskProvider = Provider.of<TaskProvider>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
@@ -45,16 +48,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
-              child: const Row(
+              child: Row(
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ProfileCircle(
+                    const ProfileCircle(
                       height: 38,
                       width: 38,
                       iconSize: 25,
                     ),
-                    CustomBackButton()
+                    CustomBackButton(onPressed: () {
+                      TaskController().clearControllers();
+                      Get.back();
+                    })
                   ]),
             )),
         body: Padding(
@@ -157,16 +163,53 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizeConfig.customSizedBox(null, 100, null),
                 Center(
                   child: CustomButton(
-                      onTap: () {
-                        TaskProvider().addTask(Task(
+                      onTap: () async {
+                        var startTime =
+                            TaskController().startTimeController.text;
+                        var endTime = TaskController().endTimeController.text;
+                        if (TaskController().taskNameController.text.isEmpty) {
+                          GeneralController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              "task_name_is_mandatory",
+                              Icons.error,
+                              AppColors.errorColor,
+                              null);
+                          return;
+                        }
+                        if (TaskController()
+                                .checkTimeOrder(startTime, endTime) ==
+                            false) {
+                          GeneralController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              "bigger_end_time",
+                              Icons.error,
+                              AppColors.errorColor,
+                              400);
+                          return;
+                        }
+                        if (taskProvider.checkTimeOverlapping(
+                                startTime, endTime) ==
+                            false) {
+                          GeneralController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              "task_overlapping",
+                              Icons.error,
+                              AppColors.errorColor,
+                              null);
+                          return;
+                        }
+                        await taskProvider.addTask(Task(
                             taskName: TaskController().taskNameController.text,
-                            startTime:
-                                TaskController().startTimeController.text,
-                            endTime: TaskController().endTimeController.text,
+                            startTime: startTime,
+                            endTime: endTime,
                             description:
                                 TaskController().descriptionController.text,
                             date: widget.date,
                             userId: widget.userId));
+                        TaskController().clearControllers();
                         Get.to(const Dashboard());
                       },
                       text: "confirm",

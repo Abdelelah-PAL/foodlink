@@ -1,5 +1,5 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/task_controller.dart';
 import 'package:foodlink/core/constants/colors.dart';
 import 'package:foodlink/providers/settings_provider.dart';
 import 'package:foodlink/providers/task_provider.dart';
@@ -27,6 +27,8 @@ class _ScheduleState extends State<Schedule> {
   void initState() {
     super.initState();
     final usersProvider = Provider.of<UsersProvider>(context, listen: false);
+    Provider.of<TaskProvider>(context, listen: false)
+        .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
 
     TaskProvider()
         .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
@@ -74,7 +76,7 @@ class _ScheduleState extends State<Schedule> {
                         itemCount: 7,
                         itemBuilder: (context, index) {
                           DateTime currentDate =
-                              DateTime.now().add(Duration(days: index));
+                              DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: index));
                           bool isSelected =
                               selectedDate.day == currentDate.day &&
                                   selectedDate.month == currentDate.month &&
@@ -156,11 +158,12 @@ class _ScheduleState extends State<Schedule> {
                           itemBuilder: (ctx, index) {
                             return index == taskProvider.tasks.length
                                 ? GestureDetector(
-                                    onTap: () {
-                                      Get.to(AddTaskScreen(
+                                    onTap: () async {
+                                      await Get.to(AddTaskScreen(
                                           date: selectedDate,
                                           userId: usersProvider
                                               .selectedUser!.userId));
+                                      TaskController().clearControllers();
                                     },
                                     child: Align(
                                       alignment:

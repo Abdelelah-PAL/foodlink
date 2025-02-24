@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
+import 'package:foodlink/controllers/general_controller.dart';
 import 'package:foodlink/controllers/notification_controller.dart';
 import 'package:foodlink/controllers/user_types.dart';
 import 'package:foodlink/core/constants/colors.dart';
@@ -155,8 +155,8 @@ class MealScreen extends StatelessWidget {
                           onTap: () async {
                             await NotificationController()
                                 .addCookerNotification(meal);
-                            MealController()
-                                .showCustomDialog(context, settingsProvider,"notification_sent", Icons.check_circle, AppColors.successError);
+                            GeneralController()
+                                .showCustomDialog(context, settingsProvider,"notification_sent", Icons.check_circle, AppColors.successError, null);
                           },
                           text: TranslationService().translate("request_meal"),
                           width: 150,

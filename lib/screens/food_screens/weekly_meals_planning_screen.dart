@@ -10,6 +10,7 @@ import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
 import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/general_controller.dart';
 import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
 import '../../providers/users_provider.dart';
@@ -163,7 +164,8 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     },
                   ),
                 ),
-                if (!mealsProvider.currentStartDate!.isBefore(MealController.getPreviousSaturday(DateTime(
+                if (!mealsProvider.currentStartDate!.isBefore(
+                    MealController.getPreviousSaturday(DateTime(
                         mealsProvider.today.year,
                         mealsProvider.today.month,
                         mealsProvider.today.day))))
@@ -177,12 +179,13 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                               await mealsProvider.deleteWeeklyPlan();
                               return;
                             } else {
-                              MealController().showCustomDialog(
+                              GeneralController().showCustomDialog(
                                   context,
                                   settingsProvider,
                                   'add_plan_error',
                                   Icons.error,
-                                  AppColors.errorColor);
+                                  AppColors.errorColor,
+                                  null);
                               return;
                             }
                           }

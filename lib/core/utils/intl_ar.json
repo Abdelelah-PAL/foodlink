@@ -148,5 +148,8 @@
   "select_meal": "اختر الوجبة",
   "search": "بحث",
   "choose_weekly_plan": "اختر خطتك الأسبوعية",
-  "add_plan_error": "أضف خطة لتتمكن من الحفظ"
+  "add_plan_error": "أضف خطة لتتمكن من الحفظ",
+  "task_overlapping": "وقت المهمّة متداخل مع مهمّة أخرى",
+  "task_name_is_mandatory": "أدخل إسم المهمّة",
+  "bigger_end_time":"يجب أن يكون وقت الانتهاء بعد وقت البدء"
 }
