@@ -6,8 +6,9 @@ import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key, required this.fromDashboard});
+  const CustomBottomNavigationBar({super.key, required this.fromDashboard, required this.initialIndex});
   final bool fromDashboard;
+  final int initialIndex;
 
 
   @override
@@ -16,7 +17,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -24,8 +25,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       DashboardProvider().onItemTapped(index);
     });
     if(!widget.fromDashboard) {
-      Get.to(const Dashboard());
+      Get.to(const Dashboard(initialIndex: 0,));
     }
+  }
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex; // Initialize inside initState
   }
 
   @override

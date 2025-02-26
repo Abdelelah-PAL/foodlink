@@ -61,7 +61,7 @@ class _SelfMealPlanningScreenState extends State<SelfMealPlanningScreen> {
           )),
       backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar:
-          const CustomBottomNavigationBar(fromDashboard: false),
+          const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
       body: Column(children: [
         Expanded(
           child: Padding(

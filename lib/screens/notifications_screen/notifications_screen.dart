@@ -30,7 +30,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         bottomNavigationBar:
-            const CustomBottomNavigationBar(fromDashboard: false),
+            const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(SizeConfig.getProportionalHeight(100)),

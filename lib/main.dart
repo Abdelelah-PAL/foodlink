@@ -1,6 +1,7 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:foodlink/providers/authentication_provider.dart';
 import 'package:foodlink/providers/beyond_calories_articles_provider.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
@@ -49,8 +50,21 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
-
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
+  }
   Future<void> _loadTranslations() async {
     await TranslationService().loadTranslations(context);
     setState(() {
@@ -69,7 +83,7 @@ class MyAppState extends State<MyApp> {
         fillColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return AppColors
-                .primaryColor; 
+                .primaryColor;
           }
           return AppColors.backgroundColor;
         }),

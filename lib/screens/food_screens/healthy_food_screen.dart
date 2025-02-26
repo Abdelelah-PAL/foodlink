@@ -33,7 +33,7 @@ class HealthyFoodScreen extends StatelessWidget {
       ),
       backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar:
-          const CustomBottomNavigationBar(fromDashboard: false),
+          const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
       body: Column(children: [
         Stack(
           children: [

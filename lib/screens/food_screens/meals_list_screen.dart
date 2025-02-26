@@ -49,15 +49,18 @@ class _MealsListScreenState extends State<MealsListScreen> {
                       .translate(mealCategories[widget.index].mealsName),
                   isEmpty: mealsProviderWatcher.meals.isEmpty,
                   favorites: false,
-                  onTap: () {  Get.to(AddMealScreen(
-                    categoryId: widget.categoryId,
-                    isAddScreen: true,
-                  )); },
+                  onTap: () {
+                    Get.to(AddMealScreen(
+                      categoryId: widget.categoryId,
+                      isAddScreen: true,
+                    ));
+                  },
                 ),
               ),
             ),
             bottomNavigationBar: const CustomBottomNavigationBar(
               fromDashboard: false,
+              initialIndex: 0,
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(

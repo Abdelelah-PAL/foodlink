@@ -6,7 +6,8 @@ import '../../controllers/dashboard_controller.dart';
 import '../../core/constants/colors.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  const Dashboard({super.key, required this.initialIndex});
+  final int initialIndex;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -31,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
         child: DashboardController()
             .dashBoardList[dashboardProviderWatcher.selectedIndex],
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(fromDashboard: true,),
+      bottomNavigationBar:  CustomBottomNavigationBar(fromDashboard: true, initialIndex: widget.initialIndex,),
     );
   }
 }

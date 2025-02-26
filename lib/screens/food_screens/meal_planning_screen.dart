@@ -58,7 +58,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomBackButton(
-                          onPressed: () => Get.to(const Dashboard())),
+                          onPressed: () => Get.to(const Dashboard(initialIndex: 0,))),
                       const CustomText(
                         isCenter: true,
                         text: "weekly_plan",
@@ -82,7 +82,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                 )),
             backgroundColor: AppColors.backgroundColor,
             bottomNavigationBar:
-                const CustomBottomNavigationBar(fromDashboard: false),
+                const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
             body: Column(children: [
               ImageContainer(imageUrl: Assets.mealPlanningHeaderImage),
               Padding(

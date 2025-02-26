@@ -210,7 +210,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             date: widget.date,
                             userId: widget.userId));
                         TaskController().clearControllers();
-                        Get.to(const Dashboard());
+                        Get.to(const Dashboard(initialIndex: 2,));
                       },
                       text: "confirm",
                       width: 126,

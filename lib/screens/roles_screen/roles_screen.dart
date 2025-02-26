@@ -97,7 +97,7 @@ class RolesScreen extends StatelessWidget {
                       await NotificationsProvider().getAllNotifications(
                           UsersProvider().selectedUser!.userTypeId,
                           UsersProvider().selectedUser!.userId);
-                      Get.to(const Dashboard());
+                      Get.to(const Dashboard(initialIndex: 0,));
                     },
                     text: TranslationService().translate("next"),
                     width: SizeConfig.getProportionalWidth(216),
