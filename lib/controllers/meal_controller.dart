@@ -70,6 +70,7 @@ class MealController {
   Future<void> updateMeal(mealsProvider, meal) async {
     String imageUrl = '';
     if (mealsProvider.imageIsPicked) {
+      await MealsProvider().deleteImage(meal.imageUrl);
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
     List<String> ingredients = MealsProvider()

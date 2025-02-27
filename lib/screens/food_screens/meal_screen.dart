@@ -40,9 +40,11 @@ class MealScreen extends StatelessWidget {
         child: Column(
           children: [
             MealImageContainer(
-                isAddSource: false,
-                imageUrl: meal.imageUrl,
-                mealsProvider: context.watch<MealsProvider>()),
+              isAddSource: false,
+              isUpdateSource: false,
+              imageUrl: meal.imageUrl,
+              mealsProvider: context.watch<MealsProvider>(),
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.getProportionalWidth(20),
@@ -107,6 +109,7 @@ class MealScreen extends StatelessWidget {
                                       MealsProvider().fillDataForEdition(meal);
                                       Get.to(AddMealScreen(
                                           categoryId: meal.categoryId!,
+                                          isUpdateScreen: true,
                                           isAddScreen: false,
                                           meal: meal));
                                     },
@@ -155,8 +158,13 @@ class MealScreen extends StatelessWidget {
                           onTap: () async {
                             await NotificationController()
                                 .addCookerNotification(meal);
-                            GeneralController()
-                                .showCustomDialog(context, settingsProvider,"notification_sent", Icons.check_circle, AppColors.successError, null);
+                            GeneralController().showCustomDialog(
+                                context,
+                                settingsProvider,
+                                "notification_sent",
+                                Icons.check_circle,
+                                AppColors.successError,
+                                null);
                           },
                           text: TranslationService().translate("request_meal"),
                           width: 150,

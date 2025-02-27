@@ -53,6 +53,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                     Get.to(AddMealScreen(
                       categoryId: widget.categoryId,
                       isAddScreen: true,
+                      isUpdateScreen: false,
                     ));
                   },
                 ),
@@ -79,6 +80,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                                 Get.to(AddMealScreen(
                                   categoryId: widget.categoryId,
                                   isAddScreen: true,
+                                  isUpdateScreen: false,
                                 ));
                               },
                               child: Container(

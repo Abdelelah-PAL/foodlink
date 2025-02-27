@@ -59,7 +59,7 @@ class _ListMealTileState extends State<ListMealTile> {
                 width: SizeConfig.getProportionalWidth(182),
                 height: SizeConfig.getProportionalHeight(95),
                 decoration: const BoxDecoration(
-                    color: AppColors.widgetsColor,
+                  color: AppColors.widgetsColor,
                 ),
                 child: widget.meal.imageUrl != null &&
                         widget.meal.imageUrl!.isNotEmpty
@@ -89,7 +89,6 @@ class _ListMealTileState extends State<ListMealTile> {
                       height: 35,
                     ),
                     SizeConfig.customSizedBox(null, 10, null),
-
                     SizeConfig.customSizedBox(
                       null,
                       13,
@@ -118,11 +117,14 @@ class _ListMealTileState extends State<ListMealTile> {
                             SizeConfig.customSizedBox(5, null, null),
                             GestureDetector(
                                 onTap: () async {
-                                  MealsProvider().fillDataForEdition(widget.meal);
+                                  MealsProvider()
+                                      .fillDataForEdition(widget.meal);
                                   Get.to(AddMealScreen(
-                                      categoryId: widget.meal.categoryId!,
-                                      isAddScreen: false,
-                                      meal: widget.meal));
+                                    categoryId: widget.meal.categoryId!,
+                                    isAddScreen: false,
+                                    meal: widget.meal,
+                                    isUpdateScreen: true,
+                                  ));
                                 },
                                 child: const Icon(Icons.edit_outlined)),
                             SizeConfig.customSizedBox(5, null, null),

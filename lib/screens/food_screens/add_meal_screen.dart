@@ -14,14 +14,17 @@ import '../../providers/settings_provider.dart';
 import '../widgets/custom_text.dart';
 
 class AddMealScreen extends StatefulWidget {
-  const AddMealScreen(
-      {super.key,
-      required this.categoryId,
-      required this.isAddScreen,
-      this.meal});
+  const AddMealScreen({
+    super.key,
+    required this.categoryId,
+    required this.isAddScreen,
+    required this.isUpdateScreen,
+    this.meal,
+  });
 
   final int categoryId;
   final bool isAddScreen;
+  final bool isUpdateScreen;
   final Meal? meal;
 
   @override
@@ -31,7 +34,8 @@ class AddMealScreen extends StatefulWidget {
 class _AddMealScreenState extends State<AddMealScreen> {
   @override
   Widget build(BuildContext context) {
-    MealsProvider mealsProvider = Provider.of<MealsProvider>(context, listen: true);
+    MealsProvider mealsProvider =
+        Provider.of<MealsProvider>(context, listen: true);
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
 
     return Scaffold(
@@ -44,9 +48,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
             children: [
               MealImageContainer(
                   isAddSource: widget.isAddScreen,
+                  isUpdateSource: widget.isUpdateScreen,
                   mealsProvider: mealsProvider,
-                  imageUrl: widget.meal?.imageUrl
-              ),
+                  imageUrl: widget.meal?.imageUrl),
               SizeConfig.customSizedBox(null, 20, null),
               CustomAppIconicTextField(
                 width: 348,
@@ -116,11 +120,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       itemCount: mealsProvider.numberOfIngredients,
                       itemBuilder: (context, index) {
                         if (index == mealsProvider.numberOfIngredients - 1) {
-                          return  AddIngredientBox(mealsProvider: mealsProvider,);
+                          return AddIngredientBox(
+                            mealsProvider: mealsProvider,
+                          );
                         }
                         return IngredientBox(
                             settingsProvider: settingsProvider,
-                            controller: mealsProvider.ingredientsControllers[index]);
+                            controller:
+                                mealsProvider.ingredientsControllers[index]);
                       },
                     ),
                   )),

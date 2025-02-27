@@ -22,6 +22,16 @@ class MealsServices with ChangeNotifier {
     }
   }
 
+  Future<void> deleteImage(String imageUrl) async {
+    try {
+      Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
+      await ref.delete();
+      print('Image deleted successfully');
+    } catch (e) {
+      print('Error deleting image: $e');
+    }
+  }
+
   Future<List<Meal>> getAllMealsByCategory(int categoryId, String userId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore

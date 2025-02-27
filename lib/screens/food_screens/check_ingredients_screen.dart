@@ -37,6 +37,7 @@ class CheckIngredientsScreen extends StatelessWidget {
           children: [
             MealImageContainer(
                 isAddSource: false,
+                isUpdateSource: false,
                 imageUrl: meal.imageUrl,
                 mealsProvider: context.watch<MealsProvider>()),
             Padding(

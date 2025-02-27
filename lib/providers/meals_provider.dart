@@ -198,6 +198,10 @@ class MealsProvider with ChangeNotifier {
     return downloadUrl!;
   }
 
+  Future<void> deleteImage(imageUrl) async {
+     await _ms.deleteImage(imageUrl);
+  }
+
   void resetValues() {
     imageIsPicked = false;
     pickedFile = null;

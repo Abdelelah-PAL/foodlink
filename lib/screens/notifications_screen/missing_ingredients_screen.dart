@@ -30,6 +30,7 @@ class MissingIngredientsScreen extends StatelessWidget {
         children: [
           MealImageContainer(
               isAddSource: false,
+              isUpdateSource: false,
               imageUrl: notification.imageUrl,
               mealsProvider: context.watch<MealsProvider>()),
           Padding(
