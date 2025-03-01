@@ -53,7 +53,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalHeight(60),
+                        vertical: SizeConfig.getProportionalHeight(40),
                         horizontal: SizeConfig.getProportionalWidth(20)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

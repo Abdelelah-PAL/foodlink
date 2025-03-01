@@ -59,7 +59,7 @@ class _DayMealRowState extends State<DayMealRow> {
           : TextDirection.rtl,
       children: [
         SizeConfig.customSizedBox(
-          70,
+          90,
           null,
           Column(
             children: [
@@ -90,7 +90,7 @@ class _DayMealRowState extends State<DayMealRow> {
                     context, widget.mealsProvider.selectedValues[widget.index]),
               },
               child: Container(
-                width: SizeConfig.getProportionalWidth(225),
+                width: SizeConfig.getProportionalWidth(180),
                 height: SizeConfig.getProportionalWidth(40),
                 decoration: BoxDecoration(
                   color: widget.date.isBefore(
