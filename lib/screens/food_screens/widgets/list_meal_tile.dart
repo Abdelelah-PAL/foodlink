@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../models/meal.dart';
 import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../meals_list_screen.dart';
 import 'name_row.dart';
 
 class ListMealTile extends StatefulWidget {
@@ -120,11 +121,17 @@ class _ListMealTileState extends State<ListMealTile> {
                                   MealsProvider()
                                       .fillDataForEdition(widget.meal);
                                   Get.to(AddMealScreen(
-                                    categoryId: widget.meal.categoryId!,
-                                    isAddScreen: false,
-                                    meal: widget.meal,
-                                    isUpdateScreen: true,
-                                  ));
+                                      categoryId: widget.meal.categoryId!,
+                                      isAddScreen: false,
+                                      meal: widget.meal,
+                                      isUpdateScreen: true,
+                                      backButtonCallBack: () {
+                                        Get.to(MealsListScreen(
+                                            index: widget.meal.categoryId!,
+                                            categoryId:
+                                                widget.meal.categoryId!));
+                                        MealsProvider().resetValues();
+                                      }));
                                 },
                                 child: const Icon(Icons.edit_outlined)),
                             SizeConfig.customSizedBox(5, null, null),

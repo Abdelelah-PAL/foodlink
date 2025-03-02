@@ -14,12 +14,14 @@ class MealImageContainer extends StatefulWidget {
     required this.isUpdateSource,
     this.imageUrl,
     this.mealsProvider,
+    this.backButtonOnPressed,
   });
 
   final bool isAddSource;
   final bool isUpdateSource;
   final String? imageUrl;
   final MealsProvider? mealsProvider;
+  final VoidCallback? backButtonOnPressed;
 
   @override
   State<MealImageContainer> createState() => _MealImageContainerState();
@@ -64,8 +66,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                   child: Center(
                     child: IconButton(
                       onPressed: () async {
-                        await widget.mealsProvider!
-                            .pickImageFromSource(context);
+                        await widget.mealsProvider!.pickImageFromSource(context);
                         Future.microtask(() {
                           if (mounted) setState(() {});
                         });
@@ -78,7 +79,9 @@ class _MealImageContainerState extends State<MealImageContainer> {
                     ),
                   ),
                 ),
-                const CustomBackButton(),
+                CustomBackButton(
+                  onPressed: widget.backButtonOnPressed,
+                ),
               ],
             )
           : Stack(

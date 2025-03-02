@@ -20,12 +20,14 @@ class AddMealScreen extends StatefulWidget {
     required this.isAddScreen,
     required this.isUpdateScreen,
     this.meal,
+    required this.backButtonCallBack,
   });
 
   final int categoryId;
   final bool isAddScreen;
   final bool isUpdateScreen;
   final Meal? meal;
+  final VoidCallback backButtonCallBack;
 
   @override
   State<AddMealScreen> createState() => _AddMealScreenState();
@@ -47,10 +49,12 @@ class _AddMealScreenState extends State<AddMealScreen> {
           child: Column(
             children: [
               MealImageContainer(
-                  isAddSource: widget.isAddScreen,
-                  isUpdateSource: widget.isUpdateScreen,
-                  mealsProvider: mealsProvider,
-                  imageUrl: widget.meal?.imageUrl),
+                isAddSource: widget.isAddScreen,
+                isUpdateSource: widget.isUpdateScreen,
+                mealsProvider: mealsProvider,
+                imageUrl: widget.meal?.imageUrl,
+                backButtonOnPressed: widget.backButtonCallBack,
+              ),
               SizeConfig.customSizedBox(null, 20, null),
               CustomAppIconicTextField(
                 width: 348,

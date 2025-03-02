@@ -54,6 +54,12 @@ class _MealsListScreenState extends State<MealsListScreen> {
                       categoryId: widget.categoryId,
                       isAddScreen: true,
                       isUpdateScreen: false,
+                      backButtonCallBack: () {
+                        Get.to(MealsListScreen(
+                            index: widget.index,
+                            categoryId: widget.categoryId));
+                        MealsProvider().resetValues();
+                      },
                     ));
                   },
                 ),
@@ -81,7 +87,12 @@ class _MealsListScreenState extends State<MealsListScreen> {
                                   categoryId: widget.categoryId,
                                   isAddScreen: true,
                                   isUpdateScreen: false,
-                                ));
+                                    backButtonCallBack: () {
+                                      Get.to(MealsListScreen(
+                                          index: widget.index!,
+                                          categoryId: widget.categoryId!));
+                                      MealsProvider().resetValues();
+                                    }));
                               },
                               child: Container(
                                 width: SizeConfig.getProportionalWidth(105),

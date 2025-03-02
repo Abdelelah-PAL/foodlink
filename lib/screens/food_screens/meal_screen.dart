@@ -44,6 +44,8 @@ class MealScreen extends StatelessWidget {
               isUpdateSource: false,
               imageUrl: meal.imageUrl,
               mealsProvider: context.watch<MealsProvider>(),
+              backButtonOnPressed:() => Get.to(MealsListScreen(index: meal.categoryId!, categoryId: meal.categoryId!)
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -111,7 +113,11 @@ class MealScreen extends StatelessWidget {
                                           categoryId: meal.categoryId!,
                                           isUpdateScreen: true,
                                           isAddScreen: false,
-                                          meal: meal));
+                                          meal: meal,
+                                        backButtonCallBack: () {
+                                            Get.to(MealsListScreen(index: meal.categoryId!, categoryId: meal.categoryId!));
+                                            MealsProvider().resetValues();
+                                        },));
                                     },
                                     text:
                                         TranslationService().translate("edit"),

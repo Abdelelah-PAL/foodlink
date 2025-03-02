@@ -164,6 +164,7 @@ class MealsProvider with ChangeNotifier {
   }
 
   Future<void> pickImageFromSource(BuildContext context) async {
+
     final picker = ImagePicker();
     final ImageSource? source = await showDialog<ImageSource>(
       context: context,
@@ -350,7 +351,6 @@ class MealsProvider with ChangeNotifier {
   }
 
   Future<void> deleteWeeklyPlan() async {
-    print(currentWeekPlan!.documentId!);
     await _ms.deleteWeeklyPlan(currentWeekPlan!.documentId!);
   }
 }
