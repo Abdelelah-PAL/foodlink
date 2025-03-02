@@ -31,7 +31,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex; // Initialize inside initState
+    _selectedIndex = widget.initialIndex;
   }
 
   @override
