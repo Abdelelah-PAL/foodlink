@@ -26,9 +26,8 @@ class MealsServices with ChangeNotifier {
     try {
       Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
       await ref.delete();
-      print('Image deleted successfully');
     } catch (e) {
-      print('Error deleting image: $e');
+      rethrow;
     }
   }
 

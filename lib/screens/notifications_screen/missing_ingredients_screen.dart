@@ -45,6 +45,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                   textWidth: 250,
                   settingsProvider: settingsProvider,
                   height: 70,
+                  maxLines: 2,
                 ),
                 SizeConfig.customSizedBox(null, 10, null),
                 settingsProvider.language == 'en'

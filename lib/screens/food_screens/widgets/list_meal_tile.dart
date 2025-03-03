@@ -80,6 +80,7 @@ class _ListMealTileState extends State<ListMealTile> {
                       textWidth: 100,
                       settingsProvider: settingsProvider,
                       height: 25,
+                      maxLines: 1,
                     ),
                     IngredientsRow(
                       meal: widget.meal,

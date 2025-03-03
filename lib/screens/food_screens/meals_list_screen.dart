@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
-import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
-import 'package:foodlink/screens/food_screens/widgets/list_header.dart';
-import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/meals_provider.dart';
+import '../../providers/users_provider.dart';
+import '../../services/translation_services.dart';
+import '../dashboard/dashboard.dart';
+import '../dashboard/widgets/custom_bottom_navigation_bar.dart';
+import 'add_meal_screen.dart';
+import 'widgets/list_header.dart';
+import 'widgets/list_meal_tile.dart';
 
 class MealsListScreen extends StatefulWidget {
   const MealsListScreen(
@@ -48,6 +49,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                   text: TranslationService()
                       .translate(mealCategories[widget.index].mealsName),
                   isEmpty: mealsProviderWatcher.meals.isEmpty,
+                  backOnTap: () {Get.to(const Dashboard(initialIndex: 0));},
                   favorites: false,
                   onTap: () {
                     Get.to(AddMealScreen(
@@ -89,8 +91,8 @@ class _MealsListScreenState extends State<MealsListScreen> {
                                   isUpdateScreen: false,
                                     backButtonCallBack: () {
                                       Get.to(MealsListScreen(
-                                          index: widget.index!,
-                                          categoryId: widget.categoryId!));
+                                          index: widget.index,
+                                          categoryId: widget.categoryId));
                                       MealsProvider().resetValues();
                                     }));
                               },

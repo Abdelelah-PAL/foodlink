@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foodlink/providers/meals_provider.dart';
+import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
@@ -48,17 +49,17 @@ class _MealImageContainerState extends State<MealImageContainer> {
                         bottom: BorderSide(
                             width: 1, color: AppColors.defaultBorderColor),
                       )),
-                  child: widget.imageUrl != null && widget.imageUrl!.isNotEmpty
-                      ? widget.mealsProvider!.imageIsPicked
-                          ? Image.file(
-                              File(widget.mealsProvider!.pickedFile!.path),
-                              fit: BoxFit.fill,
-                            )
-                          : Image.network(
+                  child: widget.mealsProvider!.imageIsPicked
+                      ? Image.file(
+                          File(widget.mealsProvider!.pickedFile!.path),
+                          fit: BoxFit.fill,
+                        )
+                      : widget.imageUrl != null && widget.imageUrl!.isNotEmpty
+                          ? Image.network(
                               widget.imageUrl!,
                               fit: BoxFit.fill,
                             )
-                      : null,
+                          : null,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -66,7 +67,8 @@ class _MealImageContainerState extends State<MealImageContainer> {
                   child: Center(
                     child: IconButton(
                       onPressed: () async {
-                        await widget.mealsProvider!.pickImageFromSource(context);
+                        await widget.mealsProvider!
+                            .pickImageFromSource(context);
                         Future.microtask(() {
                           if (mounted) setState(() {});
                         });
@@ -80,7 +82,11 @@ class _MealImageContainerState extends State<MealImageContainer> {
                   ),
                 ),
                 CustomBackButton(
-                  onPressed: widget.backButtonOnPressed,
+                  onPressed: widget.isUpdateSource
+                      ? () {
+                          Get.back();
+                        }
+                      : widget.backButtonOnPressed,
                 ),
               ],
             )
@@ -109,7 +115,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                         )
                       : null,
                 ),
-                if (widget.isAddSource || widget.imageUrl == null)
+                if (widget.isAddSource)
                   Positioned.fill(
                     child: Center(
                       child: GestureDetector(

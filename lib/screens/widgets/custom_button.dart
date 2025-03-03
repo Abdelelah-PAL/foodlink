@@ -5,8 +5,14 @@ import 'package:foodlink/services/translation_services.dart';
 
 import '../../../core/constants/fonts.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.onTap , required this.text, required this.width, required this.height});
+class CustomButton extends StatefulWidget {
+  const CustomButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    required this.width,
+    required this.height,
+  });
 
   final VoidCallback? onTap;
   final String text;
@@ -14,23 +20,42 @@ class CustomButton extends StatelessWidget {
   final double height;
 
   @override
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> {
+  bool _isDisabled = false;
+
+  void _handleTap() {
+    if (_isDisabled) return;
+
+    setState(() {
+      _isDisabled = true;
+    });
+
+    widget.onTap?.call();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: _isDisabled ? null : _handleTap,
       child: Container(
-        height: SizeConfig.getProportionalHeight(height),
-        width: SizeConfig.getProportionalWidth(width),
+        height: SizeConfig.getProportionalHeight(widget.height),
+        width: SizeConfig.getProportionalWidth(widget.width),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.widgetsColor),
+          borderRadius: BorderRadius.circular(15),
+          color: _isDisabled ? Colors.grey : AppColors.widgetsColor, // Change color when disabled
+        ),
         child: Center(
           child: Text(
-            TranslationService().translate(text),
-            style:  TextStyle(
-                fontWeight: FontWeight.bold, // Semi-bold weight
-                fontSize: 25,
-                fontFamily: AppFonts.getPrimaryFont(context),
-                color: AppColors.fontColor),
+            TranslationService().translate(widget.text),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              fontFamily: AppFonts.getPrimaryFont(context),
+              color: AppColors.fontColor,
+            ),
           ),
         ),
       ),

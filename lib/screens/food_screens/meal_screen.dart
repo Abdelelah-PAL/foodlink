@@ -44,7 +44,7 @@ class MealScreen extends StatelessWidget {
               isUpdateSource: false,
               imageUrl: meal.imageUrl,
               mealsProvider: context.watch<MealsProvider>(),
-              backButtonOnPressed:() => Get.to(MealsListScreen(index: meal.categoryId!, categoryId: meal.categoryId!)
+              backButtonOnPressed:() => Get.to(MealsListScreen(index: meal.categoryId! - 1, categoryId: meal.categoryId!)
               ),
             ),
             Padding(
@@ -56,9 +56,10 @@ class MealScreen extends StatelessWidget {
                   NameRow(
                     name: meal.name,
                     fontSize: 30,
-                    textWidth: 250,
+                    textWidth: 280,
                     settingsProvider: settingsProvider,
                     height: 35,
+                    maxLines: 2,
                   ),
                   IngredientsRow(
                     meal: meal,

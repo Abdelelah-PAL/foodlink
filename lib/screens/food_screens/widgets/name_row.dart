@@ -11,13 +11,15 @@ class NameRow extends StatelessWidget {
       required this.fontSize,
       required this.textWidth,
       required this.settingsProvider,
-      required this.height});
+      required this.height,
+      required this.maxLines});
 
   final String name;
   final double fontSize;
   final double textWidth;
   final SettingsProvider settingsProvider;
   final double height;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class NameRow extends StatelessWidget {
             textWidth,
             null,
             Text(
-              maxLines: 2,
+              maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
               name,
               textAlign:
