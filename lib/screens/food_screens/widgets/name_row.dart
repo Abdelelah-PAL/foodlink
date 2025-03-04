@@ -24,10 +24,8 @@ class NameRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String writtenLanguage = MealController().detectLanguage(name);
-    return SizeConfig.customSizedBox(
-      null,
-      height,
-      Row(
+    return FittedBox(
+      child: Row(
         textDirection:
             writtenLanguage == 'en' ? TextDirection.ltr : TextDirection.rtl,
         mainAxisAlignment: MainAxisAlignment.start,

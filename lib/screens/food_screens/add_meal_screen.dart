@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/models/meal.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/screens/widgets/custom_app_iconic_textfield.dart';
-import 'package:foodlink/screens/food_screens/widgets/ingredient_box.dart';
-import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
-import 'package:foodlink/screens/widgets/custom_button.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/meal_controller.dart';
+import '../../core/constants/assets.dart';
+import '../../core/utils/size_config.dart';
+import '../../models/meal.dart';
+import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
+import '../../services/translation_services.dart';
+import '../widgets/custom_app_iconic_textfield.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
+import 'widgets/ingredient_box.dart';
+import 'widgets/meal_image_container.dart';
 
 class AddMealScreen extends StatefulWidget {
   const AddMealScreen({

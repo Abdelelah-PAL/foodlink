@@ -21,7 +21,6 @@ class MealController {
   TextEditingController noteController = TextEditingController();
   TextEditingController searchController = TextEditingController();
 
-
   MealsServices ms = MealsServices();
 
   List<String> missingIngredients = [];
@@ -64,13 +63,14 @@ class MealController {
     Get.to(MealScreen(
       meal: addedMeal,
       source: 'default',
+
     ));
   }
 
   Future<void> updateMeal(mealsProvider, meal) async {
     String imageUrl = '';
     if (mealsProvider.imageIsPicked) {
-      if(meal.imageUrl != null) {
+      if (meal.imageUrl != null) {
         await MealsProvider().deleteImage(meal.imageUrl);
       }
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
@@ -92,6 +92,7 @@ class MealController {
         isFavorite: meal.isFavorite,
         isPlanned: false));
 
+    mealsProvider.resetValues();
     Get.to(MealScreen(
       meal: updatedMeal,
       source: 'default',
@@ -129,8 +130,4 @@ class MealController {
   String formatDate(DateTime date) {
     return intl.DateFormat('MMM d').format(date);
   }
-
-  
-
-
 }

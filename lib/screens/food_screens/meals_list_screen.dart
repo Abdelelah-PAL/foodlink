@@ -41,6 +41,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
     return mealsProviderWatcher.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
+            backgroundColor: AppColors.backgroundColor,
             appBar: PreferredSize(
               preferredSize:
                   Size.fromHeight(SizeConfig.getProportionalHeight(100)),
@@ -49,7 +50,9 @@ class _MealsListScreenState extends State<MealsListScreen> {
                   text: TranslationService()
                       .translate(mealCategories[widget.index].mealsName),
                   isEmpty: mealsProviderWatcher.meals.isEmpty,
-                  backOnTap: () {Get.to(const Dashboard(initialIndex: 0));},
+                  backOnTap: () {
+                    Get.to(const Dashboard(initialIndex: 0));
+                  },
                   favorites: false,
                   onTap: () {
                     Get.to(AddMealScreen(
@@ -71,77 +74,71 @@ class _MealsListScreenState extends State<MealsListScreen> {
               fromDashboard: false,
               initialIndex: 0,
             ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.getProportionalWidth(20),
-              ),
-              child: mealsProviderWatcher.meals.isEmpty
-                  ? SizeConfig.customSizedBox(
-                      null,
-                      null,
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(AddMealScreen(
+            body: mealsProviderWatcher.meals.isEmpty
+                ? SizeConfig.customSizedBox(
+                    null,
+                    null,
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(AddMealScreen(
                                   categoryId: widget.categoryId,
                                   isAddScreen: true,
                                   isUpdateScreen: false,
-                                    backButtonCallBack: () {
-                                      Get.to(MealsListScreen(
-                                          index: widget.index,
-                                          categoryId: widget.categoryId));
-                                      MealsProvider().resetValues();
-                                    }));
-                              },
-                              child: Container(
-                                width: SizeConfig.getProportionalWidth(105),
-                                height: SizeConfig.getProportionalHeight(73),
-                                decoration: BoxDecoration(
-                                  color: AppColors.widgetsColor,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const Icon(Icons.add),
-                              ),
-                            ),
-                            SizeConfig.customSizedBox(null, 20, null),
-                            Text(
-                              TranslationService().translate("add_first_meal"),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontFamily: AppFonts.getPrimaryFont(context),
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  : Consumer<MealsProvider>(
-                      builder: (context, mealsProvider, child) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.getProportionalHeight(20)),
-                          child: ListView.builder(
-                            itemCount: mealsProvider.meals.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (ctx, index) {
-                              return Column(
-                                children: [
-                                  ListMealTile(
-                                      meal: mealsProvider.meals[index],
-                                      favorites: false),
-                                  SizeConfig.customSizedBox(null, 20, null)
-                                ],
-                              );
+                                  backButtonCallBack: () {
+                                    Get.to(MealsListScreen(
+                                        index: widget.index,
+                                        categoryId: widget.categoryId));
+                                    MealsProvider().resetValues();
+                                  }));
                             },
+                            child: Container(
+                              width: SizeConfig.getProportionalWidth(105),
+                              height: SizeConfig.getProportionalHeight(73),
+                              decoration: BoxDecoration(
+                                color: AppColors.widgetsColor,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: const Icon(Icons.add),
+                            ),
                           ),
-                        );
-                      },
+                          SizeConfig.customSizedBox(null, 20, null),
+                          Text(
+                            TranslationService().translate("add_first_meal"),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontFamily: AppFonts.getPrimaryFont(context),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ),
-            ),
+                  )
+                : Consumer<MealsProvider>(
+                    builder: (context, mealsProvider, child) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: mealsProvider.meals.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              top: SizeConfig.getProportionalHeight(20),
+                              right: SizeConfig.getProportionalHeight(20),
+                              left: SizeConfig.getProportionalHeight(20),
+                            ),
+                            child: ListMealTile(
+                                meal: mealsProvider.meals[index],
+                                favorites: false),
+                          );
+                        },
+                      );
+                    },
+                  ),
           );
   }
 }

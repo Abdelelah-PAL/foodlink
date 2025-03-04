@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
-import 'package:foodlink/screens/food_screens/meal_screen.dart';
-import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/colors.dart';
+import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
 import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../add_meal_screen.dart';
+import '../meal_screen.dart';
 import '../meals_list_screen.dart';
+import 'ingredients_row.dart';
 import 'name_row.dart';
 
 class ListMealTile extends StatefulWidget {
@@ -38,7 +38,7 @@ class _ListMealTileState extends State<ListMealTile> {
       onTap: onTap,
       child: Container(
           width: SizeConfig.getProportionalWidth(355),
-          height: SizeConfig.getProportionalHeight(95),
+          height: SizeConfig.getProportionalHeight(110),
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
             borderRadius: BorderRadius.circular(15),
@@ -57,8 +57,8 @@ class _ListMealTileState extends State<ListMealTile> {
                 : TextDirection.rtl,
             children: [
               Container(
-                width: SizeConfig.getProportionalWidth(182),
-                height: SizeConfig.getProportionalHeight(95),
+                width: SizeConfig.getProportionalWidth(150),
+                height: SizeConfig.getProportionalHeight(110),
                 decoration: const BoxDecoration(
                   color: AppColors.widgetsColor,
                 ),
@@ -72,12 +72,11 @@ class _ListMealTileState extends State<ListMealTile> {
               ),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     NameRow(
                       name: widget.meal.name,
                       fontSize: 15,
-                      textWidth: 100,
+                      textWidth: 135,
                       settingsProvider: settingsProvider,
                       height: 25,
                       maxLines: 1,
@@ -85,7 +84,7 @@ class _ListMealTileState extends State<ListMealTile> {
                     IngredientsRow(
                       meal: widget.meal,
                       fontSize: 14,
-                      textWidth: 80,
+                      textWidth: 135,
                       maxLines: 2,
                       settingsProvider: settingsProvider,
                       height: 35,

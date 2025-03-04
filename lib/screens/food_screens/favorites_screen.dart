@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/food_screens/widgets/list_meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/meals_provider.dart';
+import '../../providers/users_provider.dart';
+import '../../services/translation_services.dart';
+import '../widgets/custom_text.dart';
+import 'widgets/list_meal_tile.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({super.key});
@@ -44,43 +44,41 @@ class _FavoritesState extends State<Favorites> {
                 fontWeight: FontWeight.bold,
               )),
             ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.getProportionalWidth(20),
-              ),
-              child: mealsProviderWatcher.favoriteMeals.isEmpty
-                  ? SizeConfig.customSizedBox(
-                      null,
-                      null,
-                      Center(
-                        child: Text(
-                          TranslationService().translate("no_favorites"),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: AppFonts.getPrimaryFont(context),
-                              fontWeight: FontWeight.bold),
-                        ),
+            body: mealsProviderWatcher.favoriteMeals.isEmpty
+                ? SizeConfig.customSizedBox(
+                    null,
+                    null,
+                    Center(
+                      child: Text(
+                        TranslationService().translate("no_favorites"),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: AppFonts.getPrimaryFont(context),
+                            fontWeight: FontWeight.bold),
                       ),
-                    )
-                  : Consumer<MealsProvider>(
-                      builder: (context, mealsProvider, child) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.getProportionalHeight(20)),
-                          child: ListView.builder(
-                            itemCount: mealsProvider.favoriteMeals.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (ctx, index) {
-                              return ListMealTile(
-                                  meal: mealsProvider.favoriteMeals[index],
-                                  favorites: true);
-                            },
-                          ),
-                        );
-                      },
                     ),
-            ),
+                  )
+                : Consumer<MealsProvider>(
+                    builder: (context, mealsProvider, child) {
+                      return ListView.builder(
+                        itemCount: mealsProvider.favoriteMeals.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              top: SizeConfig.getProportionalHeight(20),
+                              right: SizeConfig.getProportionalHeight(20),
+                              left: SizeConfig.getProportionalHeight(20),
+                            ),
+                            child: ListMealTile(
+                                meal: mealsProvider.favoriteMeals[index],
+                                favorites: true),
+                          );
+                        },
+                      );
+                    },
+                  ),
           );
   }
 }

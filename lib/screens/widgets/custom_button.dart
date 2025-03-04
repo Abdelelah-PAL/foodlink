@@ -45,7 +45,7 @@ class _CustomButtonState extends State<CustomButton> {
         width: SizeConfig.getProportionalWidth(widget.width),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: _isDisabled ? Colors.grey : AppColors.widgetsColor, // Change color when disabled
+          color: AppColors.widgetsColor, // Change color when disabled
         ),
         child: Center(
           child: Text(

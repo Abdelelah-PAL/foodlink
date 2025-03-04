@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/meals_provider.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../providers/meals_provider.dart';
 import '../../../services/translation_services.dart';
 import '../../widgets/custom_back_button.dart';
 
@@ -168,7 +168,13 @@ class _MealImageContainerState extends State<MealImageContainer> {
                       fit: BoxFit.fill,
                     ),
                   ),
-                const CustomBackButton(),
+                CustomBackButton(
+                  onPressed: widget.isUpdateSource
+                      ? () {
+                          Get.back();
+                        }
+                      : widget.backButtonOnPressed,
+                ),
               ],
             ),
     );

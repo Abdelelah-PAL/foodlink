@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/general_controller.dart';
-import 'package:foodlink/controllers/notification_controller.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/food_screens/add_meal_screen.dart';
-import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
-import 'package:foodlink/screens/food_screens/meals_list_screen.dart';
-import 'package:foodlink/screens/food_screens/widgets/ingredients_row.dart';
-import 'package:foodlink/screens/food_screens/widgets/meal_image_container.dart';
-import 'package:foodlink/screens/food_screens/widgets/name_row.dart';
-import 'package:foodlink/screens/food_screens/widgets/recipe_row.dart';
-import 'package:foodlink/screens/notifications_screen/notifications_screen.dart';
-import 'package:foodlink/screens/widgets/custom_button.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/general_controller.dart';
+import '../../controllers/notification_controller.dart';
+import '../../controllers/user_types.dart';
+import '../../core/constants/colors.dart';
+import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
+import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
+import '../../providers/users_provider.dart';
+import '../../services/translation_services.dart';
+import '../notifications_screen/notifications_screen.dart';
+import '../widgets/custom_button.dart';
+import 'add_meal_screen.dart';
 import 'check_ingredients_screen.dart';
+import 'meal_planning_screen.dart';
+import 'meals_list_screen.dart';
+import 'widgets/ingredients_row.dart';
+import 'widgets/meal_image_container.dart';
+import 'widgets/name_row.dart';
+import 'widgets/recipe_row.dart';
 
 class MealScreen extends StatelessWidget {
   const MealScreen({super.key, required this.meal, required this.source});
@@ -44,8 +44,10 @@ class MealScreen extends StatelessWidget {
               isUpdateSource: false,
               imageUrl: meal.imageUrl,
               mealsProvider: context.watch<MealsProvider>(),
-              backButtonOnPressed:() => Get.to(MealsListScreen(index: meal.categoryId! - 1, categoryId: meal.categoryId!)
-              ),
+              backButtonOnPressed: () => {
+                Get.to(MealsListScreen(
+                    index: meal.categoryId! - 1, categoryId: meal.categoryId!))
+              },
             ),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -61,6 +63,7 @@ class MealScreen extends StatelessWidget {
                     height: 35,
                     maxLines: 2,
                   ),
+                  SizeConfig.customSizedBox(null, 15, null),
                   IngredientsRow(
                     meal: meal,
                     fontSize: 20,
@@ -111,14 +114,17 @@ class MealScreen extends StatelessWidget {
                                     onTap: () {
                                       MealsProvider().fillDataForEdition(meal);
                                       Get.to(AddMealScreen(
-                                          categoryId: meal.categoryId!,
-                                          isUpdateScreen: true,
-                                          isAddScreen: false,
-                                          meal: meal,
+                                        categoryId: meal.categoryId!,
+                                        isUpdateScreen: true,
+                                        isAddScreen: false,
+                                        meal: meal,
                                         backButtonCallBack: () {
-                                            Get.to(MealsListScreen(index: meal.categoryId!, categoryId: meal.categoryId!));
-                                            MealsProvider().resetValues();
-                                        },));
+                                          Get.to(MealsListScreen(
+                                              index: meal.categoryId!,
+                                              categoryId: meal.categoryId!));
+                                          MealsProvider().resetValues();
+                                        },
+                                      ));
                                     },
                                     text:
                                         TranslationService().translate("edit"),
