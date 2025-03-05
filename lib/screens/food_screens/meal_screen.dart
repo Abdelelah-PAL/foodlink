@@ -88,100 +88,109 @@ class MealScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                           CustomButton(
-                              onTap: () {
-                                switch (source) {
-                                  case 'default':
-                                    Get.to(MealsListScreen(
-                                        index: meal.categoryId! - 1,
-                                        categoryId: meal.categoryId!));
-                                    break;
-                                  case 'notifications':
-                                    Get.to(const NotificationsScreen());
-                                    break;
-                                  case 'planning':
-                                    Get.to(const MealPlanningScreen());
-                                    break;
-                                }
-                              },
-                              text: TranslationService().translate("proceed"),
-                              width: 216,
-                              height: 45),
+                            onTap: () {
+                              switch (source) {
+                                case 'default':
+                                  Get.to(MealsListScreen(
+                                      index: meal.categoryId! - 1,
+                                      categoryId: meal.categoryId!));
+                                  break;
+                                case 'notifications':
+                                  Get.to(const NotificationsScreen());
+                                  break;
+                                case 'planning':
+                                  Get.to(const MealPlanningScreen());
+                                  break;
+                              }
+                            },
+                            text: TranslationService().translate("proceed"),
+                            width: 216,
+                            height: 45,
+                            isDisabled: true,
+                          ),
                           SizeConfig.customSizedBox(null, 20, null),
                           if (source != 'planning')
                             Column(
                               children: [
                                 CustomButton(
-                                    onTap: () {
-                                      MealsProvider().fillDataForEdition(meal);
-                                      Get.to(AddMealScreen(
-                                        categoryId: meal.categoryId!,
-                                        isUpdateScreen: true,
-                                        isAddScreen: false,
-                                        meal: meal,
-                                        backButtonCallBack: () {
-                                          Get.to(MealsListScreen(
-                                              index: meal.categoryId!,
-                                              categoryId: meal.categoryId!));
-                                          MealsProvider().resetValues();
-                                        },
-                                      ));
-                                    },
-                                    text:
-                                        TranslationService().translate("edit"),
-                                    width: 216,
-                                    height: 45),
+                                  onTap: () {
+                                    MealsProvider().fillDataForEdition(meal);
+                                    Get.to(AddMealScreen(
+                                      categoryId: meal.categoryId!,
+                                      isUpdateScreen: true,
+                                      isAddScreen: false,
+                                      meal: meal,
+                                      backButtonCallBack: () {
+                                        Get.to(MealsListScreen(
+                                            index: meal.categoryId!,
+                                            categoryId: meal.categoryId!));
+                                        MealsProvider().resetValues();
+                                      },
+                                    ));
+                                  },
+                                  text: TranslationService().translate("edit"),
+                                  width: 216,
+                                  height: 45,
+                                  isDisabled: true,
+                                ),
                                 SizeConfig.customSizedBox(null, 20, null),
                               ],
                             ),
                           CustomButton(
-                              onTap: () {
-                                mealsProvider.checkboxValues = List.generate(
-                                    meal.ingredients.length, (index) => false);
-                                Get.to(CheckIngredientsScreen(
-                                  meal: meal,
-                                ));
-                              },
-                              text: TranslationService()
-                                  .translate("check_ingredients"),
-                              width: 216,
-                              height: 45),
+                            onTap: () {
+                              mealsProvider.checkboxValues = List.generate(
+                                  meal.ingredients.length, (index) => false);
+                              Get.to(CheckIngredientsScreen(
+                                meal: meal,
+                              ));
+                            },
+                            text: TranslationService()
+                                .translate("check_ingredients"),
+                            width: 216,
+                            height: 45,
+                            isDisabled: true,
+                          ),
                         ])
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       CustomButton(
-                          onTap: () {
-                            switch (source) {
-                              case 'default':
-                                Get.to(MealsListScreen(
-                                    index: meal.categoryId! - 1,
-                                    categoryId: meal.categoryId!));
-                                break;
-                              case 'notifications':
-                                Get.to(const NotificationsScreen());
-                                break;
-                              case 'planning':
-                                Get.to(const MealPlanningScreen());
-                                break;
-                            }
-                          },
-                          text: TranslationService().translate("proceed"),
-                          width: 150,
-                          height: 45),
+                        onTap: () {
+                          switch (source) {
+                            case 'default':
+                              Get.to(MealsListScreen(
+                                  index: meal.categoryId! - 1,
+                                  categoryId: meal.categoryId!));
+                              break;
+                            case 'notifications':
+                              Get.to(const NotificationsScreen());
+                              break;
+                            case 'planning':
+                              Get.to(const MealPlanningScreen());
+                              break;
+                          }
+                        },
+                        text: TranslationService().translate("proceed"),
+                        width: 150,
+                        height: 45,
+                        isDisabled: true,
+                      ),
                       SizeConfig.customSizedBox(20, null, null),
                       CustomButton(
-                          onTap: () async {
-                            await NotificationController()
-                                .addCookerNotification(meal);
-                            GeneralController().showCustomDialog(
-                                context,
-                                settingsProvider,
-                                "notification_sent",
-                                Icons.check_circle,
-                                AppColors.successError,
-                                null);
-                          },
-                          text: TranslationService().translate("request_meal"),
-                          width: 150,
-                          height: 45),
+                        onTap: () async {
+                          await NotificationController()
+                              .addCookerNotification(meal);
+                          GeneralController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              "notification_sent",
+                              Icons.check_circle,
+                              AppColors.successError,
+                              null);
+                        },
+                        text: TranslationService().translate("request_meal"),
+                        width: 150,
+                        height: 45,
+                        isDisabled: true,
+                      ),
                       SizeConfig.customSizedBox(null, 20, null),
                     ]),
             )

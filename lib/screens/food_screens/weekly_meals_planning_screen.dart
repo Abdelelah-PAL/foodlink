@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/models/weekly_plan.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
 import 'package:foodlink/screens/food_screens/widgets/changeable_date.dart';
-import 'package:foodlink/screens/food_screens/widgets/day_meal_row.dart';
-import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';
+import '../../controllers/meal_controller.dart';
+import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
 import '../../models/meal.dart';
+import '../../models/weekly_plan.dart';
+import '../../providers/meals_provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../widgets/custom_back_button.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
+import 'meal_planning_screen.dart';
+import 'widgets/day_meal_row.dart';
 
 class WeeklyMealsPlanningScreen extends StatefulWidget {
   const WeeklyMealsPlanningScreen({super.key});
@@ -27,6 +27,8 @@ class WeeklyMealsPlanningScreen extends StatefulWidget {
 }
 
 class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
+  late bool isDisabled;
+
   @override
   void initState() {
     MealsProvider().setDefaultDate();
@@ -173,36 +175,44 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                     padding: EdgeInsets.only(
                         bottom: SizeConfig.getProportionalHeight(35)),
                     child: CustomButton(
-                        onTap: () async {
-                          if (mealsProvider.weeklyPlanList.isEmpty) {
-                            if (mealsProvider.currentWeekPlan != null) {
-                              await mealsProvider.deleteWeeklyPlan();
-                              return;
-                            } else {
-                              GeneralController().showCustomDialog(
-                                  context,
-                                  settingsProvider,
-                                  'add_plan_error',
-                                  Icons.error,
-                                  AppColors.errorColor,
-                                  null);
-                              return;
-                            }
+                      onTap: () async {
+                        if (mealsProvider.weeklyPlanList.isEmpty) {
+                          if (mealsProvider.currentWeekPlan != null) {
+                            await mealsProvider.deleteWeeklyPlan();
+                            return;
+                          } else {
+                            setState(() {
+                              isDisabled = false;
+                            });
+                            GeneralController().showCustomDialog(
+                                context,
+                                settingsProvider,
+                                'add_plan_error',
+                                Icons.error,
+                                AppColors.errorColor,
+                                null);
+                            return;
                           }
-                          await mealsProvider.addWeeklyPlan(WeeklyPlan(
-                              daysMeals: mealsProvider.weeklyPlanList,
-                              userId: usersProvider.selectedUser!.userId,
-                              intervalEndTime: mealsProvider.currentStartDate!
-                                  .add(const Duration(days: 6)),
-                              intervalStartTime:
-                                  mealsProvider.currentStartDate!));
-                          await mealsProvider.getAllWeeklyPlans(
-                              usersProvider.selectedUser!.userId);
-                          Get.off(const MealPlanningScreen());
-                        },
-                        text: 'confirm',
-                        width: 126,
-                        height: 45),
+                        }
+                        setState(() {
+                          isDisabled = true;
+                        });
+                        await mealsProvider.addWeeklyPlan(WeeklyPlan(
+                            daysMeals: mealsProvider.weeklyPlanList,
+                            userId: usersProvider.selectedUser!.userId,
+                            intervalEndTime: mealsProvider.currentStartDate!
+                                .add(const Duration(days: 6)),
+                            intervalStartTime:
+                                mealsProvider.currentStartDate!));
+                        await mealsProvider.getAllWeeklyPlans(
+                            usersProvider.selectedUser!.userId);
+                        Get.off(const MealPlanningScreen());
+                      },
+                      text: 'confirm',
+                      width: 126,
+                      height: 45,
+                      isDisabled: isDisabled,
+                    ),
                   )
               ]),
             ),

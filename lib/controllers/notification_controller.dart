@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/models/notification.dart';
-import 'package:foodlink/models/user_details.dart';
-import 'package:foodlink/providers/notification_provider.dart';
-import 'package:foodlink/services/meals_services.dart';
+import '../core/constants/colors.dart';
+import '../models/notification.dart';
+import '../models/user_details.dart';
+import '../providers/notification_provider.dart';
 import '../providers/users_provider.dart';
+import '../services/meals_services.dart';
 import '../services/translation_services.dart';
+import 'general_controller.dart';
+import 'meal_controller.dart';
+import 'user_types.dart';
 
 class NotificationController {
   static final NotificationController _instance =
@@ -25,7 +27,7 @@ class NotificationController {
 
   MealsServices ms = MealsServices();
 
-  Future<void> addUserNotification(meal) async {
+  Future<void> addUserNotification(meal, settingsProvider, context) async {
     UserDetails userToNotify = UsersProvider()
         .loggedInUsers
         .firstWhere((user) => user.userTypeId == UserTypes.user);
@@ -42,9 +44,27 @@ class NotificationController {
         timestamp: Timestamp.now(),
         isMealPlanned: meal.isPlanned,
       ));
+      GeneralController().showCustomDialog(
+          context,
+          settingsProvider,
+          "notification_sent",
+          Icons.check_circle,
+          AppColors.successError,
+          null);
+      MealController().missingIngredients.clear();
+      MealController().addNoteController.clear();
     }
-    MealController().missingIngredients.clear();
-    MealController().addNoteController.clear();
+    else {
+      GeneralController().showCustomDialog(
+          context,
+          settingsProvider,
+          "add_missing_items",
+          Icons.check_circle,
+          AppColors.successError,
+          null);
+    }
+
+
   }
 
   Future<void> addCookerNotification(meal) async {
@@ -52,17 +72,16 @@ class NotificationController {
         .loggedInUsers
         .firstWhere((user) => user.userTypeId == UserTypes.cooker);
     await NotificationsProvider().addNotification(Notifications(
-      imageUrl: meal.imageUrl,
-      userId: userToNotify.userId,
-      userTypeId: userToNotify.userTypeId!,
-      mealId: meal.documentId,
-      mealName: meal.name,
-      missingIngredients: [],
-      notes: null,
-      seen: false,
-      timestamp: Timestamp.now(),
-      isMealPlanned: meal.isPlanned
-    ));
+        imageUrl: meal.imageUrl,
+        userId: userToNotify.userId,
+        userTypeId: userToNotify.userTypeId!,
+        mealId: meal.documentId,
+        mealName: meal.name,
+        missingIngredients: [],
+        notes: null,
+        seen: false,
+        timestamp: Timestamp.now(),
+        isMealPlanned: meal.isPlanned));
   }
 
   String getDuration(Timestamp notificationTime, String language) {

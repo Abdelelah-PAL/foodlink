@@ -152,5 +152,6 @@
   "add_plan_error": "Add a plan to proceed",
   "task_overlapping": "Task time overlaps with another task",
   "task_name_is_mandatory": "Enter task name",
-  "bigger_end_time": "End time must be after the start time"
+  "bigger_end_time": "End time must be after the start time",
+  "add_missing_items": "Add missing items"
 }

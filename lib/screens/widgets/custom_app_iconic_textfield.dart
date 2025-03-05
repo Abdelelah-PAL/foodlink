@@ -16,7 +16,9 @@ class CustomAppIconicTextField extends StatelessWidget {
       required this.controller,
       required this.maxLines,
       required this.iconSizeFactor,
-      required this.settingsProvider});
+      required this.iconPadding,
+      required this.settingsProvider,
+      required this.enabled});
 
   final double width;
   final double height;
@@ -25,29 +27,32 @@ class CustomAppIconicTextField extends StatelessWidget {
   final TextEditingController controller;
   final int maxLines;
   final double iconSizeFactor;
+  final double iconPadding;
   final SettingsProvider settingsProvider;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Padding(
-        padding: EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
+        padding: EdgeInsets.only(
+            right: SizeConfig.getProportionalWidth(iconPadding)),
         child: Row(
           textDirection: settingsProvider.language == 'en'
               ? TextDirection.ltr
               : TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizeConfig.customSizedBox(
+                  iconSizeFactor, iconSizeFactor, Image.asset(icon)),
+            ),
             CustomText(
               isCenter: false,
               text: TranslationService().translate(headerText),
               fontSize: 20,
               fontWeight: FontWeight.bold,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: SizeConfig.customSizedBox(
-                  iconSizeFactor, iconSizeFactor, Image.asset(icon)),
             ),
           ],
         ),
@@ -62,6 +67,7 @@ class CustomAppIconicTextField extends StatelessWidget {
           border: Border.all(width: 1.0, color: AppColors.widgetsColor),
         ),
         child: TextField(
+          enabled: enabled,
           maxLines: maxLines,
           controller: controller,
           textAlign: settingsProvider.language == 'en'

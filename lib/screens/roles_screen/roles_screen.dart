@@ -80,28 +80,31 @@ class RolesScreen extends StatelessWidget {
                     settingsProvider: settingsProvider),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomButton(
-                    onTap: () async {
-                      int roleId = dashboardProvider.roleId;
-                      TextEditingController controller =
-                          roleId == UserTypes.cooker
-                              ? DashboardController().cookerNameController
-                              : DashboardController().userNameController;
-                      await UsersServices()
-                          .updateUsername(user.uid, roleId, controller.text);
-                      UsersProvider().selectedUser = await UsersProvider()
-                          .getUserByRoleAndId(
-                              user.uid, dashboardProvider.roleId);
-                      BeyondCaloriesArticlesProvider().getAllArticles();
-                      MealCategoriesProvider().getAllMealCategories();
-                      MealsProvider().getAllPlannedMeals();
-                      await NotificationsProvider().getAllNotifications(
-                          UsersProvider().selectedUser!.userTypeId,
-                          UsersProvider().selectedUser!.userId);
-                      Get.to(const Dashboard(initialIndex: 0,));
-                    },
-                    text: TranslationService().translate("next"),
-                    width: SizeConfig.getProportionalWidth(216),
-                    height: SizeConfig.getProportionalHeight(45))
+                  onTap: () async {
+                    int roleId = dashboardProvider.roleId;
+                    TextEditingController controller =
+                        roleId == UserTypes.cooker
+                            ? DashboardController().cookerNameController
+                            : DashboardController().userNameController;
+                    await UsersServices()
+                        .updateUsername(user.uid, roleId, controller.text);
+                    UsersProvider().selectedUser = await UsersProvider()
+                        .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
+                    BeyondCaloriesArticlesProvider().getAllArticles();
+                    MealCategoriesProvider().getAllMealCategories();
+                    MealsProvider().getAllPlannedMeals();
+                    await NotificationsProvider().getAllNotifications(
+                        UsersProvider().selectedUser!.userTypeId,
+                        UsersProvider().selectedUser!.userId);
+                    Get.to(const Dashboard(
+                      initialIndex: 0,
+                    ));
+                  },
+                  text: TranslationService().translate("next"),
+                  width: SizeConfig.getProportionalWidth(216),
+                  height: SizeConfig.getProportionalHeight(45),
+                  isDisabled: true,
+                )
               ])),
         ));
   }

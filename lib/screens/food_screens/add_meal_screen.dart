@@ -65,6 +65,8 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 maxLines: 2,
                 iconSizeFactor: 31,
                 settingsProvider: settingsProvider,
+                iconPadding: 10,
+                enabled: true,
               ),
               settingsProvider.language == 'en'
                   ? Padding(
@@ -144,6 +146,8 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 maxLines: 10,
                 iconSizeFactor: 48,
                 settingsProvider: settingsProvider,
+                iconPadding: 10,
+                enabled: true,
               ),
               SizeConfig.customSizedBox(null, 20, null),
               CustomButton(
@@ -158,6 +162,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                     .translate(widget.isAddScreen ? "confirm" : "edit"),
                 width: SizeConfig.getProportionalWidth(126),
                 height: SizeConfig.getProportionalHeight(45),
+                isDisabled: true,
               )
             ],
           ),

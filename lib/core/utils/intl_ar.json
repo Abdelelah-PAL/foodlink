@@ -98,6 +98,7 @@
   "duration": "منذ {duration}",
   "day": " يوم",
   "second": " ثانية",
+  "a_day": " يوم",
   "hour": " ساعة",
   "minute": " دقيقة",
   "2seconds": " ثانيتين",
@@ -151,5 +152,6 @@
   "add_plan_error": "أضف خطة لتتمكن من الحفظ",
   "task_overlapping": "وقت المهمّة متداخل مع مهمّة أخرى",
   "task_name_is_mandatory": "أدخل إسم المهمّة",
-  "bigger_end_time":"يجب أن يكون وقت الانتهاء بعد وقت البدء"
+  "bigger_end_time":"يجب أن يكون وقت الانتهاء بعد وقت البدء",
+  "add_missing_items": "أضف المواد الناقصة"
 }

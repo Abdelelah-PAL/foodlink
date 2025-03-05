@@ -52,7 +52,7 @@ class TaskProvider with ChangeNotifier {
         tasks.add(task);
       }
 
-      tasks.sort((a, b) => a.startTime.compareTo(b.endTime));
+      tasks.sort((a, b) => a.startTime.compareTo(b.startTime));
       isLoading = false;
 
       notifyListeners();

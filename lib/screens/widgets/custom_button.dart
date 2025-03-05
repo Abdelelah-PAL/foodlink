@@ -12,34 +12,24 @@ class CustomButton extends StatefulWidget {
     required this.text,
     required this.width,
     required this.height,
+    required this.isDisabled,
   });
 
   final VoidCallback? onTap;
   final String text;
   final double width;
   final double height;
+  final bool isDisabled;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
 }
 
 class _CustomButtonState extends State<CustomButton> {
-  bool _isDisabled = false;
-
-  void _handleTap() {
-    if (_isDisabled) return;
-
-    setState(() {
-      _isDisabled = true;
-    });
-
-    widget.onTap?.call();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _isDisabled ? null : _handleTap,
+      onTap: widget.onTap,
       child: Container(
         height: SizeConfig.getProportionalHeight(widget.height),
         width: SizeConfig.getProportionalWidth(widget.width),

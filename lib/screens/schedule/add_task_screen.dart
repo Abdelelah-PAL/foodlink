@@ -27,6 +27,7 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   TimeOfDay? _selectedTime;
+  late bool isDisabled;
 
   @override
   void initState() {
@@ -168,6 +169,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             TaskController().startTimeController.text;
                         var endTime = TaskController().endTimeController.text;
                         if (TaskController().taskNameController.text.isEmpty) {
+                          setState(() {
+                            isDisabled = false;
+                          });
                           GeneralController().showCustomDialog(
                               context,
                               settingsProvider,
@@ -180,6 +184,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         if (TaskController()
                                 .checkTimeOrder(startTime, endTime) ==
                             false) {
+                          setState(() {
+                            isDisabled = false;
+                          });
                           GeneralController().showCustomDialog(
                               context,
                               settingsProvider,
@@ -192,6 +199,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         if (taskProvider.checkTimeOverlapping(
                                 startTime, endTime) ==
                             false) {
+                          setState(() {
+                            isDisabled = false;
+                          });
                           GeneralController().showCustomDialog(
                               context,
                               settingsProvider,
@@ -201,6 +211,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               null);
                           return;
                         }
+                        setState(() {
+                          isDisabled = false;
+                        });
                         await taskProvider.addTask(Task(
                             taskName: TaskController().taskNameController.text,
                             startTime: startTime,
@@ -214,7 +227,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       },
                       text: "confirm",
                       width: 126,
-                      height: 45),
+                      height: 45,
+                    isDisabled: isDisabled,),
                 )
               ],
             ),
