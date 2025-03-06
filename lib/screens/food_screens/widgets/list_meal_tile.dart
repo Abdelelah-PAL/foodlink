@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/user_types.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
 import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../../../providers/users_provider.dart';
 import '../add_meal_screen.dart';
 import '../meal_screen.dart';
 import '../meals_list_screen.dart';
@@ -34,6 +36,8 @@ class _ListMealTileState extends State<ListMealTile> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    UsersProvider usersProvider = Provider.of<UsersProvider>(context);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -116,25 +120,28 @@ class _ListMealTileState extends State<ListMealTile> {
                                 : const Icon(Icons.favorite,
                                     color: AppColors.errorColor),
                             SizeConfig.customSizedBox(5, null, null),
-                            GestureDetector(
-                                onTap: () async {
-                                  MealsProvider()
-                                      .fillDataForEdition(widget.meal);
-                                  Get.to(AddMealScreen(
-                                      categoryId: widget.meal.categoryId!,
-                                      isAddScreen: false,
-                                      meal: widget.meal,
-                                      isUpdateScreen: true,
-                                      backButtonCallBack: () {
-                                        Get.to(MealsListScreen(
-                                            index: widget.meal.categoryId!,
-                                            categoryId:
-                                                widget.meal.categoryId!));
-                                        MealsProvider().resetValues();
-                                      }));
-                                },
-                                child: const Icon(Icons.edit_outlined)),
-                            SizeConfig.customSizedBox(5, null, null),
+                            if (usersProvider.selectedUser!.userTypeId ==
+                                UserTypes.cooker) ...[
+                              GestureDetector(
+                                  onTap: () async {
+                                    MealsProvider()
+                                        .fillDataForEdition(widget.meal);
+                                    Get.to(AddMealScreen(
+                                        categoryId: widget.meal.categoryId!,
+                                        isAddScreen: false,
+                                        meal: widget.meal,
+                                        isUpdateScreen: true,
+                                        backButtonCallBack: () {
+                                          Get.to(MealsListScreen(
+                                              index: widget.meal.categoryId!,
+                                              categoryId:
+                                                  widget.meal.categoryId!));
+                                          MealsProvider().resetValues();
+                                        }));
+                                  },
+                                  child: const Icon(Icons.edit_outlined)),
+                              SizeConfig.customSizedBox(5, null, null)
+                            ],
                             GestureDetector(
                                 onTap: () async {
                                   await MealsProvider()

@@ -29,11 +29,11 @@ class _AppHeaderState extends State<AppHeader> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     NotificationsProvider notificationsProvider =
-        Provider.of<NotificationsProvider>(context, listen: true);
+    Provider.of<NotificationsProvider>(context, listen: true);
     UsersProvider usersProvider =
-        Provider.of<UsersProvider>(context, listen: true);
+    Provider.of<UsersProvider>(context, listen: true);
     DashboardProvider dashboardProviderWatcher =
-        context.watch<DashboardProvider>();
+    context.watch<DashboardProvider>();
     String greeting = TranslationService().translate("greeting");
     greeting = greeting.replaceFirst(
         '{name}',
@@ -43,7 +43,7 @@ class _AppHeaderState extends State<AppHeader> {
                 : TranslationService().translate("cooker")));
     return Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.getProportionalHeight(24),
+        top: SizeConfig.getProportionalHeight(50),
         left: SizeConfig.getProportionalWidth(24),
         right: SizeConfig.getProportionalWidth(24),
       ),
@@ -51,7 +51,6 @@ class _AppHeaderState extends State<AppHeader> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
@@ -117,6 +116,9 @@ class _AppHeaderState extends State<AppHeader> {
                       child: Container(
                         width: SizeConfig.getProportionalWidth(94),
                         height: SizeConfig.getProportionalHeight(22),
+                        margin: EdgeInsets.only(
+                          left: SizeConfig.getProportionalWidth(11),
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: AppColors.widgetsColor,
@@ -161,79 +163,79 @@ class _AppHeaderState extends State<AppHeader> {
                     ),
                     dashboardProviderWatcher.isExpanded
                         ? GestureDetector(
-                            onTap: () async {
-                              setState(() {
-                                usersProvider.toggleSelectedUser(
-                                  usersProvider.selectedUser!.userTypeId == 1
-                                      ? 2
-                                      : 1,
-                                );
-                                DashboardProvider().toggleExpanded();
-                              });
-                              await NotificationsProvider().getAllNotifications(
-                                  usersProvider.selectedUser!.userTypeId,
-                                  usersProvider.selectedUser!.userId);
-                            },
-                            child: Container(
-                              width: SizeConfig.getProportionalWidth(94),
-                              height: SizeConfig.getProportionalHeight(22),
+                      onTap: () async {
+                        setState(() {
+                          usersProvider.toggleSelectedUser(
+                            usersProvider.selectedUser!.userTypeId == 1
+                                ? 2
+                                : 1,
+                          );
+                          DashboardProvider().toggleExpanded();
+                        });
+                        await NotificationsProvider().getAllNotifications(
+                            usersProvider.selectedUser!.userTypeId,
+                            usersProvider.selectedUser!.userId);
+                      },
+                      child: Container(
+                        width: SizeConfig.getProportionalWidth(94),
+                        height: SizeConfig.getProportionalHeight(22),
+                        margin: EdgeInsets.only(
+                          left: SizeConfig.getProportionalWidth(11),
+                        ),
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: AppColors.defaultBorderColor,
+                                blurRadius: 5),
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.backgroundColor,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
                               margin: EdgeInsets.only(
-                                left: SizeConfig.getProportionalWidth(11),
-                              ),
-                              decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: AppColors.defaultBorderColor,
-                                      blurRadius: 5),
-                                ],
-                                borderRadius: BorderRadius.circular(20),
-                                color: AppColors.backgroundColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        bottom:
-                                            SizeConfig.getProportionalHeight(
-                                                20),
-                                        right: SizeConfig.getProportionalWidth(
-                                            11)),
-                                    width: SizeConfig.getProportionalWidth(8),
-                                    height: SizeConfig.getProportionalHeight(6),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      usersProvider.selectedUser!.userTypeId ==
-                                              1
-                                          ? TranslationService()
-                                              .translate("user")
-                                          : TranslationService()
-                                              .translate("cooker"),
-                                      style: TextStyle(
-                                        fontFamily: AppFonts.getPrimaryFont(context),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: SizeConfig.getProportionalWidth(20),
-                                    height:
-                                        SizeConfig.getProportionalHeight(18),
-                                    margin: EdgeInsets.only(
-                                        right:
-                                            SizeConfig.getProportionalWidth(5)),
-                                    child: Image.asset(usersProvider
-                                                .selectedUser!.userTypeId ==
-                                            1
-                                        ? Assets.userBlack
-                                        : Assets.cookerBlack),
-                                  ),
-                                ],
+                                  bottom:
+                                  SizeConfig.getProportionalHeight(
+                                      20),
+                                  right: SizeConfig.getProportionalWidth(
+                                      11)),
+                              width: SizeConfig.getProportionalWidth(8),
+                              height: SizeConfig.getProportionalHeight(6),
+                            ),
+                            Expanded(
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                usersProvider.selectedUser!.userTypeId ==
+                                    1
+                                    ? TranslationService()
+                                    .translate("user")
+                                    : TranslationService()
+                                    .translate("cooker"),
+                                style: TextStyle(
+                                  fontFamily: AppFonts.getPrimaryFont(context),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
-                          )
+                            Container(
+                              width: SizeConfig.getProportionalWidth(20),
+                              height:
+                              SizeConfig.getProportionalHeight(18),
+                              margin: EdgeInsets.only(
+                                  right:
+                                  SizeConfig.getProportionalWidth(5)),
+                              child: Image.asset(usersProvider
+                                  .selectedUser!.userTypeId ==
+                                  1
+                                  ? Assets.userBlack
+                                  : Assets.cookerBlack),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                         : SizeConfig.customSizedBox(94, 22, null),
                   ],
                 ),

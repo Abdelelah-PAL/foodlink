@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/models/meal.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
+import '../../../controllers/meal_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../models/meal.dart';
+import '../../../providers/meals_provider.dart';
+import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
+import '../../widgets/custom_text.dart';
 
 class DayMealRow extends StatefulWidget {
   const DayMealRow(
@@ -35,7 +35,6 @@ class DayMealRow extends StatefulWidget {
 }
 
 class _DayMealRowState extends State<DayMealRow> {
-
   List<Meal> _filteredItems = [];
 
   @override
@@ -83,7 +82,10 @@ class _DayMealRowState extends State<DayMealRow> {
               horizontal: SizeConfig.getProportionalWidth(10)),
           child: IgnorePointer(
             ignoring: widget.date.isBefore(MealController.getPreviousSaturday(
-                DateTime(widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))),
+                DateTime(
+                    widget.mealsProvider.today.year,
+                    widget.mealsProvider.today.month,
+                    widget.mealsProvider.today.day))),
             child: GestureDetector(
               onTap: () => {
                 _showDropdown(
@@ -94,8 +96,10 @@ class _DayMealRowState extends State<DayMealRow> {
                 height: SizeConfig.getProportionalWidth(40),
                 decoration: BoxDecoration(
                   color: widget.date.isBefore(
-                          MealController.getPreviousSaturday(
-                              DateTime(widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day)))
+                          MealController.getPreviousSaturday(DateTime(
+                              widget.mealsProvider.today.year,
+                              widget.mealsProvider.today.month,
+                              widget.mealsProvider.today.day)))
                       ? Colors.grey.shade200
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
@@ -109,26 +113,36 @@ class _DayMealRowState extends State<DayMealRow> {
                         ? TextDirection.ltr
                         : TextDirection.rtl,
                     children: [
-                      CustomText(
-                        isCenter: false,
-                        text: widget.date.isBefore(
-                                MealController.getPreviousSaturday(DateTime(
-                                    widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day)))
-                            ? widget.value ?? ""
-                            : widget.mealsProvider.showSelectedValues[widget.index] == true
-                                ? widget.mealsProvider
-                                        .selectedValues[widget.index] ??
-                                    "select_meal"
-                                : widget.value ?? "select_meal",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
+                      Expanded(
+                        child: CustomText(
+                          isCenter: false,
+                          text: widget.date.isBefore(
+                                  MealController.getPreviousSaturday(DateTime(
+                                      widget.mealsProvider.today.year,
+                                      widget.mealsProvider.today.month,
+                                      widget.mealsProvider.today.day)))
+                              ? widget.value ?? ""
+                              : widget.mealsProvider
+                                          .showSelectedValues[widget.index] ==
+                                      true
+                                  ? widget.mealsProvider
+                                          .selectedValues[widget.index] ??
+                                      "select_meal"
+                                  : widget.value ?? "select_meal",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       if (widget.date.isAfter(
                               MealController.getPreviousSaturday(DateTime(
-                                  widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))) ||
+                                  widget.mealsProvider.today.year,
+                                  widget.mealsProvider.today.month,
+                                  widget.mealsProvider.today.day))) ||
                           widget.date.isAtSameMomentAs(
                               MealController.getPreviousSaturday(DateTime(
-                                  widget.mealsProvider.today.year, widget.mealsProvider.today.month, widget.mealsProvider.today.day))))
+                                  widget.mealsProvider.today.year,
+                                  widget.mealsProvider.today.month,
+                                  widget.mealsProvider.today.day))))
                         const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),
@@ -210,12 +224,14 @@ class _DayMealRowState extends State<DayMealRow> {
                                     TranslationService()
                                         .translate('select_meal');
                                 widget.mealsProvider.weeklyPlanList.removeWhere(
-                                      (record) {
-                                        Timestamp dateTimestamp = Timestamp.fromDate(widget.date);
-                                        return record.containsValue(dateTimestamp);
-                                      },
+                                  (record) {
+                                    Timestamp dateTimestamp =
+                                        Timestamp.fromDate(widget.date);
+                                    return record.containsValue(dateTimestamp);
+                                  },
                                 );
-                                widget.mealsProvider.setShowSelectedValue(widget.index);
+                                widget.mealsProvider
+                                    .setShowSelectedValue(widget.index);
                                 Navigator.of(context).pop();
                               },
                             )
@@ -224,25 +240,28 @@ class _DayMealRowState extends State<DayMealRow> {
                               title: CustomText(
                                 isCenter: false,
                                 text: _filteredItems[index - 1].name,
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.fontColor,
+                                maxLines: 1,
                               ),
                               onTap: () {
-                                Timestamp dateTimestamp = Timestamp.fromDate(widget.date);
+                                Timestamp dateTimestamp =
+                                    Timestamp.fromDate(widget.date);
                                 widget.mealsProvider
                                         .selectedValues[widget.index] =
                                     _filteredItems[index - 1].name;
                                 widget.mealsProvider.weeklyPlanList.removeWhere(
-                                      (record) {
+                                  (record) {
                                     return record.containsValue(dateTimestamp);
                                   },
                                 );
                                 widget.mealsProvider.weeklyPlanList.add({
                                   _filteredItems[index - 1].documentId!:
-                                  dateTimestamp
+                                      dateTimestamp
                                 });
-                                widget.mealsProvider.setShowSelectedValue(widget.index);
+                                widget.mealsProvider
+                                    .setShowSelectedValue(widget.index);
                                 Navigator.of(context).pop();
                               },
                             ),

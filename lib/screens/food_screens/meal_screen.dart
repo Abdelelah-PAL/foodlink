@@ -70,12 +70,14 @@ class MealScreen extends StatelessWidget {
                     textWidth: 250,
                     maxLines: 100,
                     settingsProvider: settingsProvider,
-                    height: 100,
+                    height: usersProvider.selectedUser!.userTypeId == UserTypes.cooker ? 100 : 150,
                   ),
                   SizeConfig.customSizedBox(null, 20, null),
                   RecipeRow(
                     meal: meal,
                     fontSize: 15,
+                    settingsProvider: settingsProvider,
+                    usersProvider: usersProvider,
                   )
                 ],
               ),
@@ -183,7 +185,7 @@ class MealScreen extends StatelessWidget {
                               settingsProvider,
                               "notification_sent",
                               Icons.check_circle,
-                              AppColors.successError,
+                              AppColors.successColor,
                               null);
                         },
                         text: TranslationService().translate("request_meal"),

@@ -27,7 +27,7 @@ class WeeklyMealsPlanningScreen extends StatefulWidget {
 }
 
 class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
-  late bool isDisabled;
+   bool isDisabled = true;
 
   @override
   void initState() {

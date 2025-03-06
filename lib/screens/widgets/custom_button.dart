@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/services/translation_services.dart';
-
+import 'package:foodlink/controllers/general_controller.dart';
 import '../../../core/constants/fonts.dart';
+import '../../core/constants/colors.dart';
+import '../../core/utils/size_config.dart';
+import '../../services/translation_services.dart';
 
 class CustomButton extends StatefulWidget {
   const CustomButton({
@@ -13,6 +13,7 @@ class CustomButton extends StatefulWidget {
     required this.width,
     required this.height,
     required this.isDisabled,
+    this.fontSize,
   });
 
   final VoidCallback? onTap;
@@ -20,6 +21,7 @@ class CustomButton extends StatefulWidget {
   final double width;
   final double height;
   final bool isDisabled;
+  final double? fontSize;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -28,6 +30,7 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
+    String writtenLanguage = GeneralController().detectLanguage(widget.text);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -39,10 +42,11 @@ class _CustomButtonState extends State<CustomButton> {
         ),
         child: Center(
           child: Text(
+            textAlign: TextAlign.center,
             TranslationService().translate(widget.text),
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 25,
+              fontSize: widget.fontSize ?? ( writtenLanguage == 'en' ? 18 : 25),
               fontFamily: AppFonts.getPrimaryFont(context),
               color: AppColors.fontColor,
             ),

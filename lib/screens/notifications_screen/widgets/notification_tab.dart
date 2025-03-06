@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/notification_controller.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/food_screens/meal_screen.dart';
-import 'package:foodlink/screens/notifications_screen/missing_ingredients_screen.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
+import '../../../controllers/notification_controller.dart';
+import '../../../controllers/user_types.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/fonts.dart';
+import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
 import '../../../models/notification.dart';
 import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../../../providers/users_provider.dart';
+import '../../../services/translation_services.dart';
+import '../../food_screens/meal_screen.dart';
+import '../../widgets/custom_text.dart';
+import '../missing_ingredients_screen.dart';
 
 class NotificationsTab extends StatelessWidget {
   const NotificationsTab(
@@ -104,6 +104,14 @@ class NotificationsTab extends StatelessWidget {
                           fontSize: 12,
                           color: AppColors.fontColor,
                           fontWeight: FontWeight.bold,
+                          fontFamily: AppFonts.getPrimaryFont(context)),
+                    ),
+                    TextSpan(
+                      text: settingsProvider.language == 'en' ? ',' : '،',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.fontColor,
+                          fontWeight: FontWeight.normal,
                           fontFamily: AppFonts.getPrimaryFont(context)),
                     ),
                     TextSpan(

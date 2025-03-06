@@ -8,7 +8,7 @@ class AppColors {
   static const Color textFieldBorderColor = Color(0xD3D3D3D3);
   static const Color hintTextColor = Color(0xFF808080);
   static const Color errorColor = Color(0xFFEA0000);
-  static const Color successError = Color(0xFF0FA958);
+  static const Color successColor = Color(0xFF0FA958);
   static const Color widgetsColor = Color(0xFFFFC763);
   static const Color defaultBorderColor =  Color(0xD3D3D3D3);
   static const Color languageContainerColor = Color(0xfff6f6f6);

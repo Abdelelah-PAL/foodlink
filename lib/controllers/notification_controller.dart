@@ -49,18 +49,18 @@ class NotificationController {
           settingsProvider,
           "notification_sent",
           Icons.check_circle,
-          AppColors.successError,
+          AppColors.successColor,
           null);
       MealController().missingIngredients.clear();
-      MealController().addNoteController.clear();
+      NotificationController ().addNoteController.clear();
     }
     else {
       GeneralController().showCustomDialog(
           context,
           settingsProvider,
           "add_missing_items",
-          Icons.check_circle,
-          AppColors.successError,
+          Icons.error,
+          AppColors.errorColor,
           null);
     }
 

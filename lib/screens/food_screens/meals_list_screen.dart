@@ -41,6 +41,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
     return mealsProviderWatcher.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
+      resizeToAvoidBottomInset: true,
             backgroundColor: AppColors.backgroundColor,
             appBar: PreferredSize(
               preferredSize:

@@ -50,9 +50,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                   ),
                   SizeConfig.customSizedBox(null, 10, null),
                   Row(
-                    mainAxisAlignment: settingsProvider.language == 'en'
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     textDirection: settingsProvider.language == 'en'
                         ? TextDirection.ltr
@@ -117,7 +115,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                     onTap: () {},
                     text: TranslationService().translate("send_confirmation"),
                     width: 137,
-                    height: 45,
+                    height: 50,
                     isDisabled: true,
                   ),
                   SizeConfig.customSizedBox(20, null, null),
@@ -125,7 +123,7 @@ class MissingIngredientsScreen extends StatelessWidget {
                     onTap: Get.back,
                     text: TranslationService().translate("ignore"),
                     width: 137,
-                    height: 45,
+                    height: 50,
                     isDisabled: true,
                   ),
                 ],

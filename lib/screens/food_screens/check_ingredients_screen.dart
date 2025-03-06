@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/meal_controller.dart';
 import '../../controllers/notification_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/utils/size_config.dart';
@@ -26,7 +27,7 @@ class CheckIngredientsScreen extends StatelessWidget {
     MealsProvider mealsProvider =
         Provider.of<MealsProvider>(context, listen: true);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -34,10 +35,16 @@ class CheckIngredientsScreen extends StatelessWidget {
           child: Column(
             children: [
               MealImageContainer(
-                  isAddSource: false,
-                  isUpdateSource: false,
-                  imageUrl: meal.imageUrl,
-                  mealsProvider: context.watch<MealsProvider>()),
+                isAddSource: false,
+                isUpdateSource: false,
+                imageUrl: meal.imageUrl,
+                mealsProvider: context.watch<MealsProvider>(),
+                backButtonOnPressed: ()  {
+                  MealController().missingIngredients.clear();
+                  NotificationController().addNoteController.clear();
+                  Get.back();
+                },
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.getProportionalWidth(20),
@@ -54,9 +61,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                     ),
                     SizeConfig.customSizedBox(null, 10, null),
                     Row(
-                      mainAxisAlignment: settingsProvider.language == 'en'
-                          ? MainAxisAlignment.end
-                          : MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       textDirection: settingsProvider.language == 'en'
                           ? TextDirection.ltr
@@ -125,7 +130,11 @@ class CheckIngredientsScreen extends StatelessWidget {
                     ),
                     SizeConfig.customSizedBox(20, null, null),
                     CustomButton(
-                      onTap: Get.back,
+                      onTap: () => {
+                        MealController().missingIngredients.clear(),
+                        NotificationController().addNoteController.clear(),
+                        Get.back()
+                      },
                       text: TranslationService().translate("back"),
                       width: 137,
                       height: 45,

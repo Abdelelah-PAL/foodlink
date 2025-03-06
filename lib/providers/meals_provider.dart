@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/models/weekly_plan.dart';
 import 'package:image_picker/image_picker.dart';
+import '../controllers/meal_controller.dart';
 import '../models/meal.dart';
+import '../models/weekly_plan.dart';
 import '../services/meals_services.dart';
 
 class MealsProvider with ChangeNotifier {
@@ -44,7 +44,6 @@ class MealsProvider with ChangeNotifier {
   List<Map<String, dynamic>> weeklyPlanList = [];
   WeeklyPlan? currentWeekPlan;
 
-  bool isIngredientChecked = false;
   final List<String> months = [
     'January',
     'February',

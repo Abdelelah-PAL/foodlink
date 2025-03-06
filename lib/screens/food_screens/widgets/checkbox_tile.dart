@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/settings_provider.dart';
+import 'package:foodlink/controllers/general_controller.dart';
+import '../../../controllers/meal_controller.dart';
+import '../../../providers/meals_provider.dart';
+import '../../../providers/settings_provider.dart';
 import '../../widgets/custom_text.dart';
 
 class CheckboxTile extends StatelessWidget {
@@ -23,47 +23,32 @@ class CheckboxTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(
-            top: 0,
-            right: SizeConfig.getProportionalWidth(20),
-            left: SizeConfig.getProportionalWidth(20)),
-        child: settingsProvider.language == 'en'
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CustomText(
-                      isCenter: false,
-                      text: text,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                  Checkbox(
-                    value: mealsProvider.isIngredientChecked,
-                    onChanged: (bool? value) {
-                      mealsProvider.toggleCheckedIngredient(
-                          value,  index);
-                    },
-                  )
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomText(
-                      isCenter: false,
-                      text: text,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                  Checkbox(
-                    value: mealsProvider.checkboxValues[index],
-                    onChanged: (bool? value) {
-                      mealsProvider.toggleCheckedIngredient(value, index);
-                      if(value == true) {
-                        MealController().missingIngredients.add(text);
-                      }
-                    },
-                  )
-                ],
-              ));
+    String writtenLanguage = GeneralController().detectLanguage(text);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      textDirection: settingsProvider.language == 'en'
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+      children: [
+        CustomText(
+          isCenter: false,
+          text: text,
+          fontSize: writtenLanguage == 'en' ? 20 : 14,
+          fontWeight: FontWeight.normal,
+          maxLines: 2,
+        ),
+        Checkbox(
+          value: mealsProvider.checkboxValues[index],
+          onChanged: (bool? value) {
+            mealsProvider.toggleCheckedIngredient(value, index);
+            if (value == true) {
+              MealController().missingIngredients.add(text);
+            } else {
+              MealController().missingIngredients.remove(text);
+            }
+          },
+        )
+      ],
+    );
   }
 }

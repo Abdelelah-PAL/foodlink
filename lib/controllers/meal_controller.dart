@@ -25,20 +25,6 @@ class MealController {
 
   List<String> missingIngredients = [];
 
-  String detectLanguage(String string) {
-    String languageCode = 'en';
-
-    final RegExp english = RegExp(r'^[a-zA-Z]+');
-    final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
-
-    if (english.hasMatch(string)) {
-      languageCode = 'en';
-    } else if (arabic.hasMatch(string)) {
-      languageCode = 'ar';
-    }
-    return languageCode;
-  }
-
   Future<void> addMeal(mealsProvider, categoryId) async {
     String imageUrl = '';
     if (mealsProvider.imageIsPicked) {

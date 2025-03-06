@@ -96,10 +96,10 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       : TextDirection.rtl,
                   children: [
                     CustomChangeableColorButton(
-                        tag: 'chosen', mealsProvider: mealsProvider),
+                        tag: 'chosen', mealsProvider: mealsProvider, settingsProvider:settingsProvider),
                     SizeConfig.customSizedBox(40, null, null),
                     CustomChangeableColorButton(
-                        tag: 'self', mealsProvider: mealsProvider),
+                        tag: 'self', mealsProvider: mealsProvider, settingsProvider:settingsProvider),
                   ],
                 ),
               ),

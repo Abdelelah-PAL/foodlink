@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
 
+import '../core/utils/size_config.dart';
+import '../providers/settings_provider.dart';
+import '../screens/widgets/custom_text.dart';
 
 class GeneralController {
   static final GeneralController _instance = GeneralController._internal();
@@ -10,8 +10,6 @@ class GeneralController {
   factory GeneralController() => _instance;
 
   GeneralController._internal();
-
-
 
   String detectLanguage(String string) {
     String languageCode = 'en';
@@ -27,7 +25,8 @@ class GeneralController {
     return languageCode;
   }
 
-  void showCustomDialog(BuildContext context, SettingsProvider settingsProvider, String text, IconData icon, Color color, double? width ) {
+  void showCustomDialog(BuildContext context, SettingsProvider settingsProvider,
+      String text, IconData icon, Color color, double? width) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -43,13 +42,13 @@ class GeneralController {
                     ? TextDirection.ltr
                     : TextDirection.rtl,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:  [
+                children: [
                   Icon(icon, size: 30, color: color),
                   SizeConfig.customSizedBox(10, null, null),
                   CustomText(
                       isCenter: true,
                       text: text,
-                      fontSize: 20,
+                      fontSize: settingsProvider.language == 'en' ? 12 : 20,
                       fontWeight: FontWeight.normal),
                 ]),
           ),

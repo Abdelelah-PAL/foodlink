@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/general_controller.dart';
 import 'package:foodlink/core/constants/fonts.dart';
-import '../../../controllers/meal_controller.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
@@ -25,14 +25,14 @@ class IngredientsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String writtenLanguage = MealController().detectLanguage(meal.recipe!);
+    String writtenLanguage = GeneralController().detectLanguage(meal.recipe!);
 
     return SizeConfig.customSizedBox(
       null,
       height,
       Row(
         textDirection:
-            writtenLanguage == 'en' ? TextDirection.ltr : TextDirection.rtl,
+            settingsProvider.language == 'en' ? TextDirection.ltr : TextDirection.rtl,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -44,7 +44,7 @@ class IngredientsRow extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Text(
-                meal.ingredients.join('-'),
+                meal.ingredients.join(' - '),
                 maxLines: maxLines,
                 overflow: TextOverflow.ellipsis,
                 textDirection: writtenLanguage == 'en'

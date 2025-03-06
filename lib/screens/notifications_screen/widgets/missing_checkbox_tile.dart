@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/settings_provider.dart';
+import '../../../controllers/general_controller.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/utils/size_config.dart';
 import '../../../models/notification.dart';
+import '../../../providers/settings_provider.dart';
 import '../../widgets/custom_text.dart';
 
 class MissingCheckboxTile extends StatelessWidget {
@@ -19,41 +20,29 @@ class MissingCheckboxTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String writtenLanguage = GeneralController()
+        .detectLanguage(notification.missingIngredients[index]);
     return Padding(
         padding: EdgeInsets.only(
             top: 0,
             right: SizeConfig.getProportionalWidth(20),
             left: SizeConfig.getProportionalWidth(20)),
-        child: settingsProvider.language == 'en'
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CustomText(
-                      isCenter: false,
-                      text: notification.missingIngredients[index],
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                  const Checkbox(
-                    value: true,
-                    onChanged: null,
-                  )
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomText(
-                      isCenter: false,
-                      text: notification.missingIngredients[index],
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                  const Checkbox(
-                    activeColor: AppColors.primaryColor,
-                    checkColor: AppColors.backgroundColor,
-                    value: true,
-                    onChanged: null,
-                  )
-                ],
-              ));
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          textDirection: TextDirection.rtl,
+          children: [
+            CustomText(
+                isCenter: false,
+                text: notification.missingIngredients[index],
+                fontSize: writtenLanguage == 'en' ? 12 : 14,
+                fontWeight: FontWeight.normal),
+            const Checkbox(
+              activeColor: AppColors.primaryColor,
+              checkColor: AppColors.backgroundColor,
+              value: true,
+              onChanged: null,
+            )
+          ],
+        ));
   }
 }
