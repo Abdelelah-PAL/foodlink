@@ -112,6 +112,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       ? ListView.builder(
                           itemCount: mealsProvider.plannedMeals.length,
                           itemBuilder: (ctx, index) {
+
                             Meal selectedMeal =
                                 mealsProvider.plannedMeals[index];
                             return PlanMealTile(
@@ -127,6 +128,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                           ? ListView.builder(
                               itemCount: mealsProvider.weeklyPlanList.length,
                               itemBuilder: (ctx, index) {
+
                                 DateTime date = mealsProvider
                                     .weeklyPlanList[index].entries.first.value
                                     .toDate();
@@ -144,7 +146,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                                     if (!snapshot.hasData) {
                                       return const CircularProgressIndicator();
                                     }
-
                                     Meal? meal = snapshot.data;
                                     if (meal != null) {
                                       return PlanMealTile(

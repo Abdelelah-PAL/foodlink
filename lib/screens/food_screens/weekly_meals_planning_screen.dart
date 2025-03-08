@@ -63,6 +63,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                         CustomBackButton(
                           onPressed: () {
                             MealsProvider().resetDropdownValues();
+                            MealsProvider().resetWeeklyPlanList();
                             Get.back();
                           },
                         ),
