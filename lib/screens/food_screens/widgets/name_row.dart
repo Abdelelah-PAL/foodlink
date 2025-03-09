@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/general_controller.dart';
+import '../../../controllers/general_controller.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../providers/settings_provider.dart';
@@ -26,12 +26,14 @@ class NameRow extends StatelessWidget {
     String writtenLanguage = GeneralController().detectLanguage(name);
     return FittedBox(
       child: Row(
-        textDirection:
-            settingsProvider.language == 'en' ? TextDirection.ltr : TextDirection.rtl,
-        mainAxisAlignment: MainAxisAlignment.start,
+        textDirection: settingsProvider.language == 'en'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        mainAxisAlignment: settingsProvider.language == 'en'
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.end,
         children: [
           Image.asset(Assets.mealNameIcon),
-          SizeConfig.customSizedBox(10, null, null),
           SizeConfig.customSizedBox(
             textWidth,
             null,
@@ -39,9 +41,8 @@ class NameRow extends StatelessWidget {
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
               name,
-              textAlign:
-              settingsProvider.language == 'en' ? TextAlign.left : TextAlign.right,
-              textDirection: settingsProvider.language == 'en'
+              textAlign: writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+              textDirection: writtenLanguage == 'en'
                   ? TextDirection.ltr
                   : TextDirection.rtl,
               style: TextStyle(

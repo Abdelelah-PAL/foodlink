@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/general_controller.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
+import '../../../controllers/general_controller.dart';
+import '../../../controllers/user_types.dart';
 import '../../../core/constants/assets.dart';
+import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
+import '../../../providers/settings_provider.dart';
+import '../../../providers/users_provider.dart';
 
 class RecipeRow extends StatelessWidget {
-  const RecipeRow({
-    super.key,
-    required this.meal,
-    required this.fontSize,
-    required this.settingsProvider,
-    required this.usersProvider,
-xx  });
+  const RecipeRow(
+      {super.key,
+      required this.meal,
+      required this.fontSize,
+      required this.settingsProvider,
+      required this.usersProvider,
+      xx});
 
   final Meal meal;
   final double fontSize;
@@ -29,13 +29,17 @@ xx  });
       textDirection: settingsProvider.language == 'en'
           ? TextDirection.ltr
           : TextDirection.rtl,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: settingsProvider.language == 'en'
+          ? MainAxisAlignment.start
+          : MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.asset(Assets.mealRecipe),
         SizeConfig.customSizedBox(
           280,
-          usersProvider.selectedUser!.userTypeId == UserTypes.cooker ? 200 : 225,
+          usersProvider.selectedUser!.userTypeId == UserTypes.cooker
+              ? 200
+              : 225,
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Text(
@@ -44,8 +48,7 @@ xx  });
               textDirection: writtenLanguage == 'en'
                   ? TextDirection.ltr
                   : TextDirection.rtl,
-              textAlign:
-                  writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+              textAlign: writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
               style: TextStyle(
                   fontSize: fontSize,
                   fontFamily:

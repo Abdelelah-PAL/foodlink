@@ -43,11 +43,11 @@ class SettingsProvider with ChangeNotifier {
 
   void changeLanguage(chosenLanguage, userId, context) async {
     language = chosenLanguage;
-    notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('app_language', language);
     await _ss.changeLanguage(userId, language);
     await TranslationService().loadTranslations(context);
+    notifyListeners();
   }
 
 }

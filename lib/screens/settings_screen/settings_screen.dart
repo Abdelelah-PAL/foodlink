@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/settings_screen/widgets/custom_setting_tile.dart';
-import 'package:foodlink/screens/settings_screen/widgets/custom_settings_container.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/screens/widgets/profile_circle.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
+import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/settings_provider.dart';
+import '../../providers/users_provider.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/profile_circle.dart';
+import 'widgets/custom_setting_tile.dart';
+import 'widgets/custom_settings_container.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,11 +30,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizeConfig.customSizedBox(null, 50, null),
-        const CustomText(
-            isCenter: true,
-            text: "settings",
-            fontSize: 30,
-            fontWeight: FontWeight.bold),
+         CustomText(
+          isCenter: true,
+          text: "settings",
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          givenWrittenLanguage: settingsProvider.language,
+        ),
         SizeConfig.customSizedBox(null, 25, null),
         const ProfileCircle(
           height: 68,
@@ -46,11 +48,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
             height: 125,
             settingsProvider: settingsProvider,
             children: [
-              CustomSettingTile(icon: Assets.editInfo, text: "edit_data"),
-              CustomSettingTile(icon: Assets.privacy, text: "privacy"),
+              CustomSettingTile(
+                icon: Assets.editInfo,
+                text: "edit_data",
+                givenWrittenLanguage: settingsProvider.language,
+              ),
+              CustomSettingTile(
+                  icon: Assets.privacy,
+                  text: "privacy",
+                  givenWrittenLanguage: settingsProvider.language),
               CustomSettingTile(
                   icon: Assets.language,
                   text: "language",
+                  givenWrittenLanguage: settingsProvider.language,
                   trailing: GestureDetector(
                     onTap: () {
                       var language =
@@ -80,6 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                 icon: Assets.notifications,
                 text: "notifications",
+                givenWrittenLanguage: settingsProvider.language,
                 trailing: Transform.scale(
                   scale: .7,
                   child: Switch(
@@ -98,6 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                 icon: Assets.updates,
                 text: "updates",
+                givenWrittenLanguage: settingsProvider.language,
                 trailing: Transform.scale(
                   scale: .7,
                   child: Switch(
@@ -118,8 +130,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             settingsProvider: settingsProvider,
             height: 103,
             children: [
-              CustomSettingTile(icon: Assets.contactUs, text: "contact_us"),
-              CustomSettingTile(icon: Assets.support, text: "help_support")
+              CustomSettingTile(
+                  icon: Assets.contactUs,
+                  text: "contact_us",
+                  givenWrittenLanguage: settingsProvider.language),
+              CustomSettingTile(
+                  icon: Assets.support,
+                  text: "help_support",
+                  givenWrittenLanguage: settingsProvider.language)
             ])
       ],
     );
