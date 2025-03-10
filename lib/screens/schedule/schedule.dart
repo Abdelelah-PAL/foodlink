@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/task_controller.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/task_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/schedule/widgets/task_tile.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/task_controller.dart';
+import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/settings_provider.dart';
+import '../../providers/task_provider.dart';
+import '../../providers/users_provider.dart';
+import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 import 'add_task_screen.dart';
+import 'widgets/task_tile.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({super.key});
@@ -22,16 +22,34 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   DateTime selectedDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  late ScrollController _scrollController;
+  int todayIndex = 7;
 
   @override
   void initState() {
     super.initState();
-    final usersProvider = Provider.of<UsersProvider>(context, listen: false);
-    Provider.of<TaskProvider>(context, listen: false)
-        .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
+    _scrollController = ScrollController();
 
-    TaskProvider()
-        .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (_scrollController.hasClients) {
+          double offset = todayIndex * 60.0;
+          _scrollController.jumpTo(offset);
+        }
+      });
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final usersProvider = Provider.of<UsersProvider>(context, listen: false);
+      Provider.of<TaskProvider>(context, listen: false)
+          .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,11 +90,14 @@ class _ScheduleState extends State<Schedule> {
                     SizedBox(
                       height: SizeConfig.getProportionalHeight(100),
                       child: ListView.builder(
+                        controller: _scrollController,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 7,
+                        itemCount: 14,
                         itemBuilder: (context, index) {
-                          DateTime currentDate =
-                              DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: index));
+                          DateTime currentDate = DateTime(DateTime.now().year,
+                                  DateTime.now().month, DateTime.now().day)
+                              .subtract(Duration(days: 7 - index));
+
                           bool isSelected =
                               selectedDate.day == currentDate.day &&
                                   selectedDate.month == currentDate.month &&
@@ -87,13 +108,15 @@ class _ScheduleState extends State<Schedule> {
                               setState(() {
                                 selectedDate = currentDate;
                               });
-                              await TaskProvider().getAllTasksByDate(
-                                  currentDate,
-                                  usersProvider.selectedUser!.userId);
+                              await Provider.of<TaskProvider>(context,
+                                      listen: false)
+                                  .getAllTasksByDate(currentDate,
+                                      usersProvider.selectedUser!.userId);
                             },
                             child: Container(
                               height: SizeConfig.getProportionalHeight(79),
-                              width: SizeConfig.getProportionalHeight(53),
+                              width: SizeConfig.getProportionalHeight(45),
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? AppColors.widgetsColor
