@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/screens/dashboard/dashboard.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../providers/dashboard_provider.dart';
+import '../dashboard.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({super.key, required this.fromDashboard, required this.initialIndex});
@@ -23,10 +23,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     setState(() {
       _selectedIndex = index;
       DashboardProvider().onItemTapped(index);
+      Get.to( Dashboard(initialIndex: index,));
     });
-    if(!widget.fromDashboard) {
-      Get.to(const Dashboard(initialIndex: 0,));
-    }
+    // if(!widget.fromDashboard) {
+    //   Get.to(const Dashboard(initialIndex: 0,));
+    // }
   }
   @override
   void initState() {

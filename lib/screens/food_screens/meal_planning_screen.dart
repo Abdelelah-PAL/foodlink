@@ -82,7 +82,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                 )),
             backgroundColor: AppColors.backgroundColor,
             bottomNavigationBar:
-                const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
+                const CustomBottomNavigationBar(fromDashboard: true, initialIndex: 0,),
             body: Column(children: [
               ImageContainer(imageUrl: Assets.mealPlanningHeaderImage),
               Padding(

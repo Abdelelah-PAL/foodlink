@@ -33,7 +33,7 @@ class _ScheduleState extends State<Schedule> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 200), () {
         if (_scrollController.hasClients) {
-          double offset = todayIndex * 60.0;
+          double offset = todayIndex * 55;
           _scrollController.jumpTo(offset);
         }
       });
@@ -108,10 +108,36 @@ class _ScheduleState extends State<Schedule> {
                               setState(() {
                                 selectedDate = currentDate;
                               });
+
                               await Provider.of<TaskProvider>(context,
                                       listen: false)
                                   .getAllTasksByDate(currentDate,
                                       usersProvider.selectedUser!.userId);
+
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                if (_scrollController.hasClients) {
+                                  double itemWidth =
+                                      SizeConfig.getProportionalHeight(45) +
+                                          10; // Adjust width + margins
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    final screenWidth = SizeConfig.screenWidth!;
+                                    double indexOffset = (index * itemWidth) -
+                                        (screenWidth / 2) +
+                                        (itemWidth / 2);
+
+                                    _scrollController.animateTo(
+                                      indexOffset.clamp(
+                                          0,
+                                          _scrollController
+                                              .position.maxScrollExtent),
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  });
+                                }
+                              });
                             },
                             child: Container(
                               height: SizeConfig.getProportionalHeight(79),
