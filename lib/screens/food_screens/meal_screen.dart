@@ -37,122 +37,102 @@ class MealScreen extends StatelessWidget {
         Provider.of<UsersProvider>(context, listen: true);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MealImageContainer(
-              isAddSource: false,
-              isUpdateSource: false,
-              imageUrl: meal.imageUrl,
-              mealsProvider: context.watch<MealsProvider>(),
-              backButtonOnPressed: () => {
-                Get.to(MealsListScreen(
-                    index: meal.categoryId! - 1, categoryId: meal.categoryId!))
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.getProportionalWidth(20),
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
+          child: Column(
+            children: [
+              MealImageContainer(
+                isAddSource: false,
+                isUpdateSource: false,
+                imageUrl: meal.imageUrl,
+                mealsProvider: context.watch<MealsProvider>(),
+                backButtonOnPressed: () => {
+                  Get.to(MealsListScreen(
+                      index: meal.categoryId! - 1,
+                      categoryId: meal.categoryId!))
+                },
               ),
-              child: Column(
-                children: [
-                  NameRow(
-                    name: meal.name,
-                    fontSize: 30,
-                    textWidth: 280,
-                    settingsProvider: settingsProvider,
-                    height: 35,
-                    maxLines: 2,
-                  ),
-                  SizeConfig.customSizedBox(null, 15, null),
-                  IngredientsRow(
-                    meal: meal,
-                    fontSize: 20,
-                    textWidth: 250,
-                    maxLines: 100,
-                    settingsProvider: settingsProvider,
-                    height: usersProvider.selectedUser!.userTypeId == UserTypes.cooker ? 100 : 150,
-                  ),
-                  SizeConfig.customSizedBox(null, 20, null),
-                  RecipeRow(
-                    meal: meal,
-                    fontSize: 15,
-                    settingsProvider: settingsProvider,
-                    usersProvider: usersProvider,
-                  )
-                ],
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getProportionalWidth(20),
+                  right: SizeConfig.getProportionalWidth(20),
+                  bottom: SizeConfig.getProportionalHeight(70),
+                  top: SizeConfig.getProportionalHeight(20),
+                ),
+                child: Column(
+                  children: [
+                    NameRow(
+                      name: meal.name,
+                      fontSize: 20,
+                      textWidth: 280,
+                      settingsProvider: settingsProvider,
+                      height: 35,
+                      maxLines: 2,
+                    ),
+                    SizeConfig.customSizedBox(null, 15, null),
+                    IngredientsRow(
+                      meal: meal,
+                      fontSize: 20,
+                      textWidth: 250,
+                      maxLines: 100,
+                      settingsProvider: settingsProvider,
+                      height: usersProvider.selectedUser!.userTypeId ==
+                              UserTypes.cooker
+                          ? 100
+                          : 150,
+                    ),
+                    SizeConfig.customSizedBox(null, 20, null),
+                    RecipeRow(
+                      meal: meal,
+                      fontSize: 15,
+                      settingsProvider: settingsProvider,
+                      usersProvider: usersProvider,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
-              child: usersProvider.selectedUser!.userTypeId == UserTypes.cooker
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                          CustomButton(
-                            onTap: () {
-                              switch (source) {
-                                case 'default':
-                                  Get.to(MealsListScreen(
-                                      index: meal.categoryId! - 1,
-                                      categoryId: meal.categoryId!));
-                                  break;
-                                case 'notifications':
-                                  Get.to(const NotificationsScreen());
-                                  break;
-                                case 'planning':
-                                  Get.to(const MealPlanningScreen());
-                                  break;
-                              }
-                            },
-                            text: TranslationService().translate("proceed"),
-                            width: 216,
-                            height: 45,
-                            isDisabled: true,
-                          ),
-                          SizeConfig.customSizedBox(null, 20, null),
-                          if (source != 'planning')
-                            Column(
-                              children: [
-                                CustomButton(
-                                  onTap: () {
-                                    MealsProvider().fillDataForEdition(meal);
-                                    Get.to(AddMealScreen(
-                                      categoryId: meal.categoryId!,
-                                      isUpdateScreen: true,
-                                      isAddScreen: false,
-                                      meal: meal,
-                                      backButtonCallBack: () {
-                                        Get.to(MealsListScreen(
-                                            index: meal.categoryId!,
-                                            categoryId: meal.categoryId!));
-                                        MealsProvider().resetValues();
-                                      },
-                                    ));
-                                  },
-                                  text: TranslationService().translate("edit"),
-                                  width: 216,
-                                  height: 45,
-                                  isDisabled: true,
-                                ),
-                                SizeConfig.customSizedBox(null, 20, null),
-                              ],
-                            ),
-                          CustomButton(
-                            onTap: () {
-                              mealsProvider.checkboxValues = List.generate(
-                                  meal.ingredients.length, (index) => false);
-                              Get.to(CheckIngredientsScreen(
-                                meal: meal,
-                              ));
-                            },
-                            text: TranslationService()
-                                .translate("check_ingredients"),
-                            width: 216,
-                            height: 45,
-                            isDisabled: true,
-                          ),
-                        ])
+              usersProvider.selectedUser!.userTypeId == UserTypes.cooker
+                  ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      if (source != 'planning') ...[
+                        CustomButton(
+                          onTap: () {
+                            MealsProvider().fillDataForEdition(meal);
+                            Get.to(AddMealScreen(
+                              categoryId: meal.categoryId!,
+                              isUpdateScreen: true,
+                              isAddScreen: false,
+                              meal: meal,
+                              backButtonCallBack: () {
+                                Get.to(MealsListScreen(
+                                    index: meal.categoryId!,
+                                    categoryId: meal.categoryId!));
+                                MealsProvider().resetValues();
+                              },
+                            ));
+                          },
+                          text: TranslationService().translate("edit"),
+                          width: 137,
+                          height: 45,
+                          isDisabled: true,
+                        ),
+                        SizeConfig.customSizedBox(20, null, null)
+                      ],
+                      CustomButton(
+                        onTap: () {
+                          mealsProvider.checkboxValues = List.generate(
+                              meal.ingredients.length, (index) => false);
+                          Get.to(CheckIngredientsScreen(
+                            meal: meal,
+                          ));
+                        },
+                        text:
+                            TranslationService().translate("check_ingredients"),
+                        width: 137,
+                        height: 45,
+                        isDisabled: true,
+                      ),
+                    ])
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       CustomButton(
                         onTap: () {
@@ -193,10 +173,9 @@ class MealScreen extends StatelessWidget {
                         height: 45,
                         isDisabled: true,
                       ),
-                      SizeConfig.customSizedBox(null, 20, null),
-                    ]),
-            )
-          ],
+                    ])
+            ],
+          ),
         ),
       ),
     );

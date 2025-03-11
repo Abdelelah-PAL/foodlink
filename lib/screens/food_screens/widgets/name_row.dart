@@ -32,6 +32,7 @@ class NameRow extends StatelessWidget {
         mainAxisAlignment: settingsProvider.language == 'en'
             ? MainAxisAlignment.start
             : MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(Assets.mealNameIcon),
           SizeConfig.customSizedBox(

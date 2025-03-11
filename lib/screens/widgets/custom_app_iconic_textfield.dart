@@ -42,12 +42,10 @@ class CustomAppIconicTextField extends StatelessWidget {
               ? TextDirection.ltr
               : TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: SizeConfig.customSizedBox(
-                  iconSizeFactor, iconSizeFactor, Image.asset(icon)),
-            ),
+            SizeConfig.customSizedBox(
+                iconSizeFactor, iconSizeFactor, Image.asset(icon)),
             CustomText(
               isCenter: false,
               text: TranslationService().translate(headerText),
@@ -61,7 +59,8 @@ class CustomAppIconicTextField extends StatelessWidget {
         width: SizeConfig.getProportionalWidth(width),
         height: SizeConfig.getProportionalHeight(height),
         margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(10)),
+            vertical: SizeConfig.getProportionalHeight(10),
+            horizontal: SizeConfig.getProportionalWidth(26)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(width: 1.0, color: AppColors.widgetsColor),

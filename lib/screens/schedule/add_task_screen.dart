@@ -27,7 +27,7 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   TimeOfDay? _selectedTime;
-  late bool isDisabled;
+  bool isDisabled = true;
 
   @override
   void initState() {
@@ -164,71 +164,72 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizeConfig.customSizedBox(null, 100, null),
                 Center(
                   child: CustomButton(
-                      onTap: () async {
-                        var startTime =
-                            TaskController().startTimeController.text;
-                        var endTime = TaskController().endTimeController.text;
-                        if (TaskController().taskNameController.text.isEmpty) {
-                          setState(() {
-                            isDisabled = false;
-                          });
-                          GeneralController().showCustomDialog(
-                              context,
-                              settingsProvider,
-                              "task_name_is_mandatory",
-                              Icons.error,
-                              AppColors.errorColor,
-                              null);
-                          return;
-                        }
-                        if (TaskController()
-                                .checkTimeOrder(startTime, endTime) ==
-                            false) {
-                          setState(() {
-                            isDisabled = false;
-                          });
-                          GeneralController().showCustomDialog(
-                              context,
-                              settingsProvider,
-                              "bigger_end_time",
-                              Icons.error,
-                              AppColors.errorColor,
-                              400);
-                          return;
-                        }
-                        if (taskProvider.checkTimeOverlapping(
-                                startTime, endTime) ==
-                            false) {
-                          setState(() {
-                            isDisabled = false;
-                          });
-                          GeneralController().showCustomDialog(
-                              context,
-                              settingsProvider,
-                              "task_overlapping",
-                              Icons.error,
-                              AppColors.errorColor,
-                              null);
-                          return;
-                        }
+                    onTap: () async {
+                      var startTime = TaskController().startTimeController.text;
+                      var endTime = TaskController().endTimeController.text;
+                      if (TaskController().taskNameController.text.isEmpty) {
                         setState(() {
                           isDisabled = false;
                         });
-                        await taskProvider.addTask(Task(
-                            taskName: TaskController().taskNameController.text,
-                            startTime: startTime,
-                            endTime: endTime,
-                            description:
-                                TaskController().descriptionController.text,
-                            date: widget.date,
-                            userId: widget.userId));
-                        TaskController().clearControllers();
-                        Get.to(const Dashboard(initialIndex: 2,));
-                      },
-                      text: "confirm",
-                      width: 126,
-                      height: 45,
-                    isDisabled: isDisabled,),
+                        GeneralController().showCustomDialog(
+                            context,
+                            settingsProvider,
+                            "task_name_is_mandatory",
+                            Icons.error,
+                            AppColors.errorColor,
+                            null);
+                        return;
+                      }
+                      if (TaskController().checkTimeOrder(startTime, endTime) ==
+                          false) {
+                        setState(() {
+                          isDisabled = false;
+                        });
+                        GeneralController().showCustomDialog(
+                            context,
+                            settingsProvider,
+                            "bigger_end_time",
+                            Icons.error,
+                            AppColors.errorColor,
+                            400);
+                        return;
+                      }
+                      if (taskProvider.checkTimeOverlapping(
+                              startTime, endTime) ==
+                          false) {
+                        setState(() {
+                          isDisabled = false;
+                        });
+                        GeneralController().showCustomDialog(
+                            context,
+                            settingsProvider,
+                            "task_overlapping",
+                            Icons.error,
+                            AppColors.errorColor,
+                            null);
+                        return;
+                      }
+                      setState(() {
+                        isDisabled = false;
+                      });
+                      await taskProvider.addTask(Task(
+                          taskName: TaskController().taskNameController.text,
+                          startTime: startTime,
+                          endTime: endTime,
+                          description:
+                              TaskController().descriptionController.text,
+                          date: widget.date,
+                          userId: widget.userId));
+                      TaskController().clearControllers();
+                      Get.to(const Dashboard(
+                        initialIndex: 2,
+                      ));
+                    },
+                    text: "confirm",
+                    width: 126,
+                    height: 45,
+                    isDisabled: isDisabled,
+                  ),
                 )
               ],
             ),
