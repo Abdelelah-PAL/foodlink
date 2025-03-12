@@ -73,7 +73,8 @@ class _FavoritesState extends State<Favorites> {
                             ),
                             child: ListMealTile(
                                 meal: mealsProvider.favoriteMeals[index],
-                                favorites: true),
+                                favorites: true,
+                              source: 'favorites',),
                           );
                         },
                       );

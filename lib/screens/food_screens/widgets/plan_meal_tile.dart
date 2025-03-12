@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/meals_provider.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/screens/food_screens/meal_screen.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' as intl;
@@ -11,6 +6,11 @@ import 'package:provider/provider.dart';
 import '../../../../models/meal.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../providers/meals_provider.dart';
+import '../../../providers/settings_provider.dart';
+import '../../../services/translation_services.dart';
+import '../../widgets/custom_text.dart';
+import '../meal_screen.dart';
 import 'ingredients_row.dart';
 import 'name_row.dart';
 
@@ -69,7 +69,6 @@ class _PlanMealTileState extends State<PlanMealTile> {
             .split(' ')
             .reversed
             .join(' ');
-    ;
     return Column(
         crossAxisAlignment: SettingsProvider().language == "en"
             ? CrossAxisAlignment.start
@@ -153,6 +152,8 @@ class _PlanMealTileState extends State<PlanMealTile> {
                                 maxLines: 3,
                                 settingsProvider: widget.settingsProvider,
                                 height: 75,
+                                horizontalPadding: 8,
+                                withBorder: false,
                               ),
                             ],
                           ),

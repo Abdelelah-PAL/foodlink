@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/services/translation_services.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
+import '../../core/utils/size_config.dart';
 import '../../providers/settings_provider.dart';
+import '../../services/translation_services.dart';
 
 class CustomAppTextField extends StatelessWidget {
   const CustomAppTextField(
@@ -38,8 +38,8 @@ class CustomAppTextField extends StatelessWidget {
       child: Container(
         width: SizeConfig.getProportionalWidth(width),
         height: SizeConfig.getProportionalHeight(height),
-        margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(10)),
+        margin: EdgeInsets.only(
+            bottom: SizeConfig.getProportionalHeight(20)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(width: 3.0, color: AppColors.widgetsColor),

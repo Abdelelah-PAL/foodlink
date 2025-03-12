@@ -167,7 +167,7 @@ class _ScheduleState extends State<Schedule> {
                                   ),
                                   SizeConfig.customSizedBox(8, null, null),
                                   Text(
-                                    _getDayName(currentDate),
+                                    _getDaySubName(currentDate),
                                     style: TextStyle(
                                         color: AppColors.fontColor,
                                         fontSize: 14,
@@ -210,6 +210,7 @@ class _ScheduleState extends State<Schedule> {
                                     onTap: () async {
                                       await Get.to(AddTaskScreen(
                                           date: selectedDate,
+                                          day:_getDayName(selectedDate, settingsProvider),
                                           userId: usersProvider
                                               .selectedUser!.userId));
                                       TaskController().clearControllers();
@@ -251,8 +252,14 @@ class _ScheduleState extends State<Schedule> {
           );
   }
 
-  String _getDayName(DateTime date) {
+  String _getDaySubName(DateTime date) {
     const List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return days[date.weekday - 1];
+  }
+  String _getDayName(DateTime date, SettingsProvider settingsProvider) {
+    final List<String> days = settingsProvider.language == 'en'
+    ?['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    :['الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
     return days[date.weekday - 1];
   }
 }

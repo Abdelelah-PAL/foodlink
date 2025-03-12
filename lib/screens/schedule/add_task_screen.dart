@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/task_controller.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/models/task.dart';
-import 'package:foodlink/providers/task_provider.dart';
-import 'package:foodlink/screens/dashboard/dashboard.dart';
-import 'package:foodlink/screens/widgets/custom_app_textfield.dart';
-import 'package:foodlink/screens/widgets/custom_back_button.dart';
-import 'package:foodlink/screens/widgets/custom_button.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';
+import '../../controllers/task_controller.dart';
+import '../../core/constants/colors.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
+import '../../models/task.dart';
 import '../../providers/settings_provider.dart';
+import '../../providers/task_provider.dart';
+import '../dashboard/dashboard.dart';
+import '../widgets/custom_app_textfield.dart';
+import '../widgets/custom_back_button.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
+import 'package:intl/intl.dart' as intl;
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key, required this.date, required this.userId});
+  const AddTaskScreen(
+      {super.key, required this.date, required this.userId, required this.day});
 
   final DateTime date;
+  final String day;
   final String userId;
 
   @override
@@ -33,6 +38,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   void initState() {
     TaskController().startTimeController.text = "00:00";
     TaskController().endTimeController.text = "00:00";
+    initializeDateFormatting('ar_SA', null);
+    initializeDateFormatting('en_US', null);
     super.initState();
   }
 
@@ -40,6 +47,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     TaskProvider taskProvider = Provider.of<TaskProvider>(context);
+    String formattedDate = settingsProvider.language == "en"
+        ? intl.DateFormat.yMMMMd('en_US')
+            .format(widget.date)
+            .split(' ')
+            .reversed
+            .join(' ')
+        : intl.DateFormat.yMMMMd('ar_SA')
+            .format(widget.date)
+            .split(' ')
+            .reversed
+            .join(' ');
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
@@ -65,8 +83,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ]),
             )),
         body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.getProportionalWidth(35)),
+          padding: EdgeInsets.only(
+              left: SizeConfig.getProportionalWidth(35),
+              right: SizeConfig.getProportionalWidth(35),
+              bottom: SizeConfig.getProportionalHeight(20)),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => FocusScope.of(context).unfocus(),
@@ -75,6 +95,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ? CrossAxisAlignment.start
                   : CrossAxisAlignment.end,
               children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.getProportionalWidth(20),
+                  ),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                        textDirection: settingsProvider.language == 'en'
+                            ? TextDirection.ltr
+                            : TextDirection.rtl,
+                        text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${widget.day}  ',
+                                style: const TextStyle(
+                                  color: AppColors.widgetsColor,
+                                )
+                              ),
+                              TextSpan(
+                                  text: formattedDate,
+                                  style: const TextStyle(
+                                    color: AppColors.fontColor,
+                                  ))
+                            ],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              fontFamily: AppFonts.getPrimaryFont(context),
+                            ))),
+                  ),
+                ),
                 const CustomText(
                     isCenter: false,
                     text: "today_system",
@@ -104,7 +155,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             isCenter: false,
                             text: "start_time",
                             fontSize: 18,
-                            fontWeight: FontWeight.normal),
+                            fontWeight: FontWeight.w700),
                         CustomAppTextField(
                           width: 142,
                           height: 63,
@@ -129,7 +180,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             isCenter: false,
                             text: "end_time",
                             fontSize: 18,
-                            fontWeight: FontWeight.normal),
+                            fontWeight: FontWeight.w700),
                         CustomAppTextField(
                           width: 142,
                           height: 63,
@@ -161,7 +212,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   enabled: true,
                   isCentered: false,
                 ),
-                SizeConfig.customSizedBox(null, 100, null),
+                SizeConfig.customSizedBox(null, 80, null),
                 Center(
                   child: CustomButton(
                     onTap: () async {
@@ -229,6 +280,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     width: 126,
                     height: 45,
                     isDisabled: isDisabled,
+                    fontSize: 30,
                   ),
                 )
               ],

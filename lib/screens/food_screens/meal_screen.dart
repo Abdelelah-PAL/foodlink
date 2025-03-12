@@ -11,11 +11,10 @@ import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
-import '../notifications_screen/notifications_screen.dart';
+import '../dashboard/dashboard.dart';
 import '../widgets/custom_button.dart';
 import 'add_meal_screen.dart';
 import 'check_ingredients_screen.dart';
-import 'meal_planning_screen.dart';
 import 'meals_list_screen.dart';
 import 'widgets/ingredients_row.dart';
 import 'widgets/meal_image_container.dart';
@@ -36,10 +35,9 @@ class MealScreen extends StatelessWidget {
     UsersProvider usersProvider =
         Provider.of<UsersProvider>(context, listen: true);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:
-              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
+      body: Padding(
+        padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               MealImageContainer(
@@ -47,10 +45,18 @@ class MealScreen extends StatelessWidget {
                 isUpdateSource: false,
                 imageUrl: meal.imageUrl,
                 mealsProvider: context.watch<MealsProvider>(),
-                backButtonOnPressed: () => {
-                  Get.to(MealsListScreen(
-                      index: meal.categoryId! - 1,
-                      categoryId: meal.categoryId!))
+                backButtonOnPressed: () {
+                  switch (source) {
+                    case 'default':
+                      Get.to(MealsListScreen(
+                        index: meal.categoryId! - 1,
+                        categoryId: meal.categoryId!,
+                      ));
+                      break;
+                    case 'favorites':
+                      Get.to(const Dashboard(initialIndex: 1));
+                      break;
+                  }
                 },
               ),
               Padding(
@@ -81,6 +87,8 @@ class MealScreen extends StatelessWidget {
                               UserTypes.cooker
                           ? 100
                           : 150,
+                      horizontalPadding: 10,
+                      withBorder: true,
                     ),
                     SizeConfig.customSizedBox(null, 20, null),
                     RecipeRow(
@@ -92,6 +100,7 @@ class MealScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizeConfig.customSizedBox(null, 50, null),
               usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                   ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       if (source != 'planning') ...[
@@ -133,47 +142,23 @@ class MealScreen extends StatelessWidget {
                         isDisabled: true,
                       ),
                     ])
-                  : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      CustomButton(
-                        onTap: () {
-                          switch (source) {
-                            case 'default':
-                              Get.to(MealsListScreen(
-                                  index: meal.categoryId! - 1,
-                                  categoryId: meal.categoryId!));
-                              break;
-                            case 'notifications':
-                              Get.to(const NotificationsScreen());
-                              break;
-                            case 'planning':
-                              Get.to(const MealPlanningScreen());
-                              break;
-                          }
-                        },
-                        text: TranslationService().translate("proceed"),
-                        width: 150,
-                        height: 45,
-                        isDisabled: true,
-                      ),
-                      SizeConfig.customSizedBox(20, null, null),
-                      CustomButton(
-                        onTap: () async {
-                          await NotificationController()
-                              .addCookerNotification(meal);
-                          GeneralController().showCustomDialog(
-                              context,
-                              settingsProvider,
-                              "notification_sent",
-                              Icons.check_circle,
-                              AppColors.successColor,
-                              null);
-                        },
-                        text: TranslationService().translate("request_meal"),
-                        width: 150,
-                        height: 45,
-                        isDisabled: true,
-                      ),
-                    ])
+                  : CustomButton(
+                      onTap: () async {
+                        await NotificationController()
+                            .addCookerNotification(meal);
+                        GeneralController().showCustomDialog(
+                            context,
+                            settingsProvider,
+                            "notification_sent",
+                            Icons.check_circle,
+                            AppColors.successColor,
+                            null);
+                      },
+                      text: TranslationService().translate("request_meal"),
+                      width: 150,
+                      height: 45,
+                      isDisabled: true,
+                    )
             ],
           ),
         ),

@@ -41,7 +41,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
     return mealsProviderWatcher.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
-      resizeToAvoidBottomInset: true,
+            resizeToAvoidBottomInset: true,
             backgroundColor: AppColors.backgroundColor,
             appBar: PreferredSize(
               preferredSize:
@@ -133,8 +133,10 @@ class _MealsListScreenState extends State<MealsListScreen> {
                               left: SizeConfig.getProportionalHeight(20),
                             ),
                             child: ListMealTile(
-                                meal: mealsProvider.meals[index],
-                                favorites: false),
+                              meal: mealsProvider.meals[index],
+                              favorites: false,
+                              source: 'default',
+                            ),
                           );
                         },
                       );

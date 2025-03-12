@@ -24,36 +24,41 @@ class NameRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String writtenLanguage = GeneralController().detectLanguage(name);
-    return FittedBox(
-      child: Row(
-        textDirection: settingsProvider.language == 'en'
-            ? TextDirection.ltr
-            : TextDirection.rtl,
-        mainAxisAlignment: settingsProvider.language == 'en'
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(Assets.mealNameIcon),
-          SizeConfig.customSizedBox(
-            textWidth,
-            null,
-            Text(
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              name,
-              textAlign: writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
-              textDirection: writtenLanguage == 'en'
-                  ? TextDirection.ltr
-                  : TextDirection.rtl,
-              style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.bold,
-                  fontFamily:
-                      writtenLanguage == 'en' ? 'salsa' : 'MyriadArabic'),
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
+      child: FittedBox(
+        child: Row(
+          textDirection: settingsProvider.language == 'en'
+              ? TextDirection.ltr
+              : TextDirection.rtl,
+          mainAxisAlignment: settingsProvider.language == 'en'
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(scale: 1.3, Assets.mealNameIcon),
+            SizeConfig.customSizedBox(10, null, null),
+            SizeConfig.customSizedBox(
+              textWidth,
+              null,
+              Text(
+                maxLines: maxLines,
+                overflow: TextOverflow.ellipsis,
+                name,
+                textAlign:
+                    writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+                textDirection: writtenLanguage == 'en'
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.bold,
+                    fontFamily:
+                        writtenLanguage == 'en' ? 'salsa' : 'MyriadArabic'),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

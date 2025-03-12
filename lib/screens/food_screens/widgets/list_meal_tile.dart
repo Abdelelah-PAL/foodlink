@@ -19,10 +19,12 @@ class ListMealTile extends StatefulWidget {
     super.key,
     required this.meal,
     required this.favorites,
+    required this.source,
   });
 
   final Meal meal;
   final bool favorites;
+  final String source;
 
   @override
   State<ListMealTile> createState() => _ListMealTileState();
@@ -30,7 +32,7 @@ class ListMealTile extends StatefulWidget {
 
 class _ListMealTileState extends State<ListMealTile> {
   onTap() {
-    Get.to(MealScreen(meal: widget.meal, source: 'default'));
+    Get.to(MealScreen(meal: widget.meal, source: widget.source));
   }
 
   @override
@@ -63,6 +65,13 @@ class _ListMealTileState extends State<ListMealTile> {
               Container(
                 width: SizeConfig.getProportionalWidth(150),
                 height: SizeConfig.getProportionalHeight(110),
+                margin: EdgeInsets.only(
+                    left: settingsProvider.language == 'en'
+                        ? 0
+                        : SizeConfig.getProportionalWidth(0),
+                    right: settingsProvider.language == 'en'
+                        ? SizeConfig.getProportionalWidth(0)
+                        : 0),
                 decoration: const BoxDecoration(
                   color: AppColors.widgetsColor,
                 ),
@@ -75,89 +84,103 @@ class _ListMealTileState extends State<ListMealTile> {
                     : const Icon(Icons.camera_alt_outlined),
               ),
               Expanded(
-                child: Column(
-                  children: [
-                    NameRow(
-                      name: widget.meal.name,
-                      fontSize: 15,
-                      textWidth: 135,
-                      settingsProvider: settingsProvider,
-                      height: 25,
-                      maxLines: 1,
-                    ),
-                    IngredientsRow(
-                      meal: widget.meal,
-                      fontSize: 14,
-                      textWidth: 135,
-                      maxLines: 2,
-                      settingsProvider: settingsProvider,
-                      height: 35,
-                    ),
-                    SizeConfig.customSizedBox(null, 10, null),
-                    SizeConfig.customSizedBox(
-                      null,
-                      13,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            !widget.favorites
-                                ? GestureDetector(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: settingsProvider.language == 'en'
+                          ? 0
+                          : SizeConfig.getProportionalWidth(5),
+                      right: settingsProvider.language == 'en'
+                          ? SizeConfig.getProportionalWidth(5)
+                          : 0),
+                  child: Column(
+                    children: [
+                      NameRow(
+                        name: widget.meal.name,
+                        fontSize: 15,
+                        textWidth: 135,
+                        settingsProvider: settingsProvider,
+                        height: 25,
+                        maxLines: 1,
+                      ),
+                      IngredientsRow(
+                        meal: widget.meal,
+                        fontSize: 14,
+                        textWidth: 135,
+                        maxLines: 2,
+                        settingsProvider: settingsProvider,
+                        height: 50,
+                        horizontalPadding: 8,
+                        withBorder: false,
+                      ),
+                      SizeConfig.customSizedBox(null, 10, null),
+                      SizeConfig.customSizedBox(
+                        null,
+                        13,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top:SizeConfig.getProportionalHeight(0) ,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              !widget.favorites
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        final newIsFavorite =
+                                            !widget.meal.isFavorite!;
+                                        await MealsProvider().toggleIsFavorite(
+                                            widget.meal, newIsFavorite);
+                                        setState(() {
+                                          widget.meal.isFavorite =
+                                              newIsFavorite;
+                                        });
+                                      },
+                                      child: widget.meal.isFavorite!
+                                          ? const Icon(Icons.favorite,
+                                              color: AppColors.errorColor)
+                                          : const Icon(Icons.favorite_outline))
+                                  : const Icon(Icons.favorite,
+                                      color: AppColors.errorColor),
+                              SizeConfig.customSizedBox(5, null, null),
+                              if (usersProvider.selectedUser!.userTypeId ==
+                                  UserTypes.cooker) ...[
+                                GestureDetector(
                                     onTap: () async {
-                                      final newIsFavorite =
-                                          !widget.meal.isFavorite!;
-                                      await MealsProvider().toggleIsFavorite(
-                                          widget.meal, newIsFavorite);
-                                      setState(() {
-                                        widget.meal.isFavorite = newIsFavorite;
-                                      });
+                                      MealsProvider()
+                                          .fillDataForEdition(widget.meal);
+                                      Get.to(AddMealScreen(
+                                          categoryId: widget.meal.categoryId!,
+                                          isAddScreen: false,
+                                          meal: widget.meal,
+                                          isUpdateScreen: true,
+                                          backButtonCallBack: () {
+                                            Get.to(MealsListScreen(
+                                                index: widget.meal.categoryId!,
+                                                categoryId:
+                                                    widget.meal.categoryId!));
+                                            MealsProvider().resetValues();
+                                          }));
                                     },
-                                    child: widget.meal.isFavorite!
-                                        ? const Icon(Icons.favorite,
-                                            color: AppColors.errorColor)
-                                        : const Icon(Icons.favorite_outline))
-                                : const Icon(Icons.favorite,
-                                    color: AppColors.errorColor),
-                            SizeConfig.customSizedBox(5, null, null),
-                            if (usersProvider.selectedUser!.userTypeId ==
-                                UserTypes.cooker) ...[
+                                    child: const Icon(Icons.edit_outlined)),
+                                SizeConfig.customSizedBox(5, null, null)
+                              ],
                               GestureDetector(
                                   onTap: () async {
-                                    MealsProvider()
-                                        .fillDataForEdition(widget.meal);
-                                    Get.to(AddMealScreen(
-                                        categoryId: widget.meal.categoryId!,
-                                        isAddScreen: false,
-                                        meal: widget.meal,
-                                        isUpdateScreen: true,
-                                        backButtonCallBack: () {
-                                          Get.to(MealsListScreen(
-                                              index: widget.meal.categoryId!,
-                                              categoryId:
-                                                  widget.meal.categoryId!));
-                                          MealsProvider().resetValues();
-                                        }));
+                                    await MealsProvider()
+                                        .deleteMeal(widget.meal.documentId!);
+                                    setState(() {
+                                      MealsProvider().getAllMealsByCategory(
+                                          widget.meal.categoryId,
+                                          widget.meal.userId);
+                                    });
                                   },
-                                  child: const Icon(Icons.edit_outlined)),
-                              SizeConfig.customSizedBox(5, null, null)
+                                  child: const Icon(Icons.delete_outlined)),
                             ],
-                            GestureDetector(
-                                onTap: () async {
-                                  await MealsProvider()
-                                      .deleteMeal(widget.meal.documentId!);
-                                  setState(() {
-                                    MealsProvider().getAllMealsByCategory(
-                                        widget.meal.categoryId,
-                                        widget.meal.userId);
-                                  });
-                                },
-                                child: const Icon(Icons.delete_outlined)),
-                          ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
