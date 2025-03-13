@@ -153,5 +153,9 @@
   "task_overlapping": "وقت المهمّة متداخل مع مهمّة أخرى",
   "task_name_is_mandatory": "أدخل إسم المهمّة",
   "bigger_end_time":"يجب أن يكون وقت الانتهاء بعد وقت البدء",
-  "add_missing_items": "أضف المواد الناقصة"
+  "add_missing_items": "أضف المواد الناقصة",
+  "done_confirmation": "تم تأكيد ",
+  "for_this_day": "لهذا اليوم ",
+  "by_partner": " من قِِبَل شريكك في التطبيق",
+  "confirmation_sent": "تم إرسال التأكيد بنجاح"
 }

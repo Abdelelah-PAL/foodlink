@@ -46,6 +46,7 @@ class CustomAppIconicTextField extends StatelessWidget {
           children: [
             SizeConfig.customSizedBox(
                 iconSizeFactor, iconSizeFactor, Image.asset(icon)),
+            SizeConfig.customSizedBox(10, null, null),
             CustomText(
               isCenter: false,
               text: TranslationService().translate(headerText),

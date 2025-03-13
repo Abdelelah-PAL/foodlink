@@ -153,5 +153,9 @@
   "task_overlapping": "Task time overlaps with another task",
   "task_name_is_mandatory": "Enter task name",
   "bigger_end_time": "End time must be after the start time",
-  "add_missing_items": "Add missing items"
+  "add_missing_items": "Add missing items",
+  "done_confirmation": " has been confirmed ",
+  "for_this_day": "for today ",
+  "by_partner": "by your FoodLink partner",
+  "confirmation_sent":"Confirmation has been sent successfully"
 }

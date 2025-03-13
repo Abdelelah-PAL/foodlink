@@ -11,6 +11,7 @@ class Notifications {
   bool seen;
   Timestamp timestamp;
   bool isMealPlanned;
+  bool isConfirmation;
 
   Notifications(
       {this.imageUrl,
@@ -22,7 +23,8 @@ class Notifications {
       required this.notes,
       required this.seen,
       required this.timestamp,
-      required this.isMealPlanned});
+      required this.isMealPlanned,
+      required this.isConfirmation});
 
   factory Notifications.fromJson(Map<String, dynamic> json) {
     return Notifications(
@@ -30,12 +32,13 @@ class Notifications {
         userId: json['user_id'],
         userTypeId: json['user_type_id'],
         mealName: json['meal_name'],
-        mealId:  json['meal_id'],
+        mealId: json['meal_id'],
         missingIngredients: List<String>.from(json['missing_ingredients']),
         notes: json['notes'],
         seen: json['seen'],
         timestamp: json['timestamp'],
-        isMealPlanned: json['is_meal_planned']);
+        isMealPlanned: json['is_meal_planned'],
+        isConfirmation:  json['is_confirmation']);
   }
 
   Map<String, dynamic> toMap() {
@@ -49,7 +52,8 @@ class Notifications {
       'notes': notes,
       'seen': seen,
       'timestamp': timestamp,
-      'is_meal_planned': isMealPlanned
+      'is_meal_planned': isMealPlanned,
+      'is_confirmation': isConfirmation,
     };
   }
 }

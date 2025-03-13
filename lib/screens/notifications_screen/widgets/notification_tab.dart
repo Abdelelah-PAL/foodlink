@@ -41,101 +41,171 @@ class NotificationsTab extends StatelessWidget {
               String duration = NotificationController().getDuration(
                   notifications[index].timestamp, settingsProvider.language);
 
-              return ListTile(
-                onTap: () async {
-                  Meal meal = notifications[index].isMealPlanned
-                      ? await MealsProvider()
-                          .getPlannedMealById(notifications[index].mealId)
-                      : await MealsProvider()
-                          .getMealById(notifications[index].mealId);
-                  usersProvider.selectedUser!.userTypeId == UserTypes.user
-                      ? Get.to(MissingIngredientsScreen(
-                          notification: notifications[index]))
-                      : Get.to(MealScreen(
-                          meal: meal,
-                          source: 'notifications',
-                        ));
+              return FutureBuilder<Meal>(
+                future: notifications[index].isMealPlanned
+                    ? MealsProvider()
+                        .getPlannedMealById(notifications[index].mealId)
+                    : MealsProvider().getMealById(notifications[index].mealId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return const Center(child: Text("Error loading meal"));
+                  }
+
+                  Meal meal = snapshot.data!;
+
+                  return ListTile(
+                    onTap: () {
+                      usersProvider.selectedUser!.userTypeId == UserTypes.user
+                          ? Get.to(MissingIngredientsScreen(
+                              notification: notifications[index]))
+                          : Get.to(MealScreen(
+                              meal: meal,
+                              source: 'notifications',
+                            ));
+                    },
+                    leading: settingsProvider.language == "en"
+                        ? meal.imageUrl != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(meal.imageUrl!))
+                            : Container(
+                                width: SizeConfig.getProportionalWidth(42),
+                                height: SizeConfig.getProportionalHeight(42),
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.widgetsColor),
+                              )
+                        : null,
+                    trailing: settingsProvider.language == "en"
+                        ? null
+                        : meal.imageUrl != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(meal.imageUrl!))
+                            : Container(
+                                width: SizeConfig.getProportionalWidth(42),
+                                height: SizeConfig.getProportionalHeight(42),
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.widgetsColor),
+                              ),
+                    title: RichText(
+                      textAlign: settingsProvider.language == "en"
+                          ? TextAlign.left
+                          : TextAlign.right,
+                      textDirection: settingsProvider.language == "en"
+                          ? TextDirection.ltr
+                          : TextDirection.rtl,
+                      text: notifications[index].isConfirmation == false
+                          ? TextSpan(children: [
+                              TextSpan(
+                                text: TranslationService()
+                                    .translate('notification_text'),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: meal.name,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: settingsProvider.language == 'en'
+                                    ? ','
+                                    : '،',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: usersProvider.selectedUser!.userTypeId ==
+                                        UserTypes.user
+                                    ? TranslationService()
+                                        .translate('user_notification_text_2')
+                                    : TranslationService().translate(
+                                        'cooker_notification_text_2'),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                            ])
+                          : TextSpan(children: [
+                              TextSpan(
+                                text: settingsProvider.language == 'en'
+                                    ? meal.name
+                                    : TranslationService()
+                                        .translate('done_confirmation'),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight:
+                                        settingsProvider.language == 'en'
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: settingsProvider.language == 'en'
+                                    ? TranslationService()
+                                        .translate('done_confirmation')
+                                    : meal.name,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight:
+                                        settingsProvider.language == 'en'
+                                            ? FontWeight.normal
+                                            : FontWeight.bold,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: TranslationService()
+                                    .translate('for_this_day'),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                              TextSpan(
+                                text: TranslationService()
+                                    .translate('by_partner'),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.fontColor,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context)),
+                              ),
+                            ]),
+                    ),
+                    subtitle: CustomText(
+                      isCenter: false,
+                      text: duration,
+                      color: AppColors.notificationDurationColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  );
                 },
-                leading: settingsProvider.language == "en"
-                    ? notifications[index].imageUrl != null
-                        ? CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(notifications[index].imageUrl!))
-                        : Container(
-                            width: SizeConfig.getProportionalWidth(42),
-                            height: SizeConfig.getProportionalHeight(42),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.widgetsColor),
-                          )
-                    : null,
-                trailing: settingsProvider.language == "en"
-                    ? null
-                    : notifications[index].imageUrl != null
-                        ? CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(notifications[index].imageUrl!))
-                        : Container(
-                            width: SizeConfig.getProportionalWidth(42),
-                            height: SizeConfig.getProportionalHeight(42),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.widgetsColor),
-                          ),
-                title: RichText(
-                  textAlign: settingsProvider.language == "en"
-                      ? TextAlign.left
-                      : TextAlign.right,
-                  textDirection: settingsProvider.language == "en"
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: TranslationService().translate('notification_text'),
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.fontColor,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: AppFonts.getPrimaryFont(context)),
-                    ),
-                    TextSpan(
-                      text: notifications[index].mealName,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.fontColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppFonts.getPrimaryFont(context)),
-                    ),
-                    TextSpan(
-                      text: settingsProvider.language == 'en' ? ',' : '،',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.fontColor,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: AppFonts.getPrimaryFont(context)),
-                    ),
-                    TextSpan(
-                      text: usersProvider.selectedUser!.userTypeId ==
-                              UserTypes.user
-                          ? TranslationService()
-                              .translate('user_notification_text_2')
-                          : TranslationService()
-                              .translate('cooker_notification_text_2'),
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.fontColor,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: AppFonts.getPrimaryFont(context)),
-                    ),
-                  ]),
-                ),
-                subtitle: CustomText(
-                  isCenter: false,
-                  text: duration,
-                  color: AppColors.notificationDurationColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                ),
               );
             },
           );

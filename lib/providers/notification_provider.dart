@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/services/notifications_services.dart';
+import '../controllers/user_types.dart';
 import '../models/notification.dart';
+import '../services/notifications_services.dart';
 
 class NotificationsProvider with ChangeNotifier {
   static final NotificationsProvider _instance =
@@ -42,7 +42,8 @@ class NotificationsProvider with ChangeNotifier {
           notes: doc.notes,
           seen: doc.seen,
           timestamp: doc.timestamp,
-          isMealPlanned: doc.isMealPlanned
+          isMealPlanned: doc.isMealPlanned,
+          isConfirmation: doc.isConfirmation,
         );
         if (doc.userTypeId == UserTypes.user) {
           userNotifications.add(notification);
@@ -69,10 +70,9 @@ class NotificationsProvider with ChangeNotifier {
   }
 
   Future<void> clearUnseenNotification(userTypeId) async {
-    if(userTypeId == UserTypes.user) {
+    if (userTypeId == UserTypes.user) {
       userUnseenNotifications.clear();
-    }
-    else {
+    } else {
       cookerUnseenNotifications.clear();
     }
     await _ns.setNotificationsToSeen(userTypeId);

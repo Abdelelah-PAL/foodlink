@@ -21,6 +21,7 @@ class NameRow extends StatelessWidget {
   final double height;
   final int maxLines;
 
+
   @override
   Widget build(BuildContext context) {
     String writtenLanguage = GeneralController().detectLanguage(name);
@@ -31,7 +32,7 @@ class NameRow extends StatelessWidget {
           textDirection: settingsProvider.language == 'en'
               ? TextDirection.ltr
               : TextDirection.rtl,
-          mainAxisAlignment: settingsProvider.language == 'en'
+          mainAxisAlignment: writtenLanguage == 'en'
               ? MainAxisAlignment.start
               : MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +47,7 @@ class NameRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 name,
                 textAlign:
-                    writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+                    settingsProvider.language == 'en' ? TextAlign.end : TextAlign.start,
                 textDirection: writtenLanguage == 'en'
                     ? TextDirection.ltr
                     : TextDirection.rtl,

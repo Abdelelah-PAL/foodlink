@@ -56,6 +56,8 @@ class MealScreen extends StatelessWidget {
                     case 'favorites':
                       Get.to(const Dashboard(initialIndex: 1));
                       break;
+                    default:
+                      Get.back();
                   }
                 },
               ),

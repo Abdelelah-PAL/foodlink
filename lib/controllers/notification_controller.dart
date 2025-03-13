@@ -43,6 +43,7 @@ class NotificationController {
         seen: false,
         timestamp: Timestamp.now(),
         isMealPlanned: meal.isPlanned,
+        isConfirmation: false,
       ));
       GeneralController().showCustomDialog(
           context,
@@ -52,19 +53,11 @@ class NotificationController {
           AppColors.successColor,
           null);
       MealController().missingIngredients.clear();
-      NotificationController ().addNoteController.clear();
+      NotificationController().addNoteController.clear();
+    } else {
+      GeneralController().showCustomDialog(context, settingsProvider,
+          "add_missing_items", Icons.error, AppColors.errorColor, null);
     }
-    else {
-      GeneralController().showCustomDialog(
-          context,
-          settingsProvider,
-          "add_missing_items",
-          Icons.error,
-          AppColors.errorColor,
-          null);
-    }
-
-
   }
 
   Future<void> addCookerNotification(meal) async {
@@ -81,7 +74,26 @@ class NotificationController {
         notes: null,
         seen: false,
         timestamp: Timestamp.now(),
-        isMealPlanned: meal.isPlanned));
+        isMealPlanned: meal.isPlanned,
+        isConfirmation: false));
+  }
+
+  Future<void> addConfirmationNotification(meal) async {
+    UserDetails userToNotify = UsersProvider()
+        .loggedInUsers
+        .firstWhere((user) => user.userTypeId == UserTypes.cooker);
+    await NotificationsProvider().addNotification(Notifications(
+        imageUrl: meal.imageUrl,
+        userId: userToNotify.userId,
+        userTypeId: userToNotify.userTypeId!,
+        mealId: meal.documentId,
+        mealName: meal.name,
+        missingIngredients: [],
+        notes: null,
+        seen: false,
+        timestamp: Timestamp.now(),
+        isMealPlanned: meal.isPlanned,
+        isConfirmation: true));
   }
 
   String getDuration(Timestamp notificationTime, String language) {

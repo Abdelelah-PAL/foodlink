@@ -26,7 +26,7 @@ class RecipeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String writtenLanguage = GeneralController().detectLanguage(meal.recipe!);
     return Container(
-      padding: EdgeInsets.only(left: SizeConfig.getProportionalWidth(10)) ,
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)) ,
       width: 348,
       height: 200,
       decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class RecipeRow extends StatelessWidget {
             scale: 1.3,
           ),
           SizeConfig.customSizedBox(
-            280,
+            270,
             usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                 ? 200
                 : 225,
@@ -60,7 +60,7 @@ class RecipeRow extends StatelessWidget {
                     ? TextDirection.ltr
                     : TextDirection.rtl,
                 textAlign:
-                    writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+                settingsProvider.language == 'en' ? TextAlign.end : TextAlign.start,
                 style: TextStyle(
                     fontSize: fontSize,
                     fontFamily:

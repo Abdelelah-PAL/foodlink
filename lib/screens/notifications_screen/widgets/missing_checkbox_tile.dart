@@ -29,7 +29,9 @@ class MissingCheckboxTile extends StatelessWidget {
             left: SizeConfig.getProportionalWidth(20)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          textDirection: TextDirection.rtl,
+          textDirection: settingsProvider.language == 'en'
+              ? TextDirection.rtl
+              : TextDirection.ltr,
           children: [
             CustomText(
                 isCenter: false,

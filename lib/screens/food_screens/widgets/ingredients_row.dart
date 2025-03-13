@@ -65,7 +65,7 @@ class IngredientsRow extends StatelessWidget {
                   maxLines: maxLines,
                   overflow: TextOverflow.ellipsis,
                   textAlign:
-                      writtenLanguage == 'en' ? TextAlign.end : TextAlign.start,
+                  settingsProvider.language == 'en' ? TextAlign.end : TextAlign.start,
                   textDirection: writtenLanguage == 'en'
                       ? TextDirection.ltr
                       : TextDirection.rtl,
