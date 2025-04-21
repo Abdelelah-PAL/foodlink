@@ -1,0 +1,92 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+*.bak
+*.tmp
+*.lock
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+__MACOSX
+*.icloud
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+android/key.properties
+
+# Symbolication and Obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android related
+**/android/**/debug/
+**/android/**/profile/
+**/android/**/release/
+**/android/app/build/
+**/android/local.properties
+**/android/gradle.properties
+
+# iOS related
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+
+# IntelliJ/IDEA related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+
+# Generated files
+*.generated.*
+*.g.dart
+*.freezed.dart
+
+# Logs
+*.log
+*.gz
+*.out
+
+# Migration tools
+migrate_working_dir/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.lock
