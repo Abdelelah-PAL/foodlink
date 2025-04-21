@@ -152,14 +152,22 @@
   "add_plan_error": "أضف خطة لتتمكن من الحفظ",
   "task_overlapping": "وقت المهمّة متداخل مع مهمّة أخرى",
   "task_name_is_mandatory": "أدخل إسم المهمّة",
+<<<<<<< HEAD
   "bigger_end_time": "يجب أن يكون وقت الانتهاء بعد وقت البدء",
+=======
+  "bigger_end_time":"يجب أن يكون وقت الانتهاء بعد وقت البدء",
+>>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
   "add_missing_items": "أضف المواد الناقصة",
   "done_confirmation": "تم تأكيد ",
   "for_this_day": "لهذا اليوم ",
   "by_partner": " من قِِبَل شريكك في التطبيق",
+<<<<<<< HEAD
   "confirmation_sent": "تم إرسال التأكيد بنجاح",
   "source": "المصدر",
   "no_source": "لا يوجد مصدر",
   "no_recipe": "لا يوجد وصفة"
 
+=======
+  "confirmation_sent": "تم إرسال التأكيد بنجاح"
+>>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
 }
