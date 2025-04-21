@@ -1144,20 +1144,16 @@ PODS:
     - abseil/base/config
     - abseil/meta/type_traits
     - abseil/xcprivacy
-  - abseil/xcprivacy (1.20240116.2)
-<<<<<<< HEAD
   - AppAuth (1.7.6):
     - AppAuth/Core (= 1.7.6)
     - AppAuth/ExternalUserAgent (= 1.7.6)
   - AppAuth/Core (1.7.6)
   - AppAuth/ExternalUserAgent (1.7.6):
-=======
   - AppAuth (1.7.5):
     - AppAuth/Core (= 1.7.5)
     - AppAuth/ExternalUserAgent (= 1.7.5)
   - AppAuth/Core (1.7.5)
   - AppAuth/ExternalUserAgent (1.7.5):
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
     - AppAuth/Core
   - AppCheckCore (11.2.0):
     - GoogleUtilities/Environment (~> 8.0)
@@ -1169,7 +1165,6 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.36):
     - BoringSSL-GRPC/Interface (= 0.0.36)
   - BoringSSL-GRPC/Interface (0.0.36)
-<<<<<<< HEAD
   - cloud_firestore (5.6.3):
     - Firebase/Firestore (= 11.7.0)
     - firebase_core
@@ -1257,12 +1252,10 @@ PODS:
     - FirebaseAuthInterop (~> 11.0)
     - FirebaseCore (~> 11.4)
     - FirebaseCoreExtension (~> 11.4)
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
     - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GTMSessionFetcher/Core (< 5.0, >= 3.4)
     - RecaptchaInterop (~> 100.0)
-<<<<<<< HEAD
   - FirebaseAuthInterop (11.11.0)
   - FirebaseCore (11.7.0):
     - FirebaseCoreInternal (~> 11.7.0)
@@ -1304,16 +1297,12 @@ PODS:
     - abseil/time (~> 1.20240116.1)
     - abseil/types (~> 1.20240116.1)
     - FirebaseAppCheckInterop (~> 11.0)
-<<<<<<< HEAD
     - FirebaseCore (~> 11.7.0)
-=======
     - FirebaseCore (~> 11.0)
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
     - "gRPC-C++ (~> 1.65.0)"
     - gRPC-Core (~> 1.65.0)
     - leveldb-library (~> 1.22)
     - nanopb (~> 3.30910.0)
-<<<<<<< HEAD
   - FirebaseSharedSwift (11.11.0)
   - FirebaseStorage (11.7.0):
     - FirebaseAppCheckInterop (~> 11.0)
@@ -1479,12 +1468,8 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-<<<<<<< HEAD
   - url_launcher_ios (0.0.1):
     - Flutter
-=======
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
-
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
@@ -1496,10 +1481,7 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-<<<<<<< HEAD
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-=======
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
 
 SPEC REPOS:
   trunk:
@@ -1551,7 +1533,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-<<<<<<< HEAD
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -1617,13 +1598,7 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-<<<<<<< HEAD
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-
 PODFILE CHECKSUM: 83f6a08c58d4b249cda5d50acce1e33fac59623c
-=======
-
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
-
 COCOAPODS: 1.16.2

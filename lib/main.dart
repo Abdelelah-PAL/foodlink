@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
-
 import 'core/constants/colors.dart';
 import 'providers/authentication_provider.dart';
 import 'providers/beyond_calories_articles_provider.dart';

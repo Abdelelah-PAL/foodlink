@@ -25,6 +25,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<UserCredential?> login(String email, String password) async {
+    print(email);
      isLoading = true;
      notifyListeners();
      var userCredential = await _authService.login(email, password);

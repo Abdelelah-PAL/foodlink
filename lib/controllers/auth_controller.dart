@@ -18,7 +18,7 @@ class AuthController {
   bool rememberMe = true;
   String errorText = "";
 
-  void checkEmptyFields(login) {
+  bool checkEmptyFields(login) {
     if (login == false) {
       noneIsEmpty = emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty &&
@@ -30,42 +30,40 @@ class AuthController {
     errorText = noneIsEmpty
         ? ""
         : TranslationService().translate("all_fields_required");
+    return noneIsEmpty;
   }
 
   void checkMatchedPassword() {
-    isMatched = passwordController.text.tr == confirmedPasswordController.text.tr;
-    errorText =
-        !isMatched ? TranslationService().translate("password_not_matched") : "";
+    isMatched =
+        passwordController.text.trim() == confirmedPasswordController.text.trim();
+    errorText = !isMatched
+        ? TranslationService().translate("password_not_matched")
+        : "";
   }
 
   void checkValidPassword() {
-    String password= passwordController.text.tr;
+    String password = passwordController.text.trim();
     if (password.length < 6) {
-      errorText = 'Password must be at least 6 characters long.';
+      errorText = 'password_characters_long';
       passwordIsValid = false;
-    }
-    else if (!RegExp(r'[A-Z]').hasMatch(password)) {
-      errorText = 'Password must contain at least one uppercase letter.';
+    } else if (!RegExp(r'[A-Z]').hasMatch(password)) {
+      errorText = 'uppercase_letter_required';
       passwordIsValid = false;
-    }
-    else if (!RegExp(r'[a-z]').hasMatch(password)) {
-      errorText = 'Password must contain at least one lowercase letter.';
+    } else if (!RegExp(r'[a-z]').hasMatch(password)) {
+      errorText = 'lowercase_letter_required';
       passwordIsValid = false;
-    }
-    else if (!RegExp(r'\d').hasMatch(password)) {
-      errorText = 'Password must contain at least one number.';
+    } else if (!RegExp(r'\d').hasMatch(password)) {
+      errorText = 'number_required';
       passwordIsValid = false;
-    }
-   else if (!RegExp(r'[!@#\$&*~]').hasMatch(password)) {
-      errorText = 'Password must contain at least one special character (!@#\$&*~).';
+    } else if (!RegExp(r'[!@#\$&*~]').hasMatch(password)) {
+      errorText = 'character_required';
       passwordIsValid = false;
-    }
-   else {
+    } else {
       errorText = "";
       passwordIsValid = true;
     }
-  }
 
+  }
 
   void changeTextFieldsColors(login) {
     if (login == false) {
@@ -115,7 +113,6 @@ class AuthController {
     await prefs.setString('email', email);
     await prefs.setString('password', password);
     await prefs.setBool('saved for $email', true);
-
   }
 
   Future<Map<String, String>> getLoginInfo() async {

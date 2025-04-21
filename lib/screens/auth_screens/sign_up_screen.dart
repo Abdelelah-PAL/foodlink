@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/models/user_details.dart';
-import 'package:foodlink/screens/auth_screens/login_screen.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_auth_btn.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_auth_divider.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_auth_footer.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_auth_textfield.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_error_txt.dart';
-import 'package:foodlink/screens/auth_screens/widgets/custom_google_auth_btn.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
+import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
+import '../../models/user_details.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
+import '../../services/translation_services.dart';
 import '../widgets/custom_text.dart';
+import 'login_screen.dart';
+import 'widgets/custom_auth_btn.dart';
+import 'widgets/custom_auth_divider.dart';
+import 'widgets/custom_auth_footer.dart';
+import 'widgets/custom_auth_textfield.dart';
+import 'widgets/custom_error_txt.dart';
+import 'widgets/custom_google_auth_btn.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -43,7 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
 
     return Scaffold(
@@ -62,21 +61,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizeConfig.customSizedBox(
                     179, 179, Image.asset(Assets.pureLogo)),
                 Padding(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.getProportionalHeight(10),
-                      bottom: SizeConfig.getProportionalHeight(13)),
-                  child:
-                  const CustomText(
-                    isCenter: true,
-                    text: "create_an_account",
-                    fontSize: 24,
-                    fontWeight: FontWeight.normal,
-                    color: AppColors.fontColor,
-                  )
-                ),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.getProportionalHeight(10),
+                        bottom: SizeConfig.getProportionalHeight(13)),
+                    child: const CustomText(
+                      isCenter: true,
+                      text: "create_an_account",
+                      fontSize: 24,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.fontColor,
+                    )),
                 CustomErrorTxt(
-                    text: TranslationService()
-                        .translate(_authController.errorText),
+                  text:
+                      TranslationService().translate(_authController.errorText),
                   settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
@@ -97,9 +94,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: TranslationService().translate('confirm_password'),
                   obscureText: true,
                   textEditingController:
-                  _authController.confirmedPasswordController,
+                      _authController.confirmedPasswordController,
                   borderColor:
-                  _authController.confirmPasswordTextFieldBorderColor,
+                      _authController.confirmPasswordTextFieldBorderColor,
                   settingsProvider: settingsProvider,
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
@@ -107,21 +104,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   text: TranslationService().translate('signup'),
                   onTap: () async {
                     _authController.checkEmptyFields(false);
-                    _authController.checkValidPassword();
-                    _authController.checkMatchedPassword();
-
-                    if (!_authController.noneIsEmpty ||
-                        !_authController.isMatched ||
-                        !_authController.passwordIsValid
-                   ) {
+                    if (!_authController.noneIsEmpty) {
                       setState(() {
                         _authController.changeTextFieldsColors(false);
                       });
                       return;
-                    } else {
-                      if (_authController.isMatched && _authController.passwordIsValid) {
+                    }
+                    _authController.checkMatchedPassword();
+                    if (!_authController.isMatched) {
+                      setState(() {
+                        _authController.changeTextFieldsColors(false);
+                      });
+                      return;
+                    }
+                    _authController.checkValidPassword();
+                    if (!_authController.passwordIsValid) {
+                      setState(() {
+                        _authController.changeTextFieldsColors(false);
+                      });
+                      return;
+                    }
+                      if (_authController.isMatched &&
+                          _authController.passwordIsValid) {
                         var user =
-                        await AuthProvider().signUpWithEmailAndPassword(
+                            await AuthProvider().signUpWithEmailAndPassword(
                           _authController.emailController.text,
                           _authController.passwordController.text,
                         );
@@ -135,11 +141,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() {
                           _authController.changeTextFieldsColors(false);
                         });
-                        await SettingsProvider()
-                            .addSettings(user.uid);
+                        await SettingsProvider().addSettings(user.uid);
                         Get.to(() => const LoginScreen());
                       }
-                    }
                   },
                 ),
                 Padding(

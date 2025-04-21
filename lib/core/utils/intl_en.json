@@ -157,12 +157,13 @@
   "done_confirmation": " has been confirmed ",
   "for_this_day": "for today ",
   "by_partner": "by your FoodLink partner",
-<<<<<<< HEAD
-  "confirmation_sent":"Confirmation has been sent successfully",
   "source": "Source",
   "no_source": "No Source",
-  "no_recipe": "No Recipe"
-=======
-  "confirmation_sent":"Confirmation has been sent successfully"
->>>>>>> e1d0f5c22f51d56913b170f5af15142fedd8ffc2
+  "no_recipe": "No Recipe",
+  "confirmation_sent":"Confirmation has been sent successfully",
+  "password_characters_long":"Password must be at least 6 characters long",
+  "uppercase_letter_required": "Password must contain at least one uppercase letter",
+  "lowercase_letter_required": "Password must contain at least one lowercase letter",
+  "number__required": "Password must contain at least one number",
+  "character_required":"Password must contain at least one special character (!@#\\$&*~)"
 }
