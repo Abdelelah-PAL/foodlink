@@ -25,12 +25,20 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<UserCredential?> login(String email, String password) async {
-    print(email);
-     isLoading = true;
+    isLoading = true;
      notifyListeners();
      var userCredential = await _authService.login(email, password);
      isLoading = false;
      notifyListeners();
      return userCredential;
+  }
+
+  Future<UserCredential?> signUpWithGoogle() async {
+    isLoading = true;
+    notifyListeners();
+    var userCredential = await _authService.signInWithGoogle();
+    isLoading = false;
+    notifyListeners();
+    return userCredential;
   }
 }

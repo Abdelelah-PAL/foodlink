@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:foodlink/services/translation_services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../controllers/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -39,6 +40,22 @@ class AuthService with ChangeNotifier {
         AuthController().errorText = e.message!;
       }
       return null; // Ensure the function always returns a value
+    }
+  }
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return null;
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      return await _auth.signInWithCredential(credential);
+    } catch (e) {
+      print("Google sign-in error: $e");
+      return null;
     }
   }
 }

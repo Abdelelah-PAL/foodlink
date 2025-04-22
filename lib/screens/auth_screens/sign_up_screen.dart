@@ -124,26 +124,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                       return;
                     }
-                      if (_authController.isMatched &&
-                          _authController.passwordIsValid) {
-                        var user =
-                            await AuthProvider().signUpWithEmailAndPassword(
-                          _authController.emailController.text,
-                          _authController.passwordController.text,
-                        );
-                        UserDetails userDetails = UserDetails(
-                          userId: user!.uid,
-                          userTypeId: null,
-                          email: user.email!,
-                          username: null,
-                        );
-                        UsersProvider().addUserDetails(userDetails);
-                        setState(() {
-                          _authController.changeTextFieldsColors(false);
-                        });
-                        await SettingsProvider().addSettings(user.uid);
-                        Get.to(() => const LoginScreen());
-                      }
+                    if (_authController.isMatched &&
+                        _authController.passwordIsValid) {
+                      var user =
+                          await AuthProvider().signUpWithEmailAndPassword(
+                        _authController.emailController.text,
+                        _authController.passwordController.text,
+                      );
+                      UserDetails userDetails = UserDetails(
+                        userId: user!.uid,
+                        userTypeId: null,
+                        email: user.email!,
+                        username: null,
+                      );
+                      UsersProvider().addUserDetails(userDetails);
+                      setState(() {
+                        _authController.changeTextFieldsColors(false);
+                      });
+                      await SettingsProvider().addSettings(user.uid);
+                      Get.to(() => const LoginScreen());
+                    }
                   },
                 ),
                 Padding(
@@ -155,7 +155,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 CustomGoogleAuthBtn(
                   text: TranslationService().translate("google_signup"),
                   settingsProvider: settingsProvider,
-                  onTap: () {},
+                  onTap: () async {
+                     var userCredential = await AuthProvider().signUpWithGoogle();
+                     UserDetails userDetails = UserDetails(
+                       userId: userCredential!.user!.uid,
+                       userTypeId: null,
+                       email: userCredential.user!.email!,
+                       username: null,
+                     );
+                      UsersProvider().addUserDetails(userDetails);
+                     await SettingsProvider().addSettings(userCredential.user!.uid);
+                    Get.to(const LoginScreen());
+                  },
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthFooter(

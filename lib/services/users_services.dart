@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foodlink/controllers/user_types.dart';
+import '../controllers/user_types.dart';
 import '../models/user_details.dart';
 
 class UsersServices with ChangeNotifier {
