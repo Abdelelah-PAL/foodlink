@@ -142,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         _authController.changeTextFieldsColors(false);
                       });
                       await SettingsProvider().addSettings(user.uid);
-                      Get.to(() => const LoginScreen());
+                      Get.to(() => const LoginScreen(firstScreen: false,));
                     }
                   },
                 ),
@@ -165,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                      );
                       UsersProvider().addUserDetails(userDetails);
                      await SettingsProvider().addSettings(userCredential.user!.uid);
-                    Get.to(const LoginScreen());
+                    Get.to(const LoginScreen(firstScreen: false,));
                   },
                 ),
                 SizeConfig.customSizedBox(null, 50, null),
@@ -174,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tailText: "login",
                   settingsProvider: settingsProvider,
                   onTap: () {
-                    Get.to(() => const LoginScreen());
+                    Get.to(() => const LoginScreen(firstScreen: false,));
                   },
                 )
               ],

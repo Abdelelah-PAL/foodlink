@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/screens/onBoarding_screen/onboarding_screen.dart';
 import 'package:get/get.dart';
+import '../../core/constants/assets.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../core/constants/colors.dart';
+import '../onboarding_screen/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

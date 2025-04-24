@@ -122,4 +122,9 @@ class AuthController {
     passwordController.text = password;
     return {'email': email, 'password': password};
   }
+
+  Future<void> completeOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_complete', true);
+  }
 }

@@ -2,8 +2,10 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/constants/colors.dart';
 import 'providers/authentication_provider.dart';
 import 'providers/beyond_calories_articles_provider.dart';
@@ -22,6 +24,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
+  final prefs = await SharedPreferences.getInstance();
+  final onboardingComplete = prefs.getBool('onboarding_complete') ?? false;
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
     ChangeNotifierProvider(create: (ctx) => AuthProvider()),
@@ -33,11 +37,12 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
     ChangeNotifierProvider(create: (ctx) => BeyondCaloriesArticlesProvider()),
     ChangeNotifierProvider(create: (ctx) => TaskProvider()),
-  ], child: const MyApp()));
+  ], child:  MyApp(startingWidget: onboardingComplete == true ? const LoginScreen(firstScreen: true,) : const SplashScreen())));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.startingWidget});
+  final Widget startingWidget;
 
   @override
   MyAppState createState() => MyAppState();
@@ -90,7 +95,7 @@ class MyAppState extends State<MyApp> {
       )),
       home: _isLoading
           ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : const SplashScreen(),
+          :  widget.startingWidget,
     );
   }
 }

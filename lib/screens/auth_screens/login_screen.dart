@@ -22,7 +22,8 @@ import 'widgets/custom_error_txt.dart';
 import 'widgets/custom_google_auth_btn.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.firstScreen});
+  final bool firstScreen;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -40,6 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.firstScreen) {
+      SizeConfig().init(context);
+    }
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,

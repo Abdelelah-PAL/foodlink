@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/screens/auth_screens/sign_up_screen.dart';
-import 'package:foodlink/screens/onBoarding_screen/widgets/onboarding_body.dart';
 import 'package:get/get.dart';
+import '../../controllers/auth_controller.dart';
+import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
+import '../../core/utils/size_config.dart';
 import '../../models/onboarding_content.dart';
 import '../../services/translation_services.dart';
 import '../OnBoarding_screen/widgets/dot.dart';
+import '../auth_screens/sign_up_screen.dart';
+import 'widgets/onboarding_body.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -32,9 +33,10 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
       if (mounted) {
         if (_currentIndex == 2) {
           Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SignUpScreen()),
+              context,
+              MaterialPageRoute(builder: (context) => const SignUpScreen()),
           );
+          AuthController().completeOnboarding();
         }
         _startAutoPageJump();
       }
@@ -111,29 +113,30 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
             _currentIndex == onBoardingContentList.length - 1
                 ? Padding(
-                    padding: EdgeInsets.only(
-                        left: SizeConfig.getProportionalWidth(10),
-                        top: SizeConfig.getProportionalHeight(20),
-                        bottom: SizeConfig.getProportionalHeight(70)),
-                  )
+              padding: EdgeInsets.only(
+                  left: SizeConfig.getProportionalWidth(10),
+                  top: SizeConfig.getProportionalHeight(20),
+                  bottom: SizeConfig.getProportionalHeight(70)),
+            )
                 : Padding(
-                    padding: EdgeInsets.only(
-                        left: SizeConfig.getProportionalWidth(10),
-                        top: SizeConfig.getProportionalHeight(20),
-                        bottom: SizeConfig.getProportionalHeight(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        Get.to(() => const SignUpScreen());
-                      },
-                      child: Text(
-                        TranslationService().translate('skip'),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.fontColor,
-                            fontFamily: AppFonts.getPrimaryFont(context),
-                            fontSize: 16),
-                      ),
-                    )),
+                padding: EdgeInsets.only(
+                    left: SizeConfig.getProportionalWidth(10),
+                    top: SizeConfig.getProportionalHeight(20),
+                    bottom: SizeConfig.getProportionalHeight(20)),
+                child: TextButton(
+                  onPressed: () {
+                    AuthController().completeOnboarding();
+                    Get.to(() => const SignUpScreen());
+                  },
+                  child: Text(
+                    TranslationService().translate('skip'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.fontColor,
+                        fontFamily: AppFonts.getPrimaryFont(context),
+                        fontSize: 16),
+                  ),
+                )),
           ],
         ),
       ),
