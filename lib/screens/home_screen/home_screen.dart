@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/widgets/app_header.dart';
-import 'package:foodlink/screens/home_screen/widgets/cooker_body.dart';
-import 'package:foodlink/screens/home_screen/widgets/user_body.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/user_types.dart';
+import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/meal_categories_provider.dart';
+import '../../providers/meals_provider.dart';
 import '../../providers/settings_provider.dart';
+import '../../providers/users_provider.dart';
+import '../widgets/app_header.dart';
+import 'widgets/cooker_body.dart';
+import 'widgets/user_body.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    MealsProvider mealsProvider = Provider.of<MealsProvider>(context);
     MealCategoriesProvider mealCategoriesProvider =
         context.watch<MealCategoriesProvider>();
     UsersProvider usersProviderWatcher = context.watch<UsersProvider>();
@@ -55,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker
                           ? CookerBody(
-                              settingsProvider: settingsProvider,
+                              settingsProvider: settingsProvider, mealsProvider: mealsProvider,
                             )
                           : UserBody(settingsProvider: settingsProvider),
                     ),

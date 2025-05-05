@@ -33,12 +33,10 @@ class SizeConfig {
   // }
 
   static double getProportionalWidth(double inputWidth) {
-    // 375 is the layout width that the design was based on
     return (inputWidth / 375.0) * screenWidth!;
   }
 
   static double getProportionalHeight(double inputHeight) {
-    // 812 is the layout height that the design was based on
     return (inputHeight / 812.0) * screenHeight!;
   }
 

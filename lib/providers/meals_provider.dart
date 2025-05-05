@@ -194,6 +194,9 @@ class MealsProvider with ChangeNotifier {
     String? downloadUrl = await _ms.uploadImage(image);
     return downloadUrl!;
   }
+  Future<Map<String, dynamic>?> fetchLatestDishOfTheWeek() async {
+    return await _ms.fetchLatestDishOfTheWeek();
+  }
 
   Future<void> deleteImage(imageUrl) async {
     await _ms.deleteImage(imageUrl);

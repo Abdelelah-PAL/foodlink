@@ -1,133 +1,164 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/meal_categories_provider.dart';
-import 'package:foodlink/screens/food_screens/healthy_food_screen.dart';
-import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
-import 'package:foodlink/screens/food_screens/weekly_meals_planning_screen.dart';
-import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
-import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/screens/widgets/image_container.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/assets.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../providers/meal_categories_provider.dart';
+import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../../../services/translation_services.dart';
 import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
+import '../../food_screens/healthy_food_screen.dart';
+import '../../food_screens/meal_planning_screen.dart';
+import '../../food_screens/weekly_meals_planning_screen.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/image_container.dart';
+import 'feature_container.dart';
+import 'meal_tile.dart';
 
-class CookerBody extends StatelessWidget {
-  const CookerBody({super.key, required this.settingsProvider});
-
+class CookerBody extends StatefulWidget {
   final SettingsProvider settingsProvider;
+  final MealsProvider mealsProvider;
+
+  const CookerBody({
+    super.key,
+    required this.settingsProvider,
+    required this.mealsProvider,
+  });
+
+  @override
+  _CookerBodyState createState() => _CookerBodyState();
+}
+
+class _CookerBodyState extends State<CookerBody> {
+  final GlobalKey _bgKey = GlobalKey();
+  bool dowExists = true;
+  double? _dx, _dy;
+  Widget? _positionedWidget;
 
   @override
   Widget build(BuildContext context) {
-    bool dowExists = true;
-    return FutureBuilder(
-        future: Assets.dishOfTheWeekReference,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-            dowExists = false;
-          }
+    return FutureBuilder<Map<String, dynamic>?>(
+      future: widget.mealsProvider.fetchLatestDishOfTheWeek(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          return Column(
-            children: [
-              Stack(
+        final data = snapshot.data;
+
+        if (snapshot.hasError || data == null) {
+          return const Text('No dish of the week found.');
+        }
+
+        final String imageUrl = data['imageUrl'];
+        final double dx = (data['position']['x'] as num).toDouble();
+        final double dy = (data['position']['y'] as num).toDouble();
+
+        _dx = dx;
+        _dy = dy;
+
+        return Column(
+          children: [
+            SizedBox(
+              width: SizeConfig.getProportionalWidth(332),
+              height: SizeConfig.getProportionalHeight(127),
+              child: Stack(
                 children: [
-                  ImageContainer(imageUrl: Assets.dishOfTheWeek),
+                  ImageContainer(
+                    key: _bgKey,
+                    imageUrl: Assets.dishOfTheWeek,
+                  ),
+
                   Positioned(
-                    left: SizeConfig.getProportionalWidth(80),
-                    bottom: SizeConfig.getProportionalHeight(10),
-                    top: SizeConfig.getProportionalHeight(10),
+                    left: SizeConfig.getProportionalWidth(332) * _dx!,
+                    top:  SizeConfig.getProportionalHeight(127) * _dy!,
                     child: SizeConfig.customSizedBox(
                       138,
                       138,
-                      dowExists == false ? null : Image.network(snapshot.data!),
+                      Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.error),
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizeConfig.customSizedBox(
-                null,
-                10,
-                null,
+            ),
+            SizeConfig.customSizedBox(null, 10, null),
+            Align(
+              alignment: widget.settingsProvider.language == "en"
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
+              child: CustomText(
+                text: TranslationService().translate("meals"),
+                isCenter: false,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
-              Align(
-                alignment: settingsProvider.language == "en"
-                    ? Alignment.centerLeft
-                    : Alignment.centerRight,
-                child: CustomText(
-                  text: TranslationService().translate("meals"),
-                  isCenter: false,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+            ),
+            SizeConfig.customSizedBox(null, 5, null),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.getProportionalHeight(25),
+              ),
+              child: SizeConfig.customSizedBox(
+                332,
+                95,
+                Consumer<MealCategoriesProvider>(
+                  builder: (context, mealCategoriesProvider, child) {
+                    return ListView.builder(
+                      itemCount: mealCategoriesProvider.mealCategories.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index) {
+                        final category =
+                            mealCategoriesProvider.mealCategories[index];
+                        return MealTile(
+                          name: category.name,
+                          imageUrl: category.imageUrl,
+                          width: 66,
+                          height: 55,
+                          index: index,
+                          categoryId: category.id!,
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
-              SizeConfig.customSizedBox(
-                null,
-                5,
-                null,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: SizeConfig.getProportionalHeight(25)),
-                child: SizeConfig.customSizedBox(
-                  332,
-                  95,
-                  Consumer<MealCategoriesProvider>(
-                    builder: (context, mealCategoriesProvider, child) {
-                      return ListView.builder(
-                        itemCount: mealCategoriesProvider.mealCategories.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (ctx, index) {
-                          final category =
-                              mealCategoriesProvider.mealCategories[index];
-                          return MealTile(
-                            name: category.name,
-                            imageUrl: category.imageUrl,
-                            width: 66,
-                            height: 55,
-                            index: index,
-                            categoryId: category.id!,
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-              FeatureContainer(
-                imageUrl: Assets.healthyFood,
-                text: TranslationService().translate("healthy_life"),
-                settingsProvider: settingsProvider,
-                onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
-              ),
-              FeatureContainer(
-                imageUrl: Assets.resourcesAdvertising,
-                text: TranslationService().translate("resources_advertising"),
-                settingsProvider: settingsProvider,
-                onTap: () => Get.to(const WeeklyMealsPlanningScreen()),
-              ),
-              FeatureContainer(
-                left: SizeConfig.getProportionalWidth(18),
-                imageUrl: Assets.aestheticFood,
-                text: TranslationService().translate("aesthetic_food"),
-                settingsProvider: settingsProvider,
-                onTap: () => Get.to(const HealthyFoodScreen()),
-              ),
-              FeatureContainer(
-                left: SizeConfig.getProportionalWidth(35),
-                imageUrl: Assets.mealPlanning,
-                text: TranslationService().translate("meal_planning"),
-                settingsProvider: settingsProvider,
-                onTap: () => Get.to(const MealPlanningScreen()),
-              ),
-            ],
-          );
-        });
+            ),
+            FeatureContainer(
+              imageUrl: Assets.healthyFood,
+              text: TranslationService().translate("healthy_life"),
+              settingsProvider: widget.settingsProvider,
+              onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
+            ),
+            FeatureContainer(
+              imageUrl: Assets.resourcesAdvertising,
+              text: TranslationService().translate("resources_advertising"),
+              settingsProvider: widget.settingsProvider,
+              onTap: () => Get.to(const WeeklyMealsPlanningScreen()),
+            ),
+            FeatureContainer(
+              left: SizeConfig.getProportionalWidth(18),
+              imageUrl: Assets.aestheticFood,
+              text: TranslationService().translate("aesthetic_food"),
+              settingsProvider: widget.settingsProvider,
+              onTap: () => Get.to(const HealthyFoodScreen()),
+            ),
+            FeatureContainer(
+              left: SizeConfig.getProportionalWidth(35),
+              imageUrl: Assets.mealPlanning,
+              text: TranslationService().translate("meal_planning"),
+              settingsProvider: widget.settingsProvider,
+              onTap: () => Get.to(const MealPlanningScreen()),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

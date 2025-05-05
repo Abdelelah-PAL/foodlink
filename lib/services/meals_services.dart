@@ -201,4 +201,25 @@ class MealsServices with ChangeNotifier {
   Future<void> deleteWeeklyPlan(String docId) async {
     await _firebaseFireStore.collection('weekly_plan').doc(docId).delete();
   }
+
+  Future<Map<String, dynamic>?> fetchLatestDishOfTheWeek() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection("dish_of_the_week")
+          .orderBy('uploadedAt', descending: true)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return snapshot.docs.first.data();
+      } else {
+        print('No records found in');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching latest dish of the week: $e');
+      return null;
+    }
+  }
+
 }

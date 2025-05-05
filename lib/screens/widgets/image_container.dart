@@ -10,12 +10,15 @@ class ImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Container(
         width: SizeConfig.getProportionalWidth(332),
         height: SizeConfig.getProportionalHeight(127),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-        child: Image.asset(imageUrl, fit: BoxFit.fill),
+        child: Image.asset(
+          imageUrl,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

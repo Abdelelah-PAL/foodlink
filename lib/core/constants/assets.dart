@@ -71,6 +71,4 @@ class Assets {
     }
     return null;
   }
-
-
 }
