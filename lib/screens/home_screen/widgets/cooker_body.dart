@@ -33,9 +33,7 @@ class CookerBody extends StatefulWidget {
 
 class _CookerBodyState extends State<CookerBody> {
   final GlobalKey _bgKey = GlobalKey();
-  bool dowExists = true;
-  double? _dx, _dy;
-  Widget? _positionedWidget;
+  Widget? _positionedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +54,34 @@ class _CookerBodyState extends State<CookerBody> {
         final double dx = (data['position']['x'] as num).toDouble();
         final double dy = (data['position']['y'] as num).toDouble();
 
-        _dx = dx;
-        _dy = dy;
+        // Ensure layout is done
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final RenderBox? box =
+          _bgKey.currentContext?.findRenderObject() as RenderBox?;
+          final size = box?.size;
+
+          if (size != null && _positionedImage == null) {
+            final actualDx = size.width * dx;
+            final actualDy = size.height * dy;
+
+            setState(() {
+              _positionedImage = Positioned(
+                left: actualDx,
+                top: actualDy,
+                child: SizeConfig.customSizedBox(
+                  100,
+                  100,
+                  Image.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.error),
+                  ),
+                ),
+              );
+            });
+          }
+        });
 
         return Column(
           children: [
@@ -71,20 +95,7 @@ class _CookerBodyState extends State<CookerBody> {
                     imageUrl: Assets.dishOfTheWeek,
                   ),
 
-                  Positioned(
-                    left: SizeConfig.getProportionalWidth(332) * _dx!,
-                    top:  SizeConfig.getProportionalHeight(127) * _dy!,
-                    child: SizeConfig.customSizedBox(
-                      138,
-                      138,
-                      Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
+                  if (_positionedImage != null) _positionedImage!,
                 ],
               ),
             ),
@@ -115,7 +126,7 @@ class _CookerBodyState extends State<CookerBody> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (ctx, index) {
                         final category =
-                            mealCategoriesProvider.mealCategories[index];
+                        mealCategoriesProvider.mealCategories[index];
                         return MealTile(
                           name: category.name,
                           imageUrl: category.imageUrl,
