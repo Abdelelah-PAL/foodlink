@@ -2,7 +2,6 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +16,7 @@ import 'providers/notification_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/task_provider.dart';
 import 'providers/users_provider.dart';
+import 'screens/auth_screens/login_screen.dart';
 import 'screens/splash_screen/splash_screen.dart';
 import 'services/translation_services.dart';
 

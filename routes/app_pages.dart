@@ -7,7 +7,7 @@ import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
    static var list = [
      GetPage(
        name: AppRoutes.logIn,
-       page: () => const LoginScreen(),
+       page: () => const LoginScreen(firstScreen: false,),
      ),
 //     GetPage(
 //       name: AppRoutes.createAccount,
