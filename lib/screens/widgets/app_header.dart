@@ -43,7 +43,7 @@ class _AppHeaderState extends State<AppHeader> {
                 : TranslationService().translate("cooker")));
     return Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.getProportionalHeight(50),
+        top: SizeConfig.getProportionalHeight(25),
         left: SizeConfig.getProportionalWidth(24),
         right: SizeConfig.getProportionalWidth(24),
       ),

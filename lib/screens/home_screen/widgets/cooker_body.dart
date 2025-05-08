@@ -51,10 +51,11 @@ class _CookerBodyState extends State<CookerBody> {
         }
 
         final String imageUrl = data['imageUrl'];
+        final double width = data['width'].toDouble();
+        final double height = data['height'].toDouble();
         final double dx = (data['position']['x'] as num).toDouble();
         final double dy = (data['position']['y'] as num).toDouble();
 
-        // Ensure layout is done
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final RenderBox? box =
           _bgKey.currentContext?.findRenderObject() as RenderBox?;
@@ -69,8 +70,8 @@ class _CookerBodyState extends State<CookerBody> {
                 left: actualDx,
                 top: actualDy,
                 child: SizeConfig.customSizedBox(
-                  100,
-                  100,
+                  width,
+                  height,
                   Image.network(
                     imageUrl,
                     fit: BoxFit.cover,
