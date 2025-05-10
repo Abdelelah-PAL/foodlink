@@ -51,11 +51,12 @@ class _CookerBodyState extends State<CookerBody> {
         }
 
         final String imageUrl = data['imageUrl'];
-        final double width = data['width'].toDouble();
-        final double height = data['height'].toDouble();
+        final double widthRatio = (data['width'] as num).toDouble();
+        final double heightRatio = (data['height'] as num).toDouble();
         final double dx = (data['position']['x'] as num).toDouble();
         final double dy = (data['position']['y'] as num).toDouble();
 
+        // Run after first frame to access layout info
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final RenderBox? box =
           _bgKey.currentContext?.findRenderObject() as RenderBox?;
@@ -64,17 +65,19 @@ class _CookerBodyState extends State<CookerBody> {
           if (size != null && _positionedImage == null) {
             final actualDx = size.width * dx;
             final actualDy = size.height * dy;
+            final imageWidth = size.width * widthRatio;
+            final imageHeight = size.height * heightRatio;
 
             setState(() {
               _positionedImage = Positioned(
                 left: actualDx,
                 top: actualDy,
                 child: SizeConfig.customSizedBox(
-                  width,
-                  height,
+                  imageWidth,
+                  imageHeight,
                   Image.network(
                     imageUrl,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitHeight,
                     errorBuilder: (context, error, stackTrace) =>
                     const Icon(Icons.error),
                   ),
@@ -95,7 +98,6 @@ class _CookerBodyState extends State<CookerBody> {
                     key: _bgKey,
                     imageUrl: Assets.dishOfTheWeek,
                   ),
-
                   if (_positionedImage != null) _positionedImage!,
                 ],
               ),

@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (_authController.isMatched &&
                         _authController.passwordIsValid) {
                       var user =
-                          await AuthProvider().signUpWithEmailAndPassword(
+                          await AuthenticationProvider().signUpWithEmailAndPassword(
                         _authController.emailController.text,
                         _authController.passwordController.text,
                       );
@@ -156,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   text: TranslationService().translate("google_signup"),
                   settingsProvider: settingsProvider,
                   onTap: () async {
-                     var userCredential = await AuthProvider().signUpWithGoogle();
+                     var userCredential = await AuthenticationProvider().signUpWithGoogle();
                      UserDetails userDetails = UserDetails(
                        userId: userCredential!.user!.uid,
                        userTypeId: null,

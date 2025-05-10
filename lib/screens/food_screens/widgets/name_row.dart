@@ -12,7 +12,8 @@ class NameRow extends StatelessWidget {
       required this.textWidth,
       required this.settingsProvider,
       required this.height,
-      required this.maxLines});
+      required this.maxLines,
+      required this.horizontalPadding});
 
   final String name;
   final double fontSize;
@@ -20,13 +21,15 @@ class NameRow extends StatelessWidget {
   final SettingsProvider settingsProvider;
   final double height;
   final int maxLines;
-
+  final double horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
-    String writtenLanguage = GeneralController().detectLanguage(name);
+    String writtenLanguage =
+        GeneralController().detectLanguage(name);
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
+      padding:
+          EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(horizontalPadding)),
       child: FittedBox(
         child: Row(
           textDirection: settingsProvider.language == 'en'
@@ -46,8 +49,9 @@ class NameRow extends StatelessWidget {
                 maxLines: maxLines,
                 overflow: TextOverflow.ellipsis,
                 name,
-                textAlign:
-                    settingsProvider.language == 'en' ? TextAlign.end : TextAlign.start,
+                textAlign: settingsProvider.language == 'en'
+                    ? TextAlign.end
+                    : TextAlign.start,
                 textDirection: writtenLanguage == 'en'
                     ? TextDirection.ltr
                     : TextDirection.rtl,

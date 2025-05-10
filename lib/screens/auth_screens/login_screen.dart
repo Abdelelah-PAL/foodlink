@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         _authController.changeTextFieldsColors(true);
                       });
-                      var user = await AuthProvider().login(
+                      var user = await AuthenticationProvider().login(
                         _authController.emailController.text.trim(),
                         _authController.passwordController.text,
                       );

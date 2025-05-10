@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/auth_controller.dart';
+import 'package:foodlink/providers/dashboard_provider.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/authentication_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
+import '../auth_screens/login_screen.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 import 'widgets/custom_setting_tile.dart';
@@ -24,13 +29,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Provider.of<UsersProvider>(context, listen: true);
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
+    DashboardProvider dashboardProvider =
+    Provider.of<DashboardProvider>(context, listen: true);
+    AuthenticationProvider authenticationProvider =
+    Provider.of<AuthenticationProvider>(context, listen: true);
     var userId = usersProvider.selectedUser!.userId;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizeConfig.customSizedBox(null, 50, null),
-         CustomText(
+        CustomText(
           isCenter: true,
           text: "settings",
           fontSize: 30,
@@ -128,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ]),
         CustomSettingsContainer(
             settingsProvider: settingsProvider,
-            height: 103,
+            height: SizeConfig.getProportionalHeight(140),
             children: [
               CustomSettingTile(
                   icon: Assets.contactUs,
@@ -137,7 +146,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                   icon: Assets.support,
                   text: "help_support",
-                  givenWrittenLanguage: settingsProvider.language)
+                  givenWrittenLanguage: settingsProvider.language),
+              CustomSettingTile(
+                icon: Assets.logout,
+                text: "logout",
+                givenWrittenLanguage: settingsProvider.language,
+                onTap: () => AuthController().logout(authenticationProvider, dashboardProvider),
+              )
             ])
       ],
     );

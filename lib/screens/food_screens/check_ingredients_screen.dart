@@ -33,79 +33,86 @@ class CheckIngredientsScreen extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
+            crossAxisAlignment: settingsProvider.language == "en"
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.end,
             children: [
               MealImageContainer(
                 isAddSource: false,
                 isUpdateSource: false,
                 imageUrl: meal.imageUrl,
                 mealsProvider: context.watch<MealsProvider>(),
-                backButtonOnPressed: ()  {
+                backButtonOnPressed: () {
                   MealController().missingIngredients.clear();
                   NotificationController().addNoteController.clear();
                   Get.back();
                 },
               ),
+              NameRow(
+                name: meal.name,
+                fontSize: 20,
+                textWidth: 280,
+                settingsProvider: settingsProvider,
+                height: 35,
+                maxLines: 2,
+                horizontalPadding: 23,
+              ),
+              SizeConfig.customSizedBox(null, 10, null),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20),
-                ),
-                child: Column(
+                    horizontal: SizeConfig.getProportionalWidth(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: settingsProvider.language == 'en'
+                      ? TextDirection.ltr
+                      : TextDirection.rtl,
                   children: [
-                    NameRow(
-                      name: meal.name,
-                      fontSize: 30,
-                      textWidth: 280,
-                      settingsProvider: settingsProvider,
-                      height: 35,
-                      maxLines: 2,
-                    ),
-                    SizeConfig.customSizedBox(null, 10, null),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      textDirection: settingsProvider.language == 'en'
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      children: [
-                        Image.asset(Assets.mealIngredients),
-                        SizeConfig.customSizedBox(10, null, null),
-                        const CustomText(
-                            isCenter: false,
-                            text: "ingredients",
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ],
-                    ),
-                    SizeConfig.customSizedBox(
-                      null,
-                      250,
-                      ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemCount: meal.ingredients.length,
-                        itemBuilder: (ctx, index) {
-                          return CheckboxTile(
-                              text: meal.ingredients[index],
-                              settingsProvider: settingsProvider,
-                              mealsProvider: mealsProvider,
-                              index: index,
-                              ingredientsLength: meal.ingredients.length);
-                        },
-                      ),
-                    ),
-                    CustomAppIconicTextField(
-                      width: 263,
-                      height: 79,
-                      headerText: "add_notes",
-                      icon: Assets.note,
-                      controller: NotificationController().addNoteController,
-                      maxLines: 7,
-                      iconSizeFactor: 31,
-                      settingsProvider: settingsProvider,
-                      iconPadding: 0,
-                      enabled: true,
-                    ),
+                    Image.asset(Assets.mealIngredients),
+                    SizeConfig.customSizedBox(10, null, null),
+                    const CustomText(
+                        isCenter: false,
+                        text: "ingredients",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getProportionalWidth(20)),
+                child: SizeConfig.customSizedBox(
+                  null,
+                  250,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: meal.ingredients.length,
+                    itemBuilder: (ctx, index) {
+                      return CheckboxTile(
+                          text: meal.ingredients[index],
+                          settingsProvider: settingsProvider,
+                          mealsProvider: mealsProvider,
+                          index: index,
+                          ingredientsLength: meal.ingredients.length);
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getProportionalWidth(20)),
+                child: CustomAppIconicTextField(
+                  width: 263,
+                  height: 79,
+                  headerText: "add_notes",
+                  icon: Assets.note,
+                  controller: NotificationController().addNoteController,
+                  maxLines: 7,
+                  iconSizeFactor: 31,
+                  settingsProvider: settingsProvider,
+                  iconPadding: 0,
+                  enabled: true,
                 ),
               ),
               SizeConfig.customSizedBox(null, 30, null),

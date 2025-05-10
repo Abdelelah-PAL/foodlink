@@ -70,6 +70,9 @@ class MealScreen extends StatelessWidget {
                   top: SizeConfig.getProportionalHeight(20),
                 ),
                 child: Column(
+                  crossAxisAlignment: settingsProvider.language == 'en'
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.end,
                   children: [
                     NameRow(
                       name: meal.name,
@@ -78,6 +81,7 @@ class MealScreen extends StatelessWidget {
                       settingsProvider: settingsProvider,
                       height: 35,
                       maxLines: 2,
+                      horizontalPadding: 10,
                     ),
                     SizeConfig.customSizedBox(null, 30, null),
                     IngredientsMealView(

@@ -32,81 +32,82 @@ class MissingIngredientsScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: settingsProvider.language == "en"
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
           children: [
             MealImageContainer(
                 isAddSource: false,
                 isUpdateSource: false,
                 imageUrl: notification.imageUrl,
                 mealsProvider: context.watch<MealsProvider>()),
+            NameRow(
+              name: notification.mealName,
+              fontSize: 20,
+              textWidth: 280,
+              settingsProvider: settingsProvider,
+              height: 70,
+              maxLines: 2,
+              horizontalPadding: 23,
+            ),
+            SizeConfig.customSizedBox(null, 10, null),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.getProportionalHeight(20),
-                horizontal: SizeConfig.getProportionalWidth(20),
-              ),
-              child: Column(
+                  horizontal: SizeConfig.getProportionalWidth(20)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                textDirection: settingsProvider.language == 'en'
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
                 children: [
-                  NameRow(
-                    name: notification.mealName,
-                    fontSize: 20,
-                    textWidth: 280,
-                    settingsProvider: settingsProvider,
-                    height: 70,
-                    maxLines: 2,
+                  Image.asset(
+                    Assets.mealIngredients,
+                    scale: 1.3,
                   ),
-                  SizeConfig.customSizedBox(null, 10, null),
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      textDirection: settingsProvider.language == 'en'
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      children: [
-                        Image.asset(Assets.mealIngredients, scale: 1.3,),
-                        SizeConfig.customSizedBox(10, null, null),
-                        const CustomText(
-                            isCenter: false,
-                            text: "ingredients",
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ],
-                    ),
-                  ),
-                  SizeConfig.customSizedBox(
-                    null,
-                    250,
-                    ListView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      itemCount: notification.missingIngredients.length,
-                      itemBuilder: (ctx, index) {
-                        if (notification.notes != null &&
-                            notification.notes!.isNotEmpty) {
-                          MealController().noteController.text =
-                              notification.notes!;
-                        }
-                        return MissingCheckboxTile(
-                          settingsProvider: settingsProvider,
-                          notification: notification,
-                          index: index,
-                        );
-                      },
-                    ),
-                  ),
-                  CustomAppIconicTextField(
-                    width: 263,
-                    height: 79,
-                    headerText: "notes",
-                    icon: Assets.note,
-                    controller: MealController().noteController,
-                    maxLines: 7,
-                    iconSizeFactor: 31,
-                    settingsProvider: settingsProvider,
-                    iconPadding: 10,
-                    enabled: false,
-                  ),
+                  SizeConfig.customSizedBox(10, null, null),
+                  const CustomText(
+                      isCenter: false,
+                      text: "ingredients",
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ],
+              ),
+            ),
+            SizeConfig.customSizedBox(
+              null,
+              250,
+              ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: notification.missingIngredients.length,
+                itemBuilder: (ctx, index) {
+                  if (notification.notes != null &&
+                      notification.notes!.isNotEmpty) {
+                    MealController().noteController.text = notification.notes!;
+                  }
+                  return MissingCheckboxTile(
+                    settingsProvider: settingsProvider,
+                    notification: notification,
+                    index: index,
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getProportionalWidth(20)),
+              child: CustomAppIconicTextField(
+                width: 263,
+                height: 79,
+                headerText: "notes",
+                icon: Assets.note,
+                controller: MealController().noteController,
+                maxLines: 7,
+                iconSizeFactor: 31,
+                settingsProvider: settingsProvider,
+                iconPadding: 10,
+                enabled: false,
               ),
             ),
             SizeConfig.customSizedBox(null, 30, null),
@@ -120,12 +121,14 @@ class MissingIngredientsScreen extends StatelessWidget {
                     : TextDirection.rtl,
                 children: [
                   CustomButton(
-                    onTap: () async{
-                      Meal meal =  notification.isMealPlanned
+                    onTap: () async {
+                      Meal meal = notification.isMealPlanned
                           ? await MealsProvider()
-                          .getPlannedMealById(notification.mealId)
-                          : await MealsProvider().getMealById(notification.mealId);
-                      await NotificationController().addConfirmationNotification(meal);
+                              .getPlannedMealById(notification.mealId)
+                          : await MealsProvider()
+                              .getMealById(notification.mealId);
+                      await NotificationController()
+                          .addConfirmationNotification(meal);
                       GeneralController().showCustomDialog(
                           context,
                           settingsProvider,

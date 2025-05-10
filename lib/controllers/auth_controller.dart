@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodlink/screens/auth_screens/login_screen.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/colors.dart';
+import '../providers/authentication_provider.dart';
+import '../providers/dashboard_provider.dart';
 import '../services/translation_services.dart';
 
 class AuthController {
@@ -126,5 +131,13 @@ class AuthController {
   Future<void> completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_complete', true);
+  }
+
+  void logout(AuthenticationProvider authenticationProvider, DashboardProvider dashBoardProvider) {
+    dashBoardProvider.cookerPressed =false;
+    dashBoardProvider.userPressed = false;
+    dashBoardProvider.selectedIndex=0;
+    authenticationProvider.logout();
+    Get.to(const LoginScreen(firstScreen: false));
   }
 }

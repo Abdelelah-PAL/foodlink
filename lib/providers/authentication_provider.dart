@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import '../services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthProvider with ChangeNotifier {
-  static final AuthProvider _instance = AuthProvider._internal();
-  factory AuthProvider() => _instance;
+class AuthenticationProvider with ChangeNotifier {
+  static final AuthenticationProvider _instance = AuthenticationProvider._internal();
+  factory AuthenticationProvider() => _instance;
 
-  AuthProvider._internal();
+  AuthenticationProvider._internal();
 
   final AuthService _authService = AuthService();
   bool isLoading = false;
@@ -40,5 +40,9 @@ class AuthProvider with ChangeNotifier {
     isLoading = false;
     notifyListeners();
     return userCredential;
+  }
+  Future<void> logout() async {
+    user = null;
+    await _authService.logout();
   }
 }

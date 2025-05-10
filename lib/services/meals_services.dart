@@ -107,7 +107,22 @@ class MealsServices with ChangeNotifier {
   }
 
   Future<void> deleteMeal(String docId) async {
-    await _firebaseFireStore.collection('meals').doc(docId).delete();
+    final batch = _firebaseFireStore.batch();
+
+    final mealDocRef = _firebaseFireStore.collection('meals').doc(docId);
+    batch.delete(mealDocRef);
+
+    final notificationsSnapshot = await _firebaseFireStore
+        .collection('notifications')
+        .where('meal_id', isEqualTo: docId)
+        .get();
+
+    for (var doc in notificationsSnapshot.docs) {
+      print(doc);
+      batch.delete(doc.reference);
+    }
+
+    await batch.commit();
   }
 
   Future<Meal> getMealById(String docId) async {

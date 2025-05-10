@@ -58,4 +58,8 @@ class AuthService with ChangeNotifier {
       return null;
     }
   }
+
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

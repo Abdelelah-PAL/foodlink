@@ -101,6 +101,7 @@ class _ListMealTileState extends State<ListMealTile> {
                         settingsProvider: settingsProvider,
                         height: 25,
                         maxLines: 1,
+                        horizontalPadding: 10,
                       ),
                       IngredientsRow(
                         meal: widget.meal,
@@ -118,10 +119,12 @@ class _ListMealTileState extends State<ListMealTile> {
                         13,
                         Padding(
                           padding: EdgeInsets.only(
-                            top:SizeConfig.getProportionalHeight(0) ,
+                            top: SizeConfig.getProportionalHeight(0),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: settingsProvider.language == "en"
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.start,
                             children: [
                               !widget.favorites
                                   ? GestureDetector(

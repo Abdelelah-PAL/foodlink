@@ -28,7 +28,7 @@ void main() async {
   final onboardingComplete = prefs.getBool('onboarding_complete') ?? false;
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
-    ChangeNotifierProvider(create: (ctx) => AuthProvider()),
+    ChangeNotifierProvider(create: (ctx) => AuthenticationProvider()),
     ChangeNotifierProvider(create: (ctx) => UsersProvider()),
     ChangeNotifierProvider(create: (ctx) => MealCategoriesProvider()),
     ChangeNotifierProvider(create: (ctx) => DashboardProvider()),
