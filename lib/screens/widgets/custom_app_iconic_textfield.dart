@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/services/translation_services.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
+import '../../core/utils/size_config.dart';
 import '../../providers/settings_provider.dart';
+import '../../services/translation_services.dart';
+import 'custom_text.dart';
 
 class CustomAppIconicTextField extends StatelessWidget {
   const CustomAppIconicTextField({
@@ -81,9 +81,9 @@ class CustomAppIconicTextField extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(
                 SizeConfig.getProportionalWidth(10),
-                SizeConfig.getProportionalHeight(2),
+                SizeConfig.getProportionalHeight(0),
                 SizeConfig.getProportionalWidth(10),
-                SizeConfig.getProportionalHeight(10)),
+                SizeConfig.getProportionalHeight(0)),
             hintStyle: TextStyle(
                 fontSize: 20,
                 color: AppColors.hintTextColor,

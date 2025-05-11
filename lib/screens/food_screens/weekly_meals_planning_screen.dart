@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/food_screens/widgets/changeable_date.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';
@@ -16,6 +15,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
 import 'meal_planning_screen.dart';
+import 'widgets/changeable_date.dart';
 import 'widgets/day_meal_row.dart';
 
 class WeeklyMealsPlanningScreen extends StatefulWidget {

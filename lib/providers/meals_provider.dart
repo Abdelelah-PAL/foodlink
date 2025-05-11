@@ -242,6 +242,13 @@ class MealsProvider with ChangeNotifier {
       }
       ingredientsControllers[index].text = meal.ingredients[index];
     });
+    numberOfSteps = meal.recipe.length + 1;
+    meal.recipe.asMap().forEach((index, controller) {
+      if (index + 1 > stepsControllers.length) {
+        stepsControllers.add(TextEditingController());
+      }
+      stepsControllers[index].text = meal.recipe[index];
+    });
     notifyListeners();
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/food_screens/widgets/step_box.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/meal_controller.dart';
 import '../../core/constants/assets.dart';
@@ -13,6 +12,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import 'widgets/ingredient_box.dart';
 import 'widgets/meal_image_container.dart';
+import 'widgets/step_box.dart';
 
 class AddMealScreen extends StatefulWidget {
   const AddMealScreen({
@@ -63,7 +63,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   SizeConfig.customSizedBox(null, 20, null),
                   CustomAppIconicTextField(
                     width: 348,
-                    height: 37,
+                    height: 40,
                     headerText: "meal_name",
                     icon: Assets.mealNameIcon,
                     controller: MealController().nameController,
@@ -111,7 +111,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                   crossAxisCount: 3,
                                   crossAxisSpacing: 8,
                                   mainAxisSpacing: 0,
-                                  childAspectRatio: 2),
+                                  childAspectRatio: 1.7),
                           itemCount: mealsProvider.numberOfIngredients,
                           itemBuilder: (context, index) {
                             if (index ==

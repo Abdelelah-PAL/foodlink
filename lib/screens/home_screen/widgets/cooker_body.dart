@@ -17,7 +17,7 @@ import '../../widgets/image_container.dart';
 import 'feature_container.dart';
 import 'meal_tile.dart';
 
-class CookerBody extends StatefulWidget {
+class CookerBody extends StatelessWidget {
   final SettingsProvider settingsProvider;
   final MealsProvider mealsProvider;
 
@@ -28,17 +28,9 @@ class CookerBody extends StatefulWidget {
   });
 
   @override
-  _CookerBodyState createState() => _CookerBodyState();
-}
-
-class _CookerBodyState extends State<CookerBody> {
-  final GlobalKey _bgKey = GlobalKey();
-  Widget? _positionedImage;
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>?>(
-      future: widget.mealsProvider.fetchLatestDishOfTheWeek(),
+      future: mealsProvider.fetchLatestDishOfTheWeek(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -56,37 +48,6 @@ class _CookerBodyState extends State<CookerBody> {
         final double dx = (data['position']['x'] as num).toDouble();
         final double dy = (data['position']['y'] as num).toDouble();
 
-        // Run after first frame to access layout info
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final RenderBox? box =
-          _bgKey.currentContext?.findRenderObject() as RenderBox?;
-          final size = box?.size;
-
-          if (size != null && _positionedImage == null) {
-            final actualDx = size.width * dx;
-            final actualDy = size.height * dy;
-            final imageWidth = size.width * widthRatio;
-            final imageHeight = size.height * heightRatio;
-
-            setState(() {
-              _positionedImage = Positioned(
-                left: actualDx,
-                top: actualDy,
-                child: SizeConfig.customSizedBox(
-                  imageWidth,
-                  imageHeight,
-                  Image.network(
-                    imageUrl,
-                    fit: BoxFit.fitHeight,
-                    errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.error),
-                  ),
-                ),
-              );
-            });
-          }
-        });
-
         return Column(
           children: [
             SizedBox(
@@ -95,16 +56,28 @@ class _CookerBodyState extends State<CookerBody> {
               child: Stack(
                 children: [
                   ImageContainer(
-                    key: _bgKey,
                     imageUrl: Assets.dishOfTheWeek,
                   ),
-                  if (_positionedImage != null) _positionedImage!,
+                  Positioned(
+                    left: 332 * dx,
+                    top: 142 * dy,
+                    child: SizeConfig.customSizedBox(
+                      332 * widthRatio,
+                      142 * heightRatio,
+                      Image.network(
+                        imageUrl,
+                        fit: BoxFit.fitHeight,
+                        errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.error),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             SizeConfig.customSizedBox(null, 10, null),
             Align(
-              alignment: widget.settingsProvider.language == "en"
+              alignment: settingsProvider.language == "en"
                   ? Alignment.centerLeft
                   : Alignment.centerRight,
               child: CustomText(
@@ -147,27 +120,27 @@ class _CookerBodyState extends State<CookerBody> {
             FeatureContainer(
               imageUrl: Assets.healthyFood,
               text: TranslationService().translate("healthy_life"),
-              settingsProvider: widget.settingsProvider,
+              settingsProvider: settingsProvider,
               onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
             ),
             FeatureContainer(
               imageUrl: Assets.resourcesAdvertising,
               text: TranslationService().translate("resources_advertising"),
-              settingsProvider: widget.settingsProvider,
+              settingsProvider: settingsProvider,
               onTap: () => Get.to(const WeeklyMealsPlanningScreen()),
             ),
             FeatureContainer(
               left: SizeConfig.getProportionalWidth(18),
               imageUrl: Assets.aestheticFood,
               text: TranslationService().translate("aesthetic_food"),
-              settingsProvider: widget.settingsProvider,
+              settingsProvider: settingsProvider,
               onTap: () => Get.to(const HealthyFoodScreen()),
             ),
             FeatureContainer(
               left: SizeConfig.getProportionalWidth(35),
               imageUrl: Assets.mealPlanning,
               text: TranslationService().translate("meal_planning"),
-              settingsProvider: widget.settingsProvider,
+              settingsProvider: settingsProvider,
               onTap: () => Get.to(const MealPlanningScreen()),
             ),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/meals_provider.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
 
 class IngredientBox extends StatelessWidget {
@@ -29,12 +29,10 @@ class IngredientBox extends StatelessWidget {
         textDirection: settingsProvider.language == 'en'
             ? TextDirection.ltr
             : TextDirection.rtl,
-        // For right-to-left text
         textAlign: settingsProvider.language == 'en'
             ? TextAlign.left
             : TextAlign.right,
         style: const TextStyle(fontSize: 12),
-        // Set font size here
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(
               SizeConfig.getProportionalWidth(10),

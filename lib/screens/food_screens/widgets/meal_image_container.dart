@@ -82,11 +82,7 @@ class _MealImageContainerState extends State<MealImageContainer> {
                   ),
                 ),
                 CustomBackButton(
-                  onPressed: widget.isUpdateSource
-                      ? () {
-                          Get.back();
-                        }
-                      : widget.backButtonOnPressed,
+                  onPressed: widget.backButtonOnPressed ?? () => Get.back(),
                 ),
               ],
             )
