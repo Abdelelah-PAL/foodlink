@@ -168,7 +168,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                   mealsProvider.stepsControllers[index]);
                         },
                       )),
-
                   SizeConfig.customSizedBox(null, 20, null),
                   CustomAppIconicTextField(
                     width: 348,
