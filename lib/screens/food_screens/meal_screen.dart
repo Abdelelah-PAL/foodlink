@@ -35,6 +35,8 @@ class MealScreen extends StatelessWidget {
         Provider.of<MealsProvider>(context, listen: true);
     UsersProvider usersProvider =
         Provider.of<UsersProvider>(context, listen: true);
+    print(meal.source);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
@@ -107,7 +109,7 @@ class MealScreen extends StatelessWidget {
               SizeConfig.customSizedBox(null, 10, null),
               usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                   ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (source != 'planning') ...[
+                      if (meal.isPlanned == false) ...[
                         CustomButton(
                           onTap: () {
                             MealsProvider().fillDataForEdition(meal);

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/auth_controller.dart';
-import 'package:foodlink/providers/dashboard_provider.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/general_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/authentication_provider.dart';
+import '../../providers/dashboard_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
-import '../auth_screens/login_screen.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/profile_circle.dart';
+import 'edit_account_info_screen.dart';
 import 'widgets/custom_setting_tile.dart';
 import 'widgets/custom_settings_container.dart';
 
@@ -60,6 +61,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                 icon: Assets.editInfo,
                 text: "edit_data",
+                onTap: () {
+                  GeneralController().usernameController.text = usersProvider.selectedUser!.username!;
+                  GeneralController().emailController.text = usersProvider.selectedUser!.email;
+                  Get.to(EditAccountInfoScreen(usersProvider: usersProvider, settingsProvider: settingsProvider));
+                },
                 givenWrittenLanguage: settingsProvider.language,
               ),
               CustomSettingTile(

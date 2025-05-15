@@ -166,5 +166,6 @@
   "lowercase_letter_required": "Password must contain at least one lowercase letter",
   "number__required": "Password must contain at least one number",
   "character_required":"Password must contain at least one special character (!@#\\$&*~)",
-  "logout": "logout"
+  "logout": "logout",
+  "name": "name"
 }

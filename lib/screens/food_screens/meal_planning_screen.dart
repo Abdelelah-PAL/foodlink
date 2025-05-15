@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
-import 'package:foodlink/core/constants/colors.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/models/meal.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/dashboard/dashboard.dart';
-import 'package:foodlink/screens/dashboard/widgets/custom_bottom_navigation_bar.dart';
-import 'package:foodlink/screens/food_screens/widgets/custom_changeable_color_button.dart';
-import 'package:foodlink/screens/food_screens/widgets/plan_meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/screens/widgets/image_container.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/meal_controller.dart';
 import '../../core/constants/assets.dart';
+import '../../core/constants/colors.dart';
+import '../../core/utils/size_config.dart';
+import '../../models/meal.dart';
 import '../../providers/meals_provider.dart';
+import '../../providers/settings_provider.dart';
+import '../../providers/users_provider.dart';
+import '../dashboard/dashboard.dart';
+import '../dashboard/widgets/custom_bottom_navigation_bar.dart';
 import '../widgets/custom_back_button.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/image_container.dart';
 import 'weekly_meals_planning_screen.dart';
+import 'widgets/custom_changeable_color_button.dart';
+import 'widgets/plan_meal_tile.dart';
 
 class MealPlanningScreen extends StatefulWidget {
   const MealPlanningScreen({super.key});
@@ -58,7 +58,9 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomBackButton(
-                          onPressed: () => Get.to(const Dashboard(initialIndex: 0,))),
+                          onPressed: () => Get.to(const Dashboard(
+                                initialIndex: 0,
+                              ))),
                       const CustomText(
                         isCenter: true,
                         text: "weekly_plan",
@@ -81,8 +83,10 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                   ),
                 )),
             backgroundColor: AppColors.backgroundColor,
-            bottomNavigationBar:
-                const CustomBottomNavigationBar(fromDashboard: true, initialIndex: 0,),
+            bottomNavigationBar: const CustomBottomNavigationBar(
+              fromDashboard: true,
+              initialIndex: 0,
+            ),
             body: Column(children: [
               ImageContainer(imageUrl: Assets.mealPlanningHeaderImage),
               Padding(
@@ -96,10 +100,14 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       : TextDirection.rtl,
                   children: [
                     CustomChangeableColorButton(
-                        tag: 'chosen', mealsProvider: mealsProvider, settingsProvider:settingsProvider),
+                        tag: 'chosen',
+                        mealsProvider: mealsProvider,
+                        settingsProvider: settingsProvider),
                     SizeConfig.customSizedBox(40, null, null),
                     CustomChangeableColorButton(
-                        tag: 'self', mealsProvider: mealsProvider, settingsProvider:settingsProvider),
+                        tag: 'self',
+                        mealsProvider: mealsProvider,
+                        settingsProvider: settingsProvider),
                   ],
                 ),
               ),
@@ -112,7 +120,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       ? ListView.builder(
                           itemCount: mealsProvider.plannedMeals.length,
                           itemBuilder: (ctx, index) {
-
                             Meal selectedMeal =
                                 mealsProvider.plannedMeals[index];
                             return PlanMealTile(
@@ -128,7 +135,6 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                           ? ListView.builder(
                               itemCount: mealsProvider.weeklyPlanList.length,
                               itemBuilder: (ctx, index) {
-
                                 DateTime date = mealsProvider
                                     .weeklyPlanList[index].entries.first.value
                                     .toDate();

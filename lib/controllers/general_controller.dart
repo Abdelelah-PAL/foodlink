@@ -6,6 +6,10 @@ import '../providers/settings_provider.dart';
 import '../screens/widgets/custom_text.dart';
 
 class GeneralController {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmedPasswordController = TextEditingController();
   static final GeneralController _instance = GeneralController._internal();
 
   factory GeneralController() => _instance;

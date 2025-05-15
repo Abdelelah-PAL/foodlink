@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/general_controller.dart';
-import 'package:foodlink/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/colors.dart';
+import '../../controllers/general_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/beyond_calories_articles_provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import '../../providers/settings_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_container.dart';

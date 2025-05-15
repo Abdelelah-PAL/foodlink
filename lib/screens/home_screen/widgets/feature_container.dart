@@ -16,6 +16,7 @@ class FeatureContainer extends StatelessWidget {
         this.right,
         this.top,
         this.bottom,
+        required this.active,
       });
 
   final String imageUrl;
@@ -26,11 +27,14 @@ class FeatureContainer extends StatelessWidget {
   final double? right;
   final double? top;
   final double? bottom;
+  final bool active;
 
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return active == false ?
+    const SizedBox.shrink() :
+    Padding(
       padding: EdgeInsets.only(
           bottom: SizeConfig.getProportionalHeight(15)),
       child: GestureDetector(

@@ -122,12 +122,14 @@ class CookerBody extends StatelessWidget {
               text: TranslationService().translate("healthy_life"),
               settingsProvider: settingsProvider,
               onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
+              active: true,
             ),
             FeatureContainer(
               imageUrl: Assets.resourcesAdvertising,
               text: TranslationService().translate("resources_advertising"),
               settingsProvider: settingsProvider,
               onTap: () => Get.to(const WeeklyMealsPlanningScreen()),
+              active: false,
             ),
             FeatureContainer(
               left: SizeConfig.getProportionalWidth(18),
@@ -135,6 +137,7 @@ class CookerBody extends StatelessWidget {
               text: TranslationService().translate("aesthetic_food"),
               settingsProvider: settingsProvider,
               onTap: () => Get.to(const HealthyFoodScreen()),
+              active: false,
             ),
             FeatureContainer(
               left: SizeConfig.getProportionalWidth(35),
@@ -142,6 +145,7 @@ class CookerBody extends StatelessWidget {
               text: TranslationService().translate("meal_planning"),
               settingsProvider: settingsProvider,
               onTap: () => Get.to(const MealPlanningScreen()),
+              active: true,
             ),
           ],
         );

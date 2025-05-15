@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/core/constants/assets.dart';
-import 'package:foodlink/core/utils/size_config.dart';
-import 'package:foodlink/providers/meal_categories_provider.dart';
-import 'package:foodlink/screens/food_screens/meal_planning_screen.dart';
-import 'package:foodlink/screens/home_screen/widgets/feature_container.dart';
-import 'package:foodlink/screens/home_screen/widgets/meal_tile.dart';
-import 'package:foodlink/screens/widgets/custom_text.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/assets.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../providers/meal_categories_provider.dart';
 import '../../../providers/settings_provider.dart';
-import '../../food_screens/healthy_food_screen.dart';
+import '../../../services/translation_services.dart';
+import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
+import '../../food_screens/meal_planning_screen.dart';
+import '../../widgets/custom_text.dart';
+import 'feature_container.dart';
+import 'meal_tile.dart';
 
 class UserBody extends StatelessWidget {
   const UserBody({super.key, required this.settingsProvider});
@@ -69,7 +69,8 @@ class UserBody extends StatelessWidget {
           imageUrl: Assets.healthyFood,
           text: TranslationService().translate("healthy_life"),
           settingsProvider: settingsProvider,
-          onTap: () => Get.to(const HealthyFoodScreen()),
+          onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
+          active: true,
         ),
         FeatureContainer(
           left: SizeConfig.getProportionalWidth(30),
@@ -77,6 +78,7 @@ class UserBody extends StatelessWidget {
           text: TranslationService().translate("meal_planning"),
           settingsProvider: settingsProvider,
           onTap: () => Get.to(const MealPlanningScreen()),
+          active: true,
         ),
       ],
     );

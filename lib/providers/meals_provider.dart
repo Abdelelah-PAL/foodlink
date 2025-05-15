@@ -148,7 +148,8 @@ class MealsProvider with ChangeNotifier {
             recipe: doc.recipe,
             day: doc.day,
             date: doc.date,
-            isPlanned: doc.isPlanned);
+            isPlanned: doc.isPlanned,
+            source: doc.source);
         plannedMeals.add(meal);
       }
 
@@ -194,6 +195,7 @@ class MealsProvider with ChangeNotifier {
     String? downloadUrl = await _ms.uploadImage(image);
     return downloadUrl!;
   }
+
   Future<Map<String, dynamic>?> fetchLatestDishOfTheWeek() async {
     return await _ms.fetchLatestDishOfTheWeek();
   }

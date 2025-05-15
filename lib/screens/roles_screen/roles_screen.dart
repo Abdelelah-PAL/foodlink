@@ -1,26 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/dashboard_controller.dart';
-import 'package:foodlink/controllers/user_types.dart';
-import 'package:foodlink/providers/beyond_calories_articles_provider.dart';
-import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/screens/roles_screen/widgets/cooker_tile.dart';
-import 'package:foodlink/screens/roles_screen/widgets/user_tile.dart';
-import 'package:foodlink/screens/widgets/custom_button.dart';
-import 'package:foodlink/services/users_services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/dashboard_controller.dart';
+import '../../controllers/user_types.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/beyond_calories_articles_provider.dart';
+import '../../providers/dashboard_provider.dart';
 import '../../providers/meal_categories_provider.dart';
 import '../../providers/meals_provider.dart';
 import '../../providers/notification_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
+import '../../services/users_services.dart';
 import '../dashboard/dashboard.dart';
+import '../widgets/custom_button.dart';
+import 'widgets/cooker_tile.dart';
+import 'widgets/user_tile.dart';
 
 class RolesScreen extends StatelessWidget {
   const RolesScreen({super.key, required this.user});
