@@ -7,17 +7,22 @@ import '../../../providers/settings_provider.dart';
 class CustomAuthenticationTextField extends StatefulWidget {
   const CustomAuthenticationTextField({
     super.key,
-    required this.hintText,
+    this.hintText,
     required this.obscureText,
     required this.textEditingController,
-    required this.borderColor, required this.settingsProvider,
+    required this.borderColor,
+    required this.settingsProvider,
+    this.borderWidth,
+    this.isSettings,
   });
 
-  final String hintText;
+  final String? hintText;
   final bool obscureText;
   final TextEditingController textEditingController;
   final Color borderColor;
   final SettingsProvider settingsProvider;
+  final double? borderWidth;
+  final bool? isSettings;
 
   @override
   State<CustomAuthenticationTextField> createState() =>
@@ -31,14 +36,18 @@ class _CustomAuthenticationTextFieldState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(12)),
+      padding: widget.isSettings == null || widget.isSettings == false
+          ? EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(6))
+          : EdgeInsets.only(
+              bottom: SizeConfig.getProportionalHeight(12),
+              top: SizeConfig.getProportionalHeight(6)),
       child: Container(
         width: SizeConfig.getProportionalWidth(312),
         height: SizeConfig.getProportionalHeight(48),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 1.0, color: widget.borderColor),
+          border: Border.all(
+              width: widget.borderWidth ?? 1.0, color: widget.borderColor),
           color: Colors.white,
         ),
         child: Padding(
@@ -46,7 +55,7 @@ class _CustomAuthenticationTextFieldState
               ? EdgeInsets.only(left: SizeConfig.getProportionalWidth(10))
               : EdgeInsets.only(right: SizeConfig.getProportionalWidth(10)),
           child: TextField(
-              textAlign:TextAlign.left,
+              textAlign: TextAlign.left,
               controller: widget.textEditingController,
               obscureText: widget.obscureText && !showPassword,
               decoration: InputDecoration(
@@ -54,17 +63,17 @@ class _CustomAuthenticationTextFieldState
                   horizontal: SizeConfig.getProportionalWidth(10),
                   vertical: SizeConfig.getProportionalWidth(5),
                 ),
-                suffixIcon:  widget.obscureText
-                        ? IconButton(
-                            icon: !showPassword
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                          )
+                suffixIcon: widget.obscureText
+                    ? IconButton(
+                        icon: !showPassword
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                      )
                     : null,
                 hintText: widget.hintText,
                 hintStyle: TextStyle(

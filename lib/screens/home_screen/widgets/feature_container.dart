@@ -40,7 +40,7 @@ class FeatureContainer extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
-          alignment: Alignment.center, // Center everything within the Stack
+          alignment: Alignment.center,
           children: [
             Container(
               width: SizeConfig.getProportionalWidth(332),

@@ -32,21 +32,31 @@ class CookerBody extends StatelessWidget {
     return FutureBuilder<Map<String, dynamic>?>(
       future: mealsProvider.fetchLatestDishOfTheWeek(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+        Widget overlay = const SizedBox(); // default: no overlay
+
+        if (snapshot.hasData && snapshot.data != null) {
+          final data = snapshot.data!;
+          final String imageUrl = data['imageUrl'];
+          final double widthRatio = (data['width'] as num).toDouble();
+          final double heightRatio = (data['height'] as num).toDouble();
+          final double dx = (data['position']['x'] as num).toDouble();
+          final double dy = (data['position']['y'] as num).toDouble();
+
+          overlay = Positioned(
+            left: 332 * dx,
+            top: 142 * dy,
+            child: SizeConfig.customSizedBox(
+              332 * widthRatio,
+              142 * heightRatio,
+              Image.network(
+                imageUrl,
+                fit: BoxFit.fitHeight,
+                errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.error),
+              ),
+            ),
+          );
         }
-
-        final data = snapshot.data;
-
-        if (snapshot.hasError || data == null) {
-          return const Text('No dish of the week found.');
-        }
-
-        final String imageUrl = data['imageUrl'];
-        final double widthRatio = (data['width'] as num).toDouble();
-        final double heightRatio = (data['height'] as num).toDouble();
-        final double dx = (data['position']['x'] as num).toDouble();
-        final double dy = (data['position']['y'] as num).toDouble();
 
         return Column(
           children: [
@@ -55,23 +65,8 @@ class CookerBody extends StatelessWidget {
               height: SizeConfig.getProportionalHeight(127),
               child: Stack(
                 children: [
-                  ImageContainer(
-                    imageUrl: Assets.dishOfTheWeek,
-                  ),
-                  Positioned(
-                    left: 332 * dx,
-                    top: 142 * dy,
-                    child: SizeConfig.customSizedBox(
-                      332 * widthRatio,
-                      142 * heightRatio,
-                      Image.network(
-                        imageUrl,
-                        fit: BoxFit.fitHeight,
-                        errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
+                  ImageContainer(imageUrl: Assets.dishOfTheWeek),
+                  overlay,
                 ],
               ),
             ),

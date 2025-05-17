@@ -167,5 +167,6 @@
   "number__required": "Password must contain at least one number",
   "character_required":"Password must contain at least one special character (!@#\\$&*~)",
   "logout": "logout",
-  "name": "name"
+  "name": "name",
+  "save": "Save"
 }

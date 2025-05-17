@@ -6,8 +6,11 @@ import '../../../providers/settings_provider.dart';
 import '../../widgets/custom_text.dart';
 
 class CustomAccountInfoTile extends StatelessWidget {
-  const CustomAccountInfoTile(
-      {super.key, required this.text, required this.controller});
+  const CustomAccountInfoTile({
+    super.key,
+    required this.text,
+    required this.controller,
+  });
 
   final String text;
   final TextEditingController controller;
@@ -15,68 +18,48 @@ class CustomAccountInfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider =
-        Provider.of<SettingsProvider>(context, listen: true);
+    Provider.of<SettingsProvider>(context, listen: true);
     return Container(
-        height: SizeConfig.getProportionalHeight(53),
-        width: SizeConfig.getProportionalHeight(342),
-        margin: EdgeInsets.symmetric(
-          vertical: SizeConfig.getProportionalHeight(7),
-        ),
-        padding: EdgeInsets.only(
-            bottom: SizeConfig.getProportionalHeight(10),
-            left: SizeConfig.getProportionalWidth(10),
-            right: SizeConfig.getProportionalWidth(10)),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(width: 3.0, color: AppColors.widgetsColor),
-        ),
-        child: Column(
-          mainAxisAlignment: settingsProvider.language == "en"
-              ? MainAxisAlignment.start
-              : MainAxisAlignment.end,
-          textDirection: settingsProvider.language == "en"
-              ? TextDirection.ltr
-              : TextDirection.rtl,
-          children: [
-            Align(
-              alignment: settingsProvider.language == 'en'
-                  ? Alignment.topLeft
-                  : Alignment.topRight,
-              child: CustomText(
-                text: text,
-                isCenter: false,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+      height: SizeConfig.getProportionalHeight(60), // increased height
+      width: SizeConfig.getProportionalHeight(342),
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.getProportionalHeight(7),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.getProportionalWidth(10),
+        vertical: SizeConfig.getProportionalHeight(8),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(width: 3.0, color: AppColors.widgetsColor),
+      ),
+      child: Column(
+        crossAxisAlignment: settingsProvider.language == "en"
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.end,
+        children: [
+          CustomText(
+            text: text,
+            isCenter: false,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+          TextField(
+            controller: controller,
+            enabled: true,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
-            Expanded(
-              child: Align(
-                alignment: settingsProvider.language == 'en'
-                    ? Alignment.bottomRight
-                    : Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: SizeConfig.getProportionalHeight(10),
-                  ),
-                  child: TextField(
-                    controller: controller,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    textAlign: settingsProvider.language == 'en'
-                        ? TextAlign.right
-                        : TextAlign.left,
-                    maxLines: 1,
-                    style: const TextStyle(overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ));
+            textAlign: settingsProvider.language == 'en'
+                ? TextAlign.right
+                : TextAlign.left,
+            maxLines: 1,
+            style: const TextStyle(overflow: TextOverflow.ellipsis, fontSize: 14),
+          ),
+        ],
+      ),
+    );
   }
 }

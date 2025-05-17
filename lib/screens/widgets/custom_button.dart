@@ -14,6 +14,7 @@ class CustomButton extends StatefulWidget {
     required this.height,
     required this.isDisabled,
     this.fontSize,
+    this.fontWeight,
   });
 
   final VoidCallback? onTap;
@@ -22,6 +23,7 @@ class CustomButton extends StatefulWidget {
   final double height;
   final bool isDisabled;
   final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -45,8 +47,8 @@ class _CustomButtonState extends State<CustomButton> {
             textAlign: TextAlign.center,
             TranslationService().translate(widget.text),
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: widget.fontSize ?? ( writtenLanguage == 'en' ? 18 : 25),
+              fontWeight: widget.fontWeight ?? FontWeight.bold,
+              fontSize: widget.fontSize ?? (writtenLanguage == 'en' ? 18 : 25),
               fontFamily: AppFonts.getPrimaryFont(context),
               color: AppColors.fontColor,
             ),
