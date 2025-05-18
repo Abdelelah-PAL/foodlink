@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
-import '../../controllers/general_controller.dart';
+import '../../controllers/settings_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -31,9 +31,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
     DashboardProvider dashboardProvider =
-    Provider.of<DashboardProvider>(context, listen: true);
+        Provider.of<DashboardProvider>(context, listen: true);
     AuthenticationProvider authenticationProvider =
-    Provider.of<AuthenticationProvider>(context, listen: true);
+        Provider.of<AuthenticationProvider>(context, listen: true);
     var userId = usersProvider.selectedUser!.userId;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,9 +62,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Assets.editInfo,
                 text: "edit_data",
                 onTap: () {
-                  GeneralController().usernameController.text = usersProvider.selectedUser!.username!;
-                  GeneralController().emailController.text = usersProvider.selectedUser!.email;
-                  Get.to(EditAccountInfoScreen(usersProvider: usersProvider, settingsProvider: settingsProvider));
+                  SettingsController().usernameController.text =
+                      usersProvider.selectedUser!.username!;
+                  SettingsController().emailController.text =
+                      usersProvider.selectedUser!.email;
+                  Get.to(EditAccountInfoScreen(
+                      usersProvider: usersProvider,
+                      settingsProvider: settingsProvider));
                 },
                 givenWrittenLanguage: settingsProvider.language,
               ),
@@ -157,7 +161,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Assets.logout,
                 text: "logout",
                 givenWrittenLanguage: settingsProvider.language,
-                onTap: () => AuthController().logout(authenticationProvider, dashboardProvider),
+                onTap: () => AuthController()
+                    .logout(authenticationProvider, dashboardProvider),
               )
             ])
       ],

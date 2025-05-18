@@ -1,8 +1,10 @@
-import 'package:foodlink/services/settings_services.dart';
-import 'package:foodlink/services/translation_services.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_settings.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../services/settings_services.dart';
+import '../services/translation_services.dart';
 
 class SettingsProvider with ChangeNotifier {
   static final SettingsProvider _instance = SettingsProvider._internal();
@@ -15,6 +17,7 @@ class SettingsProvider with ChangeNotifier {
   late UserSettings settings;
   late String language;
   late bool isLoading = false;
+
 
   Future<void> addSettings(userId) async {
     await _ss.addSettings(userId);
@@ -49,5 +52,4 @@ class SettingsProvider with ChangeNotifier {
     await TranslationService().loadTranslations(context);
     notifyListeners();
   }
-
 }

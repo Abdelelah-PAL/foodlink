@@ -34,7 +34,7 @@ class MealPropertiesHeader extends StatelessWidget {
                 fontWeight: FontWeight.w700)
           ],
         ),
-        Divider(thickness: 1),
+        const Divider(thickness: 1),
       ],
     );
   }

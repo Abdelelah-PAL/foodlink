@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/fonts.dart';
+import 'package:foodlink/services/translation_services.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../providers/settings_provider.dart';
@@ -39,8 +40,8 @@ class _CustomAuthenticationTextFieldState
       padding: widget.isSettings == null || widget.isSettings == false
           ? EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(6))
           : EdgeInsets.only(
-              bottom: SizeConfig.getProportionalHeight(12),
-              top: SizeConfig.getProportionalHeight(6)),
+          bottom: SizeConfig.getProportionalHeight(12),
+          top: SizeConfig.getProportionalHeight(6)),
       child: Container(
         width: SizeConfig.getProportionalWidth(312),
         height: SizeConfig.getProportionalHeight(48),
@@ -65,17 +66,17 @@ class _CustomAuthenticationTextFieldState
                 ),
                 suffixIcon: widget.obscureText
                     ? IconButton(
-                        icon: !showPassword
-                            ? const Icon(Icons.visibility)
-                            : const Icon(Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                      )
+                  icon: !showPassword
+                      ? const Icon(Icons.visibility)
+                      : const Icon(Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                )
                     : null,
-                hintText: widget.hintText,
+                hintText: TranslationService().translate(widget.hintText ?? ""),
                 hintStyle: TextStyle(
                     color: AppColors.hintTextColor,
                     fontFamily: AppFonts.getPrimaryFont(context)),

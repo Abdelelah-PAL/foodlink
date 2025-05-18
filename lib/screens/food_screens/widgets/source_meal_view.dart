@@ -43,7 +43,7 @@ class SourceMealView extends StatelessWidget {
                     color: Colors.blue,
                     fontWeight: FontWeight.w400,
                     underlined: true)
-                : CustomText(
+                : const CustomText(
                     isCenter: true,
                     text: "no_source",
                     fontSize: 18,

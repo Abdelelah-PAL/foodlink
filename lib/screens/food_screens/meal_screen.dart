@@ -35,8 +35,6 @@ class MealScreen extends StatelessWidget {
         Provider.of<MealsProvider>(context, listen: true);
     UsersProvider usersProvider =
         Provider.of<UsersProvider>(context, listen: true);
-    print(meal.source);
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),

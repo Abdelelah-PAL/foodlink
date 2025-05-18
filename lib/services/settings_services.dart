@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foodlink/models/user_settings.dart';
+
+import '../models/user_settings.dart';
 
 class SettingsServices with ChangeNotifier {
   final _firebaseFireStore = FirebaseFirestore.instance;

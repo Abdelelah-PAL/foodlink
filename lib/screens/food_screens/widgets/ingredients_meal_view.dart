@@ -6,7 +6,6 @@ import '../../../core/utils/size_config.dart';
 import '../../../models/meal.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/users_provider.dart';
-import '../../widgets/custom_text.dart';
 import 'meal_properties_header.dart';
 
 

@@ -136,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         userTypeId: null,
                         email: user.email!,
                         username: null,
+                        subscriber: false,
                       );
                       UsersProvider().addUserDetails(userDetails);
                       setState(() {
@@ -162,6 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                        userTypeId: null,
                        email: userCredential.user!.email!,
                        username: null,
+                       subscriber: false,
                      );
                       UsersProvider().addUserDetails(userDetails);
                      await SettingsProvider().addSettings(userCredential.user!.uid);

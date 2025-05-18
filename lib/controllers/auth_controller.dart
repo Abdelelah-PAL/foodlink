@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/auth_screens/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/colors.dart';
 import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
+import '../screens/auth_screens/login_screen.dart';
 import '../services/translation_services.dart';
 
 class AuthController {
@@ -70,39 +69,31 @@ class AuthController {
   }
 
   void changeTextFieldsColors(login) {
-    if (login == false) {
-      if (!noneIsEmpty) {
-        if (emailController.text.isEmpty) {
-          emailTextFieldBorderColor = AppColors.errorColor;
-        }
-        if (passwordController.text.isEmpty) {
-          passwordTextFieldBorderColor = AppColors.errorColor;
-        }
-        if (confirmedPasswordController.text.isEmpty) {
-          confirmPasswordTextFieldBorderColor = AppColors.errorColor;
-        }
-      } else if (!isMatched || !passwordIsValid) {
+    if (!noneIsEmpty) {
+      if (emailController.text.isEmpty) {
+        emailTextFieldBorderColor = AppColors.errorColor;
+      } else {
+        emailTextFieldBorderColor = AppColors.textFieldBorderColor;
+      }
+      if (passwordController.text.isEmpty) {
         passwordTextFieldBorderColor = AppColors.errorColor;
+      } else {
+        passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
+      }
+      if (confirmedPasswordController.text.isEmpty) {
         confirmPasswordTextFieldBorderColor = AppColors.errorColor;
       } else {
-        errorText = "";
-        emailTextFieldBorderColor = AppColors.textFieldBorderColor;
-        passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
         confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
       }
+    } else if (!isMatched || !passwordIsValid) {
+      emailTextFieldBorderColor = AppColors.textFieldBorderColor;
+      passwordTextFieldBorderColor = AppColors.errorColor;
+      confirmPasswordTextFieldBorderColor = AppColors.errorColor;
     } else {
-      if (!noneIsEmpty) {
-        if (emailController.text.isEmpty) {
-          emailTextFieldBorderColor = AppColors.errorColor;
-        }
-        if (passwordController.text.isEmpty) {
-          passwordTextFieldBorderColor = AppColors.errorColor;
-        }
-      } else {
-        errorText = "";
-        emailTextFieldBorderColor = AppColors.textFieldBorderColor;
-        passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
-      }
+      errorText = "";
+      emailTextFieldBorderColor = AppColors.textFieldBorderColor;
+      passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
+      confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
     }
     return;
   }
