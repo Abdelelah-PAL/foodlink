@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../controllers/settings_controller.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/authentication_provider.dart';
+import '../../providers/dashboard_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
@@ -26,6 +29,11 @@ class EditAccountInfoScreen extends StatefulWidget {
 class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
   @override
   Widget build(BuildContext context) {
+    DashboardProvider dashboardProvider =
+        Provider.of<DashboardProvider>(context);
+    AuthenticationProvider authenticationProvider =
+        Provider.of<AuthenticationProvider>(context);
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
@@ -37,12 +45,14 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const CustomBackButton(),
-                CustomText(
-                    isCenter: true,
-                    text: "edit_data",
-                    fontSize:
-                        widget.settingsProvider.language == "en" ? 22 : 30,
-                    fontWeight: FontWeight.bold),
+                Center(
+                  child: CustomText(
+                      isCenter: true,
+                      text: "edit_data",
+                      fontSize:
+                          widget.settingsProvider.language == "en" ? 18 : 30,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           )),
@@ -73,7 +83,7 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                 SizeConfig.customSizedBox(null, 40, null),
                 CustomErrorTxt(
                   text: TranslationService()
-                      .translate(SettingsController().errorText),
+                      .translate(widget.usersProvider.errorText),
                   settingsProvider: widget.settingsProvider,
                 ),
                 SizeConfig.customSizedBox(null, 10, null),
@@ -84,9 +94,9 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     hintText: null,
                     obscureText: false,
                     textEditingController:
-                        SettingsController().usernameController,
+                        widget.usersProvider.usernameController,
                     borderColor:
-                        SettingsController().usernameTextFieldBorderColor,
+                        widget.usersProvider.usernameTextFieldBorderColor,
                     settingsProvider: widget.settingsProvider,
                     borderWidth: 3,
                     isSettings: true),
@@ -96,8 +106,8 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                 CustomAuthenticationTextField(
                     hintText: null,
                     obscureText: false,
-                    textEditingController: SettingsController().emailController,
-                    borderColor: SettingsController().emailTextFieldBorderColor,
+                    textEditingController: widget.usersProvider.emailController,
+                    borderColor: widget.usersProvider.emailTextFieldBorderColor,
                     settingsProvider: widget.settingsProvider,
                     borderWidth: 3,
                     isSettings: true),
@@ -108,9 +118,9 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     hintText: "enter_password",
                     obscureText: true,
                     textEditingController:
-                        SettingsController().passwordController,
+                        widget.usersProvider.passwordController,
                     borderColor:
-                        SettingsController().passwordTextFieldBorderColor,
+                        widget.usersProvider.passwordTextFieldBorderColor,
                     settingsProvider: widget.settingsProvider,
                     borderWidth: 3,
                     isSettings: true),
@@ -121,48 +131,50 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     hintText: "confirm_password",
                     obscureText: true,
                     textEditingController:
-                        SettingsController().confirmedPasswordController,
-                    borderColor: SettingsController()
-                        .confirmPasswordTextFieldBorderColor,
+                        widget.usersProvider.confirmedPasswordController,
+                    borderColor: widget
+                        .usersProvider.confirmPasswordTextFieldBorderColor,
                     settingsProvider: widget.settingsProvider,
                     borderWidth: 3,
                     isSettings: true),
                 SizeConfig.customSizedBox(null, 80, null),
                 CustomButton(
                     onTap: () async {
-                      SettingsController().checkEmptyFields();
-                      if (!SettingsController().noneIsEmpty) {
+                      widget.usersProvider.checkEmptyFields();
+                      if (!widget.usersProvider.noneIsEmpty) {
                         setState(() {
-                          SettingsController().changeTextFieldsColors();
+                          widget.usersProvider.changeTextFieldsColors();
                         });
                         return;
                       }
-                      SettingsController().checkMatchedPassword();
-                      if (!SettingsController().isMatched) {
+                      widget.usersProvider.checkMatchedPassword();
+                      if (!widget.usersProvider.isMatched) {
                         setState(() {
-                          SettingsController().changeTextFieldsColors();
+                          widget.usersProvider.changeTextFieldsColors();
                         });
                         return;
                       }
-                      SettingsController().checkValidPassword();
-                      if (!SettingsController().passwordIsValid) {
+                      widget.usersProvider.checkValidPassword();
+                      if (!widget.usersProvider.passwordIsValid) {
                         setState(() {
-                          SettingsController().changeTextFieldsColors();
+                          widget.usersProvider.changeTextFieldsColors();
                         });
                         return;
                       }
-                      if (SettingsController().isMatched &&
-                          SettingsController().passwordIsValid) {
+                      if (widget.usersProvider.isMatched &&
+                          widget.usersProvider.passwordIsValid) {
                         setState(() {
-                          SettingsController().changeTextFieldsColors();
+                          widget.usersProvider.changeTextFieldsColors();
                         });
 
                         await SettingsController().updateUserDetails(
                             widget.usersProvider,
+                            dashboardProvider,
+                            authenticationProvider,
                             widget.usersProvider.selectedUser!.userId,
-                            widget.usersProvider.selectedUser!.username!,
-                            widget.usersProvider.selectedUser!.email,
-                            SettingsController().passwordController.text,
+                            widget.usersProvider.usernameController.text,
+                            widget.usersProvider.emailController.text,
+                            widget.usersProvider.passwordController.text.trim(),
                             widget.usersProvider.selectedUser!.userTypeId!);
                       }
                     },

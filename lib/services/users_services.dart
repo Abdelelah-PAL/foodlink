@@ -91,7 +91,7 @@ class UsersServices with ChangeNotifier {
   }
 
   Future<UserDetails> updateUserDetails(String userId, String username,
-      String email, String imageUrl, int userTypeId) async {
+      String email, String? imageUrl, int userTypeId) async {
     try {
       final query = await FirebaseFirestore.instance
           .collection('user_details')
@@ -100,8 +100,12 @@ class UsersServices with ChangeNotifier {
           .limit(1)
           .get();
       final doc = query.docs.first.reference;
-      await doc.update(
-          {'username': username, 'email': email, 'image_url': imageUrl});
+      if (imageUrl != null) {
+        await doc.update(
+            {'username': username, 'email': email, 'image_url': imageUrl});
+      } else {
+        await doc.update({'username': username, 'email': email});
+      }
 
       final updatedSnapshot = await doc.get();
 

@@ -37,8 +37,8 @@ class AuthController {
   }
 
   void checkMatchedPassword() {
-    isMatched =
-        passwordController.text.trim() == confirmedPasswordController.text.trim();
+    isMatched = passwordController.text.trim() ==
+        confirmedPasswordController.text.trim();
     errorText = !isMatched
         ? TranslationService().translate("password_not_matched")
         : "";
@@ -65,7 +65,6 @@ class AuthController {
       errorText = "";
       passwordIsValid = true;
     }
-
   }
 
   void changeTextFieldsColors(login) {
@@ -124,10 +123,11 @@ class AuthController {
     await prefs.setBool('onboarding_complete', true);
   }
 
-  void logout(AuthenticationProvider authenticationProvider, DashboardProvider dashBoardProvider) {
-    dashBoardProvider.cookerPressed =false;
+  void logout(AuthenticationProvider authenticationProvider,
+      DashboardProvider dashBoardProvider) {
+    dashBoardProvider.cookerPressed = false;
     dashBoardProvider.userPressed = false;
-    dashBoardProvider.selectedIndex=0;
+    dashBoardProvider.selectedIndex = 0;
     authenticationProvider.logout();
     Get.to(const LoginScreen(firstScreen: false));
   }

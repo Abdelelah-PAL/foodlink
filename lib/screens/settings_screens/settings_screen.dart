@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/screens/settings_screens/widgets/profile_picture_container.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
@@ -48,11 +49,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           givenWrittenLanguage: settingsProvider.language,
         ),
         SizeConfig.customSizedBox(null, 25, null),
-        const ProfileCircle(
-          height: 68,
-          width: 68,
-          iconSize: 50,
-        ),
+        ProfilePictureContainer(
+            settingsProvider: settingsProvider, usersProvider: usersProvider),
         SizeConfig.customSizedBox(null, 50, null),
         CustomSettingsContainer(
             height: 125,
@@ -62,9 +60,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Assets.editInfo,
                 text: "edit_data",
                 onTap: () {
-                  SettingsController().usernameController.text =
+                  usersProvider.usernameController.text =
                       usersProvider.selectedUser!.username!;
-                  SettingsController().emailController.text =
+                  usersProvider.emailController.text =
                       usersProvider.selectedUser!.email;
                   Get.to(EditAccountInfoScreen(
                       usersProvider: usersProvider,

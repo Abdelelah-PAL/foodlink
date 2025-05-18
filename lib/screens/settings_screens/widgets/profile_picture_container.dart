@@ -44,7 +44,7 @@ class ProfilePictureContainer extends StatelessWidget {
       imageWidget = const Icon(
         Icons.person_outline_outlined,
         size: 50,
-        color: Colors.white,
+        color: Colors.black,
       );
     }
 

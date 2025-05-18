@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
@@ -23,6 +24,7 @@ import 'widgets/custom_google_auth_btn.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.firstScreen});
+
   final bool firstScreen;
 
   @override
@@ -41,10 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.firstScreen) {
+    if (widget.firstScreen) {
       SizeConfig().init(context);
     }
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    UsersProvider usersProvider = Provider.of<UsersProvider>(context);
+
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: false,
@@ -59,17 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizeConfig.customSizedBox(
                     179, 179, Image.asset(Assets.pureLogo)),
                 Padding(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.getProportionalHeight(10),
-                      bottom: SizeConfig.getProportionalHeight(13)),
-                  child: const CustomText(
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.getProportionalHeight(10),
+                        bottom: SizeConfig.getProportionalHeight(13)),
+                    child: const CustomText(
                       isCenter: true,
                       text: "welcome_back",
                       fontSize: 24,
                       fontWeight: FontWeight.normal,
-                    color: AppColors.fontColor,
-                  )
-                ),
+                      color: AppColors.fontColor,
+                    )),
                 CustomErrorTxt(
                   text:
                       TranslationService().translate(_authController.errorText),
@@ -134,8 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                               side: const BorderSide(
-                                  color: AppColors
-                                      .textFieldBorderColor),
+                                  color: AppColors.textFieldBorderColor),
                             ),
                           ),
                           Padding(
@@ -204,6 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _authController.passwordController.text,
                           );
                         }
+                        usersProvider.setSettingsPassword(_authController.passwordController.text);
                       }
                     }
                   },
