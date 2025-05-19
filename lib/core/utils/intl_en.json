@@ -168,5 +168,7 @@
   "character_required":"Password must contain at least one special character (!@#\\$&*~)",
   "logout": "logout",
   "name": "name",
-  "save": "Save"
+  "save": "Save",
+  "contacting_header": "If you have any questions \n We will be happy to help you.",
+  "social_media": "Social Media Accounts"
 }

@@ -10,9 +10,8 @@ import '../../services/translation_services.dart';
 import '../auth_screens/widgets/custom_auth_textfield.dart';
 import '../auth_screens/widgets/custom_auth_textfield_header.dart';
 import '../auth_screens/widgets/custom_error_txt.dart';
-import '../widgets/custom_back_button.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/custom_text.dart';
+import 'widgets/custom_top_bar.dart';
 import 'widgets/profile_picture_container.dart';
 
 class EditAccountInfoScreen extends StatefulWidget {
@@ -37,25 +36,10 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: SizeConfig.getProportionalWidth(50),
-                right: SizeConfig.getProportionalWidth(85)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CustomBackButton(),
-                Center(
-                  child: CustomText(
-                      isCenter: true,
-                      text: "edit_data",
-                      fontSize:
-                          widget.settingsProvider.language == "en" ? 18 : 30,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          )),
+          child: CustomTopBar(
+              text: 'edit_data',
+              rightPadding: 85,
+              settingsProvider: widget.settingsProvider)),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => FocusScope.of(context).unfocus(),
@@ -80,7 +64,6 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     widget.usersProvider.pickImageFromSource(context);
                   },
                 ),
-                SizeConfig.customSizedBox(null, 40, null),
                 CustomErrorTxt(
                   text: TranslationService()
                       .translate(widget.usersProvider.errorText),
@@ -137,54 +120,56 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     settingsProvider: widget.settingsProvider,
                     borderWidth: 3,
                     isSettings: true),
-                SizeConfig.customSizedBox(null, 80, null),
-                CustomButton(
-                    onTap: () async {
-                      widget.usersProvider.checkEmptyFields();
-                      if (!widget.usersProvider.noneIsEmpty) {
-                        setState(() {
-                          widget.usersProvider.changeTextFieldsColors();
-                        });
-                        return;
-                      }
-                      widget.usersProvider.checkMatchedPassword();
-                      if (!widget.usersProvider.isMatched) {
-                        setState(() {
-                          widget.usersProvider.changeTextFieldsColors();
-                        });
-                        return;
-                      }
-                      widget.usersProvider.checkValidPassword();
-                      if (!widget.usersProvider.passwordIsValid) {
-                        setState(() {
-                          widget.usersProvider.changeTextFieldsColors();
-                        });
-                        return;
-                      }
-                      if (widget.usersProvider.isMatched &&
-                          widget.usersProvider.passwordIsValid) {
-                        setState(() {
-                          widget.usersProvider.changeTextFieldsColors();
-                        });
+                Padding(
+                  padding:EdgeInsets.only(top: SizeConfig.getProportionalHeight(80)),
+                  child: CustomButton(
+                      onTap: () async {
+                        widget.usersProvider.checkEmptyFields();
+                        if (!widget.usersProvider.noneIsEmpty) {
+                          setState(() {
+                            widget.usersProvider.changeTextFieldsColors();
+                          });
+                          return;
+                        }
+                        widget.usersProvider.checkMatchedPassword();
+                        if (!widget.usersProvider.isMatched) {
+                          setState(() {
+                            widget.usersProvider.changeTextFieldsColors();
+                          });
+                          return;
+                        }
+                        widget.usersProvider.checkValidPassword();
+                        if (!widget.usersProvider.passwordIsValid) {
+                          setState(() {
+                            widget.usersProvider.changeTextFieldsColors();
+                          });
+                          return;
+                        }
+                        if (widget.usersProvider.isMatched &&
+                            widget.usersProvider.passwordIsValid) {
+                          setState(() {
+                            widget.usersProvider.changeTextFieldsColors();
+                          });
 
-                        await SettingsController().updateUserDetails(
-                            widget.usersProvider,
-                            dashboardProvider,
-                            authenticationProvider,
-                            widget.usersProvider.selectedUser!.userId,
-                            widget.usersProvider.usernameController.text,
-                            widget.usersProvider.emailController.text,
-                            widget.usersProvider.passwordController.text.trim(),
-                            widget.usersProvider.selectedUser!.userTypeId!);
-                      }
-                    },
-                    text: "save",
-                    width: 137,
-                    height: 45,
-                    fontSize:
-                        widget.settingsProvider.language == 'en' ? 24 : 30,
-                    fontWeight: FontWeight.w700,
-                    isDisabled: false)
+                          await SettingsController().updateUserDetails(
+                              widget.usersProvider,
+                              dashboardProvider,
+                              authenticationProvider,
+                              widget.usersProvider.selectedUser!.userId,
+                              widget.usersProvider.usernameController.text,
+                              widget.usersProvider.emailController.text,
+                              widget.usersProvider.passwordController.text.trim(),
+                              widget.usersProvider.selectedUser!.userTypeId!);
+                        }
+                      },
+                      text: "save",
+                      width: 137,
+                      height: 45,
+                      fontSize:
+                          widget.settingsProvider.language == 'en' ? 24 : 30,
+                      fontWeight: FontWeight.w700,
+                      isDisabled: false),
+                )
               ],
             ),
           ),

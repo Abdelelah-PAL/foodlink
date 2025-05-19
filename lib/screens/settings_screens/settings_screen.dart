@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/settings_screens/widgets/profile_picture_container.dart';
+import 'package:foodlink/screens/settings_screens/contact_us_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
-import '../../controllers/settings_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -12,10 +11,11 @@ import '../../providers/dashboard_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/profile_circle.dart';
 import 'edit_account_info_screen.dart';
+import 'privacy_screen.dart';
 import 'widgets/custom_setting_tile.dart';
 import 'widgets/custom_settings_container.dart';
+import 'widgets/profile_picture_container.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -73,6 +73,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                   icon: Assets.privacy,
                   text: "privacy",
+                  onTap: () =>
+                      Get.to(PrivacyScreen(settingsProvider: settingsProvider)),
                   givenWrittenLanguage: settingsProvider.language),
               CustomSettingTile(
                   icon: Assets.language,
@@ -150,11 +152,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomSettingTile(
                   icon: Assets.contactUs,
                   text: "contact_us",
-                  givenWrittenLanguage: settingsProvider.language),
-              CustomSettingTile(
-                  icon: Assets.support,
-                  text: "help_support",
-                  givenWrittenLanguage: settingsProvider.language),
+                  givenWrittenLanguage: settingsProvider.language,
+                  onTap: () => Get.to(
+                      ContactUsScreen(settingsProvider: settingsProvider))),
               CustomSettingTile(
                 icon: Assets.logout,
                 text: "logout",
