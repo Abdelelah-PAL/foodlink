@@ -8,8 +8,8 @@ import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
-import '../../providers/beyond_calories_articles_provider.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/features_provider.dart';
 import '../../providers/meal_categories_provider.dart';
 import '../../providers/meals_provider.dart';
 import '../../providers/notification_provider.dart';
@@ -90,7 +90,7 @@ class RolesScreen extends StatelessWidget {
                         .updateUsername(user.uid, roleId, controller.text);
                     UsersProvider().selectedUser = await UsersProvider()
                         .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
-                    BeyondCaloriesArticlesProvider().getAllArticles();
+                    FeaturesProvider().getAllArticles();
                     MealCategoriesProvider().getAllMealCategories();
                     MealsProvider().getAllPlannedMeals();
                     await NotificationsProvider().getAllNotifications(

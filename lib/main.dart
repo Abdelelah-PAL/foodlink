@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/constants/colors.dart';
 import 'providers/authentication_provider.dart';
-import 'providers/beyond_calories_articles_provider.dart';
 import 'providers/dashboard_provider.dart';
+import 'providers/features_provider.dart';
 import 'providers/general_provider.dart';
 import 'providers/meal_categories_provider.dart';
 import 'providers/meals_provider.dart';
@@ -35,7 +35,7 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => MealsProvider()),
     ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
     ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
-    ChangeNotifierProvider(create: (ctx) => BeyondCaloriesArticlesProvider()),
+    ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
     ChangeNotifierProvider(create: (ctx) => TaskProvider()),
   ], child:  MyApp(startingWidget: onboardingComplete == true ? const LoginScreen(firstScreen: true,) : const SplashScreen())));
 }

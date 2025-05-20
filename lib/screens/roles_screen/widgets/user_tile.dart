@@ -10,11 +10,15 @@ import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/user_details.dart';
+import '../../../providers/features_provider.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/users_provider.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key, required this.dashboardProvider, required this.settingsProvider});
+  const UserTile(
+      {super.key,
+      required this.dashboardProvider,
+      required this.settingsProvider});
 
   final DashboardProvider dashboardProvider;
   final SettingsProvider settingsProvider;
@@ -33,7 +37,7 @@ class UserTile extends StatelessWidget {
         children: [
           if (settingsProvider.language == "en") ...[
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 DashboardProvider().changeRole(UserTypes.user);
                 UserDetails user = usersProvider.loggedInUsers.firstWhere(
                   (user) => user.userTypeId == UserTypes.user,
@@ -41,6 +45,7 @@ class UserTile extends StatelessWidget {
                 usersProvider.setFirstLogin(user, UserTypes.user);
                 DashboardProvider().togglePressed(UserTypes.user);
                 DashboardController().cookerNameController.clear();
+                await FeaturesProvider().getAllFeatures();
               },
               child: Container(
                   height: SizeConfig.getProportionalHeight(116),
@@ -54,7 +59,6 @@ class UserTile extends StatelessWidget {
                         blurRadius: 7,
                         spreadRadius: 4,
                       ),
-
                     ],
                   ),
                   child: Center(
@@ -123,9 +127,9 @@ class UserTile extends StatelessWidget {
                       ),
                     ],
                   ),
-            SizeConfig.customSizedBox(15,null, null),
+            SizeConfig.customSizedBox(15, null, null),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 DashboardProvider().changeRole(UserTypes.user);
                 UserDetails user = usersProvider.loggedInUsers.firstWhere(
                   (user) => user.userTypeId == UserTypes.user,
@@ -133,6 +137,7 @@ class UserTile extends StatelessWidget {
                 usersProvider.setFirstLogin(user, UserTypes.user);
                 DashboardProvider().togglePressed(UserTypes.user);
                 DashboardController().cookerNameController.clear();
+                await FeaturesProvider().getAllFeatures();
               },
               child: Container(
                   height: SizeConfig.getProportionalHeight(116),
@@ -146,7 +151,6 @@ class UserTile extends StatelessWidget {
                         blurRadius: 7,
                         spreadRadius: 4,
                       ),
-
                     ],
                   ),
                   child: Center(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/assets.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../models/user_details.dart';
+import '../../../providers/features_provider.dart';
 import '../../../providers/meal_categories_provider.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
@@ -13,9 +14,11 @@ import 'feature_container.dart';
 import 'meal_tile.dart';
 
 class UserBody extends StatelessWidget {
-  const UserBody({super.key, required this.settingsProvider});
+  const UserBody(
+      {super.key, required this.settingsProvider, required this.userDetails});
 
   final SettingsProvider settingsProvider;
+  final UserDetails userDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -65,21 +68,42 @@ class UserBody extends StatelessWidget {
             },
           ),
         ),
-        FeatureContainer(
-          imageUrl: Assets.healthyFood,
-          text: TranslationService().translate("healthy_life"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const BeyondCaloriesArticlesScreen()),
-          active: true,
-        ),
-        FeatureContainer(
-          left: SizeConfig.getProportionalWidth(30),
-          imageUrl: Assets.mealPlanning,
-          text: TranslationService().translate("meal_planning"),
-          settingsProvider: settingsProvider,
-          onTap: () => Get.to(const MealPlanningScreen()),
-          active: true,
-        ),
+        SizeConfig.customSizedBox(
+          332,
+          500,
+          Consumer<FeaturesProvider>(
+              builder: (context, featuresProvider, child) {
+            return ListView.builder(
+              itemCount: featuresProvider.userFeatures.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (ctx, index) {
+                final feature = featuresProvider.userFeatures[index];
+                VoidCallback onTap = () {};
+                switch (feature.keyword) {
+                  case "Calories":
+                    onTap = () {
+                      Get.to(const BeyondCaloriesArticlesScreen());
+                    };
+                    break;
+                  case "Planning":
+                    onTap = () {
+                      Get.to(const MealPlanningScreen());
+                    };
+                    break;
+                }
+                return FeatureContainer(
+                  imageUrl: settingsProvider.language == 'en'
+                      ? feature.enImageURL
+                      : feature.arImageURL,
+                  onTap: onTap,
+                  active: feature.active,
+                  premium: feature.premium,
+                  user: userDetails,
+                );
+              },
+            );
+          }),
+        )
       ],
     );
   }

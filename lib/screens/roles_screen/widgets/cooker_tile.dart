@@ -3,6 +3,7 @@ import 'package:foodlink/controllers/dashboard_controller.dart';
 import 'package:foodlink/core/constants/fonts.dart';
 import 'package:foodlink/models/user_details.dart';
 import 'package:foodlink/providers/dashboard_provider.dart';
+import 'package:foodlink/providers/features_provider.dart';
 import 'package:foodlink/providers/notification_provider.dart';
 import 'package:foodlink/providers/users_provider.dart';
 import 'package:foodlink/services/translation_services.dart';
@@ -49,6 +50,7 @@ class CookerTile extends StatelessWidget {
                 DashboardController().userNameController.clear();
                 await NotificationsProvider()
                     .getAllNotifications(cooker.userTypeId, cooker.userId);
+                await FeaturesProvider().getAllFeatures();
               },
               child: Container(
                   height: SizeConfig.getProportionalHeight(116),
@@ -134,7 +136,7 @@ class CookerTile extends StatelessWidget {
                   ),
             SizeConfig.customSizedBox(15, null, null),
             GestureDetector(
-              onTap: () {
+              onTap: () async{
                 DashboardProvider().changeRole(UserTypes.cooker);
                 UserDetails cooker = usersProvider.loggedInUsers.firstWhere(
                   (user) => user.userTypeId == UserTypes.cooker,
@@ -143,6 +145,9 @@ class CookerTile extends StatelessWidget {
 
                 DashboardProvider().togglePressed(UserTypes.cooker);
                 DashboardController().userNameController.clear();
+                await NotificationsProvider()
+                    .getAllNotifications(cooker.userTypeId, cooker.userId);
+                await FeaturesProvider().getAllFeatures();
               },
               child: Container(
                   height: SizeConfig.getProportionalHeight(116),

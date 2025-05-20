@@ -7,6 +7,7 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/features_provider.dart';
 import '../../providers/notification_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
@@ -29,11 +30,11 @@ class _AppHeaderState extends State<AppHeader> {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     NotificationsProvider notificationsProvider =
-    Provider.of<NotificationsProvider>(context, listen: true);
+        Provider.of<NotificationsProvider>(context, listen: true);
     UsersProvider usersProvider =
-    Provider.of<UsersProvider>(context, listen: true);
+        Provider.of<UsersProvider>(context, listen: true);
     DashboardProvider dashboardProviderWatcher =
-    context.watch<DashboardProvider>();
+        context.watch<DashboardProvider>();
     String greeting = TranslationService().translate("greeting");
     greeting = greeting.replaceFirst(
         '{name}',
@@ -59,7 +60,8 @@ class _AppHeaderState extends State<AppHeader> {
                     child: IconButton(
                       onPressed: () async {
                         Get.to(const NotificationsScreen());
-                        await NotificationsProvider().clearUnseenNotification(usersProvider.selectedUser!.userTypeId);
+                        await NotificationsProvider().clearUnseenNotification(
+                            usersProvider.selectedUser!.userTypeId);
                       },
                       icon: const Icon(
                           color: Colors.black,
@@ -68,7 +70,9 @@ class _AppHeaderState extends State<AppHeader> {
                       highlightColor: Colors.transparent,
                     ),
                   ),
-                  if (usersProvider.selectedUser!.userTypeId == UserTypes.user && notificationsProvider.userUnseenNotifications.isNotEmpty)
+                  if (usersProvider.selectedUser!.userTypeId ==
+                          UserTypes.user &&
+                      notificationsProvider.userUnseenNotifications.isNotEmpty)
                     Positioned(
                       left: SizeConfig.getProportionalWidth(25),
                       top: SizeConfig.getProportionalHeight(7),
@@ -87,7 +91,10 @@ class _AppHeaderState extends State<AppHeader> {
                         ),
                       ),
                     )
-                  else if(usersProvider.selectedUser!.userTypeId == UserTypes.cooker && notificationsProvider.cookerUnseenNotifications.isNotEmpty)
+                  else if (usersProvider.selectedUser!.userTypeId ==
+                          UserTypes.cooker &&
+                      notificationsProvider
+                          .cookerUnseenNotifications.isNotEmpty)
                     Positioned(
                       left: SizeConfig.getProportionalWidth(25),
                       top: SizeConfig.getProportionalHeight(7),
@@ -99,7 +106,8 @@ class _AppHeaderState extends State<AppHeader> {
                             color: AppColors.primaryColor),
                         child: Center(
                           child: Text(
-                            notificationsProvider.cookerUnseenNotifications.length
+                            notificationsProvider
+                                .cookerUnseenNotifications.length
                                 .toString(),
                             style: const TextStyle(fontSize: 8),
                           ),
@@ -140,7 +148,8 @@ class _AppHeaderState extends State<AppHeader> {
                                       ? TranslationService().translate("cooker")
                                       : TranslationService().translate("user"),
                                   style: TextStyle(
-                                    fontFamily: AppFonts.getPrimaryFont(context),
+                                    fontFamily:
+                                        AppFonts.getPrimaryFont(context),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -163,82 +172,84 @@ class _AppHeaderState extends State<AppHeader> {
                     ),
                     dashboardProviderWatcher.isExpanded
                         ? GestureDetector(
-                      onTap: () async {
-                        setState(() {
-                          usersProvider.toggleSelectedUser(
-                            usersProvider.selectedUser!.userTypeId == 1
-                                ? 2
-                                : 1,
-                          );
-                          DashboardProvider().toggleExpanded();
-                        });
-                        await NotificationsProvider().getAllNotifications(
-                            usersProvider.selectedUser!.userTypeId,
-                            usersProvider.selectedUser!.userId);
-                      },
-                      child: Container(
-                        width: SizeConfig.getProportionalWidth(94),
-                        height: SizeConfig.getProportionalHeight(22),
-                        margin: EdgeInsets.only(
-                          left: SizeConfig.getProportionalWidth(11),
-                        ),
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                                color: AppColors.defaultBorderColor,
-                                blurRadius: 5),
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColors.backgroundColor,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
+                            onTap: () async {
+                              setState(() {
+                                usersProvider.toggleSelectedUser(
+                                  usersProvider.selectedUser!.userTypeId == 1
+                                      ? 2
+                                      : 1,
+                                );
+                                DashboardProvider().toggleExpanded();
+                              });
+                              await NotificationsProvider().getAllNotifications(
+                                  usersProvider.selectedUser!.userTypeId,
+                                  usersProvider.selectedUser!.userId);
+                              await FeaturesProvider().getAllFeatures();
+                            },
+                            child: Container(
+                              width: SizeConfig.getProportionalWidth(94),
+                              height: SizeConfig.getProportionalHeight(22),
                               margin: EdgeInsets.only(
-                                  bottom:
-                                  SizeConfig.getProportionalHeight(
-                                      20),
-                                  right: SizeConfig.getProportionalWidth(
-                                      11)),
-                              width: SizeConfig.getProportionalWidth(8),
-                              height: SizeConfig.getProportionalHeight(6),
-                            ),
-                            Expanded(
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                usersProvider.selectedUser!.userTypeId ==
-                                    1
-                                    ? TranslationService()
-                                    .translate("user")
-                                    : TranslationService()
-                                    .translate("cooker"),
-                                style: TextStyle(
-                                  fontFamily: AppFonts.getPrimaryFont(context),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                left: SizeConfig.getProportionalWidth(11),
+                              ),
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: AppColors.defaultBorderColor,
+                                      blurRadius: 5),
+                                ],
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColors.backgroundColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            SizeConfig.getProportionalHeight(
+                                                20),
+                                        right: SizeConfig.getProportionalWidth(
+                                            11)),
+                                    width: SizeConfig.getProportionalWidth(8),
+                                    height: SizeConfig.getProportionalHeight(6),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      usersProvider.selectedUser!.userTypeId ==
+                                              1
+                                          ? TranslationService()
+                                              .translate("user")
+                                          : TranslationService()
+                                              .translate("cooker"),
+                                      style: TextStyle(
+                                        fontFamily:
+                                            AppFonts.getPrimaryFont(context),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: SizeConfig.getProportionalWidth(20),
+                                    height:
+                                        SizeConfig.getProportionalHeight(18),
+                                    margin: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.getProportionalWidth(5)),
+                                    child: Image.asset(usersProvider
+                                                .selectedUser!.userTypeId ==
+                                            1
+                                        ? Assets.userBlack
+                                        : Assets.cookerBlack),
+                                  ),
+                                ],
                               ),
                             ),
-                            Container(
-                              width: SizeConfig.getProportionalWidth(20),
-                              height:
-                              SizeConfig.getProportionalHeight(18),
-                              margin: EdgeInsets.only(
-                                  right:
-                                  SizeConfig.getProportionalWidth(5)),
-                              child: Image.asset(usersProvider
-                                  .selectedUser!.userTypeId ==
-                                  1
-                                  ? Assets.userBlack
-                                  : Assets.cookerBlack),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                          )
                         : SizeConfig.customSizedBox(94, 22, null),
                   ],
-                 ),
+                ),
               ),
               const ProfileCircle(
                 height: 38,

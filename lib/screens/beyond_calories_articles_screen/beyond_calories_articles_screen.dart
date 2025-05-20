@@ -4,8 +4,8 @@ import '../../../core/constants/colors.dart';
 import '../../controllers/general_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/utils/size_config.dart';
-import '../../providers/beyond_calories_articles_provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import '../../providers/features_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
@@ -24,8 +24,8 @@ class _BeyondCaloriesArticlesScreenState
     extends State<BeyondCaloriesArticlesScreen> {
   @override
   Widget build(BuildContext context) {
-    final BeyondCaloriesArticlesProvider beyondCaloriesArticlesProvider =
-        Provider.of<BeyondCaloriesArticlesProvider>(context, listen: true);
+    final FeaturesProvider featuresProvider =
+        Provider.of<FeaturesProvider>(context, listen: true);
     final SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: true);
     return Scaffold(
@@ -95,19 +95,19 @@ class _BeyondCaloriesArticlesScreenState
                       onTap: () => GeneralController()
                           .launchURL(
                           context,
-                          Uri.parse(beyondCaloriesArticlesProvider
+                          Uri.parse(featuresProvider
                               .articles[index].url)),
                       child: Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                         child: Image.network(
-                          beyondCaloriesArticlesProvider
+                          featuresProvider
                               .articles[index].imageUrl,
                           fit: BoxFit.cover,
                         ),
                       ),
                     );
                   },
-                  childCount: beyondCaloriesArticlesProvider.articles.length,
+                  childCount: featuresProvider.articles.length,
                 ),
               ),
             )
