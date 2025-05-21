@@ -64,8 +64,6 @@ class FeaturesProvider with ChangeNotifier {
       notifyListeners();
       isLoading = false;
       notifyListeners();
-      print(userFeatures.length);
-      print(cookerFeatures.length);
     } catch (ex) {
       isLoading = false;
       rethrow;
