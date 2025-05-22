@@ -171,6 +171,12 @@ class _ListMealTileState extends State<ListMealTile> {
                                   onTap: () async {
                                     await MealsProvider()
                                         .deleteMeal(widget.meal.documentId!);
+                                    if (widget.meal.imageUrl != null &&
+                                        widget.meal.imageUrl != "") {
+                                      await MealsProvider()
+                                          .deleteImage(widget.meal.imageUrl);
+                                    }
+
                                     setState(() {
                                       MealsProvider().getAllMealsByCategory(
                                           widget.meal.categoryId,
