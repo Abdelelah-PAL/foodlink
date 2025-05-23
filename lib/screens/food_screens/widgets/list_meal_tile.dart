@@ -101,7 +101,7 @@ class _ListMealTileState extends State<ListMealTile> {
                         settingsProvider: settingsProvider,
                         height: 25,
                         maxLines: 1,
-                        horizontalPadding: 10,
+                        horizontalPadding: 30,
                       ),
                       IngredientsRow(
                         meal: widget.meal,
@@ -110,7 +110,7 @@ class _ListMealTileState extends State<ListMealTile> {
                         maxLines: 2,
                         settingsProvider: settingsProvider,
                         height: 50,
-                        horizontalPadding: 8,
+                        horizontalPadding: 35,
                         withBorder: false,
                       ),
                       SizeConfig.customSizedBox(null, 10, null),

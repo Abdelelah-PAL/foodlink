@@ -55,6 +55,8 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                   child: ProfilePictureContainer(
                     settingsProvider: widget.settingsProvider,
                     usersProvider: widget.usersProvider,
+                    circleSize: 68,
+                    iconSize: 50,
                   ),
                 ),
                 SizeConfig.customSizedBox(null, 10, null),

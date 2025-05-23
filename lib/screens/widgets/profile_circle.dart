@@ -17,8 +17,8 @@ class ProfileCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizeConfig.getProportionalWidth(width),
-      height: SizeConfig.getProportionalHeight(height),
+      width: SizeConfig.getProperHorizontalSpace(width),
+      height: SizeConfig.getProperVerticalSpace(height),
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.widgetsColor,

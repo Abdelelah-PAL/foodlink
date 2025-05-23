@@ -206,27 +206,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             _authController.passwordController.text,
                           );
                         }
-                        usersProvider.setSettingsPassword(_authController.passwordController.text);
+                        usersProvider.setSettingsPassword(
+                            _authController.passwordController.text);
                       }
                     }
                   },
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.getProportionalHeight(15),
-                  ),
-                  child: const CustomAuthDivider(),
-                ),
-                CustomGoogleAuthBtn(
-                    text: TranslationService().translate("google_login"),
-                    onTap: () {},
-                    settingsProvider: settingsProvider),
-                SizeConfig.customSizedBox(null, 15, null),
+                SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthFooter(
                     headingText: "do_not_have_account",
                     tailText: "signup",
                     onTap: () => {Get.to(() => const SignUpScreen())},
-                    settingsProvider: settingsProvider)
+                    settingsProvider: settingsProvider),
               ])),
         ));
   }

@@ -36,134 +36,140 @@ class _SettingsScreenState extends State<SettingsScreen> {
     AuthenticationProvider authenticationProvider =
         Provider.of<AuthenticationProvider>(context, listen: true);
     var userId = usersProvider.selectedUser!.userId;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizeConfig.customSizedBox(null, 50, null),
-        CustomText(
-          isCenter: true,
-          text: "settings",
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          givenWrittenLanguage: settingsProvider.language,
-        ),
-        SizeConfig.customSizedBox(null, 25, null),
-        ProfilePictureContainer(
-            settingsProvider: settingsProvider, usersProvider: usersProvider),
-        SizeConfig.customSizedBox(null, 50, null),
-        CustomSettingsContainer(
-            height: 125,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizeConfig.customSizedBox(null, 50, null),
+          CustomText(
+            isCenter: true,
+            text: "settings",
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            givenWrittenLanguage: settingsProvider.language,
+          ),
+          SizeConfig.customSizedBox(null, 25, null),
+          ProfilePictureContainer(
             settingsProvider: settingsProvider,
-            children: [
-              CustomSettingTile(
-                icon: Assets.editInfo,
-                text: "edit_data",
-                onTap: () {
-                  usersProvider.usernameController.text =
-                      usersProvider.selectedUser!.username!;
-                  usersProvider.emailController.text =
-                      usersProvider.selectedUser!.email;
-                  Get.to(EditAccountInfoScreen(
-                      usersProvider: usersProvider,
-                      settingsProvider: settingsProvider));
-                },
-                givenWrittenLanguage: settingsProvider.language,
-              ),
-              CustomSettingTile(
-                  icon: Assets.privacy,
-                  text: "privacy",
-                  onTap: () =>
-                      Get.to(PrivacyScreen(settingsProvider: settingsProvider)),
-                  givenWrittenLanguage: settingsProvider.language),
-              CustomSettingTile(
-                  icon: Assets.language,
-                  text: "language",
+            usersProvider: usersProvider,
+            circleSize: 68,
+            iconSize: 50,
+          ),
+          SizeConfig.customSizedBox(null, 50, null),
+          CustomSettingsContainer(
+              height: 125,
+              settingsProvider: settingsProvider,
+              children: [
+                CustomSettingTile(
+                  icon: Assets.editInfo,
+                  text: "edit_data",
+                  onTap: () {
+                    usersProvider.usernameController.text =
+                        usersProvider.selectedUser!.username!;
+                    usersProvider.emailController.text =
+                        usersProvider.selectedUser!.email;
+                    Get.to(EditAccountInfoScreen(
+                        usersProvider: usersProvider,
+                        settingsProvider: settingsProvider));
+                  },
                   givenWrittenLanguage: settingsProvider.language,
-                  trailing: GestureDetector(
-                    onTap: () {
-                      var language =
-                          settingsProvider.language == "en" ? "ar" : "en";
-                      settingsProvider.changeLanguage(
-                          language, userId, context);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: SizeConfig.getProportionalHeight(22),
-                      width: SizeConfig.getProportionalWidth(65),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.languageContainerColor,
-                          border: Border.all(
-                              width: 1, color: AppColors.widgetsColor)),
-                      child: Text(settingsProvider.language == "en"
-                          ? "العربية"
-                          : "English"),
+                ),
+                CustomSettingTile(
+                    icon: Assets.privacy,
+                    text: "privacy",
+                    onTap: () => Get.to(
+                        PrivacyScreen(settingsProvider: settingsProvider)),
+                    givenWrittenLanguage: settingsProvider.language),
+                CustomSettingTile(
+                    icon: Assets.language,
+                    text: "language",
+                    givenWrittenLanguage: settingsProvider.language,
+                    trailing: GestureDetector(
+                      onTap: () {
+                        var language =
+                            settingsProvider.language == "en" ? "ar" : "en";
+                        settingsProvider.changeLanguage(
+                            language, userId, context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: SizeConfig.getProportionalHeight(22),
+                        width: SizeConfig.getProportionalWidth(65),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.languageContainerColor,
+                            border: Border.all(
+                                width: 1, color: AppColors.widgetsColor)),
+                        child: Text(settingsProvider.language == "en"
+                            ? "العربية"
+                            : "English"),
+                      ),
+                    )),
+              ]),
+          CustomSettingsContainer(
+              height: 103,
+              settingsProvider: settingsProvider,
+              children: [
+                CustomSettingTile(
+                  icon: Assets.notifications,
+                  text: "notifications",
+                  givenWrittenLanguage: settingsProvider.language,
+                  trailing: Transform.scale(
+                    scale: .7,
+                    child: Switch(
+                      thumbColor: WidgetStateProperty.all(
+                          settingsProvider.settings.activeNotifications == true
+                              ? AppColors.widgetsColor
+                              : AppColors.inActiveThumbColor),
+                      activeTrackColor: AppColors.fontColor,
+                      value: settingsProvider.settings.activeNotifications,
+                      onChanged: (value) {
+                        settingsProvider.toggleNotifications(userId);
+                      },
                     ),
-                  )),
-            ]),
-        CustomSettingsContainer(
-            height: 103,
-            settingsProvider: settingsProvider,
-            children: [
-              CustomSettingTile(
-                icon: Assets.notifications,
-                text: "notifications",
-                givenWrittenLanguage: settingsProvider.language,
-                trailing: Transform.scale(
-                  scale: .7,
-                  child: Switch(
-                    thumbColor: WidgetStateProperty.all(
-                        settingsProvider.settings.activeNotifications == true
-                            ? AppColors.widgetsColor
-                            : AppColors.inActiveThumbColor),
-                    activeTrackColor: AppColors.fontColor,
-                    value: settingsProvider.settings.activeNotifications,
-                    onChanged: (value) {
-                      settingsProvider.toggleNotifications(userId);
-                    },
                   ),
                 ),
-              ),
-              CustomSettingTile(
-                icon: Assets.updates,
-                text: "updates",
-                givenWrittenLanguage: settingsProvider.language,
-                trailing: Transform.scale(
-                  scale: .7,
-                  child: Switch(
-                    thumbColor: WidgetStateProperty.all(
-                        settingsProvider.settings.activeUpdates == true
-                            ? AppColors.widgetsColor
-                            : AppColors.inActiveThumbColor),
-                    activeTrackColor: AppColors.fontColor,
-                    value: settingsProvider.settings.activeUpdates,
-                    onChanged: (value) {
-                      settingsProvider.toggleUpdates(userId);
-                    },
-                  ),
-                ),
-              ),
-            ]),
-        CustomSettingsContainer(
-            settingsProvider: settingsProvider,
-            height: SizeConfig.getProportionalHeight(140),
-            children: [
-              CustomSettingTile(
-                  icon: Assets.contactUs,
-                  text: "contact_us",
+                CustomSettingTile(
+                  icon: Assets.updates,
+                  text: "updates",
                   givenWrittenLanguage: settingsProvider.language,
-                  onTap: () => Get.to(
-                      ContactUsScreen(settingsProvider: settingsProvider))),
-              CustomSettingTile(
-                icon: Assets.logout,
-                text: "logout",
-                givenWrittenLanguage: settingsProvider.language,
-                onTap: () => AuthController()
-                    .logout(authenticationProvider, dashboardProvider),
-              )
-            ])
-      ],
+                  trailing: Transform.scale(
+                    scale: .7,
+                    child: Switch(
+                      thumbColor: WidgetStateProperty.all(
+                          settingsProvider.settings.activeUpdates == true
+                              ? AppColors.widgetsColor
+                              : AppColors.inActiveThumbColor),
+                      activeTrackColor: AppColors.fontColor,
+                      value: settingsProvider.settings.activeUpdates,
+                      onChanged: (value) {
+                        settingsProvider.toggleUpdates(userId);
+                      },
+                    ),
+                  ),
+                ),
+              ]),
+          CustomSettingsContainer(
+              settingsProvider: settingsProvider,
+              height: SizeConfig.getProportionalHeight(140),
+              children: [
+                CustomSettingTile(
+                    icon: Assets.contactUs,
+                    text: "contact_us",
+                    givenWrittenLanguage: settingsProvider.language,
+                    onTap: () => Get.to(
+                        ContactUsScreen(settingsProvider: settingsProvider))),
+                CustomSettingTile(
+                  icon: Assets.logout,
+                  text: "logout",
+                  givenWrittenLanguage: settingsProvider.language,
+                  onTap: () => AuthController()
+                      .logout(authenticationProvider, dashboardProvider),
+                )
+              ])
+        ],
+      ),
     );
   }
 }

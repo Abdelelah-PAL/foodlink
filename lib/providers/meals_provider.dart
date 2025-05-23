@@ -228,9 +228,20 @@ class MealsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeIngredient(index) {
+    numberOfIngredients--;
+    ingredientsControllers.removeAt(index);
+    notifyListeners();
+  }
+
   void increaseSteps() {
     numberOfSteps++;
     stepsControllers.add(TextEditingController());
+    notifyListeners();
+  }
+  void removeStep(index) {
+    numberOfSteps--;
+    stepsControllers.removeAt(index);
     notifyListeners();
   }
 

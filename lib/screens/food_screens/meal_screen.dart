@@ -81,7 +81,7 @@ class MealScreen extends StatelessWidget {
                       settingsProvider: settingsProvider,
                       height: 35,
                       maxLines: 2,
-                      horizontalPadding: 10,
+                      horizontalPadding: 30,
                     ),
                     SizeConfig.customSizedBox(null, 30, null),
                     IngredientsMealView(

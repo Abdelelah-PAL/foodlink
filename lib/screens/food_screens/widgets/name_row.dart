@@ -29,7 +29,7 @@ class NameRow extends StatelessWidget {
         GeneralController().detectLanguage(name);
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(horizontalPadding)),
+          EdgeInsets.symmetric(horizontal: SizeConfig.getProperHorizontalSpace(horizontalPadding)),
       child: FittedBox(
         child: Row(
           textDirection: settingsProvider.language == 'en'

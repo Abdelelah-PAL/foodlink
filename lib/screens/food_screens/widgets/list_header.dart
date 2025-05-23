@@ -39,7 +39,9 @@ class ListHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              SizeConfig.customSizedBox(20, null, null),
+              SizedBox(
+                width: SizeConfig.getProperHorizontalSpace(10),
+              )
             ],
           )
         : Padding(

@@ -31,21 +31,23 @@ class _BeyondCaloriesArticlesScreenState
     return Scaffold(
         appBar: PreferredSize(
             preferredSize:
-                Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+                Size.fromHeight(SizeConfig.getProperVerticalSpace(7)),
             child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child:  Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomBackButton(),
-                  CustomText(
+                  const CustomBackButton(),
+                  SizedBox(
+                    width: SizeConfig.getProperHorizontalSpace(4),
+                  ),
+                  const CustomText(
                       isCenter: true,
                       text: "healthy_life",
                       fontSize: 25,
                       fontWeight: FontWeight.bold),
-                  ProfileCircle(height: 50, width: 50, iconSize: 25)
                 ],
               ),
             )),
@@ -90,18 +92,15 @@ class _BeyondCaloriesArticlesScreenState
                   ],
                 ),
                 childrenDelegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     return GestureDetector(
-                      onTap: () => GeneralController()
-                          .launchURL(
-                          context,
-                          Uri.parse(featuresProvider
-                              .articles[index].url)),
+                      onTap: () => GeneralController().launchURL(context,
+                          Uri.parse(featuresProvider.articles[index].url)),
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15)),
                         child: Image.network(
-                          featuresProvider
-                              .articles[index].imageUrl,
+                          featuresProvider.articles[index].imageUrl,
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -170,5 +170,6 @@
   "name": "name",
   "save": "Save",
   "contacting_header": "If you have any questions \n We will be happy to help you.",
-  "social_media": "Social Media Accounts"
+  "social_media": "Social Media Accounts",
+  "meal_not_found": "Meal is not defined"
 }

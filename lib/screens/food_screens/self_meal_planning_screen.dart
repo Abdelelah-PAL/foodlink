@@ -52,8 +52,8 @@ class _SelfMealPlanningScreenState extends State<SelfMealPlanningScreen> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
                 const ProfileCircle(
-                  height: 38,
-                  width: 38,
+                  height: 12,
+                  width: 10,
                   iconSize: 25,
                 ),
               ],

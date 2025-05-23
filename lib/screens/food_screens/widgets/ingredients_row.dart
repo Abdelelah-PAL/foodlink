@@ -33,8 +33,8 @@ class IngredientsRow extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
           top: SizeConfig.getProportionalHeight(10),
-          left: SizeConfig.getProportionalWidth(10),
-          right: SizeConfig.getProportionalWidth(10)),
+          left: SizeConfig.getProportionalWidth(horizontalPadding),
+          right: SizeConfig.getProperHorizontalSpace( horizontalPadding)),
       width: 348,
       height: height,
       decoration: withBorder == true

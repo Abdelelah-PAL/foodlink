@@ -46,7 +46,7 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
         : Scaffold(
             appBar: PreferredSize(
                 preferredSize:
-                    Size.fromHeight(SizeConfig.getProportionalHeight(135)),
+                Size.fromHeight(SizeConfig.getProperVerticalSpace(5)),
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: SizeConfig.getProportionalHeight(75),
@@ -71,8 +71,8 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                         onTap: () =>
                             {Get.to(const WeeklyMealsPlanningScreen())},
                         child: Container(
-                          width: SizeConfig.getProportionalWidth(30),
-                          height: SizeConfig.getProportionalHeight(30),
+                          width: SizeConfig.getProperHorizontalSpace(12),
+                          height: SizeConfig.getProperVerticalSpace(15),
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColors.widgetsColor),
