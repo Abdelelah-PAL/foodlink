@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/screens/settings_screens/widgets/profile_picture_container.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/user_types.dart';
@@ -251,11 +252,7 @@ class _AppHeaderState extends State<AppHeader> {
                   ],
                 ),
               ),
-              const ProfileCircle(
-                height: 38,
-                width: 38,
-                iconSize: 25,
-              ),
+               ProfilePictureContainer(settingsProvider: settingsProvider, usersProvider: usersProvider, circleSize: 35, iconSize: 30,)
             ],
           ),
           Align(

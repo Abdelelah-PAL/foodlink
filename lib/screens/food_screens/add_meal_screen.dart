@@ -121,9 +121,12 @@ class _AddMealScreenState extends State<AddMealScreen> {
                               );
                             }
                             return IngredientBox(
-                                settingsProvider: settingsProvider,
-                                controller: mealsProvider
-                                    .ingredientsControllers[index]);
+                              settingsProvider: settingsProvider,
+                              controller:
+                                  mealsProvider.ingredientsControllers[index],
+                              mealsProvider: mealsProvider,
+                              index: index,
+                            );
                           },
                         ),
                       )),
@@ -163,9 +166,11 @@ class _AddMealScreenState extends State<AddMealScreen> {
                             );
                           }
                           return StepBox(
-                              settingsProvider: settingsProvider,
-                              controller:
-                                  mealsProvider.stepsControllers[index]);
+                            settingsProvider: settingsProvider,
+                            controller: mealsProvider.stepsControllers[index],
+                            mealsProvider: mealsProvider,
+                            index: index,
+                          );
                         },
                       )),
                   SizeConfig.customSizedBox(null, 20, null),

@@ -55,7 +55,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                 settingsProvider: settingsProvider,
                 height: 35,
                 maxLines: 2,
-                horizontalPadding: 23,
+                horizontalPadding: 16,
               ),
               SizeConfig.customSizedBox(null, 10, null),
               Padding(

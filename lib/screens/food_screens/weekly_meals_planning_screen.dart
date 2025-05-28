@@ -58,7 +58,7 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                         vertical: SizeConfig.getProportionalHeight(40),
                         horizontal: SizeConfig.getProportionalWidth(20)),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CustomBackButton(
                           onPressed: () {
@@ -67,12 +67,14 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                             Get.back();
                           },
                         ),
+                        SizedBox(
+                          width: SizeConfig.getProperHorizontalSpace(5),
+                        ),
                         const CustomText(
                             isCenter: true,
                             text: "your_weekly_plan",
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
-                        const ProfileCircle(height: 50, width: 50, iconSize: 25)
                       ],
                     ),
                   ),

@@ -10,14 +10,18 @@ class ProfilePictureContainer extends StatelessWidget {
     super.key,
     required this.settingsProvider,
     required this.usersProvider,
+    required this.circleSize,
+    required this.iconSize,
   });
 
   final SettingsProvider settingsProvider;
   final UsersProvider usersProvider;
+  final double circleSize;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
-    final double size = SizeConfig.getProportionalWidth(68);
+    final double responsiveSize = SizeConfig.getProportionalWidth(circleSize);
 
     Widget imageWidget;
 
@@ -25,8 +29,8 @@ class ProfilePictureContainer extends StatelessWidget {
       imageWidget = ClipOval(
         child: Image.file(
           File(usersProvider.pickedFile!.path),
-          width: size,
-          height: size,
+          width: responsiveSize,
+          height: responsiveSize,
           fit: BoxFit.cover,
         ),
       );
@@ -35,22 +39,22 @@ class ProfilePictureContainer extends StatelessWidget {
       imageWidget = ClipOval(
         child: Image.network(
           usersProvider.selectedUser!.imageUrl!,
-          width: size,
-          height: size,
+          width: responsiveSize,
+          height: responsiveSize,
           fit: BoxFit.cover,
         ),
       );
     } else {
-      imageWidget = const Icon(
+      imageWidget = Icon(
         Icons.person_outline_outlined,
-        size: 50,
+        size: iconSize,
         color: Colors.black,
       );
     }
 
     return Container(
-      width: size,
-      height: size,
+      width: responsiveSize,
+      height: responsiveSize,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.widgetsColor,

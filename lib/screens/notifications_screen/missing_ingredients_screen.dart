@@ -48,7 +48,7 @@ class MissingIngredientsScreen extends StatelessWidget {
               settingsProvider: settingsProvider,
               height: 70,
               maxLines: 2,
-              horizontalPadding: 23,
+              horizontalPadding: 18,
             ),
             SizeConfig.customSizedBox(null, 10, null),
             Padding(

@@ -62,25 +62,13 @@ class _ScheduleState extends State<Schedule> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: AppColors.backgroundColor,
-            appBar: PreferredSize(
-              preferredSize:
-                  Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-              child: Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: SizeConfig.getProportionalWidth(20),
-                          horizontal: SizeConfig.getProportionalWidth(20)),
-                      child: const ProfileCircle(
-                        height: 38,
-                        width: 38,
-                        iconSize: 25,
-                      ))),
-            ),
             body: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.getProportionalWidth(20)),
+                padding: EdgeInsets.only(
+                    left: SizeConfig.getProportionalWidth(20),
+                    right: SizeConfig.getProportionalWidth(20),
+                  top: SizeConfig.getProportionalWidth(20)
+                ),
                 child: Column(
                   crossAxisAlignment: settingsProvider.language == "en"
                       ? CrossAxisAlignment.start

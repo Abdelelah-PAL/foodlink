@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/general_controller.dart';
 import 'package:get/get.dart';
 import '../../../controllers/notification_controller.dart';
 import '../../../controllers/user_types.dart';
@@ -38,36 +39,40 @@ class NotificationsTab extends StatelessWidget {
         : ListView.builder(
             itemCount: notifications.length,
             itemBuilder: (context, index) {
+              Notifications notification = notifications[index];
               String duration = NotificationController().getDuration(
-                  notifications[index].timestamp, settingsProvider.language);
-
+                  notification.timestamp, settingsProvider.language);
+              
               return FutureBuilder<Meal>(
-                future: notifications[index].isMealPlanned
+                future: notification.isMealPlanned
                     ? MealsProvider()
-                        .getPlannedMealById(notifications[index].mealId)
-                    : MealsProvider().getMealById(notifications[index].mealId),
+                        .getPlannedMealById(notification.mealId)
+                    : MealsProvider().getMealById(notification.mealId),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError || !snapshot.hasData) {
-                    return const Center(child: Text("Error loading meal"));
-                  }
-
-                  Meal meal = snapshot.data!;
+                  Meal? meal = snapshot.data;
 
                   return ListTile(
                     onTap: () {
+                      if (meal == null) {
+                        GeneralController().showCustomDialog(
+                            context,
+                            settingsProvider,
+                            "meal_not_found",
+                            Icons.error_outline,
+                            AppColors.errorColor,
+                            50);
+                        return;
+                      }
                       usersProvider.selectedUser!.userTypeId == UserTypes.user
                           ? Get.to(MissingIngredientsScreen(
-                              notification: notifications[index]))
+                              notification: notification))
                           : Get.to(MealScreen(
                               meal: meal,
                               source: 'notifications',
                             ));
                     },
                     leading: settingsProvider.language == "en"
-                        ? meal.imageUrl != null
+                        ? meal != null && meal.imageUrl != null
                             ? CircleAvatar(
                                 backgroundImage: NetworkImage(meal.imageUrl!))
                             : Container(
@@ -80,7 +85,7 @@ class NotificationsTab extends StatelessWidget {
                         : null,
                     trailing: settingsProvider.language == "en"
                         ? null
-                        : meal.imageUrl != null
+                        : meal != null && meal.imageUrl != null
                             ? CircleAvatar(
                                 backgroundImage: NetworkImage(meal.imageUrl!))
                             : Container(
@@ -97,7 +102,7 @@ class NotificationsTab extends StatelessWidget {
                       textDirection: settingsProvider.language == "en"
                           ? TextDirection.ltr
                           : TextDirection.rtl,
-                      text: notifications[index].isConfirmation == false
+                      text: notification.isConfirmation == false
                           ? TextSpan(children: [
                               TextSpan(
                                 text: TranslationService()
@@ -110,7 +115,7 @@ class NotificationsTab extends StatelessWidget {
                                         AppFonts.getPrimaryFont(context)),
                               ),
                               TextSpan(
-                                text: meal.name,
+                                text: meal!.name,
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: AppColors.fontColor,
@@ -147,7 +152,7 @@ class NotificationsTab extends StatelessWidget {
                           : TextSpan(children: [
                               TextSpan(
                                 text: settingsProvider.language == 'en'
-                                    ? meal.name
+                                    ? meal!.name
                                     : TranslationService()
                                         .translate('done_confirmation'),
                                 style: TextStyle(
@@ -164,7 +169,7 @@ class NotificationsTab extends StatelessWidget {
                                 text: settingsProvider.language == 'en'
                                     ? TranslationService()
                                         .translate('done_confirmation')
-                                    : meal.name,
+                                    : notification.mealName,
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: AppColors.fontColor,

@@ -69,13 +69,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   horizontal: SizeConfig.getProportionalWidth(20)),
               child: Row(
                   textDirection: TextDirection.rtl,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const ProfileCircle(
-                      height: 38,
-                      width: 38,
-                      iconSize: 25,
-                    ),
+
                     CustomBackButton(onPressed: () {
                       TaskController().clearControllers();
                       Get.back();

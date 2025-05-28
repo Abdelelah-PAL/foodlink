@@ -24,7 +24,6 @@ android {
         applicationId = "com.example.foodlink"
         minSdkVersion 23
         targetSdkVersion 34
-        minSdkVersion 34
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutter.versionCode
         versionName flutter.versionName

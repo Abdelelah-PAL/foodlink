@@ -147,29 +147,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                   },
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.getProportionalHeight(10),
-                  ),
-                  child: const CustomAuthDivider(),
-                ),
-                CustomGoogleAuthBtn(
-                  text: TranslationService().translate("google_signup"),
-                  settingsProvider: settingsProvider,
-                  onTap: () async {
-                     var userCredential = await AuthenticationProvider().signUpWithGoogle();
-                     UserDetails userDetails = UserDetails(
-                       userId: userCredential!.user!.uid,
-                       userTypeId: null,
-                       email: userCredential.user!.email!,
-                       username: null,
-                       subscriber: false,
-                     );
-                      UsersProvider().addUserDetails(userDetails);
-                     await SettingsProvider().addSettings(userCredential.user!.uid);
-                    Get.to(const LoginScreen(firstScreen: false,));
-                  },
-                ),
                 SizeConfig.customSizedBox(null, 50, null),
                 CustomAuthFooter(
                   headingText: "have_account",

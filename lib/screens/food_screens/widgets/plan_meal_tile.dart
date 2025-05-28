@@ -143,7 +143,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                                 settingsProvider: widget.settingsProvider,
                                 height: 35,
                                 maxLines: 1,
-                                horizontalPadding: 10,
+                                horizontalPadding: 30,
                               ),
                               SizeConfig.customSizedBox(null, 10, null),
                               IngredientsRow(
@@ -153,7 +153,7 @@ class _PlanMealTileState extends State<PlanMealTile> {
                                 maxLines: 3,
                                 settingsProvider: widget.settingsProvider,
                                 height: 75,
-                                horizontalPadding: 8,
+                                horizontalPadding: 35,
                                 withBorder: false,
                               ),
                             ],
