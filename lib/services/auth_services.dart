@@ -47,7 +47,8 @@ class AuthService with ChangeNotifier {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) return null;
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -61,5 +62,16 @@ class AuthService with ChangeNotifier {
 
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> sendPasswordResetEmail(email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error: ${e.toString()}");
+      }
+      return;
+    }
   }
 }

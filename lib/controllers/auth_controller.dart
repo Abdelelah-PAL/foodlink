@@ -8,10 +8,14 @@ import '../screens/auth_screens/login_screen.dart';
 import '../services/translation_services.dart';
 
 class AuthController {
+  static final AuthController _instance = AuthController._internal();
+  factory AuthController() => _instance;
+  AuthController._internal();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmedPasswordController = TextEditingController();
+  TextEditingController forgotPasswordEmailController = TextEditingController();
   Color emailTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;

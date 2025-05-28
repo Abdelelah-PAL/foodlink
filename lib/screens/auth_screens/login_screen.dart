@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
@@ -13,6 +12,7 @@ import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
 import '../roles_screen/roles_screen.dart';
 import '../widgets/custom_text.dart';
+import 'forget_password_screen.dart';
 import 'sign_up_screen.dart';
 import 'widgets/custom_auth_btn.dart';
 import 'widgets/custom_auth_divider.dart';
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => {Get.to(() => const ForgotPasswordScreen())},
                         child: Text(
                           TranslationService().translate("forgot_password"),
                           style: TextStyle(

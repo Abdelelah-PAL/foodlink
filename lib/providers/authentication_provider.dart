@@ -45,4 +45,7 @@ class AuthenticationProvider with ChangeNotifier {
     user = null;
     await _authService.logout();
   }
+  Future<void> sendPasswordResetEmail(email) async {
+    await _authService.sendPasswordResetEmail(email);
+  }
 }
