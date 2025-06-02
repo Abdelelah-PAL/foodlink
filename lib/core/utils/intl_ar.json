@@ -174,5 +174,8 @@
   "meal_not_found": "الوجبة غير مُعرّفة",
   "reset_password": "إعادة تعيين كلمة المرور",
   "send": "إرسال",
-  "email_sent": "إذا كان البريد الإلكتروني حقيقيًّا، سوف يصلك رابط لإعادة تعيين كلمة المرور"
+  "email_sent": "إذا كان البريد الإلكتروني حقيقيًّا، سوف يصلك رابط لإعادة تعيين كلمة المرور",
+  "email_already_registered": "البريد الإلكتروني مُسجّل من قبل",
+  "The email address is already in use by another account.": "البريد الإلكتروني مُسجّل من قبل",
+  "The email address is badly formatted": "البريد الإلكتروني غير مكتوب بشكل صحيح"
 }

@@ -16,7 +16,7 @@ import 'providers/notification_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/task_provider.dart';
 import 'providers/users_provider.dart';
-import 'screens/auth_screens/login_screen.dart';
+import 'screens/authentication_screens/login_screen.dart';
 import 'screens/splash_screen/splash_screen.dart';
 import 'services/translation_services.dart';
 

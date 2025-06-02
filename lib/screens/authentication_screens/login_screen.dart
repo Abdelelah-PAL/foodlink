@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/auth_controller.dart';
+import '../../controllers/authentication_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
@@ -15,12 +15,10 @@ import '../widgets/custom_text.dart';
 import 'forget_password_screen.dart';
 import 'sign_up_screen.dart';
 import 'widgets/custom_auth_btn.dart';
-import 'widgets/custom_auth_divider.dart';
 import 'widgets/custom_auth_footer.dart';
 import 'widgets/custom_auth_textfield.dart';
 import 'widgets/custom_auth_textfield_header.dart';
 import 'widgets/custom_error_txt.dart';
-import 'widgets/custom_google_auth_btn.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.firstScreen});
@@ -32,12 +30,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late AuthController _authController;
+  late AuthenticationController _authController;
 
   @override
   void initState() {
     super.initState();
-    _authController = AuthController();
+    _authController = AuthenticationController();
     _authController.getLoginInfo();
   }
 
@@ -74,8 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: AppColors.fontColor,
                     )),
                 CustomErrorTxt(
-                  text:
-                      TranslationService().translate(_authController.errorText),
+                  text: TranslationService()
+                      .translate(_authController.loginErrorText),
                   settingsProvider: settingsProvider,
                 ),
                 SizeConfig.customSizedBox(null, 6, null),
@@ -85,8 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomAuthenticationTextField(
                     hintText: 'example@example.com',
                     obscureText: false,
-                    textEditingController: _authController.emailController,
-                    borderColor: _authController.emailTextFieldBorderColor,
+                    textEditingController: _authController.loginEmailController,
+                    borderColor:
+                        _authController.loginPasswordTextFieldBorderColor,
                     settingsProvider: settingsProvider),
                 SizeConfig.customSizedBox(
                   null,
@@ -100,8 +99,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: TranslationService().translate('enter_password'),
                   settingsProvider: settingsProvider,
                   obscureText: true,
-                  textEditingController: _authController.passwordController,
-                  borderColor: _authController.passwordTextFieldBorderColor,
+                  textEditingController:
+                      _authController.loginPasswordController,
+                  borderColor:
+                      _authController.loginPasswordTextFieldBorderColor,
                 ),
                 SizeConfig.customSizedBox(
                   null,
@@ -155,7 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       TextButton(
-                        onPressed: () => {Get.to(() => const ForgotPasswordScreen())},
+                        onPressed: () =>
+                            {Get.to(() => const ForgotPasswordScreen())},
                         child: Text(
                           TranslationService().translate("forgot_password"),
                           style: TextStyle(
@@ -183,13 +185,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         _authController.changeTextFieldsColors(true);
                       });
                       var user = await AuthenticationProvider().login(
-                        _authController.emailController.text.trim(),
-                        _authController.passwordController.text,
+                        _authController.loginEmailController.text.trim(),
+                        _authController.loginPasswordController.text,
                       );
 
                       if (user == null) {
                         setState(() {
-                          _authController.errorText = TranslationService()
+                          _authController.loginErrorText = TranslationService()
                               .translate("wrong_email_password");
                         });
                         return;
@@ -203,11 +205,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_authController.rememberMe == true) {
                           _authController.saveLoginInfo(
                             user.user!.email!,
-                            _authController.passwordController.text,
+                            _authController.loginPasswordController.text,
                           );
                         }
                         usersProvider.setSettingsPassword(
-                            _authController.passwordController.text);
+                            _authController.loginPasswordController.text);
                       }
                     }
                   },
@@ -216,7 +218,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomAuthFooter(
                     headingText: "do_not_have_account",
                     tailText: "signup",
-                    onTap: () => {Get.to(() => const SignUpScreen())},
+                    onTap: () => {
+                          AuthenticationProvider().resetSignUpErrorText(),
+                          Get.to(() => const SignUpScreen())
+                        },
                     settingsProvider: settingsProvider),
               ])),
         ));

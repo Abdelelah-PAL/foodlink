@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/screens/settings_screens/contact_us_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/auth_controller.dart';
+import '../../controllers/authentication_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -164,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Assets.logout,
                   text: "logout",
                   givenWrittenLanguage: settingsProvider.language,
-                  onTap: () => AuthController()
+                  onTap: () => AuthenticationController()
                       .logout(authenticationProvider, dashboardProvider),
                 )
               ])

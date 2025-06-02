@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import '../services/auth_services.dart';
+import 'package:foodlink/controllers/authentication_controller.dart';
+import 'package:foodlink/core/constants/colors.dart';
+import 'package:foodlink/services/translation_services.dart';
+import '../services/authentication_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationProvider with ChangeNotifier {
@@ -8,7 +11,7 @@ class AuthenticationProvider with ChangeNotifier {
 
   AuthenticationProvider._internal();
 
-  final AuthService _authService = AuthService();
+  final AuthenticationServices _authService = AuthenticationServices();
   bool isLoading = false;
   User? user;
   final String errorMessage = "";
@@ -48,4 +51,29 @@ class AuthenticationProvider with ChangeNotifier {
   Future<void> sendPasswordResetEmail(email) async {
     await _authService.sendPasswordResetEmail(email);
   }
+
+  Future<void> resetSignUpErrorText() async {
+    AuthenticationController().signUpErrorText = "";
+    AuthenticationController().signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().signUpPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+    notifyListeners();
+  }
+
+  Future<void> resetLoginErrorText() async {
+    AuthenticationController().loginEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().loginPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().loginErrorText = "";
+    notifyListeners();
+  }
+  void setSignUpErrorText(String key) async {
+    AuthenticationController().signUpErrorText = TranslationService().translate(key);
+    notifyListeners();
+  }
+
+  void setLoginErrorText(String key) async {
+    AuthenticationController().loginErrorText = TranslationService().translate(key);
+    notifyListeners();
+  }
+
 }

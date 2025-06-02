@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:foodlink/services/translation_services.dart';
+import 'package:foodlink/providers/authentication_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../controllers/auth_controller.dart';
+import '../controllers/authentication_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'translation_services.dart';
 
-class AuthService with ChangeNotifier {
+class AuthenticationServices with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User?> signUpWithEmailAndPassword(
@@ -17,7 +18,18 @@ class AuthService with ChangeNotifier {
       );
       User? user = userCredential.user;
       return user;
-    } catch (ex) {
+    }on FirebaseAuthException catch (e) {
+        if(e.message != null) {
+          AuthenticationProvider().setLoginErrorText(e.message!);
+          if (kDebugMode) {
+            print("Registration failed: ${e.message}");
+          }
+        }
+      rethrow;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Unexpected error: $e");
+      }
       rethrow;
     }
   }
@@ -31,13 +43,13 @@ class AuthService with ChangeNotifier {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        AuthController().errorText =
+        AuthenticationController().loginErrorText =
             TranslationService().translate("user_not_found");
       } else if (e.code == 'wrong-password') {
-        AuthController().errorText =
+        AuthenticationController().loginErrorText =
             TranslationService().translate("wrong_password");
       } else {
-        AuthController().errorText = e.message!;
+        AuthenticationController().loginErrorText = e.message!;
       }
       return null; // Ensure the function always returns a value
     }
@@ -55,7 +67,9 @@ class AuthService with ChangeNotifier {
       );
       return await _auth.signInWithCredential(credential);
     } catch (e) {
-      print("Google sign-in error: $e");
+      if (kDebugMode) {
+        print("Google sign-in error: $e");
+      }
       return null;
     }
   }

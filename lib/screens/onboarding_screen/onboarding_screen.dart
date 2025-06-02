@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/auth_controller.dart';
+import '../../controllers/authentication_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
@@ -8,7 +8,7 @@ import '../../core/utils/size_config.dart';
 import '../../models/onboarding_content.dart';
 import '../../services/translation_services.dart';
 import '../OnBoarding_screen/widgets/dot.dart';
-import '../auth_screens/sign_up_screen.dart';
+import '../authentication_screens/sign_up_screen.dart';
 import 'widgets/onboarding_body.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
               context,
               MaterialPageRoute(builder: (context) => const SignUpScreen()),
           );
-          AuthController().completeOnboarding();
+          AuthenticationController().completeOnboarding();
         }
         _startAutoPageJump();
       }
@@ -125,7 +125,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                     bottom: SizeConfig.getProportionalHeight(20)),
                 child: TextButton(
                   onPressed: () {
-                    AuthController().completeOnboarding();
+                    AuthenticationController().completeOnboarding();
                     Get.to(() => const SignUpScreen());
                   },
                   child: Text(

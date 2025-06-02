@@ -4,84 +4,113 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/colors.dart';
 import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
-import '../screens/auth_screens/login_screen.dart';
+import '../screens/authentication_screens/login_screen.dart';
 import '../services/translation_services.dart';
 
-class AuthController {
-  static final AuthController _instance = AuthController._internal();
-  factory AuthController() => _instance;
-  AuthController._internal();
+class AuthenticationController {
+  static final AuthenticationController _instance =
+      AuthenticationController._internal();
+
+  factory AuthenticationController() => _instance;
+
+  AuthenticationController._internal();
+
   TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
+  TextEditingController signUpEmailController = TextEditingController();
+  TextEditingController signUpPasswordController = TextEditingController();
   TextEditingController confirmedPasswordController = TextEditingController();
   TextEditingController forgotPasswordEmailController = TextEditingController();
-  Color emailTextFieldBorderColor = AppColors.textFieldBorderColor;
-  Color passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
+  Color signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+  Color signUpPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+  Color loginEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+  Color loginPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
   Color confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
   bool noneIsEmpty = true;
   bool isMatched = true;
   bool passwordIsValid = true;
   bool rememberMe = true;
-  String errorText = "";
+  String signUpErrorText = "";
+  String loginErrorText = "";
 
   bool checkEmptyFields(login) {
     if (login == false) {
-      noneIsEmpty = emailController.text.isNotEmpty &&
-          passwordController.text.isNotEmpty &&
+      noneIsEmpty = signUpEmailController.text.isNotEmpty &&
+          signUpPasswordController.text.isNotEmpty &&
           confirmedPasswordController.text.isNotEmpty;
+      signUpErrorText = noneIsEmpty
+          ? ""
+          : TranslationService().translate("all_fields_required");
     } else {
-      noneIsEmpty =
-          emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+      noneIsEmpty = loginEmailController.text.isNotEmpty &&
+          loginPasswordController.text.isNotEmpty;
+      loginErrorText = noneIsEmpty
+          ? ""
+          : TranslationService().translate("all_fields_required");
     }
-    errorText = noneIsEmpty
-        ? ""
-        : TranslationService().translate("all_fields_required");
+
     return noneIsEmpty;
   }
 
   void checkMatchedPassword() {
-    isMatched = passwordController.text.trim() ==
+    isMatched = signUpPasswordController.text.trim() ==
         confirmedPasswordController.text.trim();
-    errorText = !isMatched
+    signUpErrorText = !isMatched
         ? TranslationService().translate("password_not_matched")
         : "";
   }
 
   void checkValidPassword() {
-    String password = passwordController.text.trim();
+    String password = signUpPasswordController.text.trim();
     if (password.length < 6) {
-      errorText = 'password_characters_long';
+      signUpErrorText = 'password_characters_long';
       passwordIsValid = false;
     } else if (!RegExp(r'[A-Z]').hasMatch(password)) {
-      errorText = 'uppercase_letter_required';
+      signUpErrorText = 'uppercase_letter_required';
       passwordIsValid = false;
     } else if (!RegExp(r'[a-z]').hasMatch(password)) {
-      errorText = 'lowercase_letter_required';
+      signUpErrorText = 'lowercase_letter_required';
       passwordIsValid = false;
     } else if (!RegExp(r'\d').hasMatch(password)) {
-      errorText = 'number_required';
+      signUpErrorText = 'number_required';
       passwordIsValid = false;
     } else if (!RegExp(r'[!@#\$&*~]').hasMatch(password)) {
-      errorText = 'character_required';
+      signUpErrorText = 'character_required';
       passwordIsValid = false;
     } else {
-      errorText = "";
+      signUpErrorText = "";
       passwordIsValid = true;
     }
   }
 
   void changeTextFieldsColors(login) {
     if (!noneIsEmpty) {
-      if (emailController.text.isEmpty) {
-        emailTextFieldBorderColor = AppColors.errorColor;
+      if (login == false) {
+        if (signUpEmailController.text.isEmpty) {
+          signUpEmailTextFieldBorderColor = AppColors.errorColor;
+        } else {
+          signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+        }
       } else {
-        emailTextFieldBorderColor = AppColors.textFieldBorderColor;
+        if (loginEmailController.text.isEmpty) {
+          loginEmailTextFieldBorderColor = AppColors.errorColor;
+        } else {
+          loginEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+        }
       }
-      if (passwordController.text.isEmpty) {
-        passwordTextFieldBorderColor = AppColors.errorColor;
+      if (login == false) {
+        if (signUpPasswordController.text.isEmpty) {
+          signUpPasswordTextFieldBorderColor = AppColors.errorColor;
+        } else {
+          signUpPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+        }
       } else {
-        passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
+        if (loginPasswordController.text.isEmpty) {
+          loginPasswordTextFieldBorderColor = AppColors.errorColor;
+        } else {
+          loginPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+        }
       }
       if (confirmedPasswordController.text.isEmpty) {
         confirmPasswordTextFieldBorderColor = AppColors.errorColor;
@@ -89,13 +118,13 @@ class AuthController {
         confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
       }
     } else if (!isMatched || !passwordIsValid) {
-      emailTextFieldBorderColor = AppColors.textFieldBorderColor;
-      passwordTextFieldBorderColor = AppColors.errorColor;
+      signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+      signUpPasswordTextFieldBorderColor = AppColors.errorColor;
       confirmPasswordTextFieldBorderColor = AppColors.errorColor;
     } else {
-      errorText = "";
-      emailTextFieldBorderColor = AppColors.textFieldBorderColor;
-      passwordTextFieldBorderColor = AppColors.textFieldBorderColor;
+      signUpErrorText = "";
+      signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
+      signUpPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
       confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
     }
     return;
@@ -117,8 +146,8 @@ class AuthController {
     final prefs = await SharedPreferences.getInstance();
     final email = prefs.getString('email') ?? '';
     final password = prefs.getString('password') ?? '';
-    emailController.text = email;
-    passwordController.text = password;
+    loginEmailController.text = email;
+    loginPasswordController.text = password;
     return {'email': email, 'password': password};
   }
 

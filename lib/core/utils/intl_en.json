@@ -160,12 +160,12 @@
   "source": "Source",
   "no_source": "No Source",
   "no_recipe": "No Recipe",
-  "confirmation_sent":"Confirmation has been sent successfully",
-  "password_characters_long":"Password must be at least 6 characters long",
+  "confirmation_sent": "Confirmation has been sent successfully",
+  "password_characters_long": "Password must be at least 6 characters long",
   "uppercase_letter_required": "Password must contain at least one uppercase letter",
   "lowercase_letter_required": "Password must contain at least one lowercase letter",
   "number__required": "Password must contain at least one number",
-  "character_required":"Password must contain at least one special character (!@#\\$&*~)",
+  "character_required": "Password must contain at least one special character (!@#\\$&*~)",
   "logout": "logout",
   "name": "name",
   "save": "Save",
@@ -174,5 +174,8 @@
   "meal_not_found": "Meal is not defined",
   "reset_password": "Reset Password",
   "send": "Send",
-  "email_sent": "If this email exists, a reset link has been sent."
+  "email_sent": "If this email exists, a reset link has been sent.",
+  "email_already_registered": "Email is already registered",
+  "The email address is already in use by another account.":"The email address is already in use by another account.",
+  "The email address is badly formatted": "The email address is badly formatted"
 }

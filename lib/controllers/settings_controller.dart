@@ -1,7 +1,7 @@
 import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../providers/users_provider.dart';
-import 'auth_controller.dart';
+import 'authentication_controller.dart';
 
 class SettingsController {
   static final SettingsController _instance = SettingsController._internal();
@@ -22,7 +22,7 @@ class SettingsController {
     await usersProvider.updateUserDetails(userId, username, email, userTypeId);
     if (password != "") {
       await usersProvider.changePassword(password);
-      AuthController().logout(authenticationProvider, dashboardProvider);
+      AuthenticationController().logout(authenticationProvider, dashboardProvider);
     }
     usersProvider.imageIsPicked = false;
     usersProvider.pickedFile = null;

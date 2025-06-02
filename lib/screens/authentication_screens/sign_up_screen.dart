@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/auth_controller.dart';
+import '../../controllers/authentication_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -13,11 +13,9 @@ import '../../services/translation_services.dart';
 import '../widgets/custom_text.dart';
 import 'login_screen.dart';
 import 'widgets/custom_auth_btn.dart';
-import 'widgets/custom_auth_divider.dart';
 import 'widgets/custom_auth_footer.dart';
 import 'widgets/custom_auth_textfield.dart';
 import 'widgets/custom_error_txt.dart';
-import 'widgets/custom_google_auth_btn.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -27,7 +25,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late AuthController _authController;
+  late AuthenticationController _authController;
 
   @override
   void dispose() {
@@ -38,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    _authController = AuthController();
+    _authController = AuthenticationController();
   }
 
   @override
@@ -73,21 +71,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     )),
                 CustomErrorTxt(
                   text:
-                      TranslationService().translate(_authController.errorText),
+                      TranslationService().translate(_authController.signUpErrorText),
                   settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_email'),
                   obscureText: false,
-                  textEditingController: _authController.emailController,
-                  borderColor: _authController.emailTextFieldBorderColor,
+                  textEditingController: _authController.signUpEmailController,
+                  borderColor: _authController.signUpEmailTextFieldBorderColor,
                   settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
                   hintText: TranslationService().translate('enter_password'),
                   obscureText: true,
-                  textEditingController: _authController.passwordController,
-                  borderColor: _authController.passwordTextFieldBorderColor,
+                  textEditingController: _authController.signUpPasswordController,
+                  borderColor: _authController.signUpPasswordTextFieldBorderColor,
                   settingsProvider: settingsProvider,
                 ),
                 CustomAuthenticationTextField(
@@ -126,10 +124,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                     if (_authController.isMatched &&
                         _authController.passwordIsValid) {
-                      var user =
-                          await AuthenticationProvider().signUpWithEmailAndPassword(
-                        _authController.emailController.text,
-                        _authController.passwordController.text,
+                      var user = await AuthenticationProvider()
+                          .signUpWithEmailAndPassword(
+                        _authController.signUpEmailController.text,
+                        _authController.signUpPasswordController.text,
                       );
                       UserDetails userDetails = UserDetails(
                         userId: user!.uid,
@@ -143,7 +141,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         _authController.changeTextFieldsColors(false);
                       });
                       await SettingsProvider().addSettings(user.uid);
-                      Get.to(() => const LoginScreen(firstScreen: false,));
+                      Get.to(() => const LoginScreen(
+                            firstScreen: false,
+                          ));
                     }
                   },
                 ),
@@ -153,7 +153,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tailText: "login",
                   settingsProvider: settingsProvider,
                   onTap: () {
-                    Get.to(() => const LoginScreen(firstScreen: false,));
+                    AuthenticationProvider().resetSignUpErrorText();
+                    Get.to(() => const LoginScreen(
+                          firstScreen: false,
+                        ));
                   },
                 )
               ],

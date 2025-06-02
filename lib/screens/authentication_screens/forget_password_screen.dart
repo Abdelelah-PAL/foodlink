@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodlink/screens/widgets/custom_back_button.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/auth_controller.dart';
+import '../../controllers/authentication_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -92,7 +92,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   hintText: 'example@example.com',
                   obscureText: false,
                   textEditingController:
-                      AuthController().forgotPasswordEmailController,
+                      AuthenticationController().forgotPasswordEmailController,
                   borderColor: AppColors.textFieldBorderColor,
                   settingsProvider: settingsProvider,
                 ),
@@ -105,7 +105,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 CustomAuthBtn(
                     text: TranslationService().translate('send'),
                     onTap: () async {
-                      if (AuthController()
+                      if (AuthenticationController()
                           .forgotPasswordEmailController
                           .text
                           .isEmpty) {
@@ -114,7 +114,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         return;
                       }
                       await authenticationProvider.sendPasswordResetEmail(
-                          AuthController().forgotPasswordEmailController.text.trim());
+                          AuthenticationController().forgotPasswordEmailController.text.trim());
                       Fluttertoast.showToast(msg: TranslationService().translate("email_sent"));
                     }),
               ])),
