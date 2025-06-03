@@ -18,10 +18,10 @@ class AuthenticationProvider with ChangeNotifier {
 
 
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password,  AuthenticationProvider authenticationProvider) async {
     isLoading = true;
     notifyListeners();
-    user = await _authService.signUpWithEmailAndPassword(email, password);
+    user = await _authService.signUpWithEmailAndPassword(email, password, authenticationProvider);
     isLoading = false;
     notifyListeners();
     return user;
@@ -66,12 +66,12 @@ class AuthenticationProvider with ChangeNotifier {
     AuthenticationController().loginErrorText = "";
     notifyListeners();
   }
-  void setSignUpErrorText(String key) async {
+  void setSignUpErrorText(String key)  {
     AuthenticationController().signUpErrorText = TranslationService().translate(key);
     notifyListeners();
   }
 
-  void setLoginErrorText(String key) async {
+  void setLoginErrorText(String key)  {
     AuthenticationController().loginErrorText = TranslationService().translate(key);
     notifyListeners();
   }

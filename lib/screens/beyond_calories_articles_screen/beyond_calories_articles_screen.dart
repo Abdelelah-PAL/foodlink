@@ -10,7 +10,6 @@ import '../../providers/settings_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_container.dart';
-import '../widgets/profile_circle.dart';
 
 class BeyondCaloriesArticlesScreen extends StatefulWidget {
   const BeyondCaloriesArticlesScreen({super.key});

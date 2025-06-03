@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
 
+
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: false,

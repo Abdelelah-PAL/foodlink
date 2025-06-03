@@ -15,7 +15,6 @@ import '../widgets/custom_app_textfield.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/profile_circle.dart';
 import 'package:intl/intl.dart' as intl;
 
 class AddTaskScreen extends StatefulWidget {

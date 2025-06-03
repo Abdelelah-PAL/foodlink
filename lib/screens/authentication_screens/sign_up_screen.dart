@@ -42,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    AuthenticationProvider authenticationProvider = Provider.of<AuthenticationProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -126,8 +127,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         _authController.passwordIsValid) {
                       var user = await AuthenticationProvider()
                           .signUpWithEmailAndPassword(
-                        _authController.signUpEmailController.text,
+                        _authController.signUpEmailController.text.trim(),
                         _authController.signUpPasswordController.text,
+                        authenticationProvider
                       );
                       UserDetails userDetails = UserDetails(
                         userId: user!.uid,

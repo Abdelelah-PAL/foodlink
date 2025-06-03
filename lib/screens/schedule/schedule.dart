@@ -8,7 +8,6 @@ import '../../providers/settings_provider.dart';
 import '../../providers/task_provider.dart';
 import '../../providers/users_provider.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/profile_circle.dart';
 import 'add_task_screen.dart';
 import 'widgets/task_tile.dart';
 

@@ -13,7 +13,6 @@ import '../../providers/users_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/profile_circle.dart';
 import 'meal_planning_screen.dart';
 import 'widgets/changeable_date.dart';
 import 'widgets/day_meal_row.dart';

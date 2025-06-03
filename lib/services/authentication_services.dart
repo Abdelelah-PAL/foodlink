@@ -8,8 +8,7 @@ import 'translation_services.dart';
 class AuthenticationServices with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+  Future<User?> signUpWithEmailAndPassword(String email, String password, AuthenticationProvider authenticationProvider) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -18,13 +17,13 @@ class AuthenticationServices with ChangeNotifier {
       );
       User? user = userCredential.user;
       return user;
-    }on FirebaseAuthException catch (e) {
-        if(e.message != null) {
-          AuthenticationProvider().setLoginErrorText(e.message!);
-          if (kDebugMode) {
-            print("Registration failed: ${e.message}");
-          }
+    } on FirebaseAuthException catch (e) {
+      if (e.message != null) {
+        authenticationProvider.setSignUpErrorText(e.message!);
+        if (kDebugMode) {
+          print("Registration failed: ${e.message}");
         }
+      }
       rethrow;
     } catch (e) {
       if (kDebugMode) {

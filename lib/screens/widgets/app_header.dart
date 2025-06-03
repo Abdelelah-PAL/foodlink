@@ -14,7 +14,6 @@ import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../../services/translation_services.dart';
 import '../notifications_screen/notifications_screen.dart';
-import 'profile_circle.dart';
 
 class AppHeader extends StatefulWidget {
   const AppHeader({super.key, required this.userId, required this.userTypeId});

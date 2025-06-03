@@ -23,7 +23,7 @@ class UsersServices with ChangeNotifier {
           userId: userDetails.userId,
           userTypeId: UserTypes.user,
           email: userDetails.email,
-          username: userDetails.usernam,
+          username: userDetails.username,
           subscriber: userDetails.subscriber);
 
       await _firebaseFireStore.collection('user_details').add(cooker.toMap());
