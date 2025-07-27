@@ -6,6 +6,7 @@ import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../screens/authentication_screens/login_screen.dart';
 import '../services/translation_services.dart';
+import 'dashboard_controller.dart';
 
 class AuthenticationController {
   static final AuthenticationController _instance =
@@ -158,6 +159,8 @@ class AuthenticationController {
 
   void logout(AuthenticationProvider authenticationProvider,
       DashboardProvider dashBoardProvider) {
+    DashboardController().userNameController.clear();
+    DashboardController().cookerNameController.clear();
     dashBoardProvider.cookerPressed = false;
     dashBoardProvider.userPressed = false;
     dashBoardProvider.selectedIndex = 0;

@@ -96,7 +96,9 @@ class UserTile extends StatelessWidget {
                       ),
                     ],
                   )
-          ] else ...[
+          ]
+          else ...[
+
             dashboardProvider.userPressed &&
                     usersProvider.userFirstLogin == true
                 ? UsernameTextField(
@@ -130,6 +132,8 @@ class UserTile extends StatelessWidget {
             SizeConfig.customSizedBox(15, null, null),
             GestureDetector(
               onTap: () async {
+                print(usersProvider.userFirstLogin);
+
                 DashboardProvider().changeRole(UserTypes.user);
                 UserDetails user = usersProvider.loggedInUsers.firstWhere(
                   (user) => user.userTypeId == UserTypes.user,

@@ -1,18 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/dashboard_controller.dart';
-import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/models/user_details.dart';
-import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/providers/features_provider.dart';
-import 'package:foodlink/providers/notification_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/dashboard_controller.dart';
 import '../../../controllers/user_types.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
+import '../../../models/user_details.dart';
+import '../../../providers/dashboard_provider.dart';
+import '../../../providers/features_provider.dart';
+import '../../../providers/notification_provider.dart';
 import '../../../providers/settings_provider.dart';
+import '../../../providers/users_provider.dart';
+import '../../../services/translation_services.dart';
 import 'username_textfield.dart';
 
 class CookerTile extends StatelessWidget {
@@ -45,7 +46,6 @@ class CookerTile extends StatelessWidget {
                   (user) => user.userTypeId == UserTypes.cooker,
                 );
                 usersProvider.setFirstLogin(cooker, UserTypes.cooker);
-
                 DashboardProvider().togglePressed(UserTypes.cooker);
                 DashboardController().userNameController.clear();
                 await NotificationsProvider()
@@ -137,6 +137,10 @@ class CookerTile extends StatelessWidget {
             SizeConfig.customSizedBox(15, null, null),
             GestureDetector(
               onTap: () async{
+                if (kDebugMode) {
+                  print(usersProvider.cookerFirstLogin);
+                }
+
                 DashboardProvider().changeRole(UserTypes.cooker);
                 UserDetails cooker = usersProvider.loggedInUsers.firstWhere(
                   (user) => user.userTypeId == UserTypes.cooker,

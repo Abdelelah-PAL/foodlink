@@ -51,6 +51,8 @@ class UsersProvider with ChangeNotifier {
           username: doc['username'],
           subscriber: doc['subscriber'],
         );
+        print("User ID: $id");
+
         loggedInUsers.add(user);
         notifyListeners();
       }
@@ -60,6 +62,7 @@ class UsersProvider with ChangeNotifier {
   }
 
   void setFirstLogin(user, roleId) {
+    print(user.username);
     if (user.username == null) {
       if (roleId == UserTypes.user) {
         userFirstLogin = true;

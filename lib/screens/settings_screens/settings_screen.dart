@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/settings_screens/contact_us_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/authentication_controller.dart';
+import '../../controllers/dashboard_controller.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -11,6 +11,7 @@ import '../../providers/dashboard_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
 import '../widgets/custom_text.dart';
+import 'contact_us_screen.dart';
 import 'edit_account_info_screen.dart';
 import 'privacy_screen.dart';
 import 'widgets/custom_setting_tile.dart';
@@ -164,8 +165,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Assets.logout,
                   text: "logout",
                   givenWrittenLanguage: settingsProvider.language,
-                  onTap: () => AuthenticationController()
-                      .logout(authenticationProvider, dashboardProvider),
+                  onTap: () {
+                    setState(() {
+                      DashboardController().userNameController.clear();
+                      DashboardController().cookerNameController.clear();
+                    });
+                    AuthenticationController()
+                        .logout(authenticationProvider, dashboardProvider);
+                  }
                 )
               ])
         ],
