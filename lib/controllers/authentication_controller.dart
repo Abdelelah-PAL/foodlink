@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/providers/users_provider.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/colors.dart';
@@ -158,9 +159,10 @@ class AuthenticationController {
   }
 
   void logout(AuthenticationProvider authenticationProvider,
-      DashboardProvider dashBoardProvider, BuildContext context) {
+      DashboardProvider dashBoardProvider) {
     dashBoardProvider.resetValues();
     authenticationProvider.logout();
+
     Get.to(const LoginScreen(firstScreen: false));
   }
 }

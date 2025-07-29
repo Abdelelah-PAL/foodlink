@@ -80,7 +80,6 @@ class DashboardProvider with ChangeNotifier {
     cookerPressed = false;
     userPressed = false;
     selectedIndex = 0;
-    userNameController.clear();
-    cookerNameController.clear();
+    notifyListeners();
   }
 }

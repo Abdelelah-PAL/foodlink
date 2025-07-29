@@ -25,7 +25,7 @@ class SettingsController {
     await usersProvider.updateUserDetails(userId, username, email, userTypeId);
     if (password != "") {
       await usersProvider.changePassword(password);
-      AuthenticationController().logout(authenticationProvider, dashboardProvider,context);
+      AuthenticationController().logout(authenticationProvider, dashboardProvider);
     }
     usersProvider.imageIsPicked = false;
     usersProvider.pickedFile = null;

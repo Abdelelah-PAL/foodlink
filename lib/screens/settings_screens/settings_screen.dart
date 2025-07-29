@@ -162,14 +162,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onTap: () => Get.to(
                         ContactUsScreen(settingsProvider: settingsProvider))),
                 CustomSettingTile(
-                  icon: Assets.logout,
-                  text: "logout",
-                  givenWrittenLanguage: settingsProvider.language,
-                  onTap: () {
-                    AuthenticationController()
-                        .logout(authenticationProvider, dashboardProvider, context);
-                  }
-                )
+                    icon: Assets.logout,
+                    text: "logout",
+                    givenWrittenLanguage: settingsProvider.language,
+                    onTap: () {
+                      AuthenticationController().logout(authenticationProvider, dashboardProvider);
+                    })
               ])
         ],
       ),

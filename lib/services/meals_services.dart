@@ -228,7 +228,6 @@ class MealsServices with ChangeNotifier {
       if (snapshot.docs.isNotEmpty) {
         return snapshot.docs.first.data();
       } else {
-        print('No records found in');
         return null;
       }
     } catch (e) {

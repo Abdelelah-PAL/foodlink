@@ -33,11 +33,11 @@ class CookerTile extends StatelessWidget {
           vertical: SizeConfig.getProportionalWidth(20),
           horizontal: SizeConfig.getProportionalWidth(20)),
       child: Row(
-        mainAxisAlignment: settingsProvider.language == "en"
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.end,
+        mainAxisAlignment:  MainAxisAlignment.start,
+        textDirection: settingsProvider.language == "en"
+            ? TextDirection.ltr
+            : TextDirection.rtl,
         children: [
-          if (settingsProvider.language == "en") ...[
             GestureDetector(
               onTap: () async {
                 DashboardProvider().changeRole(UserTypes.cooker);
@@ -101,77 +101,7 @@ class CookerTile extends StatelessWidget {
                       ),
                     ],
                   )
-          ] else ...[
-            dashboardProvider.cookerPressed == true &&
-                    usersProvider.cookerFirstLogin == true
-                ? UsernameTextField(
-                    controller: dashboardProvider.cookerNameController,
-                    hintText:
-                        TranslationService().translate("enter_cooker_name"))
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        TranslationService().translate("cooker"),
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: AppFonts.getPrimaryFont(context),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizeConfig.customSizedBox(
-                        170,
-                        null,
-                        Text(
-                          textDirection: TextDirection.rtl,
-                          textAlign: TextAlign.center,
-                          TranslationService().translate("cook_one"),
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: AppFonts.getPrimaryFont(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-            SizeConfig.customSizedBox(15, null, null),
-            GestureDetector(
-              onTap: () async{
-                if (kDebugMode) {
-                  print(usersProvider.cookerFirstLogin);
-                }
 
-                DashboardProvider().changeRole(UserTypes.cooker);
-                UserDetails cooker = usersProvider.loggedInUsers.firstWhere(
-                  (user) => user.userTypeId == UserTypes.cooker,
-                );
-                usersProvider.setFirstLogin(cooker, UserTypes.cooker);
-
-                DashboardProvider().togglePressed(UserTypes.cooker);
-               dashboardProvider.userNameController.clear();
-                await NotificationsProvider()
-                    .getAllNotifications(cooker.userTypeId, cooker.userId);
-                await FeaturesProvider().getAllFeatures();
-              },
-              child: Container(
-                  height: SizeConfig.getProportionalHeight(116),
-                  width: SizeConfig.getProportionalWidth(120),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: AppColors.backgroundColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        blurRadius: 7,
-                        spreadRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                      child: Image.asset(dashboardProvider.cookerPressed
-                          ? Assets.pressedCooker
-                          : Assets.cooker))),
-            ),
-          ]
         ],
       ),
     );

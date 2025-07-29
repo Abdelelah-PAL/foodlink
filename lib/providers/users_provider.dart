@@ -40,6 +40,9 @@ class UsersProvider with ChangeNotifier {
 
   Future<void> getUsersById(String id) async {
     try {
+      loggedInUsers.clear();
+      cookerFirstLogin = false;
+      userFirstLogin = false;
       QuerySnapshot<Map<String, dynamic>> userQuery =
           await _us.getUsersById(id);
       for (var doc in userQuery.docs) {
@@ -61,7 +64,6 @@ class UsersProvider with ChangeNotifier {
   }
 
   void setFirstLogin(user, roleId) {
-    print(user.username);
     if (user.username == null) {
       if (roleId == UserTypes.user) {
         userFirstLogin = true;

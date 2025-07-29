@@ -42,15 +42,20 @@ class NotificationsTab extends StatelessWidget {
               Notifications notification = notifications[index];
               String duration = NotificationController().getDuration(
                   notification.timestamp, settingsProvider.language);
-              
+
               return FutureBuilder<Meal>(
                 future: notification.isMealPlanned
-                    ? MealsProvider()
-                        .getPlannedMealById(notification.mealId)
+                    ? MealsProvider().getPlannedMealById(notification.mealId)
                     : MealsProvider().getMealById(notification.mealId),
                 builder: (context, snapshot) {
                   Meal? meal = snapshot.data;
-
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                      strokeWidth: 4.0,
+                      backgroundColor: Colors.grey[300],
+                    );
+                  }
                   return ListTile(
                     onTap: () {
                       if (meal == null) {
