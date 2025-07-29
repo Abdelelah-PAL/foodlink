@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../providers/users_provider.dart';
@@ -18,11 +20,12 @@ class SettingsController {
       String username,
       String email,
       String password,
-      int userTypeId) async {
+      int userTypeId,
+      BuildContext context) async {
     await usersProvider.updateUserDetails(userId, username, email, userTypeId);
     if (password != "") {
       await usersProvider.changePassword(password);
-      AuthenticationController().logout(authenticationProvider, dashboardProvider);
+      AuthenticationController().logout(authenticationProvider, dashboardProvider,context);
     }
     usersProvider.imageIsPicked = false;
     usersProvider.pickedFile = null;

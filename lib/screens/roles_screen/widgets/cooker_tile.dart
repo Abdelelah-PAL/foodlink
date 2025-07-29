@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/dashboard_controller.dart';
 import '../../../controllers/user_types.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
@@ -47,7 +46,7 @@ class CookerTile extends StatelessWidget {
                 );
                 usersProvider.setFirstLogin(cooker, UserTypes.cooker);
                 DashboardProvider().togglePressed(UserTypes.cooker);
-                DashboardController().userNameController.clear();
+                dashboardProvider.userNameController.clear();
                 await NotificationsProvider()
                     .getAllNotifications(cooker.userTypeId, cooker.userId);
                 await FeaturesProvider().getAllFeatures();
@@ -75,7 +74,7 @@ class CookerTile extends StatelessWidget {
             dashboardProvider.cookerPressed == true &&
                     usersProvider.cookerFirstLogin == true
                 ? UsernameTextField(
-                    controller: DashboardController().cookerNameController,
+                    controller: dashboardProvider.cookerNameController,
                     hintText:
                         TranslationService().translate("enter_cooker_name"))
                 : Column(
@@ -106,7 +105,7 @@ class CookerTile extends StatelessWidget {
             dashboardProvider.cookerPressed == true &&
                     usersProvider.cookerFirstLogin == true
                 ? UsernameTextField(
-                    controller: DashboardController().cookerNameController,
+                    controller: dashboardProvider.cookerNameController,
                     hintText:
                         TranslationService().translate("enter_cooker_name"))
                 : Column(
@@ -148,7 +147,7 @@ class CookerTile extends StatelessWidget {
                 usersProvider.setFirstLogin(cooker, UserTypes.cooker);
 
                 DashboardProvider().togglePressed(UserTypes.cooker);
-                DashboardController().userNameController.clear();
+               dashboardProvider.userNameController.clear();
                 await NotificationsProvider()
                     .getAllNotifications(cooker.userTypeId, cooker.userId);
                 await FeaturesProvider().getAllFeatures();

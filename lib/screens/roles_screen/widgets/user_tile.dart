@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/dashboard_controller.dart';
-import 'package:foodlink/core/constants/fonts.dart';
-import 'package:foodlink/providers/dashboard_provider.dart';
-import 'package:foodlink/screens/roles_screen/widgets/username_textfield.dart';
-import 'package:foodlink/services/translation_services.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/user_types.dart';
 import '../../../core/constants/assets.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
 import '../../../models/user_details.dart';
+import '../../../providers/dashboard_provider.dart';
 import '../../../providers/features_provider.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/users_provider.dart';
+import '../../../services/translation_services.dart';
+import 'username_textfield.dart';
 
 class UserTile extends StatelessWidget {
   const UserTile(
@@ -44,7 +43,7 @@ class UserTile extends StatelessWidget {
                 );
                 usersProvider.setFirstLogin(user, UserTypes.user);
                 DashboardProvider().togglePressed(UserTypes.user);
-                DashboardController().cookerNameController.clear();
+                dashboardProvider.cookerNameController.clear();
                 await FeaturesProvider().getAllFeatures();
               },
               child: Container(
@@ -70,7 +69,7 @@ class UserTile extends StatelessWidget {
             dashboardProvider.userPressed &&
                     usersProvider.userFirstLogin == true
                 ? UsernameTextField(
-                    controller: DashboardController().userNameController,
+                    controller:dashboardProvider.userNameController,
                     hintText: TranslationService().translate("enter_user_name"))
                 : Column(
                     children: [
@@ -102,7 +101,7 @@ class UserTile extends StatelessWidget {
             dashboardProvider.userPressed &&
                     usersProvider.userFirstLogin == true
                 ? UsernameTextField(
-                    controller: DashboardController().userNameController,
+                    controller: dashboardProvider.userNameController,
                     hintText: TranslationService().translate("enter_user_name"))
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -140,7 +139,7 @@ class UserTile extends StatelessWidget {
                 );
                 usersProvider.setFirstLogin(user, UserTypes.user);
                 DashboardProvider().togglePressed(UserTypes.user);
-                DashboardController().cookerNameController.clear();
+                dashboardProvider.cookerNameController.clear();
                 await FeaturesProvider().getAllFeatures();
               },
               child: Container(

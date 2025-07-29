@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/dashboard_controller.dart';
 import '../../controllers/user_types.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
@@ -84,8 +83,8 @@ class RolesScreen extends StatelessWidget {
                     int roleId = dashboardProvider.roleId;
                     TextEditingController controller =
                         roleId == UserTypes.cooker
-                            ? DashboardController().cookerNameController
-                            : DashboardController().userNameController;
+                            ? dashboardProvider.cookerNameController
+                            : dashboardProvider.userNameController;
                     await UsersServices()
                         .updateUsername(user.uid, roleId, controller.text);
                     UsersProvider().selectedUser = await UsersProvider()

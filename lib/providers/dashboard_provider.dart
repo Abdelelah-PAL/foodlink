@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:foodlink/controllers/user_types.dart';
 import 'package:get/get.dart';
+import '../controllers/user_types.dart';
 import '../screens/home_screen/home_screen.dart';
 
 class DashboardProvider with ChangeNotifier {
@@ -17,6 +17,8 @@ class DashboardProvider with ChangeNotifier {
   int roleId = UserTypes.user;
   bool userPressed = false;
   bool cookerPressed = false;
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController cookerNameController = TextEditingController();
 
   void onItemTapped(int index) {
     selectedIndex = index;
@@ -72,5 +74,13 @@ class DashboardProvider with ChangeNotifier {
       default:
         selectedIndex = index;
     }
+  }
+
+  void resetValues() {
+    cookerPressed = false;
+    userPressed = false;
+    selectedIndex = 0;
+    userNameController.clear();
+    cookerNameController.clear();
   }
 }

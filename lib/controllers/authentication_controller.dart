@@ -158,12 +158,8 @@ class AuthenticationController {
   }
 
   void logout(AuthenticationProvider authenticationProvider,
-      DashboardProvider dashBoardProvider) {
-    DashboardController().userNameController.clear();
-    DashboardController().cookerNameController.clear();
-    dashBoardProvider.cookerPressed = false;
-    dashBoardProvider.userPressed = false;
-    dashBoardProvider.selectedIndex = 0;
+      DashboardProvider dashBoardProvider, BuildContext context) {
+    dashBoardProvider.resetValues();
     authenticationProvider.logout();
     Get.to(const LoginScreen(firstScreen: false));
   }

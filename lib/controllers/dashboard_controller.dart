@@ -8,8 +8,7 @@ class DashboardController {
   static final DashboardController _instance = DashboardController._internal();
   factory DashboardController() => _instance;
   DashboardController._internal();
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController cookerNameController = TextEditingController();
+
 
   bool isExpanded = false;
   int selectedIndex = 0;

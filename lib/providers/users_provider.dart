@@ -51,7 +51,6 @@ class UsersProvider with ChangeNotifier {
           username: doc['username'],
           subscriber: doc['subscriber'],
         );
-        print("User ID: $id");
 
         loggedInUsers.add(user);
         notifyListeners();

@@ -123,7 +123,8 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                     borderWidth: 3,
                     isSettings: true),
                 Padding(
-                  padding:EdgeInsets.only(top: SizeConfig.getProportionalHeight(80)),
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.getProportionalHeight(80)),
                   child: CustomButton(
                       onTap: () async {
                         widget.usersProvider.checkEmptyFields();
@@ -160,8 +161,10 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
                               widget.usersProvider.selectedUser!.userId,
                               widget.usersProvider.usernameController.text,
                               widget.usersProvider.emailController.text,
-                              widget.usersProvider.passwordController.text.trim(),
-                              widget.usersProvider.selectedUser!.userTypeId!);
+                              widget.usersProvider.passwordController.text
+                                  .trim(),
+                              widget.usersProvider.selectedUser!.userTypeId!,
+                              context);
                         }
                       },
                       text: "save",

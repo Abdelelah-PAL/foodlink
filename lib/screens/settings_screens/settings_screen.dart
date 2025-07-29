@@ -166,12 +166,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   text: "logout",
                   givenWrittenLanguage: settingsProvider.language,
                   onTap: () {
-                    setState(() {
-                      DashboardController().userNameController.clear();
-                      DashboardController().cookerNameController.clear();
-                    });
                     AuthenticationController()
-                        .logout(authenticationProvider, dashboardProvider);
+                        .logout(authenticationProvider, dashboardProvider, context);
                   }
                 )
               ])
