@@ -46,185 +46,207 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
-
+    AuthenticationProvider authenticationProvider =
+        Provider.of<AuthenticationProvider>(context);
 
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(10),
-                  vertical: SizeConfig.getProportionalWidth(45)),
-              child: Column(children: [
-                SizeConfig.customSizedBox(
-                    179, 179, Image.asset(Assets.pureLogo)),
-                Padding(
-                    padding: EdgeInsets.only(
-                        top: SizeConfig.getProportionalHeight(10),
-                        bottom: SizeConfig.getProportionalHeight(13)),
-                    child: const CustomText(
-                      isCenter: true,
-                      text: "welcome_back",
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal,
-                      color: AppColors.fontColor,
-                    )),
-                CustomErrorTxt(
-                  text: TranslationService()
-                      .translate(_authController.loginErrorText),
-                  settingsProvider: settingsProvider,
-                ),
-                SizeConfig.customSizedBox(null, 6, null),
-                CustomAuthTextFieldHeader(
-                    text: TranslationService().translate('email'),
-                    settingsProvider: settingsProvider),
-                CustomAuthenticationTextField(
-                    hintText: 'example@example.com',
-                    obscureText: false,
-                    textEditingController: _authController.loginEmailController,
-                    borderColor:
-                        _authController.loginPasswordTextFieldBorderColor,
-                    settingsProvider: settingsProvider),
-                SizeConfig.customSizedBox(
-                  null,
-                  15,
-                  null,
-                ),
-                CustomAuthTextFieldHeader(
-                    text: TranslationService().translate('password'),
-                    settingsProvider: settingsProvider),
-                CustomAuthenticationTextField(
-                  hintText: TranslationService().translate('enter_password'),
-                  settingsProvider: settingsProvider,
-                  obscureText: true,
-                  textEditingController:
-                      _authController.loginPasswordController,
-                  borderColor:
-                      _authController.loginPasswordTextFieldBorderColor,
-                ),
-                SizeConfig.customSizedBox(
-                  null,
-                  15,
-                  null,
-                ),
-                SizeConfig.customSizedBox(
-                  312,
-                  48,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: AppColors.textFieldBorderColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            width: SizeConfig.getProportionalWidth(20),
-                            height: SizeConfig.getProportionalHeight(20),
-                            child: Checkbox(
-                              activeColor: AppColors.backgroundColor,
-                              checkColor: AppColors.fontColor,
-                              value: _authController.rememberMe,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _authController.toggleRememberMe();
-                                });
-                              },
-                              side: const BorderSide(
-                                  color: AppColors.textFieldBorderColor),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: SizeConfig.getProportionalWidth(10)),
-                            child: Text(
-                              TranslationService().translate("remember_me"),
-                              style: TextStyle(
-                                fontFamily: AppFonts.getPrimaryFont(context),
-                                fontSize: 15,
-                                color: AppColors.fontColor,
-                              ),
-                            ),
-                          ),
-                        ],
+        body: authenticationProvider.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.getProportionalWidth(10),
+                        vertical: SizeConfig.getProportionalWidth(45)),
+                    child: Column(children: [
+                      SizeConfig.customSizedBox(
+                          179, 179, Image.asset(Assets.pureLogo)),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.getProportionalHeight(10),
+                              bottom: SizeConfig.getProportionalHeight(13)),
+                          child: const CustomText(
+                            isCenter: true,
+                            text: "welcome_back",
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.fontColor,
+                          )),
+                      CustomErrorTxt(
+                        text: TranslationService()
+                            .translate(_authController.loginErrorText),
+                        settingsProvider: settingsProvider,
                       ),
-                      TextButton(
-                        onPressed: () =>
-                            {Get.to(() => const ForgotPasswordScreen())},
-                        child: Text(
-                          TranslationService().translate("forgot_password"),
-                          style: TextStyle(
-                            fontFamily: AppFonts.getPrimaryFont(context),
-                            fontSize: 16,
-                            color: AppColors.errorColor,
-                          ),
+                      SizeConfig.customSizedBox(null, 6, null),
+                      CustomAuthTextFieldHeader(
+                          text: TranslationService().translate('email'),
+                          settingsProvider: settingsProvider),
+                      CustomAuthenticationTextField(
+                          hintText: 'example@example.com',
+                          obscureText: false,
+                          textEditingController:
+                              _authController.loginEmailController,
+                          borderColor:
+                              _authController.loginPasswordTextFieldBorderColor,
+                          settingsProvider: settingsProvider),
+                      SizeConfig.customSizedBox(
+                        null,
+                        15,
+                        null,
+                      ),
+                      CustomAuthTextFieldHeader(
+                          text: TranslationService().translate('password'),
+                          settingsProvider: settingsProvider),
+                      CustomAuthenticationTextField(
+                        hintText:
+                            TranslationService().translate('enter_password'),
+                        settingsProvider: settingsProvider,
+                        obscureText: true,
+                        textEditingController:
+                            _authController.loginPasswordController,
+                        borderColor:
+                            _authController.loginPasswordTextFieldBorderColor,
+                      ),
+                      SizeConfig.customSizedBox(
+                        null,
+                        15,
+                        null,
+                      ),
+                      SizeConfig.customSizedBox(
+                        312,
+                        48,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: AppColors.textFieldBorderColor,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  width: SizeConfig.getProportionalWidth(20),
+                                  height: SizeConfig.getProportionalHeight(20),
+                                  child: Checkbox(
+                                    activeColor: AppColors.backgroundColor,
+                                    checkColor: AppColors.fontColor,
+                                    value: _authController.rememberMe,
+                                    onChanged: (bool? newValue) {
+                                      setState(() {
+                                        _authController.toggleRememberMe();
+                                      });
+                                    },
+                                    side: const BorderSide(
+                                        color: AppColors.textFieldBorderColor),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left:
+                                          SizeConfig.getProportionalWidth(10)),
+                                  child: Text(
+                                    TranslationService()
+                                        .translate("remember_me"),
+                                    style: TextStyle(
+                                      fontFamily:
+                                          AppFonts.getPrimaryFont(context),
+                                      fontSize: 15,
+                                      color: AppColors.fontColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  {Get.to(() => const ForgotPasswordScreen())},
+                              child: Text(
+                                TranslationService()
+                                    .translate("forgot_password"),
+                                style: TextStyle(
+                                  fontFamily: AppFonts.getPrimaryFont(context),
+                                  fontSize: 16,
+                                  color: AppColors.errorColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizeConfig.customSizedBox(null, 15, null),
-                CustomAuthBtn(
-                  text: TranslationService().translate('login'),
-                  onTap: () async {
-                    _authController.checkEmptyFields(true);
-                    if (!_authController.noneIsEmpty) {
-                      setState(() {
-                        _authController.changeTextFieldsColors(true);
-                      });
-                      return;
-                    } else {
-                      setState(() {
-                        _authController.changeTextFieldsColors(true);
-                      });
-                      var user = await AuthenticationProvider().login(
-                        _authController.loginEmailController.text.trim(),
-                        _authController.loginPasswordController.text,
-                      );
+                      SizeConfig.customSizedBox(null, 15, null),
+                      CustomAuthBtn(
+                        text: TranslationService().translate('login'),
+                        onTap: () async {
+                          _authController.checkEmptyFields(true);
+                          if (!_authController.noneIsEmpty) {
+                            setState(() {
+                              _authController.changeTextFieldsColors(true);
+                            });
+                            return;
+                          } else {
+                            setState(() {
+                              _authController.changeTextFieldsColors(true);
+                              authenticationProvider.isLoading = true;
+                            });
 
-                      if (user == null) {
-                        setState(() {
-                          _authController.loginErrorText = TranslationService()
-                              .translate("wrong_email_password");
-                        });
-                        return;
-                      } else {
-                        await UsersProvider().getUsersById(user.user!.uid);
-                        await SettingsProvider()
-                            .getSettingsByUserId(user.user!.uid);
-                        Get.to(RolesScreen(
-                          user: user.user!,
-                        ));
-                        if (_authController.rememberMe == true) {
-                          _authController.saveLoginInfo(
-                            user.user!.email!,
-                            _authController.loginPasswordController.text,
-                          );
-                        }
-                        usersProvider.setSettingsPassword(
-                            _authController.loginPasswordController.text);
-                      }
-                    }
-                  },
-                ),
-                SizeConfig.customSizedBox(null, 50, null),
-                CustomAuthFooter(
-                    headingText: "do_not_have_account",
-                    tailText: "signup",
-                    onTap: () => {
-                          AuthenticationProvider().resetSignUpErrorText(),
-                          Get.to(() => const SignUpScreen())
+                            var user = await AuthenticationProvider().login(
+                              _authController.loginEmailController.text.trim(),
+                              _authController.loginPasswordController.text,
+                            );
+
+                            if (user == null) {
+                              setState(() {
+                                _authController.loginErrorText =
+                                    TranslationService()
+                                        .translate("wrong_email_password");
+                                authenticationProvider.isLoading = false;
+                              });
+                              return;
+                            } else {
+                              await UsersProvider()
+                                  .getUsersById(user.user!.uid);
+                              await SettingsProvider()
+                                  .getSettingsByUserId(user.user!.uid);
+
+                              if (_authController.rememberMe == true) {
+                                _authController.saveLoginInfo(
+                                  user.user!.email!,
+                                  _authController.loginPasswordController.text,
+                                );
+                              }
+
+                              usersProvider.setSettingsPassword(
+                                _authController.loginPasswordController.text,
+                              );
+
+                              setState(() {
+                                authenticationProvider.isLoading = false;
+                              });
+
+                              Get.to(RolesScreen(user: user.user!));
+                            }
+                          }
                         },
-                    settingsProvider: settingsProvider),
-              ])),
-        ));
+                      ),
+                      SizeConfig.customSizedBox(null, 50, null),
+                      CustomAuthFooter(
+                          headingText: "do_not_have_account",
+                          tailText: "signup",
+                          onTap: () => {
+                                AuthenticationProvider().resetSignUpErrorText(),
+                                Get.to(() => const SignUpScreen())
+                              },
+                          settingsProvider: settingsProvider),
+                    ])),
+              ));
   }
 }
