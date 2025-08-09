@@ -1,0 +1,2 @@
+/Users/flanshorbaji/Documents/GitHub/foodlink/android/app/.cxx/RelWithDebInfo/6y4f5qd7/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/flanshorbaji/Documents/GitHub/foodlink/android/app/.cxx/RelWithDebInfo/6y4f5qd7/arm64-v8a/CMakeFiles/rebuild_cache.dir
