@@ -50,7 +50,7 @@ class IngredientsMealView extends StatelessWidget {
                       ? TextDirection.ltr
                       : TextDirection.rtl,
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontFamily: AppFonts.getPrimaryFont(context)),
                 ),
               ),

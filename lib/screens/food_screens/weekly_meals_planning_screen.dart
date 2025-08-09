@@ -26,7 +26,7 @@ class WeeklyMealsPlanningScreen extends StatefulWidget {
 }
 
 class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
-   bool isDisabled = true;
+  bool isDisabled = true;
 
   @override
   void initState() {
@@ -53,9 +53,11 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.getProportionalHeight(40),
-                        horizontal: SizeConfig.getProportionalWidth(20)),
+                    padding: EdgeInsets.fromLTRB(
+                        SizeConfig.getProportionalWidth(20),
+                        SizeConfig.getProportionalHeight(50),
+                        SizeConfig.getProportionalWidth(20),
+                        SizeConfig.getProportionalHeight(30)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -79,14 +81,16 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                   ),
                 )),
             body: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20)),
+              padding: EdgeInsets.fromLTRB(
+                  SizeConfig.getProportionalWidth(20),
+                  SizeConfig.getProportionalHeight(30),
+                  SizeConfig.getProportionalWidth(20),
+                  SizeConfig.getProportionalHeight(30)),
               child: Column(children: [
                 ChangeableDate(
                   settingsProvider: settingsProvider,
                   mealsProvider: mealsProvider,
                 ),
-                SizeConfig.customSizedBox(20, null, null),
                 SizeConfig.customSizedBox(null, 35, null),
                 Expanded(
                   child: Consumer<MealsProvider>(
@@ -173,49 +177,44 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
                         mealsProvider.today.year,
                         mealsProvider.today.month,
                         mealsProvider.today.day))))
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: SizeConfig.getProportionalHeight(35)),
-                    child: CustomButton(
-                      onTap: () async {
-                        if (mealsProvider.weeklyPlanList.isEmpty) {
-                          if (mealsProvider.currentWeekPlan != null) {
-                            await mealsProvider.deleteWeeklyPlan();
-                            return;
-                          } else {
-                            setState(() {
-                              isDisabled = false;
-                            });
-                            GeneralController().showCustomDialog(
-                                context,
-                                settingsProvider,
-                                'add_plan_error',
-                                Icons.error,
-                                AppColors.errorColor,
-                                null);
-                            return;
-                          }
+                  CustomButton(
+                    onTap: () async {
+                      if (mealsProvider.weeklyPlanList.isEmpty) {
+                        if (mealsProvider.currentWeekPlan != null) {
+                          await mealsProvider.deleteWeeklyPlan();
+                          return;
+                        } else {
+                          setState(() {
+                            isDisabled = false;
+                          });
+                          GeneralController().showCustomDialog(
+                              context,
+                              settingsProvider,
+                              'add_plan_error',
+                              Icons.error,
+                              AppColors.errorColor,
+                              null);
+                          return;
                         }
-                        setState(() {
-                          isDisabled = true;
-                        });
-                        await mealsProvider.addWeeklyPlan(WeeklyPlan(
-                            daysMeals: mealsProvider.weeklyPlanList,
-                            userId: usersProvider.selectedUser!.userId,
-                            intervalEndTime: mealsProvider.currentStartDate!
-                                .add(const Duration(days: 6)),
-                            intervalStartTime:
-                                mealsProvider.currentStartDate!));
-                        await mealsProvider.getAllWeeklyPlans(
-                            usersProvider.selectedUser!.userId);
-                        Get.off(const MealPlanningScreen());
-                      },
-                      text: 'confirm',
-                      width: 126,
-                      height: 45,
-                      isDisabled: isDisabled,
-                    ),
-                  )
+                      }
+                      setState(() {
+                        isDisabled = true;
+                      });
+                      await mealsProvider.addWeeklyPlan(WeeklyPlan(
+                          daysMeals: mealsProvider.weeklyPlanList,
+                          userId: usersProvider.selectedUser!.userId,
+                          intervalEndTime: mealsProvider.currentStartDate!
+                              .add(const Duration(days: 6)),
+                          intervalStartTime: mealsProvider.currentStartDate!));
+                      await mealsProvider.getAllWeeklyPlans(
+                          usersProvider.selectedUser!.userId);
+                      Get.off(const MealPlanningScreen());
+                    },
+                    text: 'confirm',
+                    width: 126,
+                    height: 45,
+                    isDisabled: isDisabled,
+                  ),
               ]),
             ),
           );

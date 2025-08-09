@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/core/constants/assets.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/user_types.dart';
@@ -81,11 +82,16 @@ class _ListMealTileState extends State<ListMealTile> {
                         widget.meal.imageUrl!,
                         fit: BoxFit.fill,
                       )
-                    : const Icon(Icons.camera_alt_outlined),
+                    : Center(
+                        child: Image.asset(
+                          Assets.defaultMealImage,
+                        ),
+                      ),
               ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
+                      top: SizeConfig.getProportionalHeight(10),
                       left: settingsProvider.language == 'en'
                           ? 0
                           : SizeConfig.getProportionalWidth(5),

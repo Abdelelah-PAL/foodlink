@@ -6,7 +6,9 @@ import '../services/authentication_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationProvider with ChangeNotifier {
-  static final AuthenticationProvider _instance = AuthenticationProvider._internal();
+  static final AuthenticationProvider _instance =
+      AuthenticationProvider._internal();
+
   factory AuthenticationProvider() => _instance;
 
   AuthenticationProvider._internal();
@@ -16,24 +18,18 @@ class AuthenticationProvider with ChangeNotifier {
   User? user;
   final String errorMessage = "";
 
-
-  Future<User?> signUpWithEmailAndPassword(
-      String email, String password,  AuthenticationProvider authenticationProvider) async {
-    isLoading = true;
-    notifyListeners();
-    user = await _authService.signUpWithEmailAndPassword(email, password, authenticationProvider);
-    isLoading = false;
-    notifyListeners();
+  Future<User?> signUpWithEmailAndPassword(String email, String password,
+      AuthenticationProvider authenticationProvider) async {
+    setLoading();
+    user = await _authService.signUpWithEmailAndPassword(
+        email, password, authenticationProvider);
     return user;
   }
 
   Future<UserCredential?> login(String email, String password) async {
-    isLoading = true;
-     notifyListeners();
-     var userCredential = await _authService.login(email, password);
-     isLoading = false;
-     notifyListeners();
-     return userCredential;
+    setLoading();
+    var userCredential = await _authService.login(email, password);
+    return userCredential;
   }
 
   Future<UserCredential?> signUpWithGoogle() async {
@@ -44,36 +40,53 @@ class AuthenticationProvider with ChangeNotifier {
     notifyListeners();
     return userCredential;
   }
+
   Future<void> logout() async {
     user = null;
     await _authService.logout();
   }
+
   Future<void> sendPasswordResetEmail(email) async {
     await _authService.sendPasswordResetEmail(email);
   }
 
   Future<void> resetSignUpErrorText() async {
     AuthenticationController().signUpErrorText = "";
-    AuthenticationController().signUpEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
-    AuthenticationController().signUpPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
-    AuthenticationController().confirmPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().signUpEmailTextFieldBorderColor =
+        AppColors.textFieldBorderColor;
+    AuthenticationController().signUpPasswordTextFieldBorderColor =
+        AppColors.textFieldBorderColor;
+    AuthenticationController().confirmPasswordTextFieldBorderColor =
+        AppColors.textFieldBorderColor;
     notifyListeners();
   }
 
   Future<void> resetLoginErrorText() async {
-    AuthenticationController().loginEmailTextFieldBorderColor = AppColors.textFieldBorderColor;
-    AuthenticationController().loginPasswordTextFieldBorderColor = AppColors.textFieldBorderColor;
+    AuthenticationController().loginEmailTextFieldBorderColor =
+        AppColors.textFieldBorderColor;
+    AuthenticationController().loginPasswordTextFieldBorderColor =
+        AppColors.textFieldBorderColor;
     AuthenticationController().loginErrorText = "";
     notifyListeners();
   }
-  void setSignUpErrorText(String key)  {
-    AuthenticationController().signUpErrorText = TranslationService().translate(key);
+
+  void setSignUpErrorText(String key) {
+    AuthenticationController().signUpErrorText =
+        TranslationService().translate(key);
     notifyListeners();
   }
 
-  void setLoginErrorText(String key)  {
-    AuthenticationController().loginErrorText = TranslationService().translate(key);
+  void setLoginErrorText(String key) {
+    AuthenticationController().loginErrorText =
+        TranslationService().translate(key);
     notifyListeners();
   }
-
+  void setLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+  void resetLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 }

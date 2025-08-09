@@ -165,4 +165,10 @@ class AuthenticationController {
 
     Get.to(const LoginScreen(firstScreen: false));
   }
+
+  void clearTextFields() {
+    signUpEmailController.clear();
+    signUpPasswordController.clear();
+    confirmedPasswordController.clear();
+  }
 }

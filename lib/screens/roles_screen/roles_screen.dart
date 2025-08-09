@@ -37,17 +37,20 @@ class RolesScreen extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.getProportionalWidth(70),
-                  horizontal: SizeConfig.getProportionalWidth(10)),
+              padding: EdgeInsets.fromLTRB(
+                SizeConfig.getProportionalWidth(10),
+                SizeConfig.getProportionalHeight(80),
+                SizeConfig.getProportionalWidth(10),
+                SizeConfig.getProportionalHeight(30),
+              ),
               child: Column(children: [
                 SizeConfig.customSizedBox(
                     179, 179, Image.asset(Assets.pureLogo)),
-                SizeConfig.customSizedBox(null, 20, null),
+                SizeConfig.customSizedBox(null, 34, null),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: SizeConfig.getProportionalHeight(10),
-                      bottom: SizeConfig.getProportionalHeight(13),
+                      top: SizeConfig.getProportionalHeight(0),
+                      bottom: SizeConfig.getProportionalHeight(50),
                       left: SizeConfig.getProportionalWidth(20),
                       right: SizeConfig.getProportionalWidth(20)),
                   child: Align(
@@ -71,13 +74,19 @@ class RolesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                UserTile(
-                    dashboardProvider: dashboardProvider,
-                    settingsProvider: settingsProvider),
-                CookerTile(
-                    dashboardProvider: dashboardProvider,
-                    settingsProvider: settingsProvider),
-                SizeConfig.customSizedBox(null, 50, null),
+                Expanded(
+                  child: Column(
+                    children: [
+                      UserTile(
+                          dashboardProvider: dashboardProvider,
+                          settingsProvider: settingsProvider),
+                      SizeConfig.customSizedBox(null, 30, null),
+                      CookerTile(
+                          dashboardProvider: dashboardProvider,
+                          settingsProvider: settingsProvider),
+                    ],
+                  ),
+                ),
                 CustomButton(
                   onTap: () async {
                     int roleId = dashboardProvider.roleId;

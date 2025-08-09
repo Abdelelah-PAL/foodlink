@@ -109,7 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     )),
               ]),
           CustomSettingsContainer(
-              height: 103,
+              height: SizeConfig.getProportionalHeight(100),
               settingsProvider: settingsProvider,
               children: [
                 CustomSettingTile(
@@ -153,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ]),
           CustomSettingsContainer(
               settingsProvider: settingsProvider,
-              height: SizeConfig.getProportionalHeight(140),
+              height: SizeConfig.getProportionalHeight(100),
               children: [
                 CustomSettingTile(
                     icon: Assets.contactUs,
@@ -161,13 +161,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     givenWrittenLanguage: settingsProvider.language,
                     onTap: () => Get.to(
                         ContactUsScreen(settingsProvider: settingsProvider))),
-                CustomSettingTile(
-                    icon: Assets.logout,
-                    text: "logout",
-                    givenWrittenLanguage: settingsProvider.language,
-                    onTap: () {
-                      AuthenticationController().logout(authenticationProvider, dashboardProvider);
-                    })
+                SizedBox(
+                  child: CustomSettingTile(
+                      icon: Assets.logout,
+                      text: "logout",
+                      givenWrittenLanguage: settingsProvider.language,
+                      onTap: () {
+                        AuthenticationController().logout(authenticationProvider, dashboardProvider);
+                      }),
+                )
               ])
         ],
       ),

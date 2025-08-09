@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/screens/food_screens/widgets/add_box.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
@@ -96,15 +97,7 @@ class _MealsListScreenState extends State<MealsListScreen> {
                                     MealsProvider().resetValues();
                                   }));
                             },
-                            child: Container(
-                              width: SizeConfig.getProportionalWidth(105),
-                              height: SizeConfig.getProportionalHeight(73),
-                              decoration: BoxDecoration(
-                                color: AppColors.widgetsColor,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const Icon(Icons.add),
-                            ),
+                            child:const AddBox(),
                           ),
                           SizeConfig.customSizedBox(null, 20, null),
                           Text(

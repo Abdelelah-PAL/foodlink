@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/screens/food_screens/widgets/add_box.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/meal_controller.dart';
@@ -46,38 +47,29 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
         : Scaffold(
             appBar: PreferredSize(
                 preferredSize:
-                Size.fromHeight(SizeConfig.getProperVerticalSpace(5)),
+                    Size.fromHeight(SizeConfig.getProperVerticalSpace(6)),
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: SizeConfig.getProportionalHeight(75),
-                    bottom: SizeConfig.getProportionalHeight(75),
+                    bottom: SizeConfig.getProportionalHeight(30),
                     left: SizeConfig.getProportionalWidth(10),
                     right: SizeConfig.getProportionalWidth(10),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      CustomBackButton(
-                          onPressed: () => Get.to(const Dashboard(
-                                initialIndex: 0,
-                              ))),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: CustomBackButton(
+                          onPressed: () =>
+                              Get.to(const Dashboard(initialIndex: 0)),
+                        ),
+                      ),
                       const CustomText(
                         isCenter: true,
                         text: "weekly_plan",
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            {Get.to(const WeeklyMealsPlanningScreen())},
-                        child: Container(
-                          width: SizeConfig.getProperHorizontalSpace(12),
-                          height: SizeConfig.getProperVerticalSpace(15),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.widgetsColor),
-                          child: const Icon(Icons.add),
-                        ),
                       ),
                     ],
                   ),
@@ -170,12 +162,13 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                                 );
                               },
                             )
-                          : const Center(
-                              child: CustomText(
-                                  isCenter: true,
-                                  text: "choose_weekly_plan",
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                          : Center(
+                              child: GestureDetector(
+                                  onTap: () => {
+                                        Get.to(
+                                            const WeeklyMealsPlanningScreen())
+                                      },
+                                  child: const AddBox()),
                             ),
                 ),
               )

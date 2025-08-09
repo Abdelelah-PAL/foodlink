@@ -52,106 +52,109 @@ class _DayMealRowState extends State<DayMealRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      textDirection: widget.settingsProvider.language == 'en'
-          ? TextDirection.ltr
-          : TextDirection.rtl,
-      children: [
-        SizeConfig.customSizedBox(
-          90,
-          null,
-          Column(
-            children: [
-              CustomText(
-                  isCenter: true,
-                  text: widget.dayName,
-                  fontSize: widget.settingsProvider.language == 'en' ? 14 : 20,
-                  fontWeight: FontWeight.bold),
-              CustomText(
-                  isCenter: true,
-                  text:
-                      '${widget.day.toString()} ${TranslationService().translate(widget.month)}',
-                  fontSize: widget.settingsProvider.language == 'en' ? 14 : 20,
-                  fontWeight: FontWeight.normal),
-            ],
+    return Padding(
+      padding:  EdgeInsets.symmetric(vertical: SizeConfig.getProportionalHeight(5)),
+      child: Row(
+        textDirection: widget.settingsProvider.language == 'en'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        children: [
+          SizeConfig.customSizedBox(
+            90,
+            null,
+            Column(
+              children: [
+                CustomText(
+                    isCenter: true,
+                    text: widget.dayName,
+                    fontSize: widget.settingsProvider.language == 'en' ? 14 : 20,
+                    fontWeight: FontWeight.bold),
+                CustomText(
+                    isCenter: true,
+                    text:
+                        '${widget.day.toString()} ${TranslationService().translate(widget.month)}',
+                    fontSize: widget.settingsProvider.language == 'en' ? 14 : 20,
+                    fontWeight: FontWeight.normal),
+              ],
+            ),
           ),
-        ),
-        SizeConfig.customSizedBox(10, null, null),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.getProportionalWidth(10)),
-          child: IgnorePointer(
-            ignoring: widget.date.isBefore(MealController.getPreviousSaturday(
-                DateTime(
-                    widget.mealsProvider.today.year,
-                    widget.mealsProvider.today.month,
-                    widget.mealsProvider.today.day))),
-            child: GestureDetector(
-              onTap: () => {
-                _showDropdown(
-                    context, widget.mealsProvider.selectedValues[widget.index]),
-              },
-              child: Container(
-                width: SizeConfig.getProportionalWidth(180),
-                height: SizeConfig.getProportionalWidth(40),
-                decoration: BoxDecoration(
-                  color: widget.date.isBefore(
-                          MealController.getPreviousSaturday(DateTime(
-                              widget.mealsProvider.today.year,
-                              widget.mealsProvider.today.month,
-                              widget.mealsProvider.today.day)))
-                      ? Colors.grey.shade200
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(width: 3.0, color: AppColors.widgetsColor),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    textDirection: widget.settingsProvider.language == 'en'
-                        ? TextDirection.ltr
-                        : TextDirection.rtl,
-                    children: [
-                      Expanded(
-                        child: CustomText(
-                          isCenter: false,
-                          text: widget.date.isBefore(
-                                  MealController.getPreviousSaturday(DateTime(
-                                      widget.mealsProvider.today.year,
-                                      widget.mealsProvider.today.month,
-                                      widget.mealsProvider.today.day)))
-                              ? widget.value ?? ""
-                              : widget.mealsProvider
-                                          .showSelectedValues[widget.index] ==
-                                      true
-                                  ? widget.mealsProvider
-                                          .selectedValues[widget.index] ??
-                                      "select_meal"
-                                  : widget.value ?? "select_meal",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+          SizeConfig.customSizedBox(10, null, null),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.getProportionalWidth(10)),
+            child: IgnorePointer(
+              ignoring: widget.date.isBefore(MealController.getPreviousSaturday(
+                  DateTime(
+                      widget.mealsProvider.today.year,
+                      widget.mealsProvider.today.month,
+                      widget.mealsProvider.today.day))),
+              child: GestureDetector(
+                onTap: () => {
+                  _showDropdown(
+                      context, widget.mealsProvider.selectedValues[widget.index]),
+                },
+                child: Container(
+                  width: SizeConfig.getProportionalWidth(180),
+                  height: SizeConfig.getProportionalWidth(40),
+                  decoration: BoxDecoration(
+                    color: widget.date.isBefore(
+                            MealController.getPreviousSaturday(DateTime(
+                                widget.mealsProvider.today.year,
+                                widget.mealsProvider.today.month,
+                                widget.mealsProvider.today.day)))
+                        ? Colors.grey.shade200
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 3.0, color: AppColors.widgetsColor),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      textDirection: widget.settingsProvider.language == 'en'
+                          ? TextDirection.ltr
+                          : TextDirection.rtl,
+                      children: [
+                        Expanded(
+                          child: CustomText(
+                            isCenter: false,
+                            text: widget.date.isBefore(
+                                    MealController.getPreviousSaturday(DateTime(
+                                        widget.mealsProvider.today.year,
+                                        widget.mealsProvider.today.month,
+                                        widget.mealsProvider.today.day)))
+                                ? widget.value ?? ""
+                                : widget.mealsProvider
+                                            .showSelectedValues[widget.index] ==
+                                        true
+                                    ? widget.mealsProvider
+                                            .selectedValues[widget.index] ??
+                                        "select_meal"
+                                    : widget.value ?? "select_meal",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                      if (widget.date.isAfter(
-                              MealController.getPreviousSaturday(DateTime(
-                                  widget.mealsProvider.today.year,
-                                  widget.mealsProvider.today.month,
-                                  widget.mealsProvider.today.day))) ||
-                          widget.date.isAtSameMomentAs(
-                              MealController.getPreviousSaturday(DateTime(
-                                  widget.mealsProvider.today.year,
-                                  widget.mealsProvider.today.month,
-                                  widget.mealsProvider.today.day))))
-                        const Icon(Icons.keyboard_arrow_down),
-                    ],
+                        if (widget.date.isAfter(
+                                MealController.getPreviousSaturday(DateTime(
+                                    widget.mealsProvider.today.year,
+                                    widget.mealsProvider.today.month,
+                                    widget.mealsProvider.today.day))) ||
+                            widget.date.isAtSameMomentAs(
+                                MealController.getPreviousSaturday(DateTime(
+                                    widget.mealsProvider.today.year,
+                                    widget.mealsProvider.today.month,
+                                    widget.mealsProvider.today.day))))
+                          const Icon(Icons.keyboard_arrow_down),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 

@@ -10,6 +10,7 @@ import '../../providers/settings_provider.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_container.dart';
+import 'widgets/article_tile.dart';
 
 class BeyondCaloriesArticlesScreen extends StatefulWidget {
   const BeyondCaloriesArticlesScreen({super.key});
@@ -21,6 +22,8 @@ class BeyondCaloriesArticlesScreen extends StatefulWidget {
 
 class _BeyondCaloriesArticlesScreenState
     extends State<BeyondCaloriesArticlesScreen> {
+  final List<double> columnHeights = [0.0, 0.0];
+
   @override
   Widget build(BuildContext context) {
     final FeaturesProvider featuresProvider =
@@ -35,7 +38,7 @@ class _BeyondCaloriesArticlesScreenState
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
-              child:  Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const CustomBackButton(),
@@ -51,65 +54,74 @@ class _BeyondCaloriesArticlesScreenState
               ),
             )),
         backgroundColor: AppColors.backgroundColor,
-        body: Column(
-          children: [
-            // Header Image
-            ImageContainer(imageUrl: Assets.healthyLifeHeaderImage),
-            // Custom Text
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.getProportionalWidth(10),
-                  horizontal: SizeConfig.getProportionalWidth(25)),
-              child: Align(
-                alignment: settingsProvider.language == 'en'
-                    ? Alignment.topLeft
-                    : Alignment.topRight,
-                child: const CustomText(
-                  isCenter: false,
-                  text: "beyond_calories",
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            // GridView inside a fixed-height container
-            Expanded(
-              child: GridView.custom(
+        body:  Padding(
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.getProportionalWidth(30),
+          ),
+          child: Column(
+            children: [
+              ImageContainer(imageUrl: Assets.healthyLifeHeaderImage),
+              Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(5),
-                ),
-                gridDelegate: SliverWovenGridDelegate.count(
-                  crossAxisCount: 2,
-                  pattern: [
-                    const WovenGridTile(1),
-                    const WovenGridTile(
-                      5 / 7,
-                      crossAxisRatio: 0.9,
-                      alignment: AlignmentDirectional.center,
-                    ),
-                  ],
-                ),
-                childrenDelegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return GestureDetector(
-                      onTap: () => GeneralController().launchURL(context,
-                          Uri.parse(featuresProvider.articles[index].url)),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Image.network(
-                          featuresProvider.articles[index].imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: featuresProvider.articles.length,
+                    vertical: SizeConfig.getProportionalWidth(10),
+                    horizontal: SizeConfig.getProportionalWidth(25)),
+                child: Align(
+                  alignment: settingsProvider.language == 'en'
+                      ? Alignment.topLeft
+                      : Alignment.topRight,
+                  child: const CustomText(
+                    isCenter: false,
+                    text: "beyond_calories",
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            )
-          ],
+
+              Expanded(
+                child: SingleChildScrollView(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final List<double> columnHeights = [0, 0];
+                      final List<Widget> positionedTiles = [];
+                      const verticalPadding = 10.0;
+                      const horizontalPadding = 5.0;
+
+                      for (int i = 0; i < featuresProvider.articles.length; i++) {
+                        final row = (i / 2).floor();
+                        final isShort = (row.isOdd && i.isOdd) || (!row.isOdd && i.isEven);
+                        final height = isShort ? 200.0 : 250.0;
+                        final column = i % 2;
+
+                        final topPadding = columnHeights[column] > 0 ? verticalPadding : 0;
+
+                        positionedTiles.add(
+                            Positioned(
+                              top: columnHeights[column] + topPadding,
+                              left: column == 0
+                                  ? horizontalPadding
+                                  : constraints.maxWidth / 2 + horizontalPadding,
+                              width: constraints.maxWidth / 2 - (2 * horizontalPadding),
+                              height: height,
+                              child: ArticleTile(article: featuresProvider.articles[i]),
+                            )
+                        );
+
+                        columnHeights[column] += height + topPadding;
+                      }
+
+                      return SizedBox(
+                        height: columnHeights.reduce((a, b) => a > b ? a : b), // Total height
+                        child: Stack(
+                          children: positionedTiles,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ));
   }
 }

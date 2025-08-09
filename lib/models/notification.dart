@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'meal.dart';
 
 class Notifications {
   String? imageUrl;
@@ -12,6 +13,7 @@ class Notifications {
   Timestamp timestamp;
   bool isMealPlanned;
   bool isConfirmation;
+  Meal? meal;
 
   Notifications(
       {this.imageUrl,
@@ -38,7 +40,7 @@ class Notifications {
         seen: json['seen'],
         timestamp: json['timestamp'],
         isMealPlanned: json['is_meal_planned'],
-        isConfirmation:  json['is_confirmation']);
+        isConfirmation: json['is_confirmation']);
   }
 
   Map<String, dynamic> toMap() {

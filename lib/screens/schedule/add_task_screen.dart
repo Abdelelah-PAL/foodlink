@@ -60,17 +60,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+            preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(0)),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.getProportionalWidth(50),
+                  vertical: SizeConfig.getProportionalHeight(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
               child: Row(
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-
                     CustomBackButton(onPressed: () {
                       TaskController().clearControllers();
                       Get.back();
@@ -79,9 +77,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             )),
         body: Padding(
           padding: EdgeInsets.only(
+              top: SizeConfig.getProportionalHeight(50),
               left: SizeConfig.getProportionalWidth(35),
               right: SizeConfig.getProportionalWidth(35),
-              bottom: SizeConfig.getProportionalHeight(20)),
+              bottom: SizeConfig.getProportionalHeight(30)),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => FocusScope.of(context).unfocus(),
@@ -90,42 +89,41 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ? CrossAxisAlignment.start
                   : CrossAxisAlignment.end,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.getProportionalWidth(20),
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RichText(
-                        textDirection: settingsProvider.language == 'en'
-                            ? TextDirection.ltr
-                            : TextDirection.rtl,
-                        text: TextSpan(
-                            children: [
-                              TextSpan(
+                Align(
+                  alignment: Alignment.center,
+                  child: RichText(
+                      textDirection: settingsProvider.language == 'en'
+                          ? TextDirection.ltr
+                          : TextDirection.rtl,
+                      text: TextSpan(
+                          children: [
+                            TextSpan(
                                 text: '${widget.day}  ',
                                 style: const TextStyle(
                                   color: AppColors.widgetsColor,
-                                )
-                              ),
-                              TextSpan(
-                                  text: formattedDate,
-                                  style: const TextStyle(
-                                    color: AppColors.fontColor,
-                                  ))
-                            ],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                              fontFamily: AppFonts.getPrimaryFont(context),
-                            ))),
-                  ),
+                                )),
+                            TextSpan(
+                                text: formattedDate,
+                                style: const TextStyle(
+                                  color: AppColors.fontColor,
+                                ))
+                          ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            fontFamily: AppFonts.getPrimaryFont(context),
+                          ))),
                 ),
-                const CustomText(
-                    isCenter: false,
-                    text: "today_system",
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.getProportionalHeight(50),
+                      bottom: SizeConfig.getProportionalHeight(25)),
+                  child: const CustomText(
+                      isCenter: false,
+                      text: "today_system",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
                 CustomAppTextField(
                   width: 318,
                   height: 64,
@@ -136,67 +134,74 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   enabled: true,
                   isCentered: false,
                 ),
-                Row(
-                  textDirection: settingsProvider.language == "en"
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
-                  children: [
-                    Column(
-                      crossAxisAlignment: settingsProvider.language == "en"
-                          ? CrossAxisAlignment.start
-                          : CrossAxisAlignment.end,
-                      children: [
-                        const CustomText(
-                            isCenter: false,
-                            text: "start_time",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
-                        CustomAppTextField(
-                          width: 142,
-                          height: 63,
-                          controller: TaskController().startTimeController,
-                          maxLines: 1,
-                          settingsProvider: settingsProvider,
-                          enabled: false,
-                          onTap: () async {
-                            _selectTime(context, "start");
-                          },
-                          isCentered: true,
-                        )
-                      ],
-                    ),
-                    SizeConfig.customSizedBox(10, null, null),
-                    Column(
-                      crossAxisAlignment: settingsProvider.language == "en"
-                          ? CrossAxisAlignment.start
-                          : CrossAxisAlignment.end,
-                      children: [
-                        const CustomText(
-                            isCenter: false,
-                            text: "end_time",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
-                        CustomAppTextField(
-                          width: 142,
-                          height: 63,
-                          controller: TaskController().endTimeController,
-                          maxLines: 1,
-                          settingsProvider: settingsProvider,
-                          enabled: false,
-                          onTap: () async {
-                            _selectTime(context, "end");
-                          },
-                          isCentered: true,
-                        )
-                      ],
-                    )
-                  ],
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: SizeConfig.getProportionalHeight(25)),
+                  child: Row(
+                    textDirection: settingsProvider.language == "en"
+                        ? TextDirection.ltr
+                        : TextDirection.rtl,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: settingsProvider.language == "en"
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.end,
+                        children: [
+                          const CustomText(
+                              isCenter: false,
+                              text: "start_time",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700),
+                          SizeConfig.customSizedBox(null, 10, null),
+                          CustomAppTextField(
+                            width: 142,
+                            height: 63,
+                            controller: TaskController().startTimeController,
+                            maxLines: 1,
+                            settingsProvider: settingsProvider,
+                            enabled: false,
+                            onTap: () async {
+                              _selectTime(context, "start");
+                            },
+                            isCentered: true,
+                          )
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: settingsProvider.language == "en"
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.end,
+                        children: [
+                          const CustomText(
+                              isCenter: false,
+                              text: "end_time",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700),
+                          SizeConfig.customSizedBox(null, 10, null),
+                          CustomAppTextField(
+                            width: 142,
+                            height: 63,
+                            controller: TaskController().endTimeController,
+                            maxLines: 1,
+                            settingsProvider: settingsProvider,
+                            enabled: false,
+                            onTap: () async {
+                              _selectTime(context, "end");
+                            },
+                            isCentered: true,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const CustomText(
                     isCenter: false,
                     text: "description",
                     fontSize: 30,
                     fontWeight: FontWeight.w700),
+                SizeConfig.customSizedBox(null, 10, null),
                 CustomAppTextField(
                   width: 318,
                   height: 151,

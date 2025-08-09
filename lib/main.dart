@@ -1,4 +1,4 @@
-import 'package:firebase_app_check/firebase_app_check.dart';
+  import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,7 +82,8 @@ class MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+          useMaterial3: false,
+          scaffoldBackgroundColor: AppColors.backgroundColor,
           checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {

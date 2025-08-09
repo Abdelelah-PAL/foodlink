@@ -49,6 +49,12 @@ class CustomAppTextField extends StatelessWidget {
           maxLines: maxLines,
           controller: controller,
           textAlignVertical: TextAlignVertical.center,
+          style: TextStyle(
+            color: AppColors.fontColor,  // <-- Add this line to make text black
+            fontFamily: AppFonts.getPrimaryFont(context),
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+          ),
           textAlign: isCentered
               ? TextAlign.center
               : settingsProvider.language == 'en'

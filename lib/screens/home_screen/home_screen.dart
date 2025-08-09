@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         : Scaffold(
             appBar: PreferredSize(
               preferredSize:
-                  Size.fromHeight(SizeConfig.getProportionalHeight(135)),
+                  Size.fromHeight(SizeConfig.getProportionalHeight(100)),
               child: AppHeader(
                 userId: usersProviderWatcher.selectedUser!.userId,
                 userTypeId: usersProviderWatcher.selectedUser!.userTypeId!,
@@ -57,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizeConfig.customSizedBox(null, 15, null),
                     Container(
                       child: usersProviderWatcher.selectedUser!.userTypeId ==
                               UserTypes.cooker

@@ -56,7 +56,8 @@ class Assets {
   static String email ="$rootIcons/email.png";
   static String facebook ="$rootIcons/facebook.png";
   static String instagram ="$rootIcons/instagram.png";
-
+  static String defaultMealImage ="$rootIcons/default_meal_image.png";
+  static String defaultNotificationImage ="$rootIcons/default_notification_image.png";
 
   static Future<String?> get dishOfTheWeekReference async {
     try {

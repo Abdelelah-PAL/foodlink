@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/notification_provider.dart';
-import 'package:foodlink/providers/settings_provider.dart';
-import 'package:foodlink/providers/users_provider.dart';
-import 'package:foodlink/screens/notifications_screen/widgets/custom_tab_bar.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/user_types.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
+import '../../providers/notification_provider.dart';
+import '../../providers/settings_provider.dart';
+import '../../providers/users_provider.dart';
 import '../dashboard/widgets/custom_bottom_navigation_bar.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
+import 'widgets/custom_tab_bar.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -32,24 +32,29 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         bottomNavigationBar:
             const CustomBottomNavigationBar(fromDashboard: false, initialIndex: 0,),
         appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.getProportionalWidth(50),
-                  horizontal: SizeConfig.getProportionalWidth(20)),
-              child: Row(
-                children: [
-                  const CustomBackButton(),
-                  SizeConfig.customSizedBox(90, null, null),
-                  const CustomText(
-                      isCenter: true,
-                      text: "notifications",
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
-                ],
-              ),
-            )),
+          preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.getProportionalWidth(50),
+              horizontal: SizeConfig.getProportionalWidth(20),
+            ),
+            child: const Stack(
+              alignment: Alignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomBackButton(),
+                ),
+                CustomText(
+                  isCenter: true,
+                  text: "notifications",
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+          ),
+        ),
         body: CustomTabBar(
           settingsProvider: settingsProvider,
           notifications:
