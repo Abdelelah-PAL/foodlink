@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/food_screens/widgets/add_box.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
@@ -12,6 +11,7 @@ import '../../services/translation_services.dart';
 import '../dashboard/dashboard.dart';
 import '../dashboard/widgets/custom_bottom_navigation_bar.dart';
 import 'add_meal_screen.dart';
+import 'widgets/add_box.dart';
 import 'widgets/list_header.dart';
 import 'widgets/list_meal_tile.dart';
 
