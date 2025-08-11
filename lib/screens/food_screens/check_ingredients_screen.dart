@@ -25,7 +25,8 @@ class CheckIngredientsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     MealsProvider mealsProvider =
-        Provider.of<MealsProvider>(context, listen: true);
+    Provider.of<MealsProvider>(context, listen: true);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -48,6 +49,7 @@ class CheckIngredientsScreen extends StatelessWidget {
                   Get.back();
                 },
               ),
+              SizeConfig.customSizedBox(null, 40, null),
               NameRow(
                 name: meal.name,
                 fontSize: 20,
@@ -71,10 +73,11 @@ class CheckIngredientsScreen extends StatelessWidget {
                     Image.asset(Assets.mealIngredients),
                     SizeConfig.customSizedBox(10, null, null),
                     const CustomText(
-                        isCenter: false,
-                        text: "ingredients",
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                      isCenter: false,
+                      text: "ingredients",
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ],
                 ),
               ),
@@ -90,18 +93,20 @@ class CheckIngredientsScreen extends StatelessWidget {
                     itemCount: meal.ingredients.length,
                     itemBuilder: (ctx, index) {
                       return CheckboxTile(
-                          text: meal.ingredients[index],
-                          settingsProvider: settingsProvider,
-                          mealsProvider: mealsProvider,
-                          index: index,
-                          ingredientsLength: meal.ingredients.length);
+                        text: meal.ingredients[index],
+                        settingsProvider: settingsProvider,
+                        mealsProvider: mealsProvider,
+                        index: index,
+                        ingredientsLength: meal.ingredients.length,
+                      );
                     },
                   ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.getProportionalWidth(20)),
+                  horizontal: SizeConfig.getProportionalWidth(20),
+                ),
                 child: CustomAppIconicTextField(
                   width: 263,
                   height: 79,
@@ -115,43 +120,45 @@ class CheckIngredientsScreen extends StatelessWidget {
                   enabled: true,
                 ),
               ),
-              SizeConfig.customSizedBox(null, 30, null),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: SizeConfig.getProportionalWidth(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  textDirection: settingsProvider.language == 'en'
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
-                  children: [
-                    CustomButton(
-                      onTap: () {
-                        NotificationController().addUserNotification(
-                            meal, settingsProvider, context);
-                      },
-                      text: TranslationService().translate("notify"),
-                      width: 137,
-                      height: 45,
-                      isDisabled: true,
-                    ),
-                    SizeConfig.customSizedBox(20, null, null),
-                    CustomButton(
-                      onTap: () => {
-                        MealController().missingIngredients.clear(),
-                        NotificationController().addNoteController.clear(),
-                        Get.back()
-                      },
-                      text: TranslationService().translate("back"),
-                      width: 137,
-                      height: 45,
-                      isDisabled: true,
-                    ),
-                  ],
-                ),
-              )
+              const SizedBox(height: 100), // leave space for bottomNavigationBar
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getProportionalHeight(30),
+          top: 10,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: settingsProvider.language == 'en'
+              ? TextDirection.ltr
+              : TextDirection.rtl,
+          children: [
+            CustomButton(
+              onTap: () {
+                NotificationController().addUserNotification(
+                    meal, settingsProvider, context);
+              },
+              text: TranslationService().translate("notify"),
+              width: 137,
+              height: 45,
+              isDisabled: true,
+            ),
+            SizeConfig.customSizedBox(20, null, null),
+            CustomButton(
+              onTap: () {
+                MealController().missingIngredients.clear();
+                NotificationController().addNoteController.clear();
+                Get.back();
+              },
+              text: TranslationService().translate("back"),
+              width: SizeConfig.getProportionalWidth(137),
+              height: SizeConfig.getProportionalHeight(45),
+              isDisabled: true,
+            ),
+          ],
         ),
       ),
     );

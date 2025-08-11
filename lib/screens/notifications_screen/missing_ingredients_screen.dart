@@ -31,90 +31,93 @@ class MissingIngredientsScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: settingsProvider.language == "en"
-              ? CrossAxisAlignment.start
-              : CrossAxisAlignment.end,
-          children: [
-            MealImageContainer(
+        child: Padding(
+          padding:  EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(30)),
+          child: Column(
+            crossAxisAlignment: settingsProvider.language == "en"
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.end,
+            children: [
+              MealImageContainer(
                 isAddSource: false,
                 isUpdateSource: false,
                 imageUrl: notification.imageUrl,
-                mealsProvider: context.watch<MealsProvider>()),
-            NameRow(
-              name: notification.mealName,
-              fontSize: 20,
-              textWidth: 280,
-              settingsProvider: settingsProvider,
-              height: 70,
-              maxLines: 2,
-              horizontalPadding: 18,
-            ),
-            SizeConfig.customSizedBox(null, 10, null),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textDirection: settingsProvider.language == 'en'
-                    ? TextDirection.ltr
-                    : TextDirection.rtl,
-                children: [
-                  Image.asset(
-                    Assets.mealIngredients,
-                    scale: 1.3,
-                  ),
-                  SizeConfig.customSizedBox(10, null, null),
-                  const CustomText(
+                mealsProvider: context.watch<MealsProvider>(),
+              ),
+              SizeConfig.customSizedBox(null, 40, null),
+              NameRow(
+                name: notification.mealName,
+                fontSize: 20,
+                textWidth: 280,
+                settingsProvider: settingsProvider,
+                height: 70,
+                maxLines: 2,
+                horizontalPadding: 18,
+              ),
+              SizeConfig.customSizedBox(null, 10, null),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getProportionalWidth(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: settingsProvider.language == 'en'
+                      ? TextDirection.ltr
+                      : TextDirection.rtl,
+                  children: [
+                    Image.asset(
+                      Assets.mealIngredients,
+                      scale: 1.3,
+                    ),
+                    SizeConfig.customSizedBox(10, null, null),
+                    const CustomText(
                       isCenter: false,
                       text: "ingredients",
                       fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizeConfig.customSizedBox(
-              null,
-              250,
-              ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: notification.missingIngredients.length,
-                itemBuilder: (ctx, index) {
-                  if (notification.notes != null &&
-                      notification.notes!.isNotEmpty) {
-                    MealController().noteController.text = notification.notes!;
-                  }
-                  return MissingCheckboxTile(
-                    settingsProvider: settingsProvider,
-                    notification: notification,
-                    index: index,
-                  );
-                },
+              // Ingredients list
+              SizedBox(
+                height: 250,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: notification.missingIngredients.length,
+                  itemBuilder: (ctx, index) {
+                    if (notification.notes != null &&
+                        notification.notes!.isNotEmpty) {
+                      MealController().noteController.text = notification.notes!;
+                    }
+                    return MissingCheckboxTile(
+                      settingsProvider: settingsProvider,
+                      notification: notification,
+                      index: index,
+                    );
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionalWidth(20)),
-              child: CustomAppIconicTextField(
-                width: 263,
-                height: 79,
-                headerText: "notes",
-                icon: Assets.note,
-                controller: MealController().noteController,
-                maxLines: 7,
-                iconSizeFactor: 31,
-                settingsProvider: settingsProvider,
-                iconPadding: 10,
-                enabled: false,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getProportionalWidth(20)),
+                child: CustomAppIconicTextField(
+                  width: 263,
+                  height: 79,
+                  headerText: "notes",
+                  icon: Assets.note,
+                  controller: MealController().noteController,
+                  maxLines: 7,
+                  iconSizeFactor: 31,
+                  settingsProvider: settingsProvider,
+                  iconPadding: 10,
+                  enabled: false,
+                ),
               ),
-            ),
-            SizeConfig.customSizedBox(null, 30, null),
-            Padding(
-              padding:
-                  EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(20)),
-              child: Row(
+              SizeConfig.customSizedBox(null, 20, null),
+              // Buttons
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 textDirection: settingsProvider.language == 'en'
                     ? TextDirection.ltr
@@ -124,18 +127,19 @@ class MissingIngredientsScreen extends StatelessWidget {
                     onTap: () async {
                       Meal meal = notification.isMealPlanned
                           ? await MealsProvider()
-                              .getPlannedMealById(notification.mealId)
+                          .getPlannedMealById(notification.mealId)
                           : await MealsProvider()
-                              .getMealById(notification.mealId);
+                          .getMealById(notification.mealId);
                       await NotificationController()
                           .addConfirmationNotification(meal);
                       GeneralController().showCustomDialog(
-                          context,
-                          settingsProvider,
-                          "confirmation_sent",
-                          Icons.check_circle,
-                          AppColors.successColor,
-                          null);
+                        context,
+                        settingsProvider,
+                        "confirmation_sent",
+                        Icons.check_circle,
+                        AppColors.successColor,
+                        null,
+                      );
                     },
                     text: TranslationService().translate("send_confirmation"),
                     width: 137,
@@ -151,9 +155,9 @@ class MissingIngredientsScreen extends StatelessWidget {
                     isDisabled: true,
                   ),
                 ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

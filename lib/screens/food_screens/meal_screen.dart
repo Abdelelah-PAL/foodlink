@@ -68,7 +68,7 @@ class MealScreen extends StatelessWidget {
                     left: SizeConfig.getProportionalWidth(20),
                     right: SizeConfig.getProportionalWidth(20),
                     bottom: SizeConfig.getProportionalHeight(70),
-                    top: SizeConfig.getProportionalHeight(20),
+                    top: SizeConfig.getProportionalHeight(40),
                   ),
                   child: Column(
                     crossAxisAlignment: settingsProvider.language == 'en'
