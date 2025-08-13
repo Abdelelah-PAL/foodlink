@@ -8,30 +8,35 @@ import '../../../providers/settings_provider.dart';
 import '../../../providers/users_provider.dart';
 import 'meal_properties_header.dart';
 
-
 class IngredientsMealView extends StatelessWidget {
+  const IngredientsMealView(
+      {super.key,
+      required this.settingsProvider,
+      required this.meal,
+      required this.usersProvider});
 
-  const IngredientsMealView({super.key, required this.settingsProvider, required this.meal, required this.usersProvider});
   final SettingsProvider settingsProvider;
   final Meal meal;
   final UsersProvider usersProvider;
 
-
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding:  EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
       child: Column(
         children: [
-          MealPropertiesHeader(settingsProvider: settingsProvider, icon:  Assets.mealIngredients, text: 'ingredients'),
+          MealPropertiesHeader(
+              settingsProvider: settingsProvider,
+              icon: Assets.mealIngredients,
+              text: 'ingredients'),
           Container(
             padding: EdgeInsets.only(
                 top: SizeConfig.getProportionalHeight(10),
                 left: SizeConfig.getProportionalWidth(20),
                 right: SizeConfig.getProportionalWidth(20)),
             width: SizeConfig.getProportionalWidth(348),
-            height: usersProvider.selectedUser!.userTypeId ==
-                UserTypes.cooker
+            height: usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                 ? 150
                 : 200,
             child: SizeConfig.customSizedBox(
@@ -46,9 +51,7 @@ class IngredientsMealView extends StatelessWidget {
                   textAlign: settingsProvider.language == 'en'
                       ? TextAlign.end
                       : TextAlign.start,
-                  textDirection: settingsProvider.language == 'en'
-                      ? TextDirection.ltr
-                      : TextDirection.rtl,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       fontSize: 18,
                       fontFamily: AppFonts.getPrimaryFont(context)),

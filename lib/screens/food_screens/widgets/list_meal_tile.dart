@@ -87,6 +87,7 @@ class _ListMealTileState extends State<ListMealTile> {
                     : Center(
                         child: Image.asset(
                           Assets.defaultMealImage,
+                          fit: BoxFit.fill,
                         ),
                       ),
               ),
@@ -118,7 +119,7 @@ class _ListMealTileState extends State<ListMealTile> {
                         maxLines: 2,
                         settingsProvider: settingsProvider,
                         height: 50,
-                        horizontalPadding: 35,
+                        horizontalPadding: 30,
                         withBorder: false,
                       ),
                       SizeConfig.customSizedBox(

@@ -45,16 +45,16 @@ class StepBox extends StatelessWidget {
             // Set font size here
             decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(
-                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalWidth(17),
                   SizeConfig.getProportionalHeight(0),
-                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalWidth(17),
                   SizeConfig.getProportionalHeight(15)),
               border: InputBorder.none,
             ),
           ),
         ),
         Positioned(
-            left: 0,
+            left: -10,
             top: 0,
             child: IconButton(
                 onPressed: () {

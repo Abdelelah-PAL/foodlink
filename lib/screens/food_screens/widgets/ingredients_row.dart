@@ -33,7 +33,7 @@ class IngredientsRow extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
           top: SizeConfig.getProportionalHeight(10),
-          left: SizeConfig.getProportionalWidth(horizontalPadding),
+          left: SizeConfig.getProperHorizontalSpace(horizontalPadding),
           right: SizeConfig.getProperHorizontalSpace( horizontalPadding)),
       width: 348,
       height: height,
@@ -64,7 +64,7 @@ class IngredientsRow extends StatelessWidget {
                   maxLines: maxLines,
                   overflow: TextOverflow.ellipsis,
                   textAlign: settingsProvider.language == 'en'
-                      ? TextAlign.end
+                      ? TextAlign.start
                       : TextAlign.start,
                   textDirection: settingsProvider.language == 'en'
                       ? TextDirection.ltr

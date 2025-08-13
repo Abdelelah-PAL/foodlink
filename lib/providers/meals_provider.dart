@@ -239,6 +239,7 @@ class MealsProvider with ChangeNotifier {
     stepsControllers.add(TextEditingController());
     notifyListeners();
   }
+
   void removeStep(index) {
     numberOfSteps--;
     stepsControllers.removeAt(index);
@@ -375,5 +376,14 @@ class MealsProvider with ChangeNotifier {
 
   Future<void> deleteWeeklyPlan() async {
     await _ms.deleteWeeklyPlan(currentWeekPlan!.documentId!);
+  }
+
+  void setLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+  void resetLoading() {
+    isLoading = false;
+    notifyListeners();
   }
 }

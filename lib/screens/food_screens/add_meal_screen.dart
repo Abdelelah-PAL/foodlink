@@ -47,165 +47,173 @@ class _AddMealScreenState extends State<AddMealScreen> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding:
-                  EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(42)),
-              child: Column(
-                children: [
-                  MealImageContainer(
-                    isAddSource: widget.isAddScreen,
-                    isUpdateSource: widget.isUpdateScreen,
-                    mealsProvider: mealsProvider,
-                    imageUrl: widget.meal?.imageUrl,
-                    backButtonOnPressed: widget.backButtonCallBack,
-                  ),
-                  SizeConfig.customSizedBox(null, 20, null),
-                  CustomAppIconicTextField(
-                    width: 348,
-                    height: 40,
-                    headerText: "meal_name",
-                    icon: Assets.mealNameIcon,
-                    controller: MealController().nameController,
-                    maxLines: 2,
-                    iconSizeFactor: 28,
-                    settingsProvider: settingsProvider,
-                    iconPadding: 26,
-                    enabled: true,
-                  ),
-                  SizeConfig.customSizedBox(null, 20, null),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.getProportionalWidth(26),
-                    ),
-                    child: Row(
-                      textDirection: settingsProvider.language == 'en'
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+          child: mealsProvider.isLoading == true
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: SizeConfig.getProportionalHeight(42)),
+                    child: Column(
                       children: [
-                        SizeConfig.customSizedBox(
-                            31, 31, Image.asset(Assets.mealIngredients)),
-                        CustomText(
-                          isCenter: false,
-                          text: TranslationService().translate("ingredients"),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        MealImageContainer(
+                          isAddSource: widget.isAddScreen,
+                          isUpdateSource: widget.isUpdateScreen,
+                          mealsProvider: mealsProvider,
+                          imageUrl: widget.meal?.imageUrl,
+                          backButtonOnPressed: widget.backButtonCallBack,
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      width: SizeConfig.getProportionalWidth(347),
-                      height: SizeConfig.getProportionalHeight(130),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.getProportionalWidth(26)),
-                      child: Directionality(
-                        textDirection: settingsProvider.language == 'ar'
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 0,
-                                  childAspectRatio: 1.7),
-                          itemCount: mealsProvider.numberOfIngredients,
-                          itemBuilder: (context, index) {
-                            if (index ==
-                                mealsProvider.numberOfIngredients - 1) {
-                              return AddIngredientBox(
-                                mealsProvider: mealsProvider,
-                              );
-                            }
-                            return IngredientBox(
-                              settingsProvider: settingsProvider,
-                              controller:
-                                  mealsProvider.ingredientsControllers[index],
-                              mealsProvider: mealsProvider,
-                              index: index,
-                            );
+                        SizeConfig.customSizedBox(null, 20, null),
+                        CustomAppIconicTextField(
+                          width: 348,
+                          height: 40,
+                          headerText: "meal_name",
+                          icon: Assets.mealNameIcon,
+                          controller: MealController().nameController,
+                          maxLines: 2,
+                          iconSizeFactor: 28,
+                          settingsProvider: settingsProvider,
+                          iconPadding: 26,
+                          enabled: true,
+                        ),
+                        SizeConfig.customSizedBox(null, 20, null),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.getProportionalWidth(26),
+                          ),
+                          child: Row(
+                            textDirection: settingsProvider.language == 'en'
+                                ? TextDirection.ltr
+                                : TextDirection.rtl,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizeConfig.customSizedBox(
+                                  31, 31, Image.asset(Assets.mealIngredients)),
+                              CustomText(
+                                isCenter: false,
+                                text: TranslationService()
+                                    .translate("ingredients"),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            width: SizeConfig.getProportionalWidth(347),
+                            height: SizeConfig.getProportionalHeight(130),
+                            margin: EdgeInsets.symmetric(
+                                horizontal:
+                                    SizeConfig.getProportionalWidth(26)),
+                            child: Directionality(
+                              textDirection: settingsProvider.language == 'ar'
+                                  ? TextDirection.rtl
+                                  : TextDirection.ltr,
+                              child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 8,
+                                        mainAxisSpacing: 0,
+                                        childAspectRatio: 1.7),
+                                itemCount: mealsProvider.numberOfIngredients,
+                                itemBuilder: (context, index) {
+                                  if (index ==
+                                      mealsProvider.numberOfIngredients - 1) {
+                                    return AddIngredientBox(
+                                      mealsProvider: mealsProvider,
+                                    );
+                                  }
+                                  return IngredientBox(
+                                    settingsProvider: settingsProvider,
+                                    controller: mealsProvider
+                                        .ingredientsControllers[index],
+                                    mealsProvider: mealsProvider,
+                                    index: index,
+                                  );
+                                },
+                              ),
+                            )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.getProportionalWidth(26),
+                          ),
+                          child: Row(
+                            textDirection: settingsProvider.language == 'en'
+                                ? TextDirection.ltr
+                                : TextDirection.rtl,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizeConfig.customSizedBox(
+                                  31, 31, Image.asset(Assets.mealRecipe)),
+                              CustomText(
+                                isCenter: false,
+                                text: TranslationService().translate("recipe"),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            width: SizeConfig.getProportionalWidth(347),
+                            height: SizeConfig.getProportionalHeight(150),
+                            margin: EdgeInsets.symmetric(
+                                horizontal:
+                                    SizeConfig.getProportionalWidth(26)),
+                            child: ListView.builder(
+                              itemCount: mealsProvider.numberOfSteps,
+                              itemBuilder: (context, index) {
+                                if (index == mealsProvider.numberOfSteps - 1) {
+                                  return AddStepBox(
+                                    mealsProvider: mealsProvider,
+                                  );
+                                }
+                                return StepBox(
+                                  settingsProvider: settingsProvider,
+                                  controller:
+                                      mealsProvider.stepsControllers[index],
+                                  mealsProvider: mealsProvider,
+                                  index: index,
+                                );
+                              },
+                            )),
+                        SizeConfig.customSizedBox(null, 20, null),
+                        CustomAppIconicTextField(
+                          width: 348,
+                          height: 37,
+                          headerText: "source",
+                          icon: Assets.mealSource,
+                          controller: MealController().sourceController,
+                          maxLines: 2,
+                          iconSizeFactor: 28,
+                          settingsProvider: settingsProvider,
+                          iconPadding: 26,
+                          enabled: true,
+                          textAlign: TextAlign.left,
+                        ),
+                        SizeConfig.customSizedBox(null, 20, null),
+                        CustomButton(
+                          onTap: () async {
+                            mealsProvider.setLoading();
+                            widget.isAddScreen
+                                ? await MealController()
+                                    .addMeal(mealsProvider, widget.categoryId)
+                                : await MealController()
+                                    .updateMeal(mealsProvider, widget.meal!);
+                            mealsProvider.resetLoading();
                           },
-                        ),
-                      )),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.getProportionalWidth(26),
-                    ),
-                    child: Row(
-                      textDirection: settingsProvider.language == 'en'
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizeConfig.customSizedBox(
-                            31, 31, Image.asset(Assets.mealRecipe)),
-                        CustomText(
-                          isCenter: false,
-                          text: TranslationService().translate("recipe"),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          text: TranslationService().translate(
+                              widget.isAddScreen ? "confirm" : "edit"),
+                          width: SizeConfig.getProportionalWidth(126),
+                          height: SizeConfig.getProportionalHeight(45),
+                          isDisabled: true,
+                        )
                       ],
                     ),
                   ),
-                  Container(
-                      width: SizeConfig.getProportionalWidth(347),
-                      height: SizeConfig.getProportionalHeight(150),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.getProportionalWidth(26)),
-                      child: ListView.builder(
-                        itemCount: mealsProvider.numberOfSteps,
-                        itemBuilder: (context, index) {
-                          if (index == mealsProvider.numberOfSteps - 1) {
-                            return AddStepBox(
-                              mealsProvider: mealsProvider,
-                            );
-                          }
-                          return StepBox(
-                            settingsProvider: settingsProvider,
-                            controller: mealsProvider.stepsControllers[index],
-                            mealsProvider: mealsProvider,
-                            index: index,
-                          );
-                        },
-                      )),
-                  SizeConfig.customSizedBox(null, 20, null),
-                  CustomAppIconicTextField(
-                    width: 348,
-                    height: 37,
-                    headerText: "source",
-                    icon: Assets.mealSource,
-                    controller: MealController().sourceController,
-                    maxLines: 2,
-                    iconSizeFactor: 28,
-                    settingsProvider: settingsProvider,
-                    iconPadding: 26,
-                    enabled: true,
-                    textAlign: TextAlign.left,
-                  ),
-                  SizeConfig.customSizedBox(null, 20, null),
-                  CustomButton(
-                    onTap: () async {
-                      widget.isAddScreen
-                          ? await MealController()
-                              .addMeal(mealsProvider, widget.categoryId)
-                          : await MealController()
-                              .updateMeal(mealsProvider, widget.meal!);
-                    },
-                    text: TranslationService()
-                        .translate(widget.isAddScreen ? "confirm" : "edit"),
-                    width: SizeConfig.getProportionalWidth(126),
-                    height: SizeConfig.getProportionalHeight(45),
-                    isDisabled: true,
-                  )
-                ],
-              ),
-            ),
-          ),
+                ),
         ),
       ),
     );

@@ -35,9 +35,7 @@ class NameRow extends StatelessWidget {
           textDirection: settingsProvider.language == 'en'
               ? TextDirection.ltr
               : TextDirection.rtl,
-          mainAxisAlignment: writtenLanguage == 'en'
-              ? MainAxisAlignment.start
-              : MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(scale: 1.3, Assets.mealNameIcon),
@@ -52,9 +50,7 @@ class NameRow extends StatelessWidget {
                 textAlign: settingsProvider.language == 'en'
                     ? TextAlign.end
                     : TextAlign.start,
-                textDirection: writtenLanguage == 'en'
-                    ? TextDirection.ltr
-                    : TextDirection.rtl,
+                textDirection:  TextDirection.rtl,
                 style: TextStyle(
                     fontSize: fontSize,
                     fontWeight: FontWeight.bold,

@@ -43,16 +43,16 @@ class IngredientBox extends StatelessWidget {
             style: const TextStyle(fontSize: 12),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(
-                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalWidth(15),
                   SizeConfig.getProportionalHeight(0),
-                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalWidth(15),
                   SizeConfig.getProportionalHeight(15)),
               border: InputBorder.none,
             ),
           ),
         ),
         Positioned(
-            left: -5,
+            left: -10,
             top: 0,
             child: IconButton(
                 onPressed: () {
