@@ -382,8 +382,15 @@ class MealsProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
   }
+
   void resetLoading() {
     isLoading = false;
     notifyListeners();
   }
+
+  void removeMealFromList(String id) {
+    meals.removeWhere((meal) => meal.documentId == id);
+    notifyListeners();
+  }
+
 }

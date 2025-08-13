@@ -80,16 +80,16 @@ class _ListMealTileState extends State<ListMealTile> {
                 ),
                 child: widget.meal.imageUrl != null &&
                         widget.meal.imageUrl!.isNotEmpty
-                    ? Image.network(
-                        widget.meal.imageUrl!,
-                        fit: BoxFit.fill,
-                      )
-                    : Center(
-                        child: Image.asset(
-                          Assets.defaultMealImage,
+                    ? SizedBox(
+                  child: Image.network(
+                          widget.meal.imageUrl!,
                           fit: BoxFit.fill,
                         ),
-                      ),
+                    )
+                    : Image.asset(
+                      Assets.defaultMealImage,
+                      fit: BoxFit.fill,
+                    ),
               ),
               Expanded(
                 child: Padding(
@@ -173,6 +173,8 @@ class _ListMealTileState extends State<ListMealTile> {
                             ],
                             GestureDetector(
                                 onTap: () async {
+                                  MealsProvider().removeMealFromList(widget.meal.documentId!);
+
                                   await MealsProvider()
                                       .deleteMeal(widget.meal.documentId!);
                                   if (widget.meal.imageUrl != null &&
@@ -181,12 +183,12 @@ class _ListMealTileState extends State<ListMealTile> {
                                         .deleteImage(widget.meal.imageUrl);
                                   }
 
-                                  setState(() {
-                                    MealsProvider().getAllMealsByCategory(
-                                        widget.meal.categoryId,
-                                        widget.meal.userId);
-                                  });
-                                },
+                                //   setState(() {
+                                //     MealsProvider().getAllMealsByCategory(
+                                //         widget.meal.categoryId,
+                                //         widget.meal.userId);
+                                //   });
+                                 },
                                 child: const Icon(Icons.delete_outlined)),
                           ],
                         ),
