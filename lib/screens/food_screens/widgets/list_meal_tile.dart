@@ -133,7 +133,7 @@ class _ListMealTileState extends State<ListMealTile> {
                             !widget.favorites
                                 ? GestureDetector(
                                     onTap: () async {
-                                      final newIsFavorite =
+                                    final newIsFavorite =
                                           !widget.meal.isFavorite!;
                                       await MealsProvider().toggleIsFavorite(
                                           widget.meal, newIsFavorite);
@@ -182,12 +182,6 @@ class _ListMealTileState extends State<ListMealTile> {
                                     await MealsProvider()
                                         .deleteImage(widget.meal.imageUrl);
                                   }
-
-                                //   setState(() {
-                                //     MealsProvider().getAllMealsByCategory(
-                                //         widget.meal.categoryId,
-                                //         widget.meal.userId);
-                                //   });
                                  },
                                 child: const Icon(Icons.delete_outlined)),
                           ],

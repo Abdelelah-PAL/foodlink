@@ -40,8 +40,10 @@ class _ScheduleState extends State<Schedule> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final usersProvider = Provider.of<UsersProvider>(context, listen: false);
-      Provider.of<TaskProvider>(context, listen: false)
-          .getAllTasksByDate(selectedDate, usersProvider.selectedUser!.userId);
+      Provider.of<TaskProvider>(context, listen: false).getAllTasksByDate(
+          selectedDate,
+          usersProvider.selectedUser!.userId,
+          usersProvider.selectedUser!.userTypeId);
     });
   }
 
@@ -97,8 +99,10 @@ class _ScheduleState extends State<Schedule> {
 
                               await Provider.of<TaskProvider>(context,
                                       listen: false)
-                                  .getAllTasksByDate(currentDate,
-                                      usersProvider.selectedUser!.userId);
+                                  .getAllTasksByDate(
+                                      currentDate,
+                                      usersProvider.selectedUser!.userId,
+                                      usersProvider.selectedUser!.userTypeId);
 
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 if (_scrollController.hasClients) {
@@ -153,7 +157,8 @@ class _ScheduleState extends State<Schedule> {
                                   ),
                                   SizeConfig.customSizedBox(8, null, null),
                                   Text(
-                                    _getDaySubName(currentDate, settingsProvider),
+                                    _getDaySubName(
+                                        currentDate, settingsProvider),
                                     style: TextStyle(
                                         color: AppColors.fontColor,
                                         fontSize: 14,
@@ -195,11 +200,14 @@ class _ScheduleState extends State<Schedule> {
                                 ? GestureDetector(
                                     onTap: () async {
                                       await Get.to(AddTaskScreen(
-                                          date: selectedDate,
-                                          day: _getDayName(
-                                              selectedDate, settingsProvider),
-                                          userId: usersProvider
-                                              .selectedUser!.userId));
+                                        date: selectedDate,
+                                        day: _getDayName(
+                                            selectedDate, settingsProvider),
+                                        userId:
+                                            usersProvider.selectedUser!.userId,
+                                        userTypeId:
+                                            usersProvider.selectedUser!.userTypeId!,
+                                      ));
                                       TaskController().clearControllers();
                                     },
                                     child: Align(

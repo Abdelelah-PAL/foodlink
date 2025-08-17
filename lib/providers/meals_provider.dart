@@ -393,4 +393,9 @@ class MealsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeMealFromFavoriteList(String id) {
+    favoriteMeals.removeWhere((meal) => meal.documentId == id);
+    notifyListeners();
+  }
+
 }

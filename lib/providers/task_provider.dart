@@ -33,14 +33,13 @@ class TaskProvider with ChangeNotifier {
     return task;
   }
 
-  Future<void> getAllTasksByDate(date, userId) async {
+  Future<void> getAllTasksByDate(date, userId, userTypeId) async {
     try {
-      if (isLoading) return;
 
       isLoading = true;
-
+      notifyListeners();
       tasks.clear();
-      List<Task> fetchedTasks = await _ms.getAllTasksByDate(date, userId);
+      List<Task> fetchedTasks = await _ms.getAllTasksByDate(date, userId, userTypeId);
       for (var doc in fetchedTasks) {
         Task task = Task(
             taskName: doc.taskName,
@@ -48,7 +47,8 @@ class TaskProvider with ChangeNotifier {
             endTime: doc.endTime,
             date: doc.date,
             description: doc.description,
-            userId: doc.userId);
+            userId: doc.userId,
+            userTypeId: userTypeId);
         tasks.add(task);
       }
 

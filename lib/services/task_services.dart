@@ -17,13 +17,14 @@ class TaskServices with ChangeNotifier {
     }
   }
 
-  Future<List<Task>> getAllTasksByDate(DateTime date, String userId) async {
+  Future<List<Task>> getAllTasksByDate(DateTime date, String userId, int userTypeId ) async {
     try {
 
       QuerySnapshot<Map<String, dynamic>> taskQuery = await _firebaseFireStore
           .collection('tasks')
           .where('date', isEqualTo: date)
           .where('user_id', isEqualTo: userId)
+          .where('user_type_id', isEqualTo: userTypeId)
           .get();
 
       List<Task> tasks = taskQuery.docs.map((doc) {

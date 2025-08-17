@@ -140,11 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         value: _authController.rememberMe,
                                         onChanged: (bool? newValue) {
                                           setState(() {
-                                            _authController.toggleRememberMe();
+                                            _authController.rememberMe = newValue ?? false;
                                           });
                                         },
-                                        side: const BorderSide(
-                                            color: AppColors.textFieldBorderColor),
+                                        side: const BorderSide(color: AppColors.textFieldBorderColor),
                                       ),
                                     ),
                                     Padding(
