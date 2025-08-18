@@ -36,18 +36,19 @@ class _BeyondCaloriesArticlesScreenState
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.getProportionalWidth(50),
                   horizontal: SizeConfig.getProportionalWidth(20)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: const Stack(
+                alignment: Alignment.center,
                 children: [
-                  const CustomBackButton(),
-                  SizedBox(
-                    width: SizeConfig.getProperHorizontalSpace(4),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                      child: CustomBackButton()),
+                  Center(
+                    child: CustomText(
+                        isCenter: true,
+                        text: "healthy_life",
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
                   ),
-                  const CustomText(
-                      isCenter: true,
-                      text: "healthy_life",
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
                 ],
               ),
             )),

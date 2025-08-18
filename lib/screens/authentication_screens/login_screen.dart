@@ -40,6 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.firstScreen) {
       SizeConfig().init(context);
@@ -140,10 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         value: _authController.rememberMe,
                                         onChanged: (bool? newValue) {
                                           setState(() {
-                                            _authController.rememberMe = newValue ?? false;
+                                            _authController.toggleRememberMe();
                                           });
                                         },
-                                        side: const BorderSide(color: AppColors.textFieldBorderColor),
+                                        side: const BorderSide(
+                                            color: AppColors.textFieldBorderColor),
                                       ),
                                     ),
                                     Padding(

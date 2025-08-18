@@ -36,13 +36,16 @@ class _FavoritesState extends State<Favorites> {
             appBar: PreferredSize(
               preferredSize:
                   Size.fromHeight(SizeConfig.getProportionalHeight(100)),
-              child: const SafeArea(
-                  child: CustomText(
-                isCenter: true,
-                text: "favorites",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              )),
+              child:  Padding(
+                padding: EdgeInsets.only(top: SizeConfig.getProportionalHeight(30)),
+                child: const SafeArea(
+                    child: CustomText(
+                  isCenter: true,
+                  text: "favorites",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                )),
+              ),
             ),
             body: mealsProviderWatcher.favoriteMeals.isEmpty
                 ? SizeConfig.customSizedBox(

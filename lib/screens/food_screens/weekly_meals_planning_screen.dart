@@ -48,42 +48,47 @@ class _WeeklyMealsPlanningScreenState extends State<WeeklyMealsPlanningScreen> {
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize:
-                    Size.fromHeight(SizeConfig.getProportionalHeight(150)),
+                    Size.fromHeight(SizeConfig.getProportionalHeight(85)),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                        SizeConfig.getProportionalWidth(20),
-                        SizeConfig.getProportionalHeight(50),
-                        SizeConfig.getProportionalWidth(20),
-                        SizeConfig.getProportionalHeight(30)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      SizeConfig.getProportionalWidth(20),
+                      SizeConfig.getProportionalHeight(50),
+                      SizeConfig.getProportionalWidth(20),
+                      SizeConfig.getProportionalHeight(30),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
                       children: [
-                        CustomBackButton(
-                          onPressed: () {
-                            MealsProvider().resetDropdownValues();
-                            MealsProvider().resetWeeklyPlanList();
-                            Get.back();
-                          },
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: CustomBackButton(
+                            onPressed: () {
+                              MealsProvider().resetDropdownValues();
+                              MealsProvider().resetWeeklyPlanList();
+                              Get.back();
+                            },
+                          ),
                         ),
-                        SizedBox(
-                          width: SizeConfig.getProperHorizontalSpace(5),
-                        ),
-                        const CustomText(
+                        const Center(
+                          child: CustomText(
                             isCenter: true,
                             text: "your_weekly_plan",
                             fontSize: 25,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
+
                 )),
             body: Padding(
               padding: EdgeInsets.fromLTRB(
                   SizeConfig.getProportionalWidth(20),
-                  SizeConfig.getProportionalHeight(30),
+                  SizeConfig.getProportionalHeight(0),
                   SizeConfig.getProportionalWidth(20),
                   SizeConfig.getProportionalHeight(30)),
               child: Column(children: [

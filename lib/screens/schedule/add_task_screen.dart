@@ -112,7 +112,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               ],
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 30,
+                                fontSize: settingsProvider.language == "en" ? 24: 30,
                                 fontFamily: AppFonts.getPrimaryFont(context),
                               ))),
                     ),

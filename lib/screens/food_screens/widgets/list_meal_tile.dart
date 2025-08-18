@@ -135,12 +135,13 @@ class _ListMealTileState extends State<ListMealTile> {
                                     onTap: () async {
                                     final newIsFavorite =
                                           !widget.meal.isFavorite!;
+                                    setState(() {
+                                      widget.meal.isFavorite =
+                                          newIsFavorite;
+                                    });
                                       await MealsProvider().toggleIsFavorite(
                                           widget.meal, newIsFavorite);
-                                      setState(() {
-                                        widget.meal.isFavorite =
-                                            newIsFavorite;
-                                      });
+
                                     },
                                     child: widget.meal.isFavorite!
                                         ? const Icon(Icons.favorite,
