@@ -58,6 +58,8 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+     TranslationService().loadTranslations(context);
+
   }
   @override
   void dispose() {
@@ -70,7 +72,6 @@ class MyAppState extends State<MyApp> {
     super.dispose();
   }
   Future<void> _loadTranslations() async {
-    await TranslationService().loadTranslations(context);
     setState(() {
       _isLoading = false;
     });
@@ -82,7 +83,7 @@ class MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: false,
+          useMaterial3: true,
           scaffoldBackgroundColor: AppColors.backgroundColor,
           checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((states) {

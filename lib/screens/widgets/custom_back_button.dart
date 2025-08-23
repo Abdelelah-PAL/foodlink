@@ -9,10 +9,23 @@ class CustomBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: onPressed ?? () {
-        Get.back();
-      },
-      icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+      onPressed: onPressed ?? Get.back,
+      icon: Text(
+        String.fromCharCode(Icons.arrow_back_ios.codePoint),
+        style: TextStyle(
+          fontFamily: Icons.arrow_back_ios.fontFamily,
+          package: Icons.arrow_back_ios.fontPackage,
+          fontSize: 20,
+          color: Colors.black,
+          shadows: const [
+            Shadow(
+              color: Color(0xF2FFFFFF),
+              blurRadius: 6,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

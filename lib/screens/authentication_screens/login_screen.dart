@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -139,18 +140,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       width: SizeConfig.getProportionalWidth(20),
                                       height: SizeConfig.getProportionalHeight(20),
-                                      child: Checkbox(
-                                        activeColor: AppColors.backgroundColor,
-                                        checkColor: AppColors.fontColor,
-                                        value: _authController.rememberMe,
-                                        onChanged: (bool? newValue) {
-                                          setState(() {
-                                            _authController.toggleRememberMe();
-                                          });
-                                        },
-                                        side: const BorderSide(
-                                            color: AppColors.textFieldBorderColor),
-                                      ),
+                                      child: Theme(
+                                        data: Theme.of(context).copyWith(
+                                          checkboxTheme: const CheckboxThemeData(), // reset it
+                                        ),
+                                        child: Checkbox(
+                                          value: _authController.rememberMe,
+                                          activeColor: AppColors.primaryColor,
+                                          checkColor: AppColors.backgroundColor,
+                                          onChanged: (v) => setState(() => _authController.toggleRememberMe()),
+                                          side: const BorderSide(color: AppColors.textFieldBorderColor, width: 2),
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                        ),
+                                      )
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
