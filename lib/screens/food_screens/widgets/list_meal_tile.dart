@@ -46,7 +46,7 @@ class _ListMealTileState extends State<ListMealTile> {
       child: Container(
           width: SizeConfig.getProportionalWidth(355),
           height: SizeConfig.getProportionalHeight(110),
-          padding:
+          margin:
               EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(10)),
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
@@ -68,28 +68,20 @@ class _ListMealTileState extends State<ListMealTile> {
               Container(
                 width: SizeConfig.getProportionalWidth(150),
                 height: SizeConfig.getProportionalHeight(110),
-                margin: EdgeInsets.only(
-                    left: settingsProvider.language == 'en'
-                        ? 0
-                        : SizeConfig.getProportionalWidth(0),
-                    right: settingsProvider.language == 'en'
-                        ? SizeConfig.getProportionalWidth(0)
-                        : 0),
-                decoration: const BoxDecoration(
+                decoration:  const BoxDecoration(
                   color: AppColors.widgetsColor,
                 ),
                 child: widget.meal.imageUrl != null &&
                         widget.meal.imageUrl!.isNotEmpty
-                    ? SizedBox(
-                  child: Image.network(
-                          widget.meal.imageUrl!,
-                          fit: BoxFit.fill,
-                        ),
-                    )
+                    ? Image.network(
+                        widget.meal.imageUrl!,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                      )
                     : Image.asset(
-                      Assets.defaultMealImage,
-                      fit: BoxFit.fill,
-                    ),
+                        Assets.defaultMealImage,
+                      ),
               ),
               Expanded(
                 child: Padding(
@@ -133,15 +125,13 @@ class _ListMealTileState extends State<ListMealTile> {
                             !widget.favorites
                                 ? GestureDetector(
                                     onTap: () async {
-                                    final newIsFavorite =
+                                      final newIsFavorite =
                                           !widget.meal.isFavorite!;
-                                    setState(() {
-                                      widget.meal.isFavorite =
-                                          newIsFavorite;
-                                    });
+                                      setState(() {
+                                        widget.meal.isFavorite = newIsFavorite;
+                                      });
                                       await MealsProvider().toggleIsFavorite(
                                           widget.meal, newIsFavorite);
-
                                     },
                                     child: widget.meal.isFavorite!
                                         ? const Icon(Icons.favorite,
@@ -174,7 +164,8 @@ class _ListMealTileState extends State<ListMealTile> {
                             ],
                             GestureDetector(
                                 onTap: () async {
-                                  MealsProvider().removeMealFromList(widget.meal.documentId!);
+                                  MealsProvider().removeMealFromList(
+                                      widget.meal.documentId!);
 
                                   await MealsProvider()
                                       .deleteMeal(widget.meal.documentId!);
@@ -183,7 +174,7 @@ class _ListMealTileState extends State<ListMealTile> {
                                     await MealsProvider()
                                         .deleteImage(widget.meal.imageUrl);
                                   }
-                                 },
+                                },
                                 child: const Icon(Icons.delete_outlined)),
                           ],
                         ),

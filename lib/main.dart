@@ -1,4 +1,4 @@
-  import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +37,7 @@ void main() async {
     ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
     ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
     ChangeNotifierProvider(create: (ctx) => TaskProvider()),
-  ], child:  MyApp(startingWidget: onboardingComplete == true ? const LoginScreen(firstScreen: true,) : const SplashScreen())));
+  ], child: MyApp(startingWidget: onboardingComplete == true ? const LoginScreen(firstScreen: true,) : const SplashScreen())));
 }
 
 class MyApp extends StatefulWidget {
@@ -58,9 +58,9 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-     TranslationService().loadTranslations(context);
-
+    _loadTranslations();
   }
+
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([
@@ -71,33 +71,49 @@ class MyAppState extends State<MyApp> {
     ]);
     super.dispose();
   }
+
   Future<void> _loadTranslations() async {
-    setState(() {
-      _isLoading = false;
-    });
+    try {
+      await TranslationService().loadTranslations(context);
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      // Handle errors gracefully (e.g., log or show error UI)
+      print('Error loading translations: $e'); // Replace with your logging solution
+
+      // Still proceed by hiding loading (customize as needed, e.g., show error screen)
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _loadTranslations();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          checkboxTheme: CheckboxThemeData(
-        fillColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return AppColors
-                .primaryColor;
-          }
-          return AppColors.backgroundColor;
-        }),
-        checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
-      )),
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.backgroundColor,
+        checkboxTheme: CheckboxThemeData(
+          fillColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return AppColors.primaryColor;
+            }
+            return AppColors.backgroundColor;
+          }),
+          checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
+        ),
+      ),
       home: _isLoading
           ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          :  widget.startingWidget,
+          : widget.startingWidget, // Renders only after translations load
     );
   }
 }
