@@ -199,7 +199,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                             mealsProvider.setLoading();
                             widget.isAddScreen
                                 ? await MealController()
-                                    .addMeal(mealsProvider, widget.categoryId)
+                                    .addPlannedMeal(mealsProvider, widget.categoryId)
                                 : await MealController()
                                     .updateMeal(mealsProvider, widget.meal!);
                             mealsProvider.resetLoading();

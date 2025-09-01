@@ -6,6 +6,7 @@ import '../providers/meals_provider.dart';
 import '../providers/users_provider.dart';
 import '../screens/food_screens/meal_screen.dart';
 import '../services/meals_services.dart';
+import 'meal_types.dart';
 
 class MealController {
   static final MealController _instance = MealController._internal();
@@ -25,7 +26,7 @@ class MealController {
 
   List<String> missingIngredients = [];
 
-  Future<void> addMeal(mealsProvider, categoryId) async {
+  Future<void> addPlannedMeal(mealsProvider, categoryId) async {
     String imageUrl = '';
     if (mealsProvider.imageIsPicked) {
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
@@ -48,7 +49,7 @@ class MealController {
         recipe: steps,
         imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
         userId: UsersProvider().selectedUser!.userId,
-        isPlanned: false));
+        typeId: MealTypes.userMeal));
 
     mealsProvider.resetValues();
     Get.to(MealScreen(
@@ -85,7 +86,7 @@ class MealController {
         imageUrl: imageUrl.isNotEmpty ? imageUrl : meal.imageUrl,
         userId: UsersProvider().selectedUser!.userId,
         isFavorite: meal.isFavorite,
-        isPlanned: false));
+        typeId: MealTypes.userMeal));
 
     mealsProvider.resetValues();
     Get.to(MealScreen(

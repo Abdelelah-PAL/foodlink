@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';
+import '../../controllers/meal_types.dart';
 import '../../controllers/notification_controller.dart';
 import '../../controllers/user_types.dart';
 import '../../core/constants/colors.dart';
@@ -106,7 +107,7 @@ class MealScreen extends StatelessWidget {
               ),
               usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                   ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (meal.isPlanned == false) ...[
+                      if (meal.typeId == MealTypes.plannedMeal) ...[
                         CustomButton(
                           onTap: () {
                             MealsProvider().fillDataForEdition(meal);

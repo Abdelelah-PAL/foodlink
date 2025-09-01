@@ -121,9 +121,8 @@ class MealsProvider with ChangeNotifier {
             ingredients: doc.ingredients,
             recipe: doc.recipe,
             userId: doc.userId,
-            isFavorite: doc.isFavorite,
-            isPlanned: doc.isPlanned,
-            source: doc.source);
+            source: doc.source,
+            typeId:  doc.typeId);
         meals.add(meal);
       }
       isLoading = false;
@@ -148,8 +147,8 @@ class MealsProvider with ChangeNotifier {
             recipe: doc.recipe,
             day: doc.day,
             date: doc.date,
-            isPlanned: doc.isPlanned,
-            source: doc.source);
+            source: doc.source,
+            typeId: doc.typeId);
         plannedMeals.add(meal);
       }
 

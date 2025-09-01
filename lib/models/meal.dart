@@ -7,10 +7,10 @@ class Meal {
   List<String>? recipe;
   String? userId;
   bool? isFavorite;
-  bool isPlanned;
   DateTime? date;
   String? day;
   String? source;
+  int typeId;
 
   Meal({
     this.documentId,
@@ -21,10 +21,10 @@ class Meal {
     this.recipe,
     this.userId,
     this.isFavorite = false,
-    required this.isPlanned,
     this.date,
     this.day,
     this.source,
+    required this.typeId
   });
 
   factory Meal.fromJson(Map<String, dynamic> json, docId) {
@@ -37,10 +37,10 @@ class Meal {
       recipe: List<String>.from(json['recipe']),
       userId: json['user_id'],
       isFavorite: json['is_favorite'],
-      isPlanned: json['is_planned'],
       date: json['date']?.toDate(),
       day: json['day'],
       source: json['source'],
+      typeId: json['type_id'],
     );
   }
 
@@ -53,10 +53,10 @@ class Meal {
       'recipe': recipe,
       'user_id': userId,
       'is_favorite': isFavorite,
-      'is_planned':isPlanned,
       'date': date,
       'day': day,
       'source': source,
+      'type_id': typeId
     };
   }
 }
