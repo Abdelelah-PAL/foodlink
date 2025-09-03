@@ -60,7 +60,6 @@ class MealsProvider with ChangeNotifier {
   String? selectedDay;
   String? selectedMonth;
   String? selectedDayName;
-  String? selectedDayName;
   String? selectedPlanningMealValue;
 
   Future<Meal> addMeal(Meal meal) async {
