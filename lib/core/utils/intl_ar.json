@@ -177,5 +177,10 @@
   "email_sent": "إذا كان البريد الإلكتروني حقيقيًّا، سوف يصلك رابط لإعادة تعيين كلمة المرور",
   "email_already_registered": "البريد الإلكتروني مُسجّل من قبل",
   "The email address is already in use by another account.": "البريد الإلكتروني مُسجّل من قبل",
-  "The email address is badly formatted.": "البريد الإلكتروني غير مكتوب بشكل صحيح"
+  "The email address is badly formatted.": "البريد الإلكتروني غير مكتوب بشكل صحيح",
+  "your_meals": "وجباتك",
+  "suggested_meals" : "وجبات مقترحة",
+  "no_suggested_meals": "لا يوجد وجبات مقترحة",
+  "add_to_user_meals": "أضف إلى وجباتك",
+  "meal_added_to_your_meals": "تمّت إضافة الوجبة إلى قائمة وجباتك بنجاح"
 }

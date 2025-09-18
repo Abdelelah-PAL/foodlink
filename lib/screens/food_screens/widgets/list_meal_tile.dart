@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlink/core/constants/assets.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/sources.dart';
 import '../../../controllers/user_types.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/utils/size_config.dart';
@@ -46,8 +47,7 @@ class _ListMealTileState extends State<ListMealTile> {
       child: Container(
           width: SizeConfig.getProportionalWidth(355),
           height: SizeConfig.getProportionalHeight(110),
-          margin:
-              EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(10)),
+          margin: EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(10)),
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
             borderRadius: BorderRadius.circular(15),
@@ -68,7 +68,7 @@ class _ListMealTileState extends State<ListMealTile> {
               Container(
                 width: SizeConfig.getProportionalWidth(150),
                 height: SizeConfig.getProportionalHeight(110),
-                decoration:  const BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.widgetsColor,
                 ),
                 child: widget.meal.imageUrl != null &&
@@ -114,71 +114,73 @@ class _ListMealTileState extends State<ListMealTile> {
                         horizontalPadding: 30,
                         withBorder: false,
                       ),
-                      SizeConfig.customSizedBox(
-                        null,
-                        13,
-                        Row(
-                          mainAxisAlignment: settingsProvider.language == "en"
-                              ? MainAxisAlignment.end
-                              : MainAxisAlignment.start,
-                          children: [
-                            !widget.favorites
-                                ? GestureDetector(
+                      if (widget.meal.typeId == Sources.categoryMeals)
+                        SizeConfig.customSizedBox(
+                          null,
+                          13,
+                          Row(
+                            mainAxisAlignment: settingsProvider.language == "en"
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.start,
+                            children: [
+                              !widget.favorites
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        final newIsFavorite =
+                                            !widget.meal.isFavorite!;
+                                        setState(() {
+                                          widget.meal.isFavorite =
+                                              newIsFavorite;
+                                        });
+                                        await MealsProvider().toggleIsFavorite(
+                                            widget.meal, newIsFavorite);
+                                      },
+                                      child: widget.meal.isFavorite!
+                                          ? const Icon(Icons.favorite,
+                                              color: AppColors.errorColor)
+                                          : const Icon(Icons.favorite_outline))
+                                  : const Icon(Icons.favorite,
+                                      color: AppColors.errorColor),
+                              SizeConfig.customSizedBox(5, null, null),
+                              if (usersProvider.selectedUser!.userTypeId ==
+                                  UserTypes.cooker) ...[
+                                GestureDetector(
                                     onTap: () async {
-                                      final newIsFavorite =
-                                          !widget.meal.isFavorite!;
-                                      setState(() {
-                                        widget.meal.isFavorite = newIsFavorite;
-                                      });
-                                      await MealsProvider().toggleIsFavorite(
-                                          widget.meal, newIsFavorite);
+                                      MealsProvider()
+                                          .fillDataForEdition(widget.meal);
+                                      Get.to(AddMealScreen(
+                                          categoryId: widget.meal.categoryId!,
+                                          isAddScreen: false,
+                                          meal: widget.meal,
+                                          isUpdateScreen: true,
+                                          backButtonCallBack: () {
+                                            Get.to(MealsListScreen(
+                                                index: widget.meal.categoryId!,
+                                                categoryId:
+                                                    widget.meal.categoryId!));
+                                            MealsProvider().resetValues();
+                                          }));
                                     },
-                                    child: widget.meal.isFavorite!
-                                        ? const Icon(Icons.favorite,
-                                            color: AppColors.errorColor)
-                                        : const Icon(Icons.favorite_outline))
-                                : const Icon(Icons.favorite,
-                                    color: AppColors.errorColor),
-                            SizeConfig.customSizedBox(5, null, null),
-                            if (usersProvider.selectedUser!.userTypeId ==
-                                UserTypes.cooker) ...[
+                                    child: const Icon(Icons.edit_outlined)),
+                                SizeConfig.customSizedBox(5, null, null)
+                              ],
                               GestureDetector(
                                   onTap: () async {
-                                    MealsProvider()
-                                        .fillDataForEdition(widget.meal);
-                                    Get.to(AddMealScreen(
-                                        categoryId: widget.meal.categoryId!,
-                                        isAddScreen: false,
-                                        meal: widget.meal,
-                                        isUpdateScreen: true,
-                                        backButtonCallBack: () {
-                                          Get.to(MealsListScreen(
-                                              index: widget.meal.categoryId!,
-                                              categoryId:
-                                                  widget.meal.categoryId!));
-                                          MealsProvider().resetValues();
-                                        }));
-                                  },
-                                  child: const Icon(Icons.edit_outlined)),
-                              SizeConfig.customSizedBox(5, null, null)
-                            ],
-                            GestureDetector(
-                                onTap: () async {
-                                  MealsProvider().removeMealFromList(
-                                      widget.meal.documentId!);
+                                    MealsProvider().removeMealFromList(
+                                        widget.meal.documentId!);
 
-                                  await MealsProvider()
-                                      .deleteMeal(widget.meal.documentId!);
-                                  if (widget.meal.imageUrl != null &&
-                                      widget.meal.imageUrl != "") {
                                     await MealsProvider()
-                                        .deleteImage(widget.meal.imageUrl);
-                                  }
-                                },
-                                child: const Icon(Icons.delete_outlined)),
-                          ],
-                        ),
-                      )
+                                        .deleteMeal(widget.meal.documentId!);
+                                    if (widget.meal.imageUrl != null &&
+                                        widget.meal.imageUrl != "") {
+                                      await MealsProvider()
+                                          .deleteImage(widget.meal.imageUrl);
+                                    }
+                                  },
+                                  child: const Icon(Icons.delete_outlined)),
+                            ],
+                          ),
+                        )
                     ],
                   ),
                 ),

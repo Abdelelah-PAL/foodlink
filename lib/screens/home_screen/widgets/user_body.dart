@@ -5,6 +5,7 @@ import '../../../core/utils/size_config.dart';
 import '../../../models/user_details.dart';
 import '../../../providers/features_provider.dart';
 import '../../../providers/meal_categories_provider.dart';
+import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
 import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
@@ -82,11 +83,13 @@ class UserBody extends StatelessWidget {
                 switch (feature.keyword) {
                   case "Calories":
                     onTap = () {
+                      FeaturesProvider().getAllArticles();
                       Get.to(const BeyondCaloriesArticlesScreen());
                     };
                     break;
                   case "Planning":
                     onTap = () {
+                      MealsProvider().getAllPlannedMeals();
                       Get.to(const MealPlanningScreen());
                     };
                     break;

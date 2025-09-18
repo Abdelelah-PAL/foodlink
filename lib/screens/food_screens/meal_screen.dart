@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';
@@ -107,7 +108,8 @@ class MealScreen extends StatelessWidget {
               ),
               usersProvider.selectedUser!.userTypeId == UserTypes.cooker
                   ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      if (meal.typeId == MealTypes.plannedMeal) ...[
+                      if (meal.typeId != MealTypes.plannedMeal &&
+                          meal.typeId != MealTypes.suggestedMeal) ...[
                         CustomButton(
                           onTap: () {
                             MealsProvider().fillDataForEdition(meal);
@@ -131,20 +133,47 @@ class MealScreen extends StatelessWidget {
                         ),
                         SizeConfig.customSizedBox(20, null, null)
                       ],
-                      CustomButton(
-                        onTap: () {
-                          mealsProvider.checkboxValues = List.generate(
-                              meal.ingredients.length, (index) => false);
-                          Get.to(CheckIngredientsScreen(
-                            meal: meal,
-                          ));
-                        },
-                        text:
-                            TranslationService().translate("check_ingredients"),
-                        width: 137,
-                        height: 45,
-                        isDisabled: true,
-                      ),
+                      if (meal.typeId != MealTypes.suggestedMeal) ...[
+                        CustomButton(
+                          onTap: () {
+                            mealsProvider.checkboxValues = List.generate(
+                                meal.ingredients.length, (index) => false);
+                            Get.to(CheckIngredientsScreen(
+                              meal: meal,
+                            ));
+                          },
+                          text: TranslationService()
+                              .translate("check_ingredients"),
+                          width: 137,
+                          height: 45,
+                          isDisabled: true,
+                        )
+                      ] else ...[
+                        CustomButton(
+                          onTap: () async {
+                            meal.userId = usersProvider.selectedUser!.userId;
+                            await MealsProvider().addMeal(meal);
+
+                            GeneralController().showCustomDialog(
+                                context,
+                                settingsProvider,
+                                "meal_added_to_your_meals",
+                                Icons.check_circle_rounded,
+                                AppColors.successColor,
+                                SizeConfig.screenWidth! * .90);
+
+                            await MealsProvider().getAllMealsByCategory(
+                                meal.categoryId,
+                                usersProvider.selectedUser!.userId);
+                            Get.to(() => MealsListScreen(index: meal.categoryId! - 1, categoryId: meal.categoryId!));
+                          },
+                          text: TranslationService()
+                              .translate("add_to_user_meals"),
+                          width: 137,
+                          height: 45,
+                          isDisabled: true,
+                        )
+                      ],
                     ])
                   : CustomButton(
                       onTap: () async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../controllers/meal_controller.dart';
+import '../controllers/meal_types.dart';
 import '../models/meal.dart';
 import '../models/weekly_plan.dart';
 import '../services/meals_services.dart';
@@ -23,9 +24,11 @@ class MealsProvider with ChangeNotifier {
   bool imageIsPicked = false;
   bool chosenPressed = true;
   bool selfPressed = false;
-
+  bool userMealsPressed = true;
+  bool suggestedMealsPressed = false;
   List<String?> selectedValues = List.filled(7, null);
   List<bool> showSelectedValues = List.filled(7, true); // 10 items, all false
+  List<Meal> suggestions = [];
 
   XFile? pickedFile;
   int numberOfIngredients = 2;
@@ -160,6 +163,31 @@ class MealsProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getAllSuggestedMealsByCategory(int categoryId) async {
+    try {
+      isLoading = true;
+      suggestions.clear();
+      List<Meal> fetchedMeals = await _ms.getAllSuggestedMealsByCategory(categoryId);
+      for (var doc in fetchedMeals) {
+        Meal meal = Meal(
+            documentId: doc.documentId,
+            name: doc.name,
+            imageUrl: doc.imageUrl,
+            categoryId: doc.categoryId,
+            ingredients: doc.ingredients,
+            recipe: doc.recipe,
+            typeId: MealTypes.suggestedMeal);
+        suggestions.add(meal);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+
   Future<void> pickImageFromSource(BuildContext context) async {
     final picker = ImagePicker();
     final ImageSource? source = await showDialog<ImageSource>(
@@ -284,6 +312,18 @@ class MealsProvider with ChangeNotifier {
   onSelfTapped() {
     chosenPressed = false;
     selfPressed = true;
+    notifyListeners();
+  }
+
+  onUserMealsTapped() {
+    userMealsPressed = true;
+    suggestedMealsPressed = false;
+    notifyListeners();
+  }
+
+  onSuggestedMealsTapped() {
+    userMealsPressed = false;
+    suggestedMealsPressed = true;
     notifyListeners();
   }
 

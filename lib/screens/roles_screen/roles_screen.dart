@@ -8,9 +8,7 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/fonts.dart';
 import '../../core/utils/size_config.dart';
 import '../../providers/dashboard_provider.dart';
-import '../../providers/features_provider.dart';
 import '../../providers/meal_categories_provider.dart';
-import '../../providers/meals_provider.dart';
 import '../../providers/notification_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../providers/users_provider.dart';
@@ -98,9 +96,7 @@ class RolesScreen extends StatelessWidget {
                         .updateUsername(user.uid, roleId, controller.text);
                     UsersProvider().selectedUser = await UsersProvider()
                         .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
-                    FeaturesProvider().getAllArticles();
                     MealCategoriesProvider().getAllMealCategories();
-                    MealsProvider().getAllPlannedMeals();
                     await NotificationsProvider().getAllNotifications(
                         UsersProvider().selectedUser!.userTypeId,
                         UsersProvider().selectedUser!.userId);

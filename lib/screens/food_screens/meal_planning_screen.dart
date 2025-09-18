@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/screens/food_screens/widgets/add_box.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/meal_controller.dart';
+import '../../controllers/sources.dart';
 import '../../core/constants/assets.dart';
 import '../../core/constants/colors.dart';
 import '../../core/utils/size_config.dart';
@@ -16,6 +16,7 @@ import '../widgets/custom_back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_container.dart';
 import 'weekly_meals_planning_screen.dart';
+import 'widgets/add_box.dart';
 import 'widgets/custom_changeable_color_button.dart';
 import 'widgets/plan_meal_tile.dart';
 
@@ -92,14 +93,20 @@ class _MealPlanningScreenState extends State<MealPlanningScreen> {
                       : TextDirection.rtl,
                   children: [
                     CustomChangeableColorButton(
-                        tag: 'chosen',
-                        mealsProvider: mealsProvider,
-                        settingsProvider: settingsProvider),
+                      source: Sources.planningMeals,
+                      text: 'chosen_meal_plan_inline',
+                      tag: 'chosen',
+                      mealsProvider: mealsProvider,
+                      settingsProvider: settingsProvider,
+                    ),
                     SizeConfig.customSizedBox(40, null, null),
                     CustomChangeableColorButton(
-                        tag: 'self',
-                        mealsProvider: mealsProvider,
-                        settingsProvider: settingsProvider),
+                      source: Sources.planningMeals,
+                      text: 'your_weekly_plan',
+                      tag: 'self',
+                      mealsProvider: mealsProvider,
+                      settingsProvider: settingsProvider,
+                    ),
                   ],
                 ),
               ),

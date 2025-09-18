@@ -128,11 +128,13 @@ class CookerBody extends StatelessWidget {
                   switch (feature.keyword) {
                     case "Calories":
                       onTap = () {
+                        FeaturesProvider().getAllArticles();
                         Get.to(const BeyondCaloriesArticlesScreen());
                       };
                       break;
                     case "Planning":
                       onTap = () {
+                        MealsProvider().getAllPlannedMeals();
                         Get.to(const MealPlanningScreen());
                       };
                       break;

@@ -177,5 +177,10 @@
   "email_sent": "If this email exists, a reset link has been sent.",
   "email_already_registered": "Email is already registered",
   "The email address is already in use by another account.":"The email address is already in use by another account.",
-  "The email address is badly formatted": "The email address is badly formatted"
+  "The email address is badly formatted": "The email address is badly formatted",
+  "your_meals": "Your Meals",
+  "suggested_meals" : "Suggested Meals",
+  "no_suggested_meals": "No suggested meals",
+  "add_to_user_meals": "Add to your meals",
+  "meal_added_to_your_meals": "This meal has been added to your meals list successfully"
 }

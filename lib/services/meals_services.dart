@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-
+import '../controllers/meal_types.dart';
 import '../models/meal.dart';
 import '../models/weekly_plan.dart';
 
@@ -32,7 +32,8 @@ class MealsServices with ChangeNotifier {
     }
   }
 
-  Future<List<Meal>> getAllMealsByCategory(int categoryId, String userId) async {
+  Future<List<Meal>> getAllMealsByCategory(
+      int categoryId, String userId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> mealQuery = await _firebaseFireStore
           .collection('meals')
@@ -80,8 +81,17 @@ class MealsServices with ChangeNotifier {
 
   Future<Meal> addMeal(meal) async {
     try {
+      Meal userMeal = Meal(
+          categoryId: meal.categoryId,
+          name: meal.name,
+          imageUrl: meal.imageUrl,
+          ingredients: meal.ingredients,
+          recipe: meal.recipe,
+          userId: meal.userId,
+          source: meal.source,
+          typeId: 1);
       var addedMeal =
-      await _firebaseFireStore.collection('meals').add(meal.toMap());
+          await _firebaseFireStore.collection('meals').add(userMeal.toMap());
       var mealSnapshot = await addedMeal.get();
 
       return Meal.fromJson(mealSnapshot.data()!, addedMeal.id);
@@ -118,7 +128,6 @@ class MealsServices with ChangeNotifier {
         .get();
 
     for (var doc in notificationsSnapshot.docs) {
-      print(doc);
       batch.delete(doc.reference);
     }
 
@@ -141,7 +150,7 @@ class MealsServices with ChangeNotifier {
   Future<Meal> getPlannedMealById(String docId) async {
     try {
       DocumentSnapshot mealSnapshot =
-      await _firebaseFireStore.collection('planned_meals').doc(docId).get();
+          await _firebaseFireStore.collection('planned_meals').doc(docId).get();
       return Meal.fromJson(
         mealSnapshot.data() as Map<String, dynamic>,
         mealSnapshot.id,
@@ -171,6 +180,30 @@ class MealsServices with ChangeNotifier {
     }
   }
 
+  Future<List<Meal>> getAllSuggestedMealsByCategory(int categoryId) async {
+    try {
+      final querySnapshot = await _firebaseFireStore
+          .collection('meals')
+          .where(
+            "type_id",
+            isEqualTo: MealTypes.suggestedMeal,
+          )
+          .where(
+            "category_id",
+            isEqualTo: categoryId,
+          )
+          .get();
+      return querySnapshot.docs.map((doc) {
+        return Meal.fromJson(doc.data(), doc.id);
+      }).toList();
+    } catch (ex) {
+      if (kDebugMode) {
+        print("Error fetching planned meals: ${ex.toString()}");
+      }
+      rethrow;
+    }
+  }
+
   Future<WeeklyPlan> addWeeklyPlan(weeklyPlan) async {
     try {
       QuerySnapshot<Map<String, dynamic>> planQuery = await _firebaseFireStore
@@ -184,9 +217,9 @@ class MealsServices with ChangeNotifier {
         await _firebaseFireStore.collection('weekly_plan').doc(doc.id).delete();
       }
 
-
-      var addedWeeklyPlan =
-      await _firebaseFireStore.collection('weekly_plan').add(weeklyPlan.toMap());
+      var addedWeeklyPlan = await _firebaseFireStore
+          .collection('weekly_plan')
+          .add(weeklyPlan.toMap());
       var mealSnapshot = await addedWeeklyPlan.get();
 
       return WeeklyPlan.fromJson(mealSnapshot.data()!, addedWeeklyPlan.id);
@@ -212,7 +245,6 @@ class MealsServices with ChangeNotifier {
     }
   }
 
-
   Future<void> deleteWeeklyPlan(String docId) async {
     await _firebaseFireStore.collection('weekly_plan').doc(docId).delete();
   }
@@ -231,9 +263,10 @@ class MealsServices with ChangeNotifier {
         return null;
       }
     } catch (e) {
-      print('Error fetching latest dish of the week: $e');
+      if (kDebugMode) {
+        print('Error fetching latest dish of the week: $e');
+      }
       return null;
     }
   }
-
 }
