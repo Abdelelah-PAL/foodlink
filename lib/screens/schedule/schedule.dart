@@ -107,7 +107,7 @@ class _ScheduleState extends State<Schedule> {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 if (_scrollController.hasClients) {
                                   double itemWidth =
-                                      SizeConfig.getProportionalHeight(45) +
+                                      SizeConfig.getProportionalHeight(50) +
                                           10; // Adjust width + margins
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {
@@ -131,7 +131,7 @@ class _ScheduleState extends State<Schedule> {
                             },
                             child: Container(
                               height: SizeConfig.getProportionalHeight(79),
-                              width: SizeConfig.getProportionalHeight(45),
+                              width: SizeConfig.getProportionalHeight(53),
                               margin: const EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                 color: isSelected
