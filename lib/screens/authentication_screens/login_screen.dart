@@ -19,7 +19,7 @@ import 'widgets/custom_auth_btn.dart';
 import 'widgets/custom_auth_footer.dart';
 import 'widgets/custom_auth_textfield.dart';
 import 'widgets/custom_auth_textfield_header.dart';
-import 'widgets/custom_error_txt.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.firstScreen});
@@ -81,11 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontWeight: FontWeight.normal,
                                 color: AppColors.fontColor,
                               )),
-                          CustomErrorTxt(
-                            text: TranslationService()
-                                .translate(_authController.loginErrorText),
-                            settingsProvider: settingsProvider,
-                          ),
+
                           SizeConfig.customSizedBox(null, 6, null),
                           CustomAuthTextFieldHeader(
                               text: TranslationService().translate('email'),
@@ -196,6 +192,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 setState(() {
                                   _authController.changeTextFieldsColors(true);
                                 });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      TranslationService().translate(_authController.loginErrorText),
+                                      textDirection: TextDirection.rtl,
+                                      style: const TextStyle(
+                                          color: AppColors.fontColor
+                                      ),
+                                    ),
+                                    backgroundColor: AppColors.primaryColor,
+                                  ),
+                                );
                                 return;
                               } else {
                                 setState(() {
@@ -215,6 +223,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .translate("wrong_email_password");
                                     authenticationProvider.isLoading = false;
                                   });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        TranslationService().translate("wrong_email_password"),
+                                        textDirection: TextDirection.rtl,
+                                        style: const TextStyle(
+                                            color: AppColors.fontColor
+                                        ),
+                                      ),
+                                      backgroundColor: AppColors.primaryColor,
+                                    ),
+                                  );
                                   return;
                                 }
                                 else {
@@ -238,7 +258,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Get.to(RolesScreen(user: user.user!));
                                 }
                                 AuthenticationProvider().resetLoading();
-
                               }
                             },
                           ),

@@ -15,7 +15,6 @@ import 'login_screen.dart';
 import 'widgets/custom_auth_btn.dart';
 import 'widgets/custom_auth_footer.dart';
 import 'widgets/custom_auth_textfield.dart';
-import 'widgets/custom_error_txt.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -58,128 +57,166 @@ class _SignUpScreenState extends State<SignUpScreen> {
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => FocusScope.of(context).unfocus(),
-                child: Column(
-                  children: [
-                    SizeConfig.customSizedBox(
-                        179, 179, Image.asset(Assets.pureLogo)),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            top: SizeConfig.getProportionalHeight(10),
-                            bottom: SizeConfig.getProportionalHeight(13)),
-                        child: const CustomText(
-                          isCenter: true,
-                          text: "create_an_account",
-                          fontSize: 24,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.fontColor,
-                        )),
-                    CustomErrorTxt(
-                      text: TranslationService()
-                          .translate(_authController.signUpErrorText),
-                      settingsProvider: settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText: TranslationService().translate('enter_email'),
-                      obscureText: false,
-                      textEditingController:
-                          _authController.signUpEmailController,
-                      borderColor:
-                          _authController.signUpEmailTextFieldBorderColor,
-                      settingsProvider: settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText:
-                          TranslationService().translate('enter_password'),
-                      obscureText: true,
-                      textEditingController:
-                          _authController.signUpPasswordController,
-                      borderColor:
-                          _authController.signUpPasswordTextFieldBorderColor,
-                      settingsProvider: settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText:
-                          TranslationService().translate('confirm_password'),
-                      obscureText: true,
-                      textEditingController:
-                          _authController.confirmedPasswordController,
-                      borderColor:
-                          _authController.confirmPasswordTextFieldBorderColor,
-                      settingsProvider: settingsProvider,
-                    ),
-                    SizeConfig.customSizedBox(null, 50, null),
-                    CustomAuthBtn(
-                      text: TranslationService().translate('signup'),
-                      onTap: () async {
-                        _authController.checkEmptyFields(false);
-                        if (!_authController.noneIsEmpty) {
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      SizeConfig.customSizedBox(
+                          179, 179, Image.asset(Assets.pureLogo)),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.getProportionalHeight(10),
+                              bottom: SizeConfig.getProportionalHeight(13)),
+                          child: const CustomText(
+                            isCenter: true,
+                            text: "create_an_account",
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.fontColor,
+                          )),
+                      CustomAuthenticationTextField(
+                        hintText: TranslationService().translate('enter_email'),
+                        obscureText: false,
+                        textEditingController:
+                            _authController.signUpEmailController,
+                        borderColor:
+                            _authController.signUpEmailTextFieldBorderColor,
+                        settingsProvider: settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText:
+                            TranslationService().translate('enter_password'),
+                        obscureText: true,
+                        textEditingController:
+                            _authController.signUpPasswordController,
+                        borderColor:
+                            _authController.signUpPasswordTextFieldBorderColor,
+                        settingsProvider: settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText:
+                            TranslationService().translate('confirm_password'),
+                        obscureText: true,
+                        textEditingController:
+                            _authController.confirmedPasswordController,
+                        borderColor:
+                            _authController.confirmPasswordTextFieldBorderColor,
+                        settingsProvider: settingsProvider,
+                      ),
+                      SizeConfig.customSizedBox(null, 50, null),
+                      CustomAuthBtn(
+                        text: TranslationService().translate('signup'),
+                        onTap: () async {
+                          _authController.checkEmptyFields(false);
+                          if (!_authController.noneIsEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  TranslationService().translate(
+                                      _authController.signUpErrorText),
+                                  textDirection: TextDirection.rtl,
+                                  style: const TextStyle(
+                                      color: AppColors.fontColor
+                                  ),
+                                ),
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                            );
+                            setState(() {
+                              _authController.changeTextFieldsColors(false);
+                            });
+                            return;
+                          }
+                          _authController.checkMatchedPassword();
+                          if (!_authController.isMatched) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  TranslationService().translate(
+                                      _authController.signUpErrorText),
+                                  textDirection: TextDirection.rtl,
+                                  style: const TextStyle(
+                                      color: AppColors.fontColor
+                                  ),
+                                ),
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                            );
+                            setState(() {
+                              _authController.changeTextFieldsColors(false);
+                            });
+                            return;
+                          }
+                          _authController.checkValidPassword();
+                          if (!_authController.passwordIsValid) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  TranslationService().translate(
+                                      _authController.signUpErrorText),
+                                  textDirection: TextDirection.rtl,
+                                  style: const TextStyle(
+                                    color: AppColors.fontColor
+                                  ),
+                                ),
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                            );
+                            setState(() {
+                              _authController.changeTextFieldsColors(false);
+                            });
+                            return;
+                          }
+                          if (_authController.isMatched &&
+                              _authController.passwordIsValid) {
+                            var user = await AuthenticationProvider()
+                                .signUpWithEmailAndPassword(
+                                    _authController.signUpEmailController.text
+                                        .trim(),
+                                    _authController
+                                        .signUpPasswordController.text,
+                                    authenticationProvider);
+                            UserDetails userDetails = UserDetails(
+                              userId: user!.uid,
+                              userTypeId: null,
+                              email: user.email!,
+                              username: null,
+                              subscriber: false,
+                            );
+                            UsersProvider().addUserDetails(userDetails);
+                            setState(() {
+                              _authController.changeTextFieldsColors(false);
+                            });
+                            await SettingsProvider().addSettings(user.uid);
+                            Get.to(() => const LoginScreen(
+                                  firstScreen: false,
+                                ));
+                          }
+                          AuthenticationProvider().resetLoading();
                           setState(() {
-                            _authController.changeTextFieldsColors(false);
+                            AuthenticationController().clearTextFields();
                           });
-                          return;
-                        }
-                        _authController.checkMatchedPassword();
-                        if (!_authController.isMatched) {
-                          setState(() {
-                            _authController.changeTextFieldsColors(false);
-                          });
-                          return;
-                        }
-                        _authController.checkValidPassword();
-                        if (!_authController.passwordIsValid) {
-                          setState(() {
-                            _authController.changeTextFieldsColors(false);
-                          });
-                          return;
-                        }
-                        if (_authController.isMatched &&
-                            _authController.passwordIsValid) {
-                          var user = await AuthenticationProvider()
-                              .signUpWithEmailAndPassword(
-                                  _authController.signUpEmailController.text
-                                      .trim(),
-                                  _authController.signUpPasswordController.text,
-                                  authenticationProvider);
-                          UserDetails userDetails = UserDetails(
-                            userId: user!.uid,
-                            userTypeId: null,
-                            email: user.email!,
-                            username: null,
-                            subscriber: false,
-                          );
-                          UsersProvider().addUserDetails(userDetails);
-                          setState(() {
-                            _authController.changeTextFieldsColors(false);
-                          });
-                          await SettingsProvider().addSettings(user.uid);
+                        },
+                      ),
+                      SizeConfig.customSizedBox(null, 50, null),
+                      CustomAuthFooter(
+                        headingText: "have_account",
+                        tailText: "login",
+                        settingsProvider: settingsProvider,
+                        onTap: () {
+                          AuthenticationProvider().resetSignUpErrorText();
                           Get.to(() => const LoginScreen(
                                 firstScreen: false,
                               ));
-                        }
-                        AuthenticationProvider().resetLoading();
-                        setState(() {
-                          AuthenticationController().clearTextFields();
-                        });
-                      },
-                    ),
-                    SizeConfig.customSizedBox(null, 50, null),
-                    CustomAuthFooter(
-                      headingText: "have_account",
-                      tailText: "login",
-                      settingsProvider: settingsProvider,
-                      onTap: () {
-                        AuthenticationProvider().resetSignUpErrorText();
-                        Get.to(() => const LoginScreen(
-                              firstScreen: false,
-                            ));
-                      },
-                    )
-                  ],
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
               if (authenticationProvider.isLoading)
                 const Positioned.fill(
-                  child:  Center(
+                  child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),
