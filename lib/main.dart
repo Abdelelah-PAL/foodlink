@@ -26,22 +26,30 @@ void main() async {
   await FirebaseAppCheck.instance.activate();
   final prefs = await SharedPreferences.getInstance();
   final onboardingComplete = prefs.getBool('onboarding_complete') ?? false;
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
-    ChangeNotifierProvider(create: (ctx) => AuthenticationProvider()),
-    ChangeNotifierProvider(create: (ctx) => UsersProvider()),
-    ChangeNotifierProvider(create: (ctx) => MealCategoriesProvider()),
-    ChangeNotifierProvider(create: (ctx) => DashboardProvider()),
-    ChangeNotifierProvider(create: (ctx) => MealsProvider()),
-    ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
-    ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
-    ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
-    ChangeNotifierProvider(create: (ctx) => TaskProvider()),
-  ], child: MyApp(startingWidget: onboardingComplete == true ? const LoginScreen(firstScreen: true,) : const SplashScreen())));
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
+        ChangeNotifierProvider(create: (ctx) => AuthenticationProvider()),
+        ChangeNotifierProvider(create: (ctx) => UsersProvider()),
+        ChangeNotifierProvider(create: (ctx) => MealCategoriesProvider()),
+        ChangeNotifierProvider(create: (ctx) => DashboardProvider()),
+        ChangeNotifierProvider(create: (ctx) => MealsProvider()),
+        ChangeNotifierProvider(create: (ctx) => SettingsProvider()),
+        ChangeNotifierProvider(create: (ctx) => NotificationsProvider()),
+        ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
+        ChangeNotifierProvider(create: (ctx) => TaskProvider()),
+      ],
+      child: MyApp(
+          startingWidget: onboardingComplete == true
+              ? const LoginScreen(
+                  firstScreen: true,
+                )
+              : const SplashScreen())));
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.startingWidget});
+
   final Widget startingWidget;
 
   @override
@@ -58,7 +66,7 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _loadTranslations();
+    TranslationService().loadTranslations(context);
   }
 
   @override
@@ -73,47 +81,31 @@ class MyAppState extends State<MyApp> {
   }
 
   Future<void> _loadTranslations() async {
-    try {
-      await TranslationService().loadTranslations(context);
-
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    } catch (e) {
-      // Handle errors gracefully (e.g., log or show error UI)
-      print('Error loading translations: $e'); // Replace with your logging solution
-
-      // Still proceed by hiding loading (customize as needed, e.g., show error screen)
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _loadTranslations();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
-        checkboxTheme: CheckboxThemeData(
-          fillColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.selected)) {
-              return AppColors.primaryColor;
-            }
-            return AppColors.backgroundColor;
-          }),
-          checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
-        ),
-      ),
+          useMaterial3: true,
+          scaffoldBackgroundColor: AppColors.backgroundColor,
+          checkboxTheme: CheckboxThemeData(
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return AppColors.primaryColor;
+              }
+              return AppColors.backgroundColor;
+            }),
+            checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
+          )),
       home: _isLoading
           ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : widget.startingWidget, // Renders only after translations load
+          : widget.startingWidget,
     );
   }
 }
