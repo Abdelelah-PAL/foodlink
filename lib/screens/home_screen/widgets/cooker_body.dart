@@ -121,7 +121,8 @@ class CookerBody extends StatelessWidget {
                 builder: (context, featuresProvider, child) {
               return ListView.builder(
                 itemCount: featuresProvider.cookerFeatures.length,
-                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (ctx, index) {
                   final feature = featuresProvider.cookerFeatures[index];
                   VoidCallback onTap = () {};

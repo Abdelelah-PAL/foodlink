@@ -66,7 +66,7 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    TranslationService().loadTranslations(context);
+    _loadTranslations();
   }
 
   @override
@@ -82,30 +82,37 @@ class MyAppState extends State<MyApp> {
 
   Future<void> _loadTranslations() async {
     setState(() {
+      _isLoading = true;
+    });
+   await TranslationService().loadTranslations(context);
+    setState(() {
       _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _loadTranslations();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          checkboxTheme: CheckboxThemeData(
-            fillColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) {
-                return AppColors.primaryColor;
-              }
-              return AppColors.backgroundColor;
-            }),
-            checkColor: WidgetStateProperty.all(AppColors.backgroundColor),
-          )),
-      home: _isLoading
-          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : widget.startingWidget,
-    );
+    return _isLoading == true
+        ? const CircularProgressIndicator()
+        : GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                useMaterial3: true,
+                scaffoldBackgroundColor: AppColors.backgroundColor,
+                checkboxTheme: CheckboxThemeData(
+                  fillColor: WidgetStateProperty.resolveWith((states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return AppColors.primaryColor;
+                    }
+                    return AppColors.backgroundColor;
+                  }),
+                  checkColor:
+                      WidgetStateProperty.all(AppColors.backgroundColor),
+                )),
+            home: _isLoading
+                ? const Scaffold(
+                    body: Center(child: CircularProgressIndicator()))
+                : widget.startingWidget,
+          );
   }
 }
