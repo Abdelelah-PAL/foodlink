@@ -114,45 +114,45 @@ class CookerBody extends StatelessWidget {
               ),
             ),
           ),
-          SizeConfig.customSizedBox(
-            332,
-            500,
-            Consumer<FeaturesProvider>(
-                builder: (context, featuresProvider, child) {
-              return ListView.builder(
-                itemCount: featuresProvider.cookerFeatures.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (ctx, index) {
-                  final feature = featuresProvider.cookerFeatures[index];
-                  VoidCallback onTap = () {};
-                  switch (feature.keyword) {
-                    case "Calories":
-                      onTap = () {
-                        FeaturesProvider().getAllArticles();
-                        Get.to(const BeyondCaloriesArticlesScreen());
-                      };
-                      break;
-                    case "Planning":
-                      onTap = () {
-                        MealsProvider().getAllPlannedMeals();
-                        Get.to(const MealPlanningScreen());
-                      };
-                      break;
-                  }
-                  return FeatureContainer(
-                    imageUrl: settingsProvider.language == 'en'
-                        ? feature.enImageURL
-                        : feature.arImageURL,
-                    onTap: onTap,
-                    active: feature.active,
-                    premium: feature.premium,
-                    user: userDetails,
-                  );
-                },
-              );
-            }),
-          )
+          Expanded(
+            child: Consumer<FeaturesProvider>(
+              builder: (context, featuresProvider, child) {
+                return ListView.builder(
+                  itemCount: featuresProvider.cookerFeatures.length,
+                  itemBuilder: (ctx, index) {
+                    final feature = featuresProvider.cookerFeatures[index];
+
+                    VoidCallback onTap = () {};
+                    switch (feature.keyword) {
+                      case "Calories":
+                        onTap = () {
+                          context.read<FeaturesProvider>().getAllArticles();
+                          Get.to(const BeyondCaloriesArticlesScreen());
+                        };
+                        break;
+
+                      case "Planning":
+                        onTap = () {
+                          context.read<MealsProvider>().getAllPlannedMeals();
+                          Get.to(const MealPlanningScreen());
+                        };
+                        break;
+                    }
+
+                    return FeatureContainer(
+                      imageUrl: settingsProvider.language == 'en'
+                          ? feature.enImageURL
+                          : feature.arImageURL,
+                      onTap: onTap,
+                      active: feature.active,
+                      premium: feature.premium,
+                      user: userDetails,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
         ]);
       },
     );

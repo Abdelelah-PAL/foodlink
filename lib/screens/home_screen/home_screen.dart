@@ -34,8 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
         context.watch<MealCategoriesProvider>();
     UsersProvider usersProviderWatcher = context.watch<UsersProvider>();
 
-
-
     return mealCategoriesProvider.isLoading == true
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
@@ -50,29 +48,23 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: AppColors.backgroundColor,
             body: Padding(
               padding: EdgeInsets.fromLTRB(
-                  SizeConfig.getProportionalHeight(28),
-                  SizeConfig.getProportionalHeight(0),
-                  SizeConfig.getProportionalHeight(28),
-                  0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      child: usersProviderWatcher.selectedUser!.userTypeId ==
-                              UserTypes.cooker
-                          ? CookerBody(
-                              settingsProvider: settingsProvider,
-                              mealsProvider: mealsProvider,
-                              featuresProvider: featuresProvider,
-                              userDetails: usersProviderWatcher.selectedUser!,
-                            )
-                          : UserBody(
-                              settingsProvider: settingsProvider,
-                              userDetails: usersProviderWatcher.selectedUser!),
-                    ),
-                  ],
-                ),
+                SizeConfig.getProportionalHeight(28),
+                0,
+                SizeConfig.getProportionalHeight(28),
+                0,
               ),
+              child: usersProviderWatcher.selectedUser!.userTypeId ==
+                      UserTypes.cooker
+                  ? CookerBody(
+                      settingsProvider: settingsProvider,
+                      mealsProvider: mealsProvider,
+                      featuresProvider: featuresProvider,
+                      userDetails: usersProviderWatcher.selectedUser!,
+                    )
+                  : UserBody(
+                      settingsProvider: settingsProvider,
+                      userDetails: usersProviderWatcher.selectedUser!,
+                    ),
             ),
           );
   }
