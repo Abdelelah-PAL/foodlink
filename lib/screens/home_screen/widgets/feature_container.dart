@@ -27,17 +27,12 @@ class FeatureContainer extends StatelessWidget {
                 EdgeInsets.only(bottom: SizeConfig.getProportionalHeight(15)),
             child: GestureDetector(
               onTap: onTap,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: SizeConfig.getProportionalWidth(332),
-                    height: SizeConfig.getProportionalHeight(127),
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                    child: Image.network(imageUrl, fit: BoxFit.fill),
-                  ),
-                ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           );

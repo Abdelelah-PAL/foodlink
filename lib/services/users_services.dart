@@ -33,8 +33,7 @@ class UsersServices with ChangeNotifier {
     }
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getUserByRoleAndId(
-      String id, int roleId) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserByRoleAndId(String id, int roleId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> userQuery = await FirebaseFirestore
           .instance

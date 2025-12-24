@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
-import '../../../core/constants/fonts.dart';
 import '../../../core/utils/size_config.dart';
-import '../../../services/translation_services.dart';
 
 class AddBox extends StatelessWidget {
   const AddBox({super.key});

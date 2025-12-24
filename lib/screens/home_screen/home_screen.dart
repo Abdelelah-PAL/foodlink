@@ -22,7 +22,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    final featuresProvider = context.read<FeaturesProvider>();
+    featuresProvider.getAllSliderImages();
     super.initState();
+
   }
 
   @override

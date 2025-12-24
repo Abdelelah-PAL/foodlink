@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/providers/users_provider.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/colors.dart';
@@ -7,7 +6,6 @@ import '../providers/authentication_provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../screens/authentication_screens/login_screen.dart';
 import '../services/translation_services.dart';
-import 'dashboard_controller.dart';
 
 class AuthenticationController {
   static final AuthenticationController _instance =

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/beyond_calories_article.dart';
 import '../models/feature.dart';
+import '../models/slider_image.dart';
 import '../services/features_services.dart';
 
 class FeaturesProvider with ChangeNotifier {
@@ -13,6 +14,7 @@ class FeaturesProvider with ChangeNotifier {
   List<BeyondCaloriesArticle> articles = [];
   List<Feature> cookerFeatures = [];
   List<Feature> userFeatures = [];
+  List<String> sliderImages = [];
 
   final FeaturesServices _fs = FeaturesServices();
   bool isLoading = false;
@@ -90,4 +92,26 @@ class FeaturesProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> getAllSliderImages() async {
+    try {
+      isLoading = true;
+      sliderImages.clear();
+      List<SliderImage> fetchedSliderImages = await _fs.getActiveImages();
+      for (var doc in fetchedSliderImages) {
+        SliderImage sliderImage = SliderImage(
+          active: doc.active,
+          imageUrl: doc.imageUrl,
+        );
+        sliderImages.add(sliderImage.imageUrl);
+      }
+      isLoading = false;
+      notifyListeners();
+    } catch (ex) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+
 }

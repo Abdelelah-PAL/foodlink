@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodlink/controllers/meal_controller.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/general_controller.dart';

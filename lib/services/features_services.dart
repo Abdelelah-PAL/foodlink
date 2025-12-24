@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:foodlink/models/slider_image.dart';
 import '../models/beyond_calories_article.dart';
 import '../models/feature.dart';
 
@@ -35,7 +36,25 @@ class FeaturesServices with ChangeNotifier {
     }
   }
 
+  Future<List<SliderImage>> getActiveImages() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('slider_images')
+          .where('active', isEqualTo: true)
+          .get();
 
+      return snapshot.docs
+          .map(
+            (doc) => SliderImage.fromJson(
+          doc.data(),
+          doc.id, // pass docId if your model supports it
+        ),
+      )
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
 
 }
 
