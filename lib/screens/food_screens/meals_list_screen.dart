@@ -82,133 +82,136 @@ class _MealsListScreenState extends State<MealsListScreen> {
               fromDashboard: false,
               initialIndex: 0,
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomChangeableColorButton(
-                        source: Sources.categoryMeals,
-                        text: "your_meals",
-                        tag: 'userMeals',
-                        mealsProvider: mealsProviderWatcher,
-                        settingsProvider: settingsProvider,
-                      ),
-                      SizeConfig.customSizedBox(40, null, null),
-                      CustomChangeableColorButton(
-                        source: Sources.categoryMeals,
-                        text: "suggested_meals",
-                        tag: 'suggestedMeals',
-                        mealsProvider: mealsProviderWatcher,
-                        settingsProvider: settingsProvider,
-                      ),
-                    ],
-                  ),
-                  mealsProviderWatcher.userMealsPressed == true
-                      ? mealsProviderWatcher.meals.isEmpty
-                          ? Column(
-                              children: [
-                                SizeConfig.customSizedBox(null, SizeConfig.getProperVerticalSpace(5), null),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(AddMealScreen(
-                                        categoryId: widget.categoryId,
-                                        isAddScreen: true,
-                                        isUpdateScreen: false,
-                                        backButtonCallBack: () {
-                                          Get.to(MealsListScreen(
-                                              index: widget.index,
-                                              categoryId: widget.categoryId));
-                                          MealsProvider().resetValues();
-                                        }));
-                                  },
-                                  child: const AddBox(),
-                                ),
-                                SizeConfig.customSizedBox(null, 20, null),
-                                Text(
-                                  TranslationService()
-                                      .translate("add_first_meal"),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontFamily:
-                                          AppFonts.getPrimaryFont(context),
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            )
-                          : Consumer<MealsProvider>(
-                              builder: (context, mealsProvider, child) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: mealsProvider.meals.length,
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (ctx, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        top: SizeConfig.getProportionalHeight(20),
-                                        right:
-                                            SizeConfig.getProportionalHeight(20),
-                                        left:
-                                            SizeConfig.getProportionalHeight(20),
-                                      ),
-                                      child: ListMealTile(
-                                        meal: mealsProvider.meals[index],
-                                        favorites: false,
-                                        source: 'default',
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            )
-                      : mealsProviderWatcher.suggestions.isEmpty
-                          ? Column(
-                            children: [
+            body: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomChangeableColorButton(
+                      source: Sources.categoryMeals,
+                      text: "your_meals",
+                      tag: 'userMeals',
+                      mealsProvider: mealsProviderWatcher,
+                      settingsProvider: settingsProvider,
+                    ),
+                    SizeConfig.customSizedBox(40, null, null),
+                    CustomChangeableColorButton(
+                      source: Sources.categoryMeals,
+                      text: "suggested_meals",
+                      tag: 'suggestedMeals',
+                      mealsProvider: mealsProviderWatcher,
+                      settingsProvider: settingsProvider,
+                    ),
+                  ],
+                ),
 
-                              SizeConfig.customSizedBox(null, SizeConfig.screenHeight! / 4, null),
-                              Text(
-                                TranslationService()
-                                    .translate("no_suggested_meals"),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontFamily:
-                                        AppFonts.getPrimaryFont(context),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )
-                          : Consumer<MealsProvider>(
-                              builder: (context, mealsProvider, child) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: mealsProvider.suggestions.length,
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (ctx, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        top: SizeConfig.getProportionalHeight(20),
-                                        right:
-                                            SizeConfig.getProportionalHeight(20),
-                                        left:
-                                            SizeConfig.getProportionalHeight(20),
-                                      ),
-                                      child: ListMealTile(
-                                        meal: mealsProvider.suggestions[index],
-                                        favorites: false,
-                                        source: 'default',
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            )
-                ],
+                /// 🔹 CONTENT (SCROLLABLE)
+                Expanded(
+                  child: mealsProviderWatcher.userMealsPressed
+                      ? _userMealsSection(context)
+                      : _suggestedMealsSection(context),
+                ),
+              ],
+            ),
+          );
+  }
+
+  Widget _userMealsSection(BuildContext context) {
+    return Consumer<MealsProvider>(
+      builder: (context, mealsProvider, child) {
+        if (mealsProvider.meals.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.to(
+                    AddMealScreen(
+                      categoryId: widget.categoryId,
+                      isAddScreen: true,
+                      isUpdateScreen: false,
+                      backButtonCallBack: () {
+                        Get.to(
+                          MealsListScreen(
+                            index: widget.index,
+                            categoryId: widget.categoryId,
+                          ),
+                        );
+                        MealsProvider().resetValues();
+                      },
+                    ),
+                  );
+                },
+                child: const AddBox(),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                TranslationService().translate("add_first_meal"),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: AppFonts.getPrimaryFont(context),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          );
+        }
+
+        return ListView.builder(
+          itemCount: mealsProvider.meals.length,
+          itemBuilder: (ctx, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.getProportionalHeight(20),
+                vertical: SizeConfig.getProportionalHeight(10),
+              ),
+              child: ListMealTile(
+                meal: mealsProvider.meals[index],
+                favorites: false,
+                source: 'default',
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _suggestedMealsSection(BuildContext context) {
+    return Consumer<MealsProvider>(
+      builder: (context, mealsProvider, child) {
+        if (mealsProvider.suggestions.isEmpty) {
+          return Center(
+            child: Text(
+              TranslationService().translate("no_suggested_meals"),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                fontFamily: AppFonts.getPrimaryFont(context),
+                fontWeight: FontWeight.bold,
               ),
             ),
           );
+        }
+
+        return ListView.builder(
+          itemCount: mealsProvider.suggestions.length,
+          itemBuilder: (ctx, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.getProportionalHeight(20),
+                vertical: SizeConfig.getProportionalHeight(10),
+              ),
+              child: ListMealTile(
+                meal: mealsProvider.suggestions[index],
+                favorites: false,
+                source: 'default',
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

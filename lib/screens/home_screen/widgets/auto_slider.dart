@@ -49,10 +49,12 @@ class _AutoSliderState extends State<AutoSlider> {
   Widget build(BuildContext context) {
     return Consumer<FeaturesProvider>(
       builder: (context, provider, _) {
-        if (provider.sliderImages.isEmpty) {
-          return const SizedBox();
+        if(provider.isLoading) {
+          return SizedBox(
+              width: SizeConfig.getProportionalWidth(10),
+              height: SizeConfig.getProportionalHeight(127),
+              child: const CircularProgressIndicator());
         }
-
         return SizedBox(
           width: SizeConfig.getProportionalWidth(332),
           height: SizeConfig.getProportionalHeight(127),
