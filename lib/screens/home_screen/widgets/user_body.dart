@@ -10,6 +10,7 @@ import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
 import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
 import '../../food_screens/meal_planning_screen.dart';
+import '../../food_screens/themealdb_search_screen.dart';
 import '../../widgets/custom_text.dart';
 import 'feature_container.dart';
 import 'meal_tile.dart';
@@ -41,7 +42,7 @@ class UserBody extends StatelessWidget {
               bottom: SizeConfig.getProportionalHeight(25),
               left: SizeConfig.getProportionalWidth(15)),
           width: SizeConfig.getProportionalWidth(500),
-          height: SizeConfig.getProportionalHeight(270),
+          height: SizeConfig.getProportionalHeight(250),
           child: Consumer<MealCategoriesProvider>(
             builder: (context, mealCategoriesProvider, child) {
               return GridView.builder(
@@ -71,41 +72,46 @@ class UserBody extends StatelessWidget {
         ),
         SizeConfig.customSizedBox(
           332,
-          500,
+          250,
           Consumer<FeaturesProvider>(
               builder: (context, featuresProvider, child) {
-            return ListView.builder(
-              itemCount: featuresProvider.userFeatures.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (ctx, index) {
-                final feature = featuresProvider.userFeatures[index];
-                VoidCallback onTap = () {};
-                switch (feature.keyword) {
-                  case "Calories":
-                    onTap = () {
-                      FeaturesProvider().getAllArticles();
-                      Get.to(const BeyondCaloriesArticlesScreen());
-                    };
-                    break;
-                  case "Planning":
-                    onTap = () {
-                      MealsProvider().getAllPlannedMeals();
-                      Get.to(const MealPlanningScreen());
-                    };
-                    break;
-                }
-                return FeatureContainer(
-                  imageUrl: settingsProvider.language == 'en'
-                      ? feature.enImageURL
-                      : feature.arImageURL,
-                  onTap: onTap,
-                  active: feature.active,
-                  premium: feature.premium,
-                  user: userDetails,
+                return ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    ...featuresProvider.userFeatures.map((feature) {
+                      VoidCallback onTap = () {};
+                      switch (feature.keyword) {
+                        case "ingredient_search":
+                          onTap = () {
+                            Get.to(() => const TheMealDBSearchScreen());
+                          };
+                          break;
+                        case "Calories":
+                          onTap = () {
+                            FeaturesProvider().getAllArticles();
+                            Get.to(const BeyondCaloriesArticlesScreen());
+                          };
+                          break;
+                        case "Planning":
+                          onTap = () {
+                            MealsProvider().getAllPlannedMeals();
+                            Get.to(const MealPlanningScreen());
+                          };
+                          break;
+                      }
+                      return FeatureContainer(
+                        imageUrl: settingsProvider.language == 'en'
+                            ? feature.enImageURL
+                            : feature.arImageURL,
+                        onTap: onTap,
+                        active: feature.active,
+                        premium: feature.premium,
+                        user: userDetails,
+                      );
+                    }),
+                  ],
                 );
-              },
-            );
-          }),
+              }),
         )
       ],
     );

@@ -179,8 +179,12 @@
   "The email address is already in use by another account.": "البريد الإلكتروني مُسجّل من قبل",
   "The email address is badly formatted.": "البريد الإلكتروني غير مكتوب بشكل صحيح",
   "your_meals": "وجباتك",
-  "suggested_meals" : "وجبات مقترحة",
+  "suggested_meals": "وجبات مقترحة",
   "no_suggested_meals": "لا يوجد وجبات مقترحة",
   "add_to_user_meals": "أضف إلى وجباتك",
-  "meal_added_to_your_meals": "تمّت إضافة الوجبة إلى قائمة وجباتك بنجاح"
+  "meal_added_to_your_meals": "تمّت إضافة الوجبة إلى قائمة وجباتك بنجاح",
+  "search_by_ingredient": "بحث حسب المكونات",
+  "enter_ingredient": "أدخل المكون",
+  "no_meals_found": "لم يتم العثور على وجبات",
+  "searching": "جاري البحث..."
 }

@@ -42,160 +42,162 @@ class _EditAccountInfoScreenState extends State<EditAccountInfoScreen> {
           settingsProvider: widget.settingsProvider,
         ),
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.getProportionalHeight(100), // enough bottom padding so content won't be hidden behind button
-              ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: SizeConfig.getProportionalHeight(35),
+      body: SafeArea(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.getProportionalHeight(100), // enough bottom padding so content won't be hidden behind button
+                ),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.getProportionalHeight(35),
+                        ),
+                        child: ProfilePictureContainer(
+                          settingsProvider: widget.settingsProvider,
+                          usersProvider: widget.usersProvider,
+                          circleSize: 68,
+                          iconSize: 50,
+                        ),
                       ),
-                      child: ProfilePictureContainer(
+                      SizeConfig.customSizedBox(null, 10, null),
+                      IconButton(
+                        icon: const Icon(Icons.camera_alt_outlined),
+                        onPressed: () {
+                          widget.usersProvider.pickImageFromSource(context);
+                        },
+                      ),
+                      CustomErrorTxt(
+                        text: TranslationService()
+                            .translate(widget.usersProvider.errorText),
                         settingsProvider: widget.settingsProvider,
-                        usersProvider: widget.usersProvider,
-                        circleSize: 68,
-                        iconSize: 50,
                       ),
-                    ),
-                    SizeConfig.customSizedBox(null, 10, null),
-                    IconButton(
-                      icon: const Icon(Icons.camera_alt_outlined),
-                      onPressed: () {
-                        widget.usersProvider.pickImageFromSource(context);
-                      },
-                    ),
-                    CustomErrorTxt(
-                      text: TranslationService()
-                          .translate(widget.usersProvider.errorText),
-                      settingsProvider: widget.settingsProvider,
-                    ),
-                    SizeConfig.customSizedBox(null, 10, null),
-                    CustomAuthTextFieldHeader(
-                      text: TranslationService().translate('name'),
-                      settingsProvider: widget.settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText: null,
-                      obscureText: false,
-                      textEditingController: widget.usersProvider.usernameController,
-                      borderColor: widget.usersProvider.usernameTextFieldBorderColor,
-                      settingsProvider: widget.settingsProvider,
-                      borderWidth: 3,
-                      isSettings: true,
-                    ),
-                    CustomAuthTextFieldHeader(
-                      text: TranslationService().translate('email'),
-                      settingsProvider: widget.settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText: null,
-                      obscureText: false,
-                      textEditingController: widget.usersProvider.emailController,
-                      borderColor: widget.usersProvider.emailTextFieldBorderColor,
-                      settingsProvider: widget.settingsProvider,
-                      borderWidth: 3,
-                      isSettings: true,
-                    ),
-                    CustomAuthTextFieldHeader(
-                      text: TranslationService().translate('password'),
-                      settingsProvider: widget.settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText: "enter_password",
-                      obscureText: true,
-                      textEditingController: widget.usersProvider.passwordController,
-                      borderColor: widget.usersProvider.passwordTextFieldBorderColor,
-                      settingsProvider: widget.settingsProvider,
-                      borderWidth: 3,
-                      isSettings: true,
-                    ),
-                    CustomAuthTextFieldHeader(
-                      text: TranslationService().translate('confirm_password'),
-                      settingsProvider: widget.settingsProvider,
-                    ),
-                    CustomAuthenticationTextField(
-                      hintText: "confirm_password",
-                      obscureText: true,
-                      textEditingController: widget.usersProvider.confirmedPasswordController,
-                      borderColor: widget.usersProvider.confirmPasswordTextFieldBorderColor,
-                      settingsProvider: widget.settingsProvider,
-                      borderWidth: 3,
-                      isSettings: true,
-                    ),
-                    // add extra bottom padding if needed to avoid content getting hidden behind the button
-                    SizedBox(height: SizeConfig.getProportionalHeight(60)),
-                  ],
+                      SizeConfig.customSizedBox(null, 10, null),
+                      CustomAuthTextFieldHeader(
+                        text: TranslationService().translate('name'),
+                        settingsProvider: widget.settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText: null,
+                        obscureText: false,
+                        textEditingController: widget.usersProvider.usernameController,
+                        borderColor: widget.usersProvider.usernameTextFieldBorderColor,
+                        settingsProvider: widget.settingsProvider,
+                        borderWidth: 3,
+                        isSettings: true,
+                      ),
+                      CustomAuthTextFieldHeader(
+                        text: TranslationService().translate('email'),
+                        settingsProvider: widget.settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText: null,
+                        obscureText: false,
+                        textEditingController: widget.usersProvider.emailController,
+                        borderColor: widget.usersProvider.emailTextFieldBorderColor,
+                        settingsProvider: widget.settingsProvider,
+                        borderWidth: 3,
+                        isSettings: true,
+                      ),
+                      CustomAuthTextFieldHeader(
+                        text: TranslationService().translate('password'),
+                        settingsProvider: widget.settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText: "enter_password",
+                        obscureText: true,
+                        textEditingController: widget.usersProvider.passwordController,
+                        borderColor: widget.usersProvider.passwordTextFieldBorderColor,
+                        settingsProvider: widget.settingsProvider,
+                        borderWidth: 3,
+                        isSettings: true,
+                      ),
+                      CustomAuthTextFieldHeader(
+                        text: TranslationService().translate('confirm_password'),
+                        settingsProvider: widget.settingsProvider,
+                      ),
+                      CustomAuthenticationTextField(
+                        hintText: "confirm_password",
+                        obscureText: true,
+                        textEditingController: widget.usersProvider.confirmedPasswordController,
+                        borderColor: widget.usersProvider.confirmPasswordTextFieldBorderColor,
+                        settingsProvider: widget.settingsProvider,
+                        borderWidth: 3,
+                        isSettings: true,
+                      ),
+                      // add extra bottom padding if needed to avoid content getting hidden behind the button
+                      SizedBox(height: SizeConfig.getProportionalHeight(60)),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 30, // fixed 30 px from bottom
-              child: Center(
-                child: CustomButton(
-                  onTap: () async {
-                    widget.usersProvider.checkEmptyFields();
-                    if (!widget.usersProvider.noneIsEmpty) {
-                      setState(() {
-                        widget.usersProvider.changeTextFieldsColors();
-                      });
-                      return;
-                    }
-                    widget.usersProvider.checkMatchedPassword();
-                    if (!widget.usersProvider.isMatched) {
-                      setState(() {
-                        widget.usersProvider.changeTextFieldsColors();
-                      });
-                      return;
-                    }
-                    widget.usersProvider.checkValidPassword();
-                    if (!widget.usersProvider.passwordIsValid) {
-                      setState(() {
-                        widget.usersProvider.changeTextFieldsColors();
-                      });
-                      return;
-                    }
-                    if (widget.usersProvider.isMatched &&
-                        widget.usersProvider.passwordIsValid) {
-                      setState(() {
-                        widget.usersProvider.changeTextFieldsColors();
-                      });
-
-                      await SettingsController().updateUserDetails(
-                        widget.usersProvider,
-                        dashboardProvider,
-                        authenticationProvider,
-                        widget.usersProvider.selectedUser!.userId,
-                        widget.usersProvider.usernameController.text,
-                        widget.usersProvider.emailController.text,
-                        widget.usersProvider.passwordController.text.trim(),
-                        widget.usersProvider.selectedUser!.userTypeId!,
-                        context,
-                      );
-                    }
-                  },
-                  text: "save",
-                  width: SizeConfig.getProportionalWidth(137),
-                  height: SizeConfig.getProportionalHeight(45),
-                  fontSize: widget.settingsProvider.language == 'en' ? 24 : 30,
-                  fontWeight: FontWeight.w700,
-                  isDisabled: false,
+        
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 30, // fixed 30 px from bottom
+                child: Center(
+                  child: CustomButton(
+                    onTap: () async {
+                      widget.usersProvider.checkEmptyFields();
+                      if (!widget.usersProvider.noneIsEmpty) {
+                        setState(() {
+                          widget.usersProvider.changeTextFieldsColors();
+                        });
+                        return;
+                      }
+                      widget.usersProvider.checkMatchedPassword();
+                      if (!widget.usersProvider.isMatched) {
+                        setState(() {
+                          widget.usersProvider.changeTextFieldsColors();
+                        });
+                        return;
+                      }
+                      widget.usersProvider.checkValidPassword();
+                      if (!widget.usersProvider.passwordIsValid) {
+                        setState(() {
+                          widget.usersProvider.changeTextFieldsColors();
+                        });
+                        return;
+                      }
+                      if (widget.usersProvider.isMatched &&
+                          widget.usersProvider.passwordIsValid) {
+                        setState(() {
+                          widget.usersProvider.changeTextFieldsColors();
+                        });
+        
+                        await SettingsController().updateUserDetails(
+                          widget.usersProvider,
+                          dashboardProvider,
+                          authenticationProvider,
+                          widget.usersProvider.selectedUser!.userId,
+                          widget.usersProvider.usernameController.text,
+                          widget.usersProvider.emailController.text,
+                          widget.usersProvider.passwordController.text.trim(),
+                          widget.usersProvider.selectedUser!.userTypeId!,
+                          context,
+                        );
+                      }
+                    },
+                    text: "save",
+                    width: SizeConfig.getProportionalWidth(137),
+                    height: SizeConfig.getProportionalHeight(45),
+                    fontSize: widget.settingsProvider.language == 'en' ? 24 : 30,
+                    fontWeight: FontWeight.w700,
+                    isDisabled: false,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

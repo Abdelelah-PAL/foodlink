@@ -34,82 +34,84 @@ class RolesScreen extends StatelessWidget {
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                SizeConfig.getProportionalWidth(10),
-                SizeConfig.getProportionalHeight(80),
-                SizeConfig.getProportionalWidth(10),
-                SizeConfig.getProportionalHeight(30),
-              ),
-              child: Column(children: [
-                SizeConfig.customSizedBox(
-                    179, 179, Image.asset(Assets.pureLogo)),
-                SizeConfig.customSizedBox(null, 34, null),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.getProportionalHeight(0),
-                      bottom: SizeConfig.getProportionalHeight(50),
-                      left: SizeConfig.getProportionalWidth(20),
-                      right: SizeConfig.getProportionalWidth(20)),
-                  child: Align(
-                    alignment: settingsProvider.language == "en"
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                    child: Text(
-                      TranslationService().translate("choose_role"),
-                      textDirection: settingsProvider.language == "en"
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      textAlign: settingsProvider.language == "en"
-                          ? TextAlign.left
-                          : TextAlign.right,
-                      style: TextStyle(
-                          fontFamily: AppFonts.getPrimaryFont(context),
-                          fontSize: settingsProvider.language == "en" ? 25 : 30,
-                          color: AppColors.fontColor,
-                          fontWeight: FontWeight.bold),
-                      softWrap: false,
+          child: SafeArea(
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalHeight(80),
+                  SizeConfig.getProportionalWidth(10),
+                  SizeConfig.getProportionalHeight(30),
+                ),
+                child: Column(children: [
+                  SizeConfig.customSizedBox(
+                      179, 179, Image.asset(Assets.pureLogo)),
+                  SizeConfig.customSizedBox(null, 34, null),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.getProportionalHeight(0),
+                        bottom: SizeConfig.getProportionalHeight(20),
+                        left: SizeConfig.getProportionalWidth(20),
+                        right: SizeConfig.getProportionalWidth(20)),
+                    child: Align(
+                      alignment: settingsProvider.language == "en"
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
+                      child: Text(
+                        TranslationService().translate("choose_role"),
+                        textDirection: settingsProvider.language == "en"
+                            ? TextDirection.ltr
+                            : TextDirection.rtl,
+                        textAlign: settingsProvider.language == "en"
+                            ? TextAlign.left
+                            : TextAlign.right,
+                        style: TextStyle(
+                            fontFamily: AppFonts.getPrimaryFont(context),
+                            fontSize: settingsProvider.language == "en" ? 25 : 30,
+                            color: AppColors.fontColor,
+                            fontWeight: FontWeight.bold),
+                        softWrap: false,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      UserTile(
-                          dashboardProvider: dashboardProvider,
-                          settingsProvider: settingsProvider),
-                      SizeConfig.customSizedBox(null, 30, null),
-                      CookerTile(
-                          dashboardProvider: dashboardProvider,
-                          settingsProvider: settingsProvider),
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: [
+                        UserTile(
+                            dashboardProvider: dashboardProvider,
+                            settingsProvider: settingsProvider),
+                        SizeConfig.customSizedBox(null, 15, null),
+                        CookerTile(
+                            dashboardProvider: dashboardProvider,
+                            settingsProvider: settingsProvider),
+                      ],
+                    ),
                   ),
-                ),
-                CustomButton(
-                  onTap: () async {
-                    int roleId = dashboardProvider.roleId;
-                    TextEditingController controller =
-                        roleId == UserTypes.cooker
-                            ? dashboardProvider.cookerNameController
-                            : dashboardProvider.userNameController;
-                    await UsersServices()
-                        .updateUsername(user.uid, roleId, controller.text);
-                    UsersProvider().selectedUser = await UsersProvider()
-                        .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
-                    MealCategoriesProvider().getAllMealCategories();
-                    await NotificationsProvider().getAllNotifications(
-                        UsersProvider().selectedUser!.userTypeId,
-                        UsersProvider().selectedUser!.userId);
-                    Get.to(const Dashboard(
-                      initialIndex: 0,
-                    ));
-                  },
-                  text: TranslationService().translate("next"),
-                  width: SizeConfig.getProportionalWidth(216),
-                  height: SizeConfig.getProportionalHeight(45),
-                  isDisabled: true,
-                )
-              ])),
+                  CustomButton(
+                    onTap: () async {
+                      int roleId = dashboardProvider.roleId;
+                      TextEditingController controller =
+                          roleId == UserTypes.cooker
+                              ? dashboardProvider.cookerNameController
+                              : dashboardProvider.userNameController;
+                      await UsersServices()
+                          .updateUsername(user.uid, roleId, controller.text);
+                      UsersProvider().selectedUser = await UsersProvider()
+                          .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
+                      MealCategoriesProvider().getAllMealCategories();
+                      await NotificationsProvider().getAllNotifications(
+                          UsersProvider().selectedUser!.userTypeId,
+                          UsersProvider().selectedUser!.userId);
+                      Get.to(const Dashboard(
+                        initialIndex: 0,
+                      ));
+                    },
+                    text: TranslationService().translate("next"),
+                    width: SizeConfig.getProportionalWidth(216),
+                    height: SizeConfig.getProportionalHeight(45),
+                    isDisabled: true,
+                  )
+                ])),
+          ),
         ));
   }
 }

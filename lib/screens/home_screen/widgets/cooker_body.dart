@@ -10,6 +10,8 @@ import '../../../providers/settings_provider.dart';
 import '../../../services/translation_services.dart';
 import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
 import '../../food_screens/meal_planning_screen.dart';
+import '../../../core/constants/assets.dart';
+import '../../food_screens/themealdb_search_screen.dart';
 import '../../widgets/custom_text.dart';
 import 'feature_container.dart';
 import 'meal_tile.dart';
@@ -88,39 +90,42 @@ class CookerBody extends StatelessWidget {
         Expanded(
           child: Consumer<FeaturesProvider>(
             builder: (context, featuresProvider, child) {
-              return ListView.builder(
-                itemCount: featuresProvider.cookerFeatures.length,
-                itemBuilder: (ctx, index) {
-                  final feature = featuresProvider.cookerFeatures[index];
+              return ListView(
+                children: [
+                  ...featuresProvider.cookerFeatures.map((feature) {
+                    VoidCallback onTap = () {};
+                    switch (feature.keyword) {
+                      case "Ingredient Search":
+                        onTap = () {
+                          Get.to(() => const TheMealDBSearchScreen());
+                        };
+                        break;
+                      case "Calories":
+                        onTap = () {
+                          context.read<FeaturesProvider>().getAllArticles();
+                          Get.to(const BeyondCaloriesArticlesScreen());
+                        };
+                        break;
 
-                  VoidCallback onTap = () {};
+                      case "Planning":
+                        onTap = () {
+                          context.read<MealsProvider>().getAllPlannedMeals();
+                          Get.to(const MealPlanningScreen());
+                        };
+                        break;
+                    }
 
-                  switch (feature.keyword) {
-                    case "Calories":
-                      onTap = () {
-                        context.read<FeaturesProvider>().getAllArticles();
-                        Get.to(const BeyondCaloriesArticlesScreen());
-                      };
-                      break;
-
-                    case "Planning":
-                      onTap = () {
-                        context.read<MealsProvider>().getAllPlannedMeals();
-                        Get.to(const MealPlanningScreen());
-                      };
-                      break;
-                  }
-
-                  return FeatureContainer(
-                    imageUrl: settingsProvider.language == 'en'
-                        ? feature.enImageURL
-                        : feature.arImageURL,
-                    onTap: onTap,
-                    active: feature.active,
-                    premium: feature.premium,
-                    user: userDetails,
-                  );
-                },
+                    return FeatureContainer(
+                      imageUrl: settingsProvider.language == 'en'
+                          ? feature.enImageURL
+                          : feature.arImageURL,
+                      onTap: onTap,
+                      active: feature.active,
+                      premium: feature.premium,
+                      user: userDetails,
+                    );
+                  }).toList(),
+                ],
               );
             },
           ),

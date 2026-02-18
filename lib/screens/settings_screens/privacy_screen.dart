@@ -24,15 +24,17 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       appBar:PreferredSize(
           preferredSize: Size.fromHeight(SizeConfig.getProportionalHeight(100)),
           child: CustomTopBar(text: 'privacy', rightPadding: 150, settingsProvider: widget.settingsProvider)),
-      body: Directionality(
-        textDirection: textDirection,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.settingsProvider.language == "ar"
-                ? _arabicContent()
-                : _englishContent(),
+      body: SafeArea(
+        child: Directionality(
+          textDirection: textDirection,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.settingsProvider.language == "ar"
+                  ? _arabicContent()
+                  : _englishContent(),
+            ),
           ),
         ),
       ),

@@ -5,8 +5,7 @@ import '../../../providers/meals_provider.dart';
 import '../../../providers/settings_provider.dart';
 
 class IngredientBox extends StatelessWidget {
-  const IngredientBox(
-      {super.key,
+  const IngredientBox({super.key,
       required this.settingsProvider,
       required this.controller,
       required this.mealsProvider,

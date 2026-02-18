@@ -16,16 +16,13 @@ import 'providers/notification_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/task_provider.dart';
 import 'providers/users_provider.dart';
-import 'screens/authentication_screens/login_screen.dart';
-import 'screens/splash_screen/splash_screen.dart';
+import 'screens/initial_screen/initial_screen.dart';
 import 'services/translation_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
-  final prefs = await SharedPreferences.getInstance();
-  final onboardingComplete = prefs.getBool('onboarding_complete') ?? false;
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
@@ -39,12 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
         ChangeNotifierProvider(create: (ctx) => TaskProvider()),
       ],
-      child: MyApp(
-          startingWidget: onboardingComplete == true
-              ? const LoginScreen(
-                  firstScreen: true,
-                )
-              : const SplashScreen())));
+      child: const MyApp(startingWidget: InitialScreen())));
 }
 
 class MyApp extends StatefulWidget {

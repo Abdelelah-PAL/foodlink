@@ -182,5 +182,9 @@
   "suggested_meals" : "Suggested Meals",
   "no_suggested_meals": "No suggested meals",
   "add_to_user_meals": "Add to your meals",
-  "meal_added_to_your_meals": "This meal has been added to your meals list successfully"
+  "meal_added_to_your_meals": "This meal has been added to your meals list successfully",
+  "search_by_ingredient": "Search by Ingredient",
+  "enter_ingredient": "Enter an ingredient",
+  "no_meals_found": "No meals found",
+  "searching": "Searching..."
 }
