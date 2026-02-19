@@ -2,6 +2,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodlink/screens/splash_screen/splash_screen.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +24,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
+  final prefs = await SharedPreferences.getInstance();
+  final onboardingComplete = prefs.getBool('onboarding_complete') ?? false;
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => GeneralProvider()),
@@ -36,7 +40,9 @@ void main() async {
         ChangeNotifierProvider(create: (ctx) => FeaturesProvider()),
         ChangeNotifierProvider(create: (ctx) => TaskProvider()),
       ],
-      child: const MyApp(startingWidget: InitialScreen())));
+      child:  MyApp(startingWidget: onboardingComplete == true
+              ? const InitialScreen()
+              : const SplashScreen())));
 }
 
 class MyApp extends StatefulWidget {

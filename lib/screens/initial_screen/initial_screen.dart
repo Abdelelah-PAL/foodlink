@@ -9,6 +9,7 @@ import '../../core/utils/size_config.dart';
 import '../authentication_screens/login_screen.dart';
 import '../onboarding_screen/onboarding_screen.dart';
 import '../roles_screen/roles_screen.dart';
+import '../splash_screen/splash_screen.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({super.key});
@@ -48,7 +49,7 @@ class _InitialScreenState extends State<InitialScreen> {
       if (onboardingComplete) {
         Get.offAll(() => const LoginScreen(firstScreen: true));
       } else {
-        Get.offAll(() => const OnBoardingScreen());
+        Get.offAll(() => const SplashScreen());
       }
     }
   }
