@@ -20,6 +20,7 @@ class CustomAppIconicTextField extends StatelessWidget {
     required this.settingsProvider,
     required this.enabled,
     this.textAlign,
+    this.fontSize,
   });
 
   final double width;
@@ -33,6 +34,7 @@ class CustomAppIconicTextField extends StatelessWidget {
   final SettingsProvider settingsProvider;
   final bool enabled;
   final TextAlign? textAlign;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class CustomAppIconicTextField extends StatelessWidget {
             CustomText(
               isCenter: false,
               text: TranslationService().translate(headerText),
-              fontSize: 20,
+              fontSize: fontSize ?? 20,
               fontWeight: FontWeight.bold,
             ),
           ],

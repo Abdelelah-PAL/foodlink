@@ -11,7 +11,7 @@ import '../../../services/translation_services.dart';
 import '../../beyond_calories_articles_screen/beyond_calories_articles_screen.dart';
 import '../../food_screens/meal_planning_screen.dart';
 import '../../../core/constants/assets.dart';
-import '../../food_screens/themealdb_search_screen.dart';
+import '../../food_screens/gemini_search_screen.dart';
 import '../../widgets/custom_text.dart';
 import 'feature_container.dart';
 import 'meal_tile.dart';
@@ -97,7 +97,7 @@ class CookerBody extends StatelessWidget {
                     switch (feature.keyword) {
                       case "Ingredient Search":
                         onTap = () {
-                          Get.to(() => const TheMealDBSearchScreen());
+                          Get.to(() => const GeminiSearchScreen());
                         };
                         break;
                       case "Calories":
