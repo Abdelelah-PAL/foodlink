@@ -46,8 +46,9 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
         }
       });
     } catch (e) {
+      final errorMessage = e.toString().replaceFirst('Exception: ', '');
       setState(() {
-        _error = 'Failed to generate meals. Server check needed.';
+        _error = errorMessage;
       });
     } finally {
       setState(() {
@@ -71,18 +72,34 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
             padding: EdgeInsets.symmetric(
                 vertical: SizeConfig.getProportionalWidth(50),
                 horizontal: SizeConfig.getProportionalWidth(20)),
-            child: const Stack(
+            child:  Stack(
               alignment: Alignment.center,
               children: [
-                Align(
+                const Align(
                     alignment: Alignment.centerLeft,
-                    child: CustomBackButton()),
-                Center(
+                    child:  CustomBackButton()),
+                 const Center(
                   child: CustomText(
                       isCenter: true,
                       text: "AI Meal Gen",
                       fontSize: 25,
                       fontWeight: FontWeight.bold),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.network_check, color: AppColors.widgetsColor),
+                    onPressed: () async {
+                      bool success = await _apiService.testConnection();
+                      if (success) {
+                        Get.snackbar("Success", "Backend is reachable!",
+                            backgroundColor: Colors.green, colorText: Colors.white);
+                      } else {
+                        Get.snackbar("Error", "Cannot reach backend. Check 10.0.2.2:3500",
+                            backgroundColor: Colors.red, colorText: Colors.white);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
@@ -142,7 +159,7 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
                       ],
                     )
                   : _error != null
-                      ? Center(child: CustomText(text: TranslationService().translate(_error!), fontSize: 18, isCenter: true, fontWeight: FontWeight.normal,))
+                      ? Center(child: CustomText(text: TranslationService().translate(_error!), fontSize: 10, isCenter: true, fontWeight: FontWeight.normal))
                       : ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           itemCount: _searchResults.length,

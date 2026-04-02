@@ -27,21 +27,37 @@ class Meal {
     required this.typeId
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json, docId) {
+  factory Meal.fromJson(Map<String, dynamic> json, dynamic docId) {
     return Meal(
-      documentId: docId,
-      categoryId: json['category_id'],
-      name: json['name'],
-      imageUrl: json['image_url'],
-      ingredients: List<String>.from(json['ingredients']),
-      recipe: List<String>.from(json['recipe']),
-      userId: json['user_id'],
-      isFavorite: json['is_favorite'],
-      date: json['date']?.toDate(),
-      day: json['day'],
-      source: json['source'],
-      typeId: json['type_id'],
+      documentId: docId?.toString(),
+      categoryId: json['category_id'] as int?,
+      name: json['name'] ?? 'Unknown Meal',
+      imageUrl: json['image_url'] as String?,
+      ingredients: json['ingredients'] != null 
+          ? List<String>.from(json['ingredients'] as Iterable) 
+          : [],
+      recipe: json['recipe'] != null 
+          ? List<String>.from(json['recipe'] as Iterable) 
+          : [],
+      userId: json['user_id'] as String?,
+      isFavorite: json['is_favorite'] as bool? ?? false,
+      date: _parseDate(json['date']),
+      day: json['day'] as String?,
+      source: json['source'] as String?,
+      typeId: json['type_id'] as int? ?? 1,
     );
+  }
+
+  static DateTime? _parseDate(dynamic date) {
+    if (date == null) return null;
+    if (date is DateTime) return date;
+    if (date is String) return DateTime.tryParse(date);
+    // Handle Firestore Timestamp if the method exists on the object
+    try {
+      return (date as dynamic).toDate();
+    } catch (_) {
+      return null;
+    }
   }
 
   Map<String, dynamic> toMap() {
