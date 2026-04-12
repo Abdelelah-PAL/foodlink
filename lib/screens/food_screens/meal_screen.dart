@@ -133,7 +133,7 @@ class MealScreen extends StatelessWidget {
                           ),
                           SizeConfig.customSizedBox(20, null, null)
                         ],
-                        if (meal.typeId != MealTypes.suggestedMeal) ...[
+                        if (meal.typeId != MealTypes.suggestedMeal && meal.typeId != MealTypes.aiGenerated) ...[
                           CustomButton(
                             onTap: () {
                               mealsProvider.checkboxValues = List.generate(
