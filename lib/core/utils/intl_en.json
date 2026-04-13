@@ -187,5 +187,6 @@
   "enter_ingredient": "Enter an ingredient",
   "no_meals_found": "No meals found",
   "searching": "Searching...",
-  "enter_ingredients_comma": "Insert ingredients separated by (,)"
+  "enter_ingredients_comma": "Insert ingredients separated by (,)",
+  "get_meal_suggestion": "Get a suggestion for your meal"
 }

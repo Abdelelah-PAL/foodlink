@@ -39,6 +39,7 @@ class MealsProvider with ChangeNotifier {
   List<TextEditingController> stepsControllers = [
     TextEditingController(),
   ];
+  List<int> ingredientQuantities = [1];
   List<bool> checkboxValues = [];
   DateTime? currentStartDate;
   List<Map<String, dynamic>> weeklyPlanList = [];
@@ -246,18 +247,21 @@ class MealsProvider with ChangeNotifier {
     ];
     ingredientsControllers.map((controller) => {controller.clear()});
     stepsControllers.map((controller) => {controller.clear()});
+    ingredientQuantities = [1];
     notifyListeners();
   }
 
   void increaseIngredients() {
     numberOfIngredients++;
     ingredientsControllers.add(TextEditingController());
+    ingredientQuantities.add(1);
     notifyListeners();
   }
 
   void removeIngredient(index) {
     numberOfIngredients--;
     ingredientsControllers.removeAt(index);
+    ingredientQuantities.removeAt(index);
     notifyListeners();
   }
 
@@ -277,11 +281,23 @@ class MealsProvider with ChangeNotifier {
     MealController().nameController.text = meal.name;
     MealController().sourceController.text = meal.source ?? "";
     numberOfIngredients = meal.ingredients.length + 1;
-    meal.ingredients.asMap().forEach((index, controller) {
+    ingredientQuantities = [];
+    meal.ingredients.asMap().forEach((index, ingredientText) {
       if (index + 1 > ingredientsControllers.length) {
         ingredientsControllers.add(TextEditingController());
       }
-      ingredientsControllers[index].text = meal.ingredients[index];
+      
+      int quantity = 1;
+      String text = ingredientText;
+      final RegExp regex = RegExp(r'^(\d+)\s+(.*)$');
+      final match = regex.firstMatch(ingredientText);
+      if (match != null) {
+        quantity = int.parse(match.group(1)!);
+        text = match.group(2)!;
+      }
+      
+      ingredientQuantities.add(quantity);
+      ingredientsControllers[index].text = text;
     });
     numberOfSteps = meal.recipe.length + 1;
     meal.recipe.asMap().forEach((index, controller) {
@@ -296,6 +312,13 @@ class MealsProvider with ChangeNotifier {
   void toggleCheckedIngredient(value, listIndex) {
     checkboxValues[listIndex] = value;
     notifyListeners();
+  }
+
+  void updateIngredientQuantity(int index, int delta) {
+    if (ingredientQuantities[index] + delta > 0) {
+      ingredientQuantities[index] += delta;
+      notifyListeners();
+    }
   }
 
   void setDefaultDate() {

@@ -187,6 +187,7 @@
   "enter_ingredient": "أدخل المكون",
   "no_meals_found": "لم يتم العثور على وجبات",
   "searching": "جاري البحث...",
-  "enter_ingredients_comma": "أدخل المكونات مفصولة بـ (,)"
+  "enter_ingredients_comma": "أدخل المكونات مفصولة بـ (,)",
+  "get_meal_suggestion": "احصل على اقتراح لوجبتك"
 
 }

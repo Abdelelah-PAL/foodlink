@@ -33,11 +33,14 @@ class MealController {
     if (mealsProvider.imageIsPicked) {
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
-    List<String> ingredients = MealsProvider()
-        .ingredientsControllers
-        .map((controller) => controller.text)
-        .where((text) => text.isNotEmpty)
-        .toList();
+    List<String> ingredients = [];
+    for (int i = 0; i < MealsProvider().ingredientsControllers.length; i++) {
+        String text = MealsProvider().ingredientsControllers[i].text.trim();
+        if (text.isNotEmpty) {
+            int q = MealsProvider().ingredientQuantities.length > i ? MealsProvider().ingredientQuantities[i] : 1;
+            ingredients.add("$q $text");
+        }
+    }
     List<String> steps = MealsProvider()
         .stepsControllers
         .map((controller) => controller.text)
@@ -68,11 +71,14 @@ class MealController {
       }
       imageUrl = await MealsProvider().uploadImage(mealsProvider.pickedFile);
     }
-    List<String> ingredients = MealsProvider()
-        .ingredientsControllers
-        .map((controller) => controller.text)
-        .where((text) => text.isNotEmpty)
-        .toList();
+    List<String> ingredients = [];
+    for (int i = 0; i < MealsProvider().ingredientsControllers.length; i++) {
+        String text = MealsProvider().ingredientsControllers[i].text.trim();
+        if (text.isNotEmpty) {
+            int q = MealsProvider().ingredientQuantities.length > i ? MealsProvider().ingredientQuantities[i] : 1;
+            ingredients.add("$q $text");
+        }
+    }
     List<String> steps = MealsProvider()
         .stepsControllers
         .map((controller) => controller.text)

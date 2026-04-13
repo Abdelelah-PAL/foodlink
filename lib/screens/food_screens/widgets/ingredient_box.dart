@@ -18,47 +18,72 @@ class IngredientBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    bool isEn = settingsProvider.language == 'en';
+    int quantity = mealsProvider.ingredientQuantities.length > index ? mealsProvider.ingredientQuantities[index] : 1;
+
+    Widget quantityAdjuster = Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: SizeConfig.getProportionalWidth(110),
-          height: SizeConfig.getProportionalHeight(40),
-          margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(10),
-            horizontal: SizeConfig.getProportionalWidth(3),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(width: 3.0, color: AppColors.widgetsColor),
-          ),
-          child: TextField(
-            controller: controller,
-            textDirection: settingsProvider.language == 'en'
-                ? TextDirection.ltr
-                : TextDirection.rtl,
-            textAlign: settingsProvider.language == 'en'
-                ? TextAlign.left
-                : TextAlign.right,
-            style: const TextStyle(fontSize: 12),
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(
-                  SizeConfig.getProportionalWidth(15),
-                  SizeConfig.getProportionalHeight(0),
-                  SizeConfig.getProportionalWidth(15),
-                  SizeConfig.getProportionalHeight(15)),
-              border: InputBorder.none,
-            ),
+        GestureDetector(
+          onTap: () {
+            if (quantity > 1) {
+              mealsProvider.updateIngredientQuantity(index, -1);
+            } else {
+              mealsProvider.removeIngredient(index);
+            }
+          },
+          child: Container(
+            width: 20,
+            height: 20,
+            decoration: const BoxDecoration(color: AppColors.widgetsColor, shape: BoxShape.circle),
+            child: const Center(child: Icon(Icons.remove, size: 14, color: Colors.black)),
           ),
         ),
-        Positioned(
-            left: -10,
-            top: 0,
-            child: IconButton(
-                onPressed: () {
-                  mealsProvider.removeIngredient(index);
-                },
-                icon: const Icon(Icons.highlight_remove_rounded, size: 18, color: Colors.grey,)))
+        const SizedBox(width: 8),
+        Text('$quantity', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: () => mealsProvider.updateIngredientQuantity(index, 1),
+          child: Container(
+            width: 20,
+            height: 20,
+            decoration: const BoxDecoration(color: AppColors.widgetsColor, shape: BoxShape.circle),
+            child: const Center(child: Icon(Icons.add, size: 14, color: Colors.black)),
+          ),
+        ),
       ],
+    );
+
+    Widget textField = Expanded(
+      child: TextField(
+        controller: controller,
+        textDirection: isEn ? TextDirection.ltr : TextDirection.rtl,
+        textAlign: isEn ? TextAlign.left : TextAlign.right,
+        style: const TextStyle(fontSize: 14),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: SizeConfig.getProportionalWidth(10)),
+          border: InputBorder.none,
+          isDense: true,
+        ),
+      ),
+    );
+
+    List<Widget> rowChildren = isEn
+        ? [textField, VerticalDivider(color: Colors.grey.shade300, width: 1, thickness: 1), const SizedBox(width: 8), quantityAdjuster, const SizedBox(width: 8)]
+        : [const SizedBox(width: 8), quantityAdjuster, const SizedBox(width: 8), VerticalDivider(color: Colors.grey.shade300, width: 1, thickness: 1), textField];
+
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.getProportionalHeight(5),
+        horizontal: SizeConfig.getProportionalWidth(3),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(width: 2.0, color: AppColors.widgetsColor),
+      ),
+      child: Row(
+        children: rowChildren,
+      ),
     );
   }
 }
@@ -73,17 +98,15 @@ class AddIngredientBox extends StatelessWidget {
     return GestureDetector(
       onTap: mealsProvider.increaseIngredients,
       child: Container(
-          width: SizeConfig.getProportionalWidth(110),
-          height: SizeConfig.getProportionalHeight(40),
           margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(10),
+            vertical: SizeConfig.getProportionalHeight(5),
             horizontal: SizeConfig.getProportionalWidth(3),
           ),
           decoration: BoxDecoration(
             color: AppColors.widgetsColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: const Icon(Icons.add)),
+          child: const Icon(Icons.add, size: 30, color: Colors.black)),
     );
   }
 }

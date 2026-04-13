@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodlink/controllers/meal_types.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/assets.dart';
@@ -38,7 +39,8 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
     });
 
     try {
-      final results = await _apiService.generateMealsFromIngredients(_searchController.text.trim());
+      final results = await _apiService
+          .generateMealsFromIngredients(_searchController.text.trim());
       setState(() {
         _searchResults = results;
         if (results.isEmpty) {
@@ -72,31 +74,34 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
             padding: EdgeInsets.symmetric(
                 vertical: SizeConfig.getProportionalWidth(50),
                 horizontal: SizeConfig.getProportionalWidth(20)),
-            child:  Stack(
+            child: Stack(
               alignment: Alignment.center,
               children: [
                 const Align(
-                    alignment: Alignment.centerLeft,
-                    child:  CustomBackButton()),
-                 const Center(
+                    alignment: Alignment.centerLeft, child: CustomBackButton()),
+                const Center(
                   child: CustomText(
                       isCenter: true,
-                      text: "AI Meal Gen",
+                      text: "get_meal_suggestion",
                       fontSize: 25,
                       fontWeight: FontWeight.bold),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
-                    icon: const Icon(Icons.network_check, color: AppColors.widgetsColor),
+                    icon: const Icon(Icons.network_check,
+                        color: AppColors.widgetsColor),
                     onPressed: () async {
                       bool success = await _apiService.testConnection();
                       if (success) {
                         Get.snackbar("Success", "Backend is reachable!",
-                            backgroundColor: Colors.green, colorText: Colors.white);
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white);
                       } else {
-                        Get.snackbar("Error", "Cannot reach backend. Check 10.0.2.2:3500",
-                            backgroundColor: Colors.red, colorText: Colors.white);
+                        Get.snackbar("Error",
+                            "Cannot reach backend. Check 10.0.2.2:3500",
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white);
                       }
                     },
                   ),
@@ -134,37 +139,49 @@ class _GeminiSearchScreenState extends State<GeminiSearchScreen> {
                   ),
                 ),
                 child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                    )
-                  : const CustomText(
-                      text: "search",
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      isCenter: true,
-                    ),
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            color: Colors.white, strokeWidth: 2),
+                      )
+                    : const CustomText(
+                        text: "search",
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        isCenter: true,
+                      ),
               ),
             ),
             const SizedBox(height: 20),
             Expanded(
               child: _isLoading && _searchResults.isEmpty
-                  ? const Column(
+                  ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(color: AppColors.widgetsColor),
-                        SizedBox(height: 16),
-                        Text("Chef Gemini is thinking..."),
+                        Image.asset(Assets.aiChef, width: 350, height: 350),
+                        const SizedBox(height: 16),
+                        const CustomText(
+                          text: "AI Chef is thinking...",
+                          isCenter: true,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ],
                     )
                   : _error != null
-                      ? Center(child: CustomText(text: TranslationService().translate(_error!), fontSize: 10, isCenter: true, fontWeight: FontWeight.normal))
+                      ? Center(
+                          child: CustomText(
+                              text: TranslationService().translate(_error!),
+                              fontSize: 10,
+                              isCenter: true,
+                              fontWeight: FontWeight.normal))
                       : ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           itemCount: _searchResults.length,
                           itemBuilder: (context, index) {
                             final meal = _searchResults[index];
+                            meal.typeId = MealTypes.aiGenerated;
                             return TheMealDBTile(
                               meal: meal,
                               onTap: () => _onMealTap(meal),

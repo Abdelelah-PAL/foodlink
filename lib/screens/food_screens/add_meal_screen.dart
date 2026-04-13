@@ -101,7 +101,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         ),
                         Container(
                             width: SizeConfig.getProportionalWidth(347),
-                            height: SizeConfig.getProportionalHeight(130),
                             margin: EdgeInsets.symmetric(
                                 horizontal:
                                     SizeConfig.getProportionalWidth(26)),
@@ -110,12 +109,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                   ? TextDirection.rtl
                                   : TextDirection.ltr,
                               child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
+                                        crossAxisCount: 2,
                                         crossAxisSpacing: 8,
-                                        mainAxisSpacing: 0,
-                                        childAspectRatio: 1.7),
+                                        mainAxisSpacing: 8,
+                                        childAspectRatio: 2.8),
                                 itemCount: mealsProvider.numberOfIngredients,
                                 itemBuilder: (context, index) {
                                   if (index ==
@@ -158,11 +159,12 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         ),
                         Container(
                             width: SizeConfig.getProportionalWidth(347),
-                            height: SizeConfig.getProportionalHeight(150),
                             margin: EdgeInsets.symmetric(
                                 horizontal:
                                     SizeConfig.getProportionalWidth(26)),
                             child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: mealsProvider.numberOfSteps,
                               itemBuilder: (context, index) {
                                 if (index == mealsProvider.numberOfSteps - 1) {

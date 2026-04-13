@@ -32,6 +32,7 @@ class Assets {
   static String mealPlanning = "$rootImages/meal_planning.png";
   static String mealPlanningHeaderImage = "$rootImages/meal_planning_header_image.png";
   static String healthyLifeHeaderImage = "$rootImages/healthy_life_header_image.png";
+  static String aiChef = "$rootImages/AI_Chef.gif";
 
 
   /// Icons

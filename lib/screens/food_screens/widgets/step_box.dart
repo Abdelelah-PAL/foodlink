@@ -23,7 +23,6 @@ class StepBox extends StatelessWidget {
       children: [
         Container(
           width: SizeConfig.getProportionalWidth(348),
-          height: SizeConfig.getProportionalHeight(66),
           margin: EdgeInsets.symmetric(
             vertical: SizeConfig.getProportionalHeight(5),
             horizontal: SizeConfig.getProportionalWidth(3),
@@ -34,6 +33,8 @@ class StepBox extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
+            maxLines: 5,
+            minLines: 3,
             textDirection: settingsProvider.language == 'en'
                 ? TextDirection.ltr
                 : TextDirection.rtl,
@@ -77,16 +78,16 @@ class AddStepBox extends StatelessWidget {
       onTap: mealsProvider.increaseSteps,
       child: Container(
           width: SizeConfig.getProportionalWidth(348),
-          height: SizeConfig.getProportionalHeight(66),
+          height: SizeConfig.getProportionalHeight(60),
           margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.getProportionalHeight(5),
+            vertical: SizeConfig.getProportionalHeight(10),
             horizontal: SizeConfig.getProportionalWidth(3),
           ),
           decoration: BoxDecoration(
             color: AppColors.widgetsColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: const Icon(Icons.add)),
+          child: const Center(child: Icon(Icons.add, size: 30, color: Colors.black))),
     );
   }
 }
