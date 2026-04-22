@@ -31,6 +31,7 @@ class FeaturesProvider with ChangeNotifier {
   Future<void> getAllFeatures() async {
     try {
       isLoading = true;
+      Future.microtask(() => notifyListeners());
       userFeatures.clear();
       cookerFeatures.clear();
       List<Feature> fetchedFeatures = await _fs.getAllFeatures();
@@ -75,6 +76,7 @@ class FeaturesProvider with ChangeNotifier {
   Future<void> getAllArticles() async {
     try {
       isLoading = true;
+      Future.microtask(() => notifyListeners());
       articles.clear();
       List<BeyondCaloriesArticle> fetchedArticles = await _fs.getAllArticles();
       for (var doc in fetchedArticles) {
@@ -96,6 +98,7 @@ class FeaturesProvider with ChangeNotifier {
   Future<void> getAllSliderImages() async {
     try {
       isLoading = true;
+      Future.microtask(() => notifyListeners());
       sliderImages.clear();
       List<SliderImage> fetchedSliderImages = await _fs.getActiveImages();
       for (var doc in fetchedSliderImages) {

@@ -15,6 +15,7 @@ class CustomButton extends StatefulWidget {
     required this.isDisabled,
     this.fontSize,
     this.fontWeight,
+    this.child,
   });
 
   final VoidCallback? onTap;
@@ -24,6 +25,7 @@ class CustomButton extends StatefulWidget {
   final bool isDisabled;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final Widget? child;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -43,7 +45,7 @@ class _CustomButtonState extends State<CustomButton> {
           color: AppColors.widgetsColor, // Change color when disabled
         ),
         child: Center(
-          child: Text(
+          child: widget.child ?? Text(
             textAlign: TextAlign.center,
             TranslationService().translate(widget.text),
             style: TextStyle(

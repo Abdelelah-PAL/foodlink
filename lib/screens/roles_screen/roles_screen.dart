@@ -19,10 +19,17 @@ import '../widgets/custom_button.dart';
 import 'widgets/cooker_tile.dart';
 import 'widgets/user_tile.dart';
 
-class RolesScreen extends StatelessWidget {
+class RolesScreen extends StatefulWidget {
   const RolesScreen({super.key, required this.user});
 
   final User user;
+
+  @override
+  State<RolesScreen> createState() => _RolesScreenState();
+}
+
+class _RolesScreenState extends State<RolesScreen> {
+  bool _isNavigating = false;
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +100,21 @@ class RolesScreen extends StatelessWidget {
                           roleId == UserTypes.cooker
                               ? dashboardProvider.cookerNameController
                               : dashboardProvider.userNameController;
-                      await UsersServices()
-                          .updateUsername(user.uid, roleId, controller.text);
-                      UsersProvider().selectedUser = await UsersProvider()
-                          .getUserByRoleAndId(user.uid, dashboardProvider.roleId);
+                      
+                      // Start these in parallel for speed
+                      await Future.wait([
+                        UsersServices().updateUsername(widget.user.uid, roleId, controller.text),
+                        UsersProvider().getUserByRoleAndId(widget.user.uid, dashboardProvider.roleId).then((user) {
+                          UsersProvider().selectedUser = user;
+                        }),
+                      ]);
+
+                      // Trigger these in background without awaiting
                       MealCategoriesProvider().getAllMealCategories();
-                      await NotificationsProvider().getAllNotifications(
+                      NotificationsProvider().getAllNotifications(
                           UsersProvider().selectedUser!.userTypeId,
                           UsersProvider().selectedUser!.userId);
+
                       Get.to(const Dashboard(
                         initialIndex: 0,
                       ));

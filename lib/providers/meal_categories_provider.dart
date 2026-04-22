@@ -20,6 +20,7 @@ class MealCategoriesProvider with ChangeNotifier {
     try {
       mealCategories = [];
         isLoading = true;
+        Future.microtask(() => notifyListeners());
         QuerySnapshot<Map<String, dynamic>> mealQuery =
             await _mcs.getAllMealCategories();
         for (var doc in mealQuery.docs) {
